@@ -1,0 +1,70 @@
+All DecimaERP code is Copyright 2013 by the original authors.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Aferro General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU Aferro General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+DecimaERP includes works under other copyright notices and distributed
+according to the terms of the GNU Aferro General Public License or a compatible
+license, including:
+
+Javascript
+
+  Twitter Bootstrap - Copyright 2013 Twitter Inc.
+    (http://getbootstrap.com/)
+
+  jQuery - Copyright 2005, 2013 jQuery Foundation, Inc. and other contributors
+    (http://jquery.com/)
+
+  jQuery UI - Copyright (c) jQuery Foundation and other contributors
+    (http://jqueryui.com/)
+
+  jQuery ScrollTo - Copyright (c) 2007-2012 Ariel Flesler - aflesler(at)gmail(dot)com
+    (http://flesler.blogspot.com/2007/10/jqueryscrollto.html)
+
+  jQuery Masked Input plugin - Copyright (c) 2007-2013 Josh Bush
+    (http://digitalbush.com/projects/masked-input-plugin/)
+
+  jQuery LocalScroll - Copyright (c) 2007-2009 Ariel Flesler - aflesler(at)gmail(dot)com
+    (http://flesler.blogspot.com/2007/10/jquerylocalscroll-10.html)
+
+  jQuery free Grid - Copyright (c) 2008, Tony Tomov - tony(at)trirand(dot)com
+                   - Copyright (c) 2014-2016, Oleg Kiriljuk, oleg.kiriljuk@ok-soft-gmbh.com
+    (https://github.com/free-jqgrid/jqGrid)
+
+  jQuery Calculator - Copyright (c) 2008,  Keith Wood - kbwood(at)iinet(dot)com(dot)au
+    (http://keith-wood.name/calculator.html)
+
+  jQuery UIx Multiselect - Copyright (c) 2012, Yanick Rochon - yanick.rochon(at)gmail(dot)com
+  	(http://mind2soft.com/labs/jquery/multiselect/)
+
+  jQuery Highlight - Copyright (c) 2009, Bartek Szopka - jb(at)eaio(dot)com
+  	(http://johannburkard.de/blog/programming/javascript/highlight-javascript-text-higlighting-jquery-plugin.html)
+
+  History.js Copyright (c) 2011, Benjamin Arthur Lupton - b(at)lupton(dot)cc
+    (https://github.com/browserstate/history.js)
+
+  Bootstrap Tokenfield - Copyright (c) 2013, Sliptree
+    (https://sliptree.com/)
+
+Font
+
+  Font Awesome - Copyright © 2013 Dave Gandy - dave(at)fontawesome(dot)io
+    (http://fortawesome.github.io/Font-Awesome/)
+
+PHP
+
+  Laravel PHP Framework - Copyright (c) 2013, Taylor Otwell - taylorotwell(at)gmail(at)com
+    (http://laravel.com/)
+
+  GravatarLib - Copyright (c) 2011, emberlabs.org
+    (https://github.com/emberlabs/gravatarlib)

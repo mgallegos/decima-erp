@@ -1,0 +1,50 @@
+/**
+ * @file
+ * User Management CSS script.
+ *
+ * All DecimaERP code is copyright by the original authors and released under the GNU Aferro General Public License version 3 (AGPLv3) or later.
+ * See COPYRIGHT and LICENSE.
+ */
+
+@CHARSET "UTF-8";
+
+.um-custom-alert-info {
+	margin-bottom: 0px !important;
+}
+
+#um-roles-form-legend {
+	margin-bottom: 0px;
+}
+
+#um-btn-reset {
+	margin-top: -7px;
+}
+
+#um-modal .modal-body button {
+	font-size: 12px;
+}
+
+/*Media*/
+@media (min-width: 992px) and (max-width: 1199px) {
+  .um-multiselect {
+    width: 908px !important;
+    height: 200px !important;
+  }
+
+  .um-apps-multiselect {
+    width: 908px !important;
+    height: 200px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .um-multiselect {
+    width: 539px !important;
+    height: 200px !important;
+  }
+
+  .um-apps-multiselect {
+    width: 539px !important;
+    height: 542px !important;
+  }
+}

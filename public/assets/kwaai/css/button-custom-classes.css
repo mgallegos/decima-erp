@@ -1,0 +1,86 @@
+/**
+ * @file
+ * Description of the script.
+ *
+ * All DecimaERP code is copyright by the original authors and released under the GNU Aferro General Public License version 3 (AGPLv3) or later.
+ * See COPYRIGHT and LICENSE.
+ */
+ 
+@CHARSET "UTF-8";
+
+/* App buttons classes*/
+
+.btn-app {
+	text-align: left !important;
+}
+
+/* Disabled btn-default custom class*/
+
+.btn-default.disabled,
+.btn-default[disabled],
+fieldset[disabled] .btn-default,
+.btn-default.disabled:hover,
+.btn-default[disabled]:hover,
+fieldset[disabled] .btn-default:hover,
+.btn-default.disabled:focus,
+.btn-default[disabled]:focus,
+fieldset[disabled] .btn-default:focus,
+.btn-default.disabled:active,
+.btn-default[disabled]:active,
+fieldset[disabled] .btn-default:active,
+.btn-default.disabled.active,
+.btn-default[disabled].active,
+fieldset[disabled] .btn-default.active {  
+  border-color: #ccc;  
+  color: graytext;
+}
+
+/* Modules buttons classes*/
+
+.btn-module {
+  background-color: #666666;
+  border-color: #666666;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  background-color: #5c5c5c;
+  background-image: -moz-linear-gradient(top,#666666,#4d4d4d);
+  background-image: -webkit-gradient(linear,0 0,0 100%,from(#666666),to(#4d4d4d));
+  background-image: -webkit-linear-gradient(top,#666666,#4d4d4d);
+  background-image: -o-linear-gradient(top,#666666,#4d4d4d);
+  background-image: linear-gradient(to bottom,#666666,#4d4d4d);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff666666', endColorstr='#ff4c4c4c', GradientType=0);
+  border-color: #4d4d4d #4d4d4d #262626;
+  border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+}
+.btn-module:hover,
+.btn-module:focus {
+  text-decoration: none;
+  background-position: 0 -15px;
+  -webkit-transition: background-position .1s linear;
+  -moz-transition: background-position .1s linear;
+  -o-transition: background-position .1s linear;
+  transition: background-position .1s linear;
+}
+.btn-module:hover,
+.btn-module:focus {
+  background-color: #4d4d4d;
+  color: #fff;
+}
+.btn-module:active,
+.btn-module.active,
+.btn-module.active:hover {
+  background-color: #595959;
+  border-color: #4d4d4d;
+}
+.btn-module.disabled:hover,
+.btn-module.disabled:focus,
+.btn-module.disabled:active,
+.btn-module.disabled.active,
+.btn-module[disabled] .btn-module:hover,
+.btn-module[disabled] .btn-module:focus,
+.btn-module[disabled] .btn-module:active,
+.btn-module[disabled] .btn-module.active {
+  background-color: #666666;
+  border-color: #666666;
+}

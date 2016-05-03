@@ -1,0 +1,91 @@
+<?php
+/**
+ * @file
+ * Form Language Lines.
+ *
+ * All DecimaERP code is copyright by the original authors and released under the GNU Aferro General Public License version 3 (AGPLv3) or later.
+ * See COPYRIGHT and LICENSE.
+ */
+
+return array(
+
+	'autocompleteValidation' => 'Debe elegir una de las opciones disponibles por el autocompletado de texto.',
+
+	'charactersAvailable' => 'Caracteres disponibles:',
+
+	'fieldRequiredHelpText' => '* Campo obligatorio',
+
+	'fieldRequired' => 'El campo es requerido.',
+
+	'radioRequired' => 'Debe seleccionar una opción.',
+
+	'checkboxRequired' => 'Debe elegir al menos una de las opciones.',
+
+	'passwordRequired' => 'Si el usuario no será activado por correo electrónico, es necesario que defina una contraseña.',
+
+	'dateRangeFrom' => 'Desde:',
+
+	'dateRangeTo' => 'Hasta:',
+
+	'dateRangeValidation' => 'La fecha inicial no puede ser mayor a la fecha final.',
+
+	'defaultinvalidDateHelpMessage' => 'La fecha es inválida.',
+
+	'invalidDateFromHelpMessage' => 'La fecha inicial es inválida.',
+
+	'invaliddateToHelpMessage' => 'La fecha final es inválida.',
+
+	'year' => 'year',
+
+	'positiveIntegerRegexHelpMessage' => 'El valor ingresado debe ser un entero positivo, ejemplo: 1,000 o 1000',
+
+	'positiveIntegerNoZeroRegexHelpMessage' => 'El valor ingresado debe ser un entero positivo (no esta permitido cero), example: 1,000 o 1000',
+
+	'signedIntegerRegexHelpMessage' => 'El valor ingresado debe ser un entero, ejemplo: -1 o 1 o 1,000 o 1000',
+
+	'moneyRegexHelpMessage' => 'El valor ingresado debe ser númerico, ejemplo: 1,000.00 o 1000.00 o 1000',
+
+	'defaultSuccessOperationMessage' => 'La operación se realizó exitosamente.',
+
+	'defaultSuccessSaveMessage' => 'El registro se ha guardado exitosamente.',
+
+	'defaultSuccessUpdateMessage' => 'El registro se ha actualizado exitosamente.',
+
+	'defaultSuccessDeleteMessage' => 'El registro se ha eliminado exitosamente.',
+
+	'defaultErrorMessage' => 'Su petición no ha podido ser procesada, por favor intente de nuevo más tarde.',
+
+	'tokenMismatchException' => 'El token de seguridad de su sesión ha expirado, por seguridad se procederá a refrescar la ventana de su navegador.',
+
+	'authenticationException' => 'Su sesión ha expirado, por seguridad se procederá a refrescar la ventana de su navegador para que pueda iniciar sesión nuevamente.',
+
+	'databaseConnectionNameInfoMessage' => 'Una vez creada la organización, el nombre de la conexión a la base de datos puede ser modificado únicamente por el administrador de la aplicación.',
+
+	'booleanText' => '0:No;1:Sí',
+
+	'loadButton' => 'Cargando...',
+
+	'no' => 'No',
+
+	'yes' => 'Sí',
+
+	'filtersTitle' => 'Filtros Disponibles',
+
+	'filterButton' => 'Aplicar filtros',
+
+	'clearFilterButton' => 'Limpiar filtros',
+
+	'thousandsSeparator' => ',',
+
+	'decimalSeparator' => '.',
+
+	'dateFormat' => 'dd/mm/yy',
+
+	'phpShortDateFormat' => 'd/m/Y',
+
+	'phpDateFormat' => 'd/m/Y h:i:s A',
+
+	'mysqlDateFormat' => '%d/%m/%Y',
+
+	'defaultNumericValue' => '0.00',
+);
