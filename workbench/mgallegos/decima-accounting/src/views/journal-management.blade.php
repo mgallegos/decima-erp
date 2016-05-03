@@ -267,10 +267,10 @@
 			$('#acct-jm-btn-toolbar').disabledButtonGroup();
 			// $('#acct-jm-btn-group-1').enableButtonGroup();
 			$('#acct-jm-btn-new').removeAttr('disabled');
+			$('#acct-jm-btn-group-3').enableButtonGroup();
 			$('#acct-jm-date').removeAttr('disabled');
 			$('#acct-jm-date-calendar-button').removeAttr('disabled');
 			$('#acct-jm-date').removeAttr('data-last-selected-date');
-			$('#acct-jm-btn-group-3').enableButtonGroup();
 			$('#acct-jm-btn-journal-entries-toolbar').disabledButtonGroup();
 			$('#acct-jm-form-new-title').removeClass('hidden');
 
@@ -305,6 +305,12 @@
 		{
 			$('.acct-jm-btn-tooltip').tooltip('hide');
 			$('#acct-jm-journals-grid').trigger('reloadGrid');
+
+			if($(this).hasAttr('disabled'))
+			{
+				return;
+			}
+			
 			$('#acct-jm-btn-toolbar').disabledButtonGroup();
 			$('#acct-jm-btn-group-1').enableButtonGroup();
 
