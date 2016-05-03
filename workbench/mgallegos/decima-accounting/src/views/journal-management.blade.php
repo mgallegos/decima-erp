@@ -98,6 +98,7 @@
 		$('#acct-jm-journal-entries-form').jqMgVal('addFormFieldsValidations');
 
 		$('.acct-jm-btn-tooltip').tooltip();
+		$('#acct-jm-date-calendar-button').attr('disabled','disabled');
 
 		$('#acct-jm-grid-section').on('shown.bs.collapse', function ()
 		{
@@ -266,6 +267,8 @@
 			$('#acct-jm-btn-toolbar').disabledButtonGroup();
 			// $('#acct-jm-btn-group-1').enableButtonGroup();
 			$('#acct-jm-btn-new').removeAttr('disabled');
+			$('#acct-jm-date').removeAttr('disabled');
+			$('#acct-jm-date-calendar-button').removeAttr('disabled');
 			$('#acct-jm-date').removeAttr('data-last-selected-date');
 			$('#acct-jm-btn-group-3').enableButtonGroup();
 			$('#acct-jm-btn-journal-entries-toolbar').disabledButtonGroup();
@@ -475,6 +478,8 @@
 						$('#acct-jm-journal-entries-form-fieldset').removeAttr('disabled');
 						$('#acct-jm-btn-journal-entries-group-1').enableButtonGroup();
 						$('#acct-jm-btn-journal-entries-group-3').enableButtonGroup();
+						$('#acct-jm-date').attr('disabled','disabled');
+						$('#acct-jm-date-calendar-button').attr('disabled','disabled');
 						$('#acct-jm-journal-voucher-form').jqMgVal('clearContextualClasses');
 					}
 
@@ -525,6 +530,8 @@
 			$('.acct-jm-btn-tooltip').tooltip('hide');
 			$('#acct-jm-btn-group-1').enableButtonGroup();
 			$('#acct-jm-btn-group-3').disabledButtonGroup();
+			$('#acct-jm-date').attr('disabled','disabled');
+			$('#acct-jm-date-calendar-button').attr('disabled','disabled');
 			$('#acct-jm-form-new-title').addClass('hidden');
 			$('#acct-jm-form-edit-title').addClass('hidden');
 			$('#acct-jm-id').val(-1);
@@ -1249,7 +1256,7 @@
 						--}}
 						<div class="form-group mg-hm">
 							{!! Form::label('acct-jm-date', Lang::get('decima-accounting::journal-management.date'), array('class' => 'control-label')) !!}
-							{!! Form::date('acct-jm-date', array('class' => 'form-control', 'data-mg-required' => '', 'data-period-validation-message' => Lang::get('decima-accounting::journal-management.periodValidationMessage'))) !!}
+							{!! Form::date('acct-jm-date', array('class' => 'form-control', 'data-mg-required' => '', 'disabled' => '', 'data-period-validation-message' => Lang::get('decima-accounting::journal-management.periodValidationMessage'))) !!}
 					    {!! Form::hidden('acct-jm-id', null, array('id' => 'acct-jm-id')) !!}
 			  		</div>
 						<div class="form-group mg-hm clearfix">
