@@ -149,6 +149,8 @@ return array(
 
 	'closedPeriodValidationMessage3' => 'No se puede modificar los datos de la partida, el periodo del mes de ":period" ya se encuentra cerrado.',
 
+	'changedPeriodValidationMessage' => 'No se puede modificar la fecha de la partida, la partida ya tiene asignada un número correlativo en el mes de ":period".',
+
 	'editHelpText' => 'Para editar datos de una partida contable, seleccione la partida en la tabla y haga clic en el botón "Editar".',
 
 	'nulifyHelpText' => 'Para anular una partida contable, seleccione la partida en la tabla y haga clic en el botón "Anular".',

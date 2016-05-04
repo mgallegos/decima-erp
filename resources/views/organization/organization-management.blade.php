@@ -29,7 +29,7 @@
 			</div>
 			<div id="om-btn-group-3" class="btn-group btn-group-app-toolbar">
 				{!! Form::button('<i class="fa fa-save"></i> ' . Lang::get('toolbar.save'), array('id' => 'om-btn-save', 'class' => 'btn btn-default om-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('organization/organization-management.save'))) !!}
-				{!! Form::button('<i class="fa fa-times"></i> ' . Lang::get('toolbar.close'), array('id' => 'om-btn-close', 'class' => 'btn btn-default om-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
+				{!! Form::button('<i class="fa fa-undo"></i> ' . Lang::get('toolbar.close'), array('id' => 'om-btn-close', 'class' => 'btn btn-default om-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
 			</div>
 		</div>
 		@if ($showWelcomeMessage)

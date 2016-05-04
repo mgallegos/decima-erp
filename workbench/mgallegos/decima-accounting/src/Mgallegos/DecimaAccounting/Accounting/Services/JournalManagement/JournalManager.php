@@ -554,9 +554,9 @@ class JournalManager implements JournalManagementInterface {
     $input = eloquent_array_filter_for_update($input);
     $input['date'] = $this->Carbon->createFromFormat($this->Lang->get('form.phpShortDateFormat'), $input['date'])->format('Y-m-d');
 
-    $periodIsClosed = $newPeriodIsClosed = false;
+    $periodIsChanged = $periodIsClosed = $newPeriodIsClosed = false;
 
-    $this->DB->transaction(function() use (&$input, &$Period, &$periodIsClosed, &$newPeriodIsClosed)
+    $this->DB->transaction(function() use (&$input, &$Period, &$periodIsChanged, &$periodIsClosed, &$newPeriodIsClosed)
 		{
       $JournalVoucher = $this->JournalVoucher->byId($input['id']);
       $unchangedJournalVoucherValues = $JournalVoucher->toArray();
@@ -566,6 +566,12 @@ class JournalManager implements JournalManagementInterface {
       if($Period->is_closed)
       {
         $periodIsClosed = true;
+        return;
+      }
+
+      if($JournalVoucher->period_id != $input['period_id'])
+      {
+        $periodIsChanged = true;
         return;
       }
 
@@ -611,6 +617,11 @@ class JournalManager implements JournalManagementInterface {
     if($periodIsClosed)
     {
       return json_encode(array('success' => false, 'info' => $this->Lang->get('decima-accounting::journal-management.closedPeriodValidationMessage3', array('period' => $this->Lang->get('decima-accounting::period-management.' . $Period->month)))));
+    }
+
+    if($periodIsChanged)
+    {
+      return json_encode(array('success' => false, 'info' => $this->Lang->get('decima-accounting::journal-management.changedPeriodValidationMessage', array('period' => $this->Lang->get('decima-accounting::period-management.' . $Period->month)))));
     }
 
     if($newPeriodIsClosed)

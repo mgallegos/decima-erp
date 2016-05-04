@@ -49,7 +49,7 @@
 			</div>
 			<div id="um-btn-group-3" class="btn-group btn-group-app-toolbar toolbar-block">
 				{!! Form::button('<i class="fa fa-save"></i> ' . Lang::get('toolbar.save'), array('id' => 'um-btn-save', 'class' => 'btn btn-default um-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('security/user-management.save'))) !!}
-				{!! Form::button('<i class="fa fa-times"></i> ' . Lang::get('toolbar.close'), array('id' => 'um-btn-close', 'class' => 'btn btn-default um-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
+				{!! Form::button('<i class="fa fa-undo"></i> ' . Lang::get('toolbar.close'), array('id' => 'um-btn-close', 'class' => 'btn btn-default um-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
 			</div>
 		</div>
 		<div id="um-organization-owner-info-message" class="alert alert-block alert-info alert-custom hidden">

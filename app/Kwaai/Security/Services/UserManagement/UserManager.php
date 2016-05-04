@@ -670,16 +670,19 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 		$input['email'] = $User->email;
 		$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] A new user has been added to the organization', 'context' => $input), $this->AuthenticationManager));
 
-		$sender = $this->AuthenticationManager->getLoggedUserFirstname() . ' ' . $this->AuthenticationManager->getLoggedUserLastname();
-		$subject = $this->Lang->get('security/new-organization-user.emailSubject', array('systemName' => $this->Config->get('system-security.system_name'), 'organizationName' => $organizationName));
-
-		$replyToEmail = $this->Config->get('system-security.reply_to_email');
-		$replyToName = $this->Config->get('system-security.reply_to_name');
-
-		$this->Mailer->queue('security.emails.new-organization-user', array('addressee' => $User->firstname, 'sender' => $sender, 'organizationName' => $organizationName), function($message) use ($User, $subject, $replyToEmail, $replyToName)
+		if($this->Config->get('system-security.email_organization_user'))
 		{
-			$message->to($User->email)->subject($subject)->replyTo($replyToEmail, $replyToName);
-		});
+			$sender = $this->AuthenticationManager->getLoggedUserFirstname() . ' ' . $this->AuthenticationManager->getLoggedUserLastname();
+			$subject = $this->Lang->get('security/new-organization-user.emailSubject', array('systemName' => $this->Config->get('system-security.system_name'), 'organizationName' => $organizationName));
+
+			$replyToEmail = $this->Config->get('system-security.reply_to_email');
+			$replyToName = $this->Config->get('system-security.reply_to_name');
+
+			$this->Mailer->queue('security.emails.new-organization-user', array('addressee' => $User->firstname, 'sender' => $sender, 'organizationName' => $organizationName), function($message) use ($User, $subject, $replyToEmail, $replyToName)
+			{
+				$message->to($User->email)->subject($subject)->replyTo($replyToEmail, $replyToName);
+			});
+		}
 
 		return json_encode(array('success' => $this->Lang->get('security/user-management.successAddedUserToOrganizationMessage')));
 	}

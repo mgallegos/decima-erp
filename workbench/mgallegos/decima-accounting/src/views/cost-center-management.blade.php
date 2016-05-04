@@ -351,7 +351,7 @@ $(document).ready(function()
 			</div>
 			<div id="acct-ccm-btn-group-3" class="btn-group btn-group-app-toolbar">
 				{!! Form::button('<i class="fa fa-save"></i> ' . Lang::get('toolbar.save'), array('id' => 'acct-ccm-btn-save', 'class' => 'btn btn-default acct-ccm-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('decima-accounting::cost-center-management.save'))) !!}
-				{!! Form::button('<i class="fa fa-times"></i> ' . Lang::get('toolbar.close'), array('id' => 'acct-ccm-btn-close', 'class' => 'btn btn-default acct-ccm-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
+				{!! Form::button('<i class="fa fa-undo"></i> ' . Lang::get('toolbar.close'), array('id' => 'acct-ccm-btn-close', 'class' => 'btn btn-default acct-ccm-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
 			</div>
 		</div>
 		<div id='acct-ccm-grid-section' class='app-grid collapse in' data-app-grid-id='acct-ccm-grid'>

@@ -121,4 +121,12 @@ return array(
 
 	'cas_domain' => env('CAS_DOMAIN', ''),
 
+	/*
+	|--------------------------------------------------------------------------
+	| Notify user by email when added to an organization
+	|--------------------------------------------------------------------------
+	|
+	*/
+	'email_organization_user' => env('EMAIL_ORGANIZATION_USER', true),
+
 );
