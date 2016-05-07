@@ -54,6 +54,7 @@ class EloquentJournalVoucherGridRepository extends EloquentRepositoryAbstract {
 																	'vt.id AS voucher_type_id', 'vt.name AS voucher_type',
 																	'cc.id AS cost_center_id_0', 'cc.key AS cost_center_key_0', 'cc.name AS cost_center_name_0',
 																	'c.id AS account_id_0', 'c.key AS account_key_0', 'c.name AS account_name_0',
+																	'p.id AS period_id',
 																	// $DB->raw('CONCAT("#", CASE WHEN jv.number < 10 THEN LPAD(jv.number, 2, 0) ELSE jv.number END, " - ", DATE_FORMAT(jv.date, "' . $Lang->get('form.mysqlDateFormat') . '"), " - ", vt.name, " - ", IFNULL(jv.manual_reference,"' . $Lang->get('decima-accounting::journal-management.noRef') . '"), " - ", jv.remark) AS voucher_header')
 																	$DB->raw('CONCAT("#", LPAD(jv.number, 4, 0), " - P", LPAD(month, 2, 0), " - ", DATE_FORMAT(jv.date, "' . $Lang->get('form.mysqlDateFormat') . '"), " - ", vt.name, " - ", IFNULL(jv.manual_reference,"' . $Lang->get('decima-accounting::journal-management.noRef') . '"), " - ", jv.remark) AS voucher_header')
 																	// $DB->raw('CASE

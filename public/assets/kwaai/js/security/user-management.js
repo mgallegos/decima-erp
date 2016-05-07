@@ -25,6 +25,12 @@ function umGetAccessControlList()
 	permissionsModuleId = $('#um-permissions-module').val();
 	token = $('#app-token').val();
 
+	if(userId == undefined)
+	{
+		$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+		return;
+	}
+
 	$.ajax(
 	{
 		type: 'POST',
@@ -364,6 +370,12 @@ $(document).ready(function()
 		permissionsModuleId = $('#um-permissions-module').val();
 		token = $('#app-token').val();
 
+		if(userId == undefined)
+		{
+			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
+
 		if(rolesId.length == 0)
 		{
 			return;
@@ -407,6 +419,12 @@ $(document).ready(function()
 		permissionsModuleId = $('#um-permissions-module').val();
 		token = $('#app-token').val();
 
+		if(userId == undefined)
+		{
+			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
+
 		if(menusId.length == 0)
 		{
 			return;
@@ -447,6 +465,12 @@ $(document).ready(function()
 		permissionsId = getSelectedOptionsId(ui.optionElements);
 		userId = $('#users-grid').getSelectedRowId();
 		token = $('#app-token').val();
+
+		if(userId == undefined)
+		{
+			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
 
 		if(permissionsId.length == 0)
 		{
@@ -508,6 +532,12 @@ $(document).ready(function()
 		menuOptionModuleId = ui.item.value;
 		token = $('#app-token').val();
 
+		if(userId == undefined)
+		{
+			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
+
 		$.ajax(
 		{
 			type: 'POST',
@@ -561,6 +591,12 @@ $(document).ready(function()
 		userId = $('#users-grid').getSelectedRowId();
 		permissionsModuleId = ui.item.value;
 		token = $('#app-token').val();
+
+		if(userId == undefined)
+		{
+			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
 
 		$.ajax(
 		{
@@ -617,6 +653,12 @@ $(document).ready(function()
 		userId = $('#users-grid').getSelectedRowId();
 		menuId = ui.item.value;
 		token = $('#app-token').val();
+
+		if(userId == undefined)
+		{
+			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
 
 		$.ajax(
 		{
@@ -869,6 +911,12 @@ $(document).ready(function()
 		menuOptionModuleId = $('#um-menu-options-module').val(),
 		permissionsModuleId = $('#um-permissions-module').val();
 		token = $('#app-token').val();
+
+		if(userId == undefined)
+		{
+			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
 
 		$('.um-btn-tooltip').tooltip('hide');
 

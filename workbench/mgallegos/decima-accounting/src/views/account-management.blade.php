@@ -148,14 +148,22 @@ $(document).ready(function()
 
 	$('#acct-am-btn-edit').click(function()
 	{
-		var rowData;
+		var rowData, rowId;
+
+		rowId = $('#acct-am-grid').jqGrid('getGridParam', 'selrow');
+
+		if(rowId == null)
+		{
+			$('#acct-am-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
 
 		$('#acct-am-btn-toolbar').disabledButtonGroup();
 		$('#acct-am-btn-group-3').enableButtonGroup();
 		$('#acct-am-form-edit-title').removeClass('hidden');
 		$('.acct-am-btn-tooltip').tooltip('hide');
 
-		rowData = $('#acct-am-grid').getRowData($('#acct-am-grid').jqGrid('getGridParam', 'selrow'));
+		rowData = $('#acct-am-grid').getRowData(rowId);
 
 		populateFormFields(rowData);
 		acctAmShowParentTree(rowData.acct_am_parent_account_id);
@@ -167,14 +175,22 @@ $(document).ready(function()
 
 	$('#acct-am-btn-delete').click(function()
 	{
-		var rowData;
+		var rowData, rowId;
 
 		if($(this).hasAttr('disabled'))
 		{
 			return;
 		}
 
-		rowData = $('#acct-am-grid').getRowData($('#acct-am-grid').jqGrid('getGridParam', 'selrow'));
+		rowId = $('#acct-am-grid').jqGrid('getGridParam', 'selrow');
+
+		if(rowId == null)
+		{
+			$('#acct-am-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
+
+		rowData = $('#acct-am-grid').getRowData(rowId);
 
 		$('#acct-am-delete-message').html($('#acct-am-delete-message').attr('data-default-label').replace(':account', rowData.acct_am_key + ' ' + rowData.acct_am_name));
 

@@ -110,13 +110,21 @@ $(document).ready(function()
 
 	$('#om-btn-edit').click(function()
 	{
-		var rowData;
+		var rowData, rowId;
+
+		rowId = $('#organizations-grid').jqGrid('getGridParam', 'selrow');
+
+		if(rowId == null)
+		{
+			$('#om-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
 
 		$('#om-btn-toolbar').disabledButtonGroup();
 		$('#om-btn-group-3').enableButtonGroup();
 		$('#om-form-edit-title').removeClass('hidden');
 
-		rowData = $('#organizations-grid').getRowData($('#organizations-grid').jqGrid('getGridParam', 'selrow'));
+		rowData = $('#organizations-grid').getRowData(rowId);
 
 		populateFormFields(rowData, 'om-');
 
@@ -264,10 +272,18 @@ $(document).ready(function()
 
 	$('#om-btn-delete').click(function()
 	{
-		var rowData;
+		var rowData, rowId;
 
 		if($(this).hasAttr('disabled'))
 		{
+			return;
+		}
+
+		rowId = $('#organizations-grid').jqGrid('getGridParam', 'selrow');
+
+		if(rowId == null)
+		{
+			$('#om-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 			return;
 		}
 

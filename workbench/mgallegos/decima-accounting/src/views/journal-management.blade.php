@@ -327,22 +327,40 @@
 
 		$('#acct-jm-btn-edit').click(function()
 		{
-			var rowData;
+			var rowData, rowId;
+
+			rowId = $('#acct-jm-journals-grid').jqGrid('getGridParam', 'selrow');
+
+			if(rowId == null)
+			{
+				$('#acct-jm-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+				$('.acct-jm-btn-tooltip').tooltip('hide');
+				return;
+			}
 
 			$('.acct-jm-btn-tooltip').tooltip('hide');
 			$('#acct-jm-btn-toolbar').disabledButtonGroup();
 			$('#acct-jm-form-edit-title').removeClass('hidden');
-			$('#acct-jm-date').removeAttr('data-last-selected-date');
+			// $('#acct-jm-date').removeAttr('data-last-selected-date');
 
-			rowData = $('#acct-jm-journals-grid').getRowData($('#acct-jm-journals-grid').jqGrid('getGridParam', 'selrow'));
+			rowData = $('#acct-jm-journals-grid').getRowData(rowId);
 
 			populateFormFields(rowData, 'acct-jm-');
+
+			$.each(acctJmPeriods, function( index, period )
+			{
+				if($('#acct-jm-period-id').val() == period.id)
+				{
+					$('#acct-jm-period-label').val(period.month);
+				}
+			});
 
 			$('#acct-jm-id').val(rowData.voucher_id);
 			$('#acct-jm-btn-journal-entries-refresh').click();
 		  $('#acct-jm-voucher-number-label').html($('#acct-jm-voucher-number-label').attr('data-default-label').replace(':number', rowData.number));
 			$('#acct-jm-voucher-number-label').attr('number', rowData.number);
-			$('#acct-jm-date').focusout();
+			// $('#acct-jm-date').focusout();
+			$('#acct-jm-date').attr('data-last-selected-date', $('#acct-jm-date').val());
 			$('#acct-jm-status-label').val($('#acct-jm-status-label').attr('data-label-' + rowData.status));
 			$('#acct-jm-cost-center').val($('#acct-jm-cost-center').attr('defaultvalue'));
 			$('#acct-jm-cost-center-id').val($('#acct-jm-cost-center-id').attr('defaultvalue'));
@@ -357,16 +375,25 @@
 
 		$('#acct-jm-btn-delete').click(function()
 		{
-			var rowData;
+			var rowData, rowId;
 
 			if($(this).hasAttr('disabled'))
 			{
 				return;
 			}
 
+			rowId = $('#acct-jm-journals-grid').jqGrid('getGridParam', 'selrow');
+
+			if(rowId == null)
+			{
+				$('#acct-jm-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+				$('.acct-jm-btn-tooltip').tooltip('hide');
+				return;
+			}
+
 			$('.acct-jm-btn-tooltip').tooltip('hide');
 
-			rowData = $('#acct-jm-journals-grid').getRowData($('#acct-jm-journals-grid').jqGrid('getGridParam', 'selrow'));
+			rowData = $('#acct-jm-journals-grid').getRowData(rowId);
 
 			$('#acct-jm-voucher-delete-message').html($('#acct-jm-voucher-delete-message').attr('data-default-label').replace(':number', rowData.number));
 
@@ -564,13 +591,22 @@
 
 		$('#acct-jm-btn-journal-entries-edit').click(function()
 		{
-			var rowData;
+			var rowData, rowId;
+
+			rowId = $('#acct-jm-journal-entries-grid').jqGrid('getGridParam', 'selrow');
+
+			if(rowId == null)
+			{
+				$('#acct-jm-btn-journal-entries-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+				$('.acct-jm-btn-tooltip').tooltip('hide');
+				return;
+			}
 
 			$('.acct-jm-btn-tooltip').tooltip('hide');
 			$('#acct-jm-btn-journal-entries-toolbar').disabledButtonGroup();
 			$('#acct-jm-btn-journal-entries-group-3').enableButtonGroup();
 
-			rowData = $('#acct-jm-journal-entries-grid').getRowData($('#acct-jm-journal-entries-grid').jqGrid('getGridParam', 'selrow'));
+			rowData = $('#acct-jm-journal-entries-grid').getRowData(rowId);
 			populateFormFields(rowData, 'acct-jm-');
 
 			$('#acct-jm-cost-center').val(rowData.cost_center_key + ' ' + rowData.cost_center_name);
@@ -598,6 +634,7 @@
 
 			if(idArray.length == 0)
 			{
+				$('#acct-jm-btn-journal-entries-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 				return;
 			}
 
@@ -1199,6 +1236,7 @@
 				//->setFilterToolbarEvent('beforeClear','acctJmJournalsBeforeClearEvent')
 				->addGroupHeader(array('startColumnName' => 'cost_center_key_0', 'numberOfColumns' => 7, 'titleText' => Lang::get('decima-accounting::journal-management.voucherNumberText') . ' - ' . Lang::get('decima-accounting::period-management.period') . ' - ' . Lang::get('decima-accounting::journal-management.date') . ' - ' . Lang::get('decima-accounting::journal-management.voucherType') . ' - ' . Lang::get('decima-accounting::journal-management.manualReference'). ' - ' . Lang::get('decima-accounting::journal-management.remark')))
 	    	->addColumn(array('index' => 'jv.id', 'name' => 'voucher_id', 'hidden' => true))
+	    	->addColumn(array('index' => 'p.id', 'name' => 'period_id', 'hidden' => true))
 				//->addColumn(array('label' => 'header', 'index' => 'voucher_header' ,'name' => 'voucher_header'))
 				->addColumn(array('index' => 'voucher_header'))
 	    	->addColumn(array('label' => Lang::get('decima-accounting::journal-management.date'), 'index' => 'jv.date' ,'name' => 'date', 'hidden' => true, 'formatter' => 'date'))

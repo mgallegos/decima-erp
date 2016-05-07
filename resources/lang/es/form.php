@@ -88,4 +88,6 @@ return array(
 	'mysqlDateFormat' => '%d/%m/%Y',
 
 	'defaultNumericValue' => '0.00',
+
+	'invalidSelection' => 'Debe seleccionar un registro antes de realizar esta operación.',
 );

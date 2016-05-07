@@ -54,9 +54,17 @@
 
 		$('#acct-pm-btn-open').click(function()
 		{
-			var rowData;
+			var rowData, rowId;
 
-			rowData = $('#acct-pm-grid').getRowData($('#acct-pm-grid').jqGrid('getGridParam', 'selrow'));
+			rowId = $('#acct-pm-grid').jqGrid('getGridParam', 'selrow');
+
+			if(rowId == null)
+			{
+				$('#acct-pm-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+				return;
+			}
+
+			rowData = $('#acct-pm-grid').getRowData(rowId);
 
 			if(rowData['acct_pm_is_closed'] == '0')
 			{
@@ -97,9 +105,17 @@
 
 		$('#acct-pm-btn-close').click(function()
 		{
-			var rowData;
+			var rowData, rowId;
 
-			rowData = $('#acct-pm-grid').getRowData($('#acct-pm-grid').jqGrid('getGridParam', 'selrow'));
+			rowId = $('#acct-pm-grid').jqGrid('getGridParam', 'selrow');
+
+			if(rowId == null)
+			{
+				$('#acct-pm-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+				return;
+			}
+
+			rowData = $('#acct-pm-grid').getRowData(rowId);
 
 			if(rowData['acct_pm_is_closed'] == '1')
 			{

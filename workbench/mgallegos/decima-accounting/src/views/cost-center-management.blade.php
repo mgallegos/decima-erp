@@ -136,14 +136,22 @@ $(document).ready(function()
 
 	$('#acct-ccm-btn-edit').click(function()
 	{
-		var rowData;
+		var rowData, rowId;
+
+		rowId = $('#acct-ccm-grid').jqGrid('getGridParam', 'selrow');
+
+		if(rowId == null)
+		{
+			$('#acct-ccm-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
 
 		$('#acct-ccm-btn-toolbar').disabledButtonGroup();
 		$('#acct-ccm-btn-group-3').enableButtonGroup();
 		$('#acct-ccm-form-edit-title').removeClass('hidden');
 		$('.acct-ccm-btn-tooltip').tooltip('hide');
 
-		rowData = $('#acct-ccm-grid').getRowData($('#acct-ccm-grid').jqGrid('getGridParam', 'selrow'));
+		rowData = $('#acct-ccm-grid').getRowData(rowId);
 
 		populateFormFields(rowData);
 		acctAmShowParentTree(rowData.acct_ccm_parent_cc_id);
@@ -155,14 +163,22 @@ $(document).ready(function()
 
 	$('#acct-ccm-btn-delete').click(function()
 	{
-		var rowData;
+		var rowData, rowId;
 
 		if($(this).hasAttr('disabled'))
 		{
 			return;
 		}
 
-		rowData = $('#acct-ccm-grid').getRowData($('#acct-ccm-grid').jqGrid('getGridParam', 'selrow'));
+		rowId = $('#acct-ccm-grid').jqGrid('getGridParam', 'selrow');
+
+		if(rowId == null)
+		{
+			$('#acct-ccm-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
+
+		rowData = $('#acct-ccm-grid').getRowData(rowId);
 
 		$('#acct-ccm-delete-message').html($('#acct-ccm-delete-message').attr('data-default-label').replace(':cc', rowData.acct_ccm_key + ' ' + rowData.acct_ccm_name));
 

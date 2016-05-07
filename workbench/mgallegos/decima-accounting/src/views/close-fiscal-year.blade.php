@@ -50,14 +50,22 @@
 
 		$('#acct-cfy-btn-expenses-voucher').click(function()
 		{
-			var rowData;
+			var rowData, rowId;
+
+			rowId = $('#acct-cfy-grid').jqGrid('getGridParam', 'selrow');
+
+			if(rowId == null)
+			{
+				$('#acct-cfy-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+				return;
+			}
 
 			if($(this).hasAttr('disabled'))
 			{
 				return;
 			}
 
-			rowData = $('#acct-cfy-grid').getRowData($('#acct-cfy-grid').jqGrid('getGridParam', 'selrow'));
+			rowData = $('#acct-cfy-grid').getRowData(rowId);
 			$('#acct-cfy-fiscal-year-id').val(rowData['acct_cfy_id']);
 			$('.acct-cfy-btn-tooltip').tooltip('hide');
 
@@ -129,14 +137,22 @@
 
 		$('#acct-cfy-btn-income-voucher').click(function()
 		{
-			var rowData;
+			var rowData, rowId;
+
+			rowId = $('#acct-cfy-grid').jqGrid('getGridParam', 'selrow');
+
+			if(rowId == null)
+			{
+				$('#acct-cfy-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+				return;
+			}
 
 			if($(this).hasAttr('disabled'))
 			{
 				return;
 			}
 
-			rowData = $('#acct-cfy-grid').getRowData($('#acct-cfy-grid').jqGrid('getGridParam', 'selrow'));
+			rowData = $('#acct-cfy-grid').getRowData(rowId);
 			$('#acct-cfy2-fiscal-year-id').val(rowData['acct_cfy_id']);
 			$('.acct-cfy-btn-tooltip').tooltip('hide');
 
@@ -208,14 +224,22 @@
 
 		$('#acct-cfy-btn-closing-balance-voucher').click(function()
 		{
-			var rowData;
+			var rowData, rowId;
+
+			rowId = $('#acct-cfy-grid').jqGrid('getGridParam', 'selrow');
+
+			if(rowId == null)
+			{
+				$('#acct-cfy-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+				return;
+			}
 
 			if($(this).hasAttr('disabled'))
 			{
 				return;
 			}
 
-			rowData = $('#acct-cfy-grid').getRowData($('#acct-cfy-grid').jqGrid('getGridParam', 'selrow'));
+			rowData = $('#acct-cfy-grid').getRowData(rowId);
 			$('#acct-cfy3-fiscal-year-id').val(rowData['acct_cfy_id']);
 			$('.acct-cfy-btn-tooltip').tooltip('hide');
 
