@@ -596,7 +596,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function setCurrentUserOrganization(Organization $Organization)
 	{
-		$this->Cookie->queue($this->Cookie->forever($this->getCurrectOrganizationName(), $Organization));
+		$this->Cookie->queue($this->Cookie->forever($this->getCurrentOrganizationCookieName(), $Organization->id));
 	}
 
 	/**
@@ -606,7 +606,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function unsetCurrentUserOrganization()
 	{
-		$this->Cookie->queue($this->Cookie->forget($this->getCurrectOrganizationName()));
+		$this->Cookie->queue($this->Cookie->forget($this->getCurrentOrganizationCookieName()));
 	}
 
 	/**
@@ -618,7 +618,9 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function getCurrentUserOrganization($columnName)
 	{
-		$value = $this->Input->cookie($this->getCurrectOrganizationName(), '');
+		$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
+
+		$value = $this->Organization->byId($value);
 
 		if(is_object($value))
 		{
@@ -635,12 +637,12 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getCurrentUserOrganizationId()
 	{
-		$value = $this->Input->cookie($this->getCurrectOrganizationName(), '');
+		$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
 
-		if(is_object($value))
-		{
-			$value = $value->id;
-		}
+		// if(is_object($value))
+		// {
+		// 	$value = $value->id;
+		// }
 
 		return $value;
 	}
@@ -652,7 +654,9 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getCurrentUserOrganizationConnection()
 	{
-		$value = $this->Input->cookie($this->getCurrectOrganizationName(), 'hola');
+		$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), 'hola');
+
+		$value = $this->Organization->byId($value);
 
 		if(is_object($value))
 		{
@@ -670,7 +674,9 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getCurrentUserOrganizationCountry()
 	{
-		$value = $this->Input->cookie($this->getCurrectOrganizationName(), '');
+		$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
+
+		$value = $this->Organization->byId($value);
 
 		if(is_object($value))
 		{
@@ -687,7 +693,9 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getCurrentUserOrganizationCurrency()
 	{
-		$value = $this->Input->cookie($this->getCurrectOrganizationName(), '');
+		$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
+
+		$value = $this->Organization->byId($value);
 
 		if(is_object($value))
 		{
@@ -704,7 +712,9 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 		public function getCurrentUserOrganizationName()
 	{
-		$value = $this->Input->cookie($this->getCurrectOrganizationName(), '');
+		$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
+
+		$value = $this->Organization->byId($value);
 
 		if(is_object($value))
 		{
@@ -839,7 +849,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 *
 	 * @return string
 	 */
-	public function getCurrectOrganizationName()
+	public function getCurrentOrganizationCookieName()
 	{
 		return 'current_organization_'.md5(get_class($this));
 	}
