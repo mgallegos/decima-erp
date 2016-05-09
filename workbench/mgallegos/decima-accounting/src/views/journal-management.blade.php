@@ -1370,7 +1370,7 @@
 				{!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.delete'), array('id' => 'acct-jm-btn-journal-entries-delete', 'class' => 'btn btn-default acct-jm-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('decima-accounting::journal-management.delete'))) !!}
 			</div>
 			<div id="acct-jm-btn-journal-entries-group-3" class="btn-group btn-group-app-toolbar">
-				{!! Form::button('<i class="fa fa-save"></i> ' . Lang::get('toolbar.save'), array('id' => 'acct-jm-btn-journal-entries-save', 'class' => 'btn btn-default acct-jm-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('decima-accounting::journal-management.save'))) !!}
+				{!! Form::button('<i class="fa fa-save"></i> ' . Lang::get('toolbar.save'), array('id' => 'acct-jm-btn-journal-entries-save', 'class' => 'btn btn-default acct-jm-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('decima-accounting::journal-management.saveDetail'))) !!}
 			</div>
 		</div>
 		<div id='acct-jm-journal-entries-grid-section' class='app-grid collapse in' data-app-grid-id='acct-jm-journal-entries-grid'>

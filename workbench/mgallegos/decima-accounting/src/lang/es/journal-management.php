@@ -51,6 +51,8 @@ return array(
 
 	'save' => 'Guardar encabezado de la partida',
 
+	'saveDetail' => 'Guardar detalle de la partida',
+
 	'gridTitle' => 'Libro diario',
 
 	'date' => 'Fecha',
