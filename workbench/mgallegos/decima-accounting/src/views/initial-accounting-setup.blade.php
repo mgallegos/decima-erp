@@ -6,7 +6,7 @@ $(document).ready(function()
 {
 	$('#acct-ias-settings-form').jqMgVal('addFormFieldsValidations');
 
-	if(!$('#acct-ias-voucher-numeration-type-0').is(':checked') && !$('#acct-ias-voucher-numeration-type-0').is(':checked'))
+	if(!$('#acct-ias-voucher-numeration-type-0').is(':checked') && !$('#acct-ias-voucher-numeration-type-1').is(':checked'))
 	{
 		$('#acct-ias-voucher-numeration-type-0').attr('checked', 'checked');
 	}
@@ -65,6 +65,8 @@ $(document).ready(function()
 </script>
 {!! Form::hidden('acct-ias-setting-id', $currentSettingConfiguration['id'], array('id' => 'acct-ias-setting-id')) !!}
 {{-- var_dump($journals) --}}
+{{-- var_dump($currentSettingConfiguration) --}}
+{{-- var_dump($currentSettingConfiguration['voucher_numeration_type']=='V') --}}
 <div class="row">
 	<fieldset id="acct-ias-form-fieldset">
 		<div class="col-lg-6 col-md-6">
