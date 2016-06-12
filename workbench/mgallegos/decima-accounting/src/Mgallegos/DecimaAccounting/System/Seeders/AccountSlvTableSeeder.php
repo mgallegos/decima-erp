@@ -48,7 +48,8 @@ class AccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Cuentas por Cobrar Comerciales Locales', 'key' => '110201', 'parent_key' => '1102', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Cuentas por Cobrar Comerciales del Exterior', 'key' => '110202', 'parent_key' => '1102', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Préstamos a Funcionarios y Empleados', 'key' => '110203', 'parent_key' => '1102', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
-		Account::create(array('name' => 'Otras Cuentas por Cobrar', 'key' => '110204', 'parent_key' => '1102', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Intereses por cobrar a clientes', 'key' => '110204', 'parent_key' => '1102', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Otras Cuentas por Cobrar', 'key' => '110205', 'parent_key' => '1102', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'ESTIMACIÓN (DETERIORO) PARA CUENTAS INCOBRABLES', 'key' => '1103', 'parent_key' => '11', 'balance_type' => 'A', 'account_type_key' => 'A', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Estimación (Derioro) para Cuentas Incobrables', 'key' => '110301', 'parent_key' => '1103', 'balance_type' => 'A', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'CUENTAS POR COBRAR – PARTES RELACIONADAS', 'key' => '1104', 'parent_key' => '11', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 1, 'account_chart_type_id' => 2));
@@ -70,6 +71,7 @@ class AccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Seguros Pagados por Anticipado', 'key' => '110801', 'parent_key' => '1108', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Inventario de Papelería y Útiles', 'key' => '110802', 'parent_key' => '1108', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Alquileres Pagados por Anticipado', 'key' => '110803', 'parent_key' => '1108', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Publicidad pagada por anticipada', 'key' => '110804', 'parent_key' => '1108', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'PAGO A CUENTA', 'key' => '1109', 'parent_key' => '11', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Pago a Cuenta ISR', 'key' => '110901', 'parent_key' => '1109', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Retenciones de ISR', 'key' => '110902', 'parent_key' => '1109', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 2));
@@ -155,6 +157,8 @@ class AccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Indemnizaciones por Pagar', 'key' => '21020404', 'parent_key' => '210204', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Bonificaciones por Pagar', 'key' => '21020405', 'parent_key' => '210204', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Otras Prestaciones al Personal por Pagar', 'key' => '21020406', 'parent_key' => '210204', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'GASTOS ACUMULADOS', 'key' => '210205', 'parent_key' => '2102', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 1, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Gastos acumulados', 'key' => '21020501', 'parent_key' => '210205', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'ACREEDORES VARIOS', 'key' => '2103', 'parent_key' => '21', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Cuota Patronal ISSS / Salud', 'key' => '210301', 'parent_key' => '2103', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Cuota Patronal ISSS / Previsional', 'key' => '210302', 'parent_key' => '2103', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
@@ -165,6 +169,7 @@ class AccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Impuestos Municipales por Pagar', 'key' => '210307', 'parent_key' => '2103', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Pago a Cuenta ISR por Pagar', 'key' => '210308', 'parent_key' => '2103', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Servicio de Energía Eléctrica por Pagar', 'key' => '210309', 'parent_key' => '2103', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Varios', 'key' => '210310', 'parent_key' => '2103', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'RETENCIONES POR PAGAR', 'key' => '2104', 'parent_key' => '21', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Cotización ISSS / Salud', 'key' => '210401', 'parent_key' => '2104', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'COTIZACIÓN A FONDO DE PENSIONES', 'key' => '210402', 'parent_key' => '2104', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 1, 'account_chart_type_id' => 2));
@@ -186,6 +191,8 @@ class AccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'IVA Retenido a Terceros', 'key' => '210702', 'parent_key' => '2107', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'CUENTAS POR PAGAR – PARTES RELACIONADAS', 'key' => '2108', 'parent_key' => '21', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Dividendos por Pagar - Accionistas', 'key' => '210801', 'parent_key' => '2108', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'INGRESOS COBRADOS POR ANTICIPADOS', 'key' => '2109', 'parent_key' => '21', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 1, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Anticipo de clientes', 'key' => '210901', 'parent_key' => '2109', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'NO CORRIENTE', 'key' => '22', 'parent_key' => '2', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'PRÉSTAMOS POR PAGAR A LARGO PLAZO', 'key' => '2201', 'parent_key' => '22', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Préstamos Bancarios (Porción a Largo Plazo)', 'key' => '220101', 'parent_key' => '2201', 'balance_type' => 'A', 'account_type_key' => 'P', 'is_group' => 0, 'account_chart_type_id' => 2));
@@ -201,6 +208,7 @@ class AccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'CAPITAL Y RESERVAS', 'key' => '31', 'parent_key' => '3', 'balance_type' => 'A', 'account_type_key' => 'K', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'CAPITAL', 'key' => '3101', 'parent_key' => '31', 'balance_type' => 'A', 'account_type_key' => 'K', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Capital', 'key' => '310101', 'parent_key' => '3101', 'balance_type' => 'A', 'account_type_key' => 'K', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Capital Social', 'key' => '310102', 'parent_key' => '3101', 'balance_type' => 'A', 'account_type_key' => 'K', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'RESERVA LEGAL', 'key' => '3102', 'parent_key' => '31', 'balance_type' => 'A', 'account_type_key' => 'K', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Reserva Legal', 'key' => '310201', 'parent_key' => '3102', 'balance_type' => 'A', 'account_type_key' => 'K', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'UTILIDADES DE EJERCICIOS ANTERIORES', 'key' => '3103', 'parent_key' => '31', 'balance_type' => 'A', 'account_type_key' => 'K', 'is_group' => 1, 'account_chart_type_id' => 2));
@@ -230,7 +238,7 @@ class AccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Otras Prestaciones al Personal', 'key' => '410210', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Honorarios', 'key' => '410211', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Papelería y Útiles', 'key' => '410212', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
-		Account::create(array('name' => 'Teléfono y Correo', 'key' => '410213', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Telecomunicaciones', 'key' => '410213', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Servicio Eléctrico', 'key' => '410214', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Servicio de Agua', 'key' => '410215', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Impuestos Fiscales y Municipales', 'key' => '410216', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
@@ -249,6 +257,9 @@ class AccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Servicio de Vigilancia', 'key' => '410229', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Aseo y Limpieza', 'key' => '410230', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Artículos Promocionales', 'key' => '410231', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Atención a empleados', 'key' => '410232', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Ornato', 'key' => '410233', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Otros', 'key' => '410234', 'parent_key' => '4102', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'GASTOS DE ADMINISTRACIÓN', 'key' => '4103', 'parent_key' => '41', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Sueldos', 'key' => '410301', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Horas Extras', 'key' => '410302', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
@@ -261,7 +272,7 @@ class AccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Otras Prestaciones al Personal', 'key' => '410309', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Honorarios', 'key' => '410310', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Papelería y Útiles', 'key' => '410311', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
-		Account::create(array('name' => 'Teléfono y Correo', 'key' => '410312', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Telecomunicaciones', 'key' => '410312', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Servicio Eléctrico', 'key' => '410313', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Servicio de Agua', 'key' => '410314', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Impuestos Fiscales y Municipales', 'key' => '410315', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
@@ -278,9 +289,11 @@ class AccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Seguros', 'key' => '410326', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Depreciaciones', 'key' => '410327', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Servicio de Vigilancia', 'key' => '410328', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
-		Account::create(array('name' => 'Otros', 'key' => '410329', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Atención a empleados', 'key' => '410329', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Ornato', 'key' => '410230', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Otros', 'key' => '410331', 'parent_key' => '4103', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'COSTOS Y GASTOS DE NO OPERACIÓN', 'key' => '42', 'parent_key' => '4', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 1, 'account_chart_type_id' => 2));
-		Account::create(array('name' => 'COSTOS FINANCIEROS', 'key' => '4201', 'parent_key' => '42', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 1, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'COSTOS Y GASTOS DE NO OPERACIÓN', 'key' => '4201', 'parent_key' => '42', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Intereses', 'key' => '420101', 'parent_key' => '4201', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Comisiones', 'key' => '420102', 'parent_key' => '4201', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Honorarios', 'key' => '420103', 'parent_key' => '4201', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
@@ -300,14 +313,16 @@ class AccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Gastos por Operaciones en Discontinuación ', 'key' => '420701', 'parent_key' => '4207', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'OTROS GASTOS DE NO OPERACIÓN', 'key' => '4208', 'parent_key' => '42', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Otros Gastos de no Operación ', 'key' => '420801', 'parent_key' => '4208', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'GASTOS DE IMPUESTO SOBRE LA RENTA', 'key' => '43', 'parent_key' => '4', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 1, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Gastos de impuesto sobre la renta corriente', 'key' => '4301', 'parent_key' => '43', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'CUENTAS DE RESULTADO ACREEDORAS', 'key' => '5', 'parent_key' => '', 'balance_type' => 'A', 'account_type_key' => 'I', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'INGRESOS DE ACTIVIDADES ORDINARIAS', 'key' => '51', 'parent_key' => '5', 'balance_type' => 'A', 'account_type_key' => 'I', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'SERVICIOS', 'key' => '5101', 'parent_key' => '51', 'balance_type' => 'A', 'account_type_key' => 'I', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Ingresos por Prestación de Servicios', 'key' => '510101', 'parent_key' => '5101', 'balance_type' => 'A', 'account_type_key' => 'I', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Otros Ingresos por Servicio', 'key' => '510102', 'parent_key' => '5101', 'balance_type' => 'A', 'account_type_key' => 'I', 'is_group' => 0, 'account_chart_type_id' => 2));
-		Account::create(array('name' => 'VENTAS', 'key' => '5102', 'parent_key' => '51', 'balance_type' => 'A', 'account_type_key' => 'Y', 'is_group' => 1, 'account_chart_type_id' => 2));
-		Account::create(array('name' => 'Venta de Mercaderías', 'key' => '510201', 'parent_key' => '5102', 'balance_type' => 'A', 'account_type_key' => 'Y', 'is_group' => 0, 'account_chart_type_id' => 2));
-		Account::create(array('name' => 'Otros Insumos', 'key' => '510202', 'parent_key' => '5102', 'balance_type' => 'A', 'account_type_key' => 'Y', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'VENTAS', 'key' => '5102', 'parent_key' => '51', 'balance_type' => 'A', 'account_type_key' => 'I', 'is_group' => 1, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Venta de Mercaderías', 'key' => '510201', 'parent_key' => '5102', 'balance_type' => 'A', 'account_type_key' => 'I', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'Otros Insumos', 'key' => '510202', 'parent_key' => '5102', 'balance_type' => 'A', 'account_type_key' => 'I', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'INGRESOS DE ACTIVIDADES NO ORDINARIAS', 'key' => '52', 'parent_key' => '5', 'balance_type' => 'A', 'account_type_key' => 'Y', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'INGRESOS FINANCIEROS', 'key' => '5201', 'parent_key' => '52', 'balance_type' => 'A', 'account_type_key' => 'Y', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Intereses Bancarios', 'key' => '520101', 'parent_key' => '5201', 'balance_type' => 'A', 'account_type_key' => 'Y', 'is_group' => 0, 'account_chart_type_id' => 2));
@@ -321,6 +336,9 @@ class AccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Indemnizaciones por Siniestros', 'key' => '520501', 'parent_key' => '5205', 'balance_type' => 'A', 'account_type_key' => 'Y', 'is_group' => 0, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'OTROS INGRESOS DE NO OPERACIÓN', 'key' => '5206', 'parent_key' => '52', 'balance_type' => 'A', 'account_type_key' => 'Y', 'is_group' => 1, 'account_chart_type_id' => 2));
 		Account::create(array('name' => 'Otros Ingresos de no Operación', 'key' => '520601', 'parent_key' => '5206', 'balance_type' => 'A', 'account_type_key' => 'Y', 'is_group' => 0, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'CUENTAS DE CIERRE', 'key' => '6', 'parent_key' => '', 'balance_type' => 'A', 'account_type_key' => 'L', 'is_group' => 1, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'CUENTA LIQUIDADORA DE RESULTADOS', 'key' => '61', 'parent_key' => '6', 'balance_type' => 'A', 'account_type_key' => 'L', 'is_group' => 1, 'account_chart_type_id' => 2));
+		Account::create(array('name' => 'PÉRDIDAS Y GANANCIAS', 'key' => '6101', 'parent_key' => '61', 'balance_type' => 'A', 'account_type_key' => 'L', 'is_group' => 0, 'account_chart_type_id' => 2));
 	}
 
 }

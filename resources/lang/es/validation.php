@@ -117,7 +117,7 @@ return array(
      |
      */
 
-     'invalidBrowser' => 'Su navegador no es compatible con esta aplicación, los navegadores compatibles son: Google Chrome, Mozilla Firefox, Internet Explorer versión 10 o superior y Safari versión 7 o superior.',
+     'invalidBrowser' => 'Su navegador no es compatible con esta aplicación, los navegadores compatibles son: Google Chrome, Mozilla Firefox, Internet Explorer versión 11 o superior y Safari versión 9 o superior.',
 
      'pageNotFound' => 'La página solicitada no existe.'
 );

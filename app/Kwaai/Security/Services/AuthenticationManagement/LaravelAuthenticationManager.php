@@ -654,6 +654,8 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getCurrentUserOrganizationConnection()
 	{
+		return 'default';
+		
 		$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), 'hola');
 
 		$value = $this->Organization->byId($value);

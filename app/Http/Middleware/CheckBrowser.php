@@ -20,6 +20,8 @@ class CheckBrowser {
 	 */
 	public function handle($request, Closure $next)
 	{
+		return $next($request);
+		
 		if (!Agent::isSafari() && !Agent::isIE() && !Agent::isFirefox() && Agent::browser() != 'Chrome')
 		{
 			// Event::fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User tried to access the aplication usign an unsupported browser', 'context' => array('extra' => ''))));
@@ -27,7 +29,7 @@ class CheckBrowser {
 		}
 		else
 		{
-			if(Agent::isSafari() && intval(Agent::version(Agent::browser())) < 7 || Agent::isIE() && intval(Agent::version(Agent::browser())) < 10)
+			if(Agent::isSafari() && intval(Agent::version(Agent::browser())) < 9 || Agent::isIE() && intval(Agent::version(Agent::browser())) < 11)
 				{
 					// Event::fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User tried to access the aplication usign an unsupported browser', 'context' => array('extra' => ''))));
 					return Redirect::to(AppManager::getErrorPageUrl())->withError(Lang::get('validation.invalidBrowser'));

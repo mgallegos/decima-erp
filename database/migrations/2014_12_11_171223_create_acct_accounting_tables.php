@@ -47,8 +47,8 @@ class CreateAcctAccountingTables extends Migration {
 			$table->boolean('is_configured')->default(false);
 
 			//Foreign Keys
-			$table->unsignedInteger('account_chart_type_id')->nullable();
-			$table->unsignedInteger('organization_id');
+			$table->unsignedInteger('account_chart_type_id')->index()->nullable();
+			$table->unsignedInteger('organization_id')->index();
 
 			//Timestamps
 			$table->timestamps(); //Adds created_at and updated_at columns
@@ -58,13 +58,13 @@ class CreateAcctAccountingTables extends Migration {
 		Schema::create('ACCT_Fiscal_Year', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->smallInteger('year');
+			$table->smallInteger('year')->index();
 			$table->date('start_date');
 			$table->date('end_date');
 			$table->boolean('is_closed')->default(false);
 
 			//Foreign Keys
-			$table->unsignedInteger('organization_id');
+			$table->unsignedInteger('organization_id')->index();
 
 			//Timestamps
 			$table->timestamps(); //Adds created_at and updated_at columns
@@ -80,10 +80,10 @@ class CreateAcctAccountingTables extends Migration {
 			$table->boolean('is_closed')->default(false);
 
 			//Foreign Keys
-			$table->unsignedInteger('fiscal_year_id');
+			$table->unsignedInteger('fiscal_year_id')->index();
 			$table->foreign('fiscal_year_id')->references('id')->on('ACCT_Fiscal_Year');
 
-			$table->unsignedInteger('organization_id');
+			$table->unsignedInteger('organization_id')->index();
 
 			//Timestamps
 			$table->timestamps(); //Adds created_at and updated_at columns
@@ -97,12 +97,12 @@ class CreateAcctAccountingTables extends Migration {
 			$table->string('name');
 			$table->string('lang_key',100)->nullable();
 			$table->char('key', 1)->nullable();
-			$table->char('pl_bs_category', 1);//Pérdidas y Ganancias (Cuenta de ingresos) -- B, Pérdidas y Ganancias (Cuenta de gastos) -- C, Balance (Cuenta de activo)  -- D, Balance (Cuenta de pasivo) -- E
+			$table->char('pl_bs_category', 1)->index();//Pérdidas y Ganancias (Cuenta de ingresos) -- B, Pérdidas y Ganancias (Cuenta de gastos) -- C, Balance (Cuenta de activo)  -- D, Balance (Cuenta de pasivo) -- E
 
 			$table->char('deferral_method', 1);
 
 			//Foreign Keys
-			$table->unsignedInteger('organization_id');
+			$table->unsignedInteger('organization_id')->index();
 
 			//Timestamps
 			$table->timestamps(); //Adds created_at and updated_at columns
@@ -115,13 +115,13 @@ class CreateAcctAccountingTables extends Migration {
 			$table->string('key');
 			$table->string('name');
 			$table->char('balance_type', 1);//Deudor,Receivable:D and Acreedor,Payable: A
-			$table->boolean('is_group')->default(false);
+			$table->boolean('is_group')->index()->default(false);
 
 			//Foreign Keys
-			$table->unsignedInteger('account_type_id');
+			$table->unsignedInteger('account_type_id')->index();
 			$table->foreign('account_type_id')->references('id')->on('ACCT_Account_Type');
-			$table->unsignedInteger('parent_account_id')->nullable();
-			$table->unsignedInteger('organization_id');
+			$table->unsignedInteger('parent_account_id')->index()->nullable();
+			$table->unsignedInteger('organization_id')->index();
 
 			//Timestamps
 			$table->timestamps(); //Adds created_at and updated_at columns
@@ -140,11 +140,11 @@ class CreateAcctAccountingTables extends Migration {
 			$table->string('key');
 			$table->string('name');
 			//$table->char('type', 1);//Group (G) or Ledger (L)
-			$table->boolean('is_group')->default(false);
+			$table->boolean('is_group')->index()->default(false);
 
 			//Foreign Keys
-			$table->unsignedInteger('parent_cc_id')->nullable();
-			$table->unsignedInteger('organization_id');
+			$table->unsignedInteger('parent_cc_id')->index()->nullable();
+			$table->unsignedInteger('organization_id')->index();
 
 			//Timestamps
 			$table->timestamps(); //Adds created_at and updated_at columns
@@ -165,7 +165,7 @@ class CreateAcctAccountingTables extends Migration {
 			$table->char('key', 1)->nullable();//Opening Entry: O, Closing Entry: C
 
 			//Foreign Keys
-			$table->unsignedInteger('organization_id');
+			$table->unsignedInteger('organization_id')->index();
 
 			//Timestamps
 			$table->timestamps(); //Adds created_at and updated_at columns
@@ -175,28 +175,30 @@ class CreateAcctAccountingTables extends Migration {
 		Schema::create('ACCT_Journal_Voucher', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('number');
+			$table->integer('number')->index();
 			$table->dateTime('date');
 			$table->string('manual_reference')->nullable();
 			$table->text('remark');
-			$table->string('system_reference_type', 40)->nullable();
-			$table->string('system_reference_field', 40)->nullable();
-			$table->unsignedInteger('system_reference_id')->nullable();
+			$table->string('system_reference_type', 40)->index()->nullable();
+			$table->string('system_reference_field', 40)->index()->nullable();
+			$table->unsignedInteger('system_reference_id')->index()->nullable();
 			$table->boolean('is_editable')->default(false);
-			$table->char('status', 1);//A = No Cuadrada, B = Cuadrada
+			$table->char('status', 1)->index();//A = No Cuadrada, B = Cuadrada
 
 			//Foreign Keys
-			$table->unsignedInteger('voucher_type_id');
+			$table->unsignedInteger('voucher_type_id')->index();
 			$table->foreign('voucher_type_id')->references('id')->on('ACCT_Voucher_Type');
-			$table->unsignedInteger('period_id');
+			$table->unsignedInteger('period_id')->index();
 			$table->foreign('period_id')->references('id')->on('ACCT_Period');
 			$table->unsignedInteger('created_by');
 			//$table->foreign('created_by')->references('id')->on('ACCT_User');
-			$table->unsignedInteger('organization_id');
+			$table->unsignedInteger('organization_id')->index();
 
 			//Timestamps
 			$table->timestamps(); //Adds created_at and updated_at columns
 			$table->softDeletes(); //Adds deleted_at column for soft deletes
+
+			$table->index('deleted_at');
 		});
 
 		Schema::create('ACCT_Journal_Entry', function(Blueprint $table)
@@ -205,12 +207,12 @@ class CreateAcctAccountingTables extends Migration {
 			//$table->float('number');
 			$table->float('debit');
 			$table->float('credit');
-			$table->string('system_reference_type', 40)->nullable();
-			$table->string('system_reference_field', 40)->nullable();
-			$table->unsignedInteger('system_reference_id')->nullable();
+			$table->string('system_reference_type', 40)->index()->nullable();
+			$table->string('system_reference_field', 40)->index()->nullable();
+			$table->unsignedInteger('system_reference_id')->index()->nullable();
 
 			//Foreign Keys
-			$table->unsignedInteger('journal_voucher_id')->nullable();
+			$table->unsignedInteger('journal_voucher_id')->index()->nullable();
 			$table->foreign('journal_voucher_id')->references('id')->on('ACCT_Journal_Voucher');
 			$table->unsignedInteger('cost_center_id');
 			$table->foreign('cost_center_id')->references('id')->on('ACCT_Cost_Center');
@@ -221,6 +223,8 @@ class CreateAcctAccountingTables extends Migration {
 			//Timestamps
 			$table->timestamps(); //Adds created_at and updated_at columns
 			$table->softDeletes(); //Adds deleted_at column for soft deletes
+
+			$table->index('deleted_at');
 		});
 	}
 

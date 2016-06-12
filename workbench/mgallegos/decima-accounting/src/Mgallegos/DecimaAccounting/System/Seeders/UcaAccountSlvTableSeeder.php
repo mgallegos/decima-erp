@@ -18,7 +18,7 @@ class UcaAccountSlvTableSeeder extends Seeder {
 
 	public function run()
 	{
-		AccountChartType::create(array('name' => 'Contabilidad de Costos I', 'url' => 'https://docs.google.com/spreadsheets/d/1kiZhrpwA5oLGWftY20DnnnY-OEcYGYmjCQBo1VxVNJ0/edit?usp=sharing', 'lang_key' => 'decima-accounting::account-chart-type.ucaCostos', 'country_id' => 202));//2
+		// AccountChartType::create(array('name' => 'Contabilidad de Costos I', 'url' => 'https://docs.google.com/spreadsheets/d/1kiZhrpwA5oLGWftY20DnnnY-OEcYGYmjCQBo1VxVNJ0/edit?usp=sharing', 'lang_key' => 'decima-accounting::account-chart-type.ucaCostos', 'country_id' => 202));//2
 
 		Account::create(array('name' => 'Activo', 'key' => '1', 'parent_key' => '', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 1, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'Activo Corriente', 'key' => '1.1', 'parent_key' => '1', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 1, 'account_chart_type_id' => 4));
@@ -35,7 +35,7 @@ class UcaAccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Material Directo', 'key' => '1.1.3.2.1', 'parent_key' => '1.1.3.2', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'Mano de Obra Directa', 'key' => '1.1.3.2.2', 'parent_key' => '1.1.3.2', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'Costos Indirectos de Fabricación Estimados', 'key' => '1.1.3.2.3', 'parent_key' => '1.1.3.2', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 4));
-		Account::create(array('name' => 'Aplicación de Costos Indirectos de Fabricación (cr)', 'key' => '1.1.3.3', 'parent_key' => '1.1.3', 'balance_type' => 'A', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 4));
+		Account::create(array('name' => 'Aplicación de Costos Indirectos de Fabricación(cr)', 'key' => '1.1.3.3', 'parent_key' => '1.1.3', 'balance_type' => 'A', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'Artículos Terminados', 'key' => '1.1.3.4', 'parent_key' => '1.1.3', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'IVA Crédito Fiscal', 'key' => '1.1.4', 'parent_key' => '1.1', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 1, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'IVA Crédito Fiscal-Compras Locales', 'key' => '1.1.4.1', 'parent_key' => '1.1.4', 'balance_type' => 'D', 'account_type_key' => 'A', 'is_group' => 0, 'account_chart_type_id' => 4));
@@ -179,6 +179,14 @@ class UcaAccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Intereses y Comisiones Bancarias', 'key' => '5.3.1', 'parent_key' => '5.3', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 1, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'Intereses', 'key' => '5.3.1.1', 'parent_key' => '5.3.1', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'Comisiones Bancarias', 'key' => '5.3.1.2', 'parent_key' => '5.3.1', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 4));
+		Account::create(array('name' => 'Producción', 'key' => '5.4', 'parent_key' => '5', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 1, 'account_chart_type_id' => 4));
+		Account::create(array('name' => 'Materiales', 'key' => '5.4.1', 'parent_key' => '5.4', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 1, 'account_chart_type_id' => 4));
+		Account::create(array('name' => 'Desperdicio anormal', 'key' => '5.4.1.1', 'parent_key' => '5.4.1', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 4));
+		Account::create(array('name' => 'Unidades defectuosas anormales', 'key' => '5.4.1.2', 'parent_key' => '5.4.1', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 4));
+		Account::create(array('name' => 'Mano de obra', 'key' => '5.4.2', 'parent_key' => '5.4', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 1, 'account_chart_type_id' => 4));
+		Account::create(array('name' => 'Ocio anormal', 'key' => '5.4.2.1', 'parent_key' => '5.4.2', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 4));
+		Account::create(array('name' => 'Ineficiencia en tiempo extra', 'key' => '5.4.2.2', 'parent_key' => '5.4.2', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 4));
+		Account::create(array('name' => 'Negligencia en tiempo extra', 'key' => '5.4.2.3', 'parent_key' => '5.4.2', 'balance_type' => 'D', 'account_type_key' => 'G', 'is_group' => 0, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'Ingresos', 'key' => '6', 'parent_key' => '', 'balance_type' => 'A', 'account_type_key' => 'I', 'is_group' => 1, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'Ingresos Operacionales', 'key' => '6.1', 'parent_key' => '6', 'balance_type' => 'A', 'account_type_key' => 'I', 'is_group' => 1, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'Ventas al Contado', 'key' => '6.1.1', 'parent_key' => '6.1', 'balance_type' => 'A', 'account_type_key' => 'I', 'is_group' => 1, 'account_chart_type_id' => 4));
@@ -195,6 +203,8 @@ class UcaAccountSlvTableSeeder extends Seeder {
 		Account::create(array('name' => 'Cuenta Liquidadora de Resultados', 'key' => '7.1.1.1', 'parent_key' => '7.1.1', 'balance_type' => 'A', 'account_type_key' => 'L', 'is_group' => 0, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'Subaplicación de Costos Indirectos de Fabricación', 'key' => '7.1.1.2', 'parent_key' => '7.1.1', 'balance_type' => 'A', 'account_type_key' => 'L', 'is_group' => 0, 'account_chart_type_id' => 4));
 		Account::create(array('name' => 'Sobreaplicación de Costos Indirectos de Fabricación', 'key' => '7.1.1.3', 'parent_key' => '7.1.1', 'balance_type' => 'A', 'account_type_key' => 'L', 'is_group' => 0, 'account_chart_type_id' => 4));
+
+
 	}
 
 }

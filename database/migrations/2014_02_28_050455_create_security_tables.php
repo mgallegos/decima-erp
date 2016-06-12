@@ -24,9 +24,9 @@ class CreateSecurityTables extends Migration {
 			$table->increments('id');
 			$table->string('firstname',60);
 			$table->string('lastname',60);
-			$table->string('email');
+			$table->string('email')->index();
 			$table->string('password');
-			$table->boolean('is_active');
+			$table->boolean('is_active')->index();
 			$table->boolean('is_admin');
 			$table->string('timezone', 60)->nullable();
 			$table->string('activation_code')->nullable();
@@ -69,7 +69,7 @@ class CreateSecurityTables extends Migration {
 			$table->string('description')->nullable();
 
 			//Foreign Keys
-			$table->unsignedInteger('organization_id')->nullable();
+			$table->unsignedInteger('organization_id')->index()->nullable();
 			$table->foreign('organization_id')->references('id')->on('ORG_Organization');
 			$table->unsignedInteger('created_by');
 			$table->foreign('created_by')->references('id')->on('SEC_User');
@@ -153,9 +153,9 @@ class CreateSecurityTables extends Migration {
 			$table->increments('id');
 
 			//Foreign Keys
-			$table->unsignedInteger('user_id');
+			$table->unsignedInteger('user_id')->index();
 			$table->foreign('user_id')->references('id')->on('SEC_User');
-			$table->unsignedInteger('role_id');
+			$table->unsignedInteger('role_id')->index();
 			$table->foreign('role_id')->references('id')->on('SEC_Role');
 			$table->unsignedInteger('created_by');
 			$table->foreign('created_by')->references('id')->on('SEC_User');
@@ -168,14 +168,14 @@ class CreateSecurityTables extends Migration {
 		Schema::create('SEC_User_Menu', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->boolean('is_assigned');
+			$table->boolean('is_assigned')->index();
 
 			//Foreign Keys
-			$table->unsignedInteger('user_id');
+			$table->unsignedInteger('user_id')->index();
 			$table->foreign('user_id')->references('id')->on('SEC_User');
-			$table->unsignedInteger('menu_id');
+			$table->unsignedInteger('menu_id')->index();
 			$table->foreign('menu_id')->references('id')->on('SEC_Menu');
-			$table->unsignedInteger('organization_id');
+			$table->unsignedInteger('organization_id')->index();
 			$table->foreign('organization_id')->references('id')->on('ORG_Organization');
 			$table->unsignedInteger('created_by');
 			$table->foreign('created_by')->references('id')->on('SEC_User');
@@ -188,14 +188,14 @@ class CreateSecurityTables extends Migration {
 		Schema::create('SEC_User_Permission', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->boolean('is_assigned');
+			$table->boolean('is_assigned')->index();
 
 			//Foreign Keys
-			$table->unsignedInteger('user_id');
+			$table->unsignedInteger('user_id')->index();
 			$table->foreign('user_id')->references('id')->on('SEC_User');
-			$table->unsignedInteger('permission_id');
+			$table->unsignedInteger('permission_id')->index();
 			$table->foreign('permission_id')->references('id')->on('SEC_Permission');
-			$table->unsignedInteger('organization_id');
+			$table->unsignedInteger('organization_id')->index();
 			$table->foreign('organization_id')->references('id')->on('ORG_Organization');
 			$table->unsignedInteger('created_by');
 			$table->foreign('created_by')->references('id')->on('SEC_User');
@@ -210,9 +210,9 @@ class CreateSecurityTables extends Migration {
 			$table->increments('id');
 
 			//Foreign Keys
-			$table->unsignedInteger('user_id');
+			$table->unsignedInteger('user_id')->index();
 			$table->foreign('user_id')->references('id')->on('SEC_User');
-			$table->unsignedInteger('organization_id');
+			$table->unsignedInteger('organization_id')->index();
 			$table->foreign('organization_id')->references('id')->on('ORG_Organization');
 			$table->unsignedInteger('created_by');
 			$table->foreign('created_by')->references('id')->on('SEC_User');
@@ -227,9 +227,9 @@ class CreateSecurityTables extends Migration {
 			$table->increments('id');
 
 			//Foreign Keys
-			$table->unsignedInteger('role_id');
+			$table->unsignedInteger('role_id')->index();
 			$table->foreign('role_id')->references('id')->on('SEC_Role');
-			$table->unsignedInteger('menu_id');
+			$table->unsignedInteger('menu_id')->index();
 			$table->foreign('menu_id')->references('id')->on('SEC_Menu');
 			$table->unsignedInteger('created_by');
 			$table->foreign('created_by')->references('id')->on('SEC_User');
@@ -244,9 +244,9 @@ class CreateSecurityTables extends Migration {
 			$table->increments('id');
 
 			//Foreign Keys
-			$table->unsignedInteger('role_id');
+			$table->unsignedInteger('role_id')->index();
 			$table->foreign('role_id')->references('id')->on('SEC_Role');
-			$table->unsignedInteger('permission_id');
+			$table->unsignedInteger('permission_id')->index();
 			$table->foreign('permission_id')->references('id')->on('SEC_Permission');
 			$table->unsignedInteger('created_by');
 			$table->foreign('created_by')->references('id')->on('SEC_User');
