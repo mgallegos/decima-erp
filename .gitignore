@@ -5,6 +5,7 @@
 /database/migrations/2015_01_13_150548_create_ctic_tables.php
 /database/migrations/2015_08_20_021856_create_migra_migracion_tables.php
 /database/migrations/2016_05_05_024924_create_emif_devueltos_table.php
+/database/migrations/2016_06_23_043514_create_observatorio_tables
 /app/Kwaai/Seeders
 /storage/*csv
 /node_modules

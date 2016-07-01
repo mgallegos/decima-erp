@@ -512,7 +512,7 @@
 	{
 		this.find('input[type=text],input[type=password],input[type=hidden],input[type=file],textarea').each(function()
 		{
-			if($(this).attr('name') != '_token' && $(this).attr('name') != 'fc-kwaai-time' )
+			if($(this).attr('name') != '_token' && $(this).attr('name') != 'fc-kwaai-time' && $(this).attr('data-mg-clear-ignored') == undefined)
 			{
 				$(this).val('');
 			}
