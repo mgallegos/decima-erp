@@ -108,7 +108,8 @@ return [
     |
     */
 
-    'log' => env('LOG_HANDLER', 'daily'),
+    // 'log' => env('LOG_HANDLER', 'daily'),
+    'log' => env('APP_LOG', 'daily'),
 
     /*
     |--------------------------------------------------------------------------
