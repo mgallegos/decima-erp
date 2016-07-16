@@ -32,7 +32,8 @@ class EloquentAccountGridRepository extends EloquentRepositoryAbstract {
 		// $this->DB = $DB;
 		// $this->DB->connection()->enableQueryLog();
 
-		$this->Database = $DB->table('ACCT_Account AS a')
+		$this->Database = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Account AS a')
 								->leftJoin('ACCT_Account AS ap', 'ap.id', '=', 'a.parent_account_id')
 								->join('ACCT_Account_Type AS at', 'at.id', '=', 'a.account_type_id')
 								->where('a.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())

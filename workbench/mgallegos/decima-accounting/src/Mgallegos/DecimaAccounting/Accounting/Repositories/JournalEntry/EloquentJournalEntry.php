@@ -144,20 +144,21 @@ class EloquentJournalEntry implements JournalEntryInterface {
     //                   )
     //                   )->get();
 
-    return $this->DB->table('ACCT_Journal_Entry AS je')
-        				->join('ACCT_Journal_Voucher AS jv', 'jv.id', '=', 'je.journal_voucher_id')
-                ->join('ACCT_Account AS c', 'c.id', '=', 'je.account_id')
-                ->join('ACCT_Period AS p', 'p.id', '=', 'jv.period_id')
-                ->join('ACCT_Account_Type AS at', 'at.id', '=', 'c.account_type_id')
-        				->where('jv.organization_id', '=', $organizationId)
-                ->where('p.fiscal_year_id', '=', $fiscalYearId)
-                ->where('jv.status', '=', 'B')
-                ->whereIn('at.pl_bs_category', $plBsCategory)
-                ->whereNull('je.deleted_at')
-                ->whereNull('jv.deleted_at')
-                ->groupBy('je.cost_center_id', 'je.account_id', 'c.balance_type')
-                ->select(array($this->DB->raw('SUM(je.debit) as debit'), $this->DB->raw('SUM(je.credit) as credit'), 'je.cost_center_id', 'je.account_id', 'c.balance_type'))
-                ->get();
+    return $this->DB->connection($this->databaseConnectionName)
+            ->table('ACCT_Journal_Entry AS je')
+        		->join('ACCT_Journal_Voucher AS jv', 'jv.id', '=', 'je.journal_voucher_id')
+            ->join('ACCT_Account AS c', 'c.id', '=', 'je.account_id')
+            ->join('ACCT_Period AS p', 'p.id', '=', 'jv.period_id')
+            ->join('ACCT_Account_Type AS at', 'at.id', '=', 'c.account_type_id')
+        		->where('jv.organization_id', '=', $organizationId)
+            ->where('p.fiscal_year_id', '=', $fiscalYearId)
+            ->where('jv.status', '=', 'B')
+            ->whereIn('at.pl_bs_category', $plBsCategory)
+            ->whereNull('je.deleted_at')
+            ->whereNull('jv.deleted_at')
+            ->groupBy('je.cost_center_id', 'je.account_id', 'c.balance_type')
+            ->select(array($this->DB->raw('SUM(je.debit) as debit'), $this->DB->raw('SUM(je.credit) as credit'), 'je.cost_center_id', 'je.account_id', 'c.balance_type'))
+            ->get();
 
     // var_dump($this->DB->getQueryLog(), $Entries);die();
   }
@@ -204,7 +205,7 @@ class EloquentJournalEntry implements JournalEntryInterface {
    */
   public function massCreate(array $data)
   {
-    $this->DB->table('ACCT_Journal_Entry')->insert($data);
+    $this->DB->connection($this->databaseConnectionName)->table('ACCT_Journal_Entry')->insert($data);
   }
 
   /**

@@ -181,7 +181,7 @@ class EloquentJournalVoucher implements JournalVoucherInterface {
    */
   public function delete(array $ids)
   {
-    $this->JournalVoucher->destroy($ids);
+    // $this->JournalVoucher->destroy($ids);
 
     return true;
   }

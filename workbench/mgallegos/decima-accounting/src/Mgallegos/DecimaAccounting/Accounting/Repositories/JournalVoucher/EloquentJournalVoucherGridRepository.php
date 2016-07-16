@@ -39,7 +39,8 @@ class EloquentJournalVoucherGridRepository extends EloquentRepositoryAbstract {
 		// $this->DB->connection()->enableQueryLog();
 
 
-		$this->Database = $DB->table('ACCT_Journal_Voucher AS jv')
+		$this->Database = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Journal_Voucher AS jv')
 								->leftJoin('ACCT_Journal_Entry AS je', 'je.journal_voucher_id', '=', 'jv.id')
 								->join('ACCT_Voucher_Type AS vt', 'vt.id', '=', 'jv.voucher_type_id')
 								->join('ACCT_Period AS p', 'p.id', '=', 'jv.period_id')

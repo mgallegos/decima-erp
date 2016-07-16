@@ -25,9 +25,12 @@ class EloquentTrialBalanceGridRepository extends EloquentRepositoryAbstract {
 	{
 		$this->DB = $DB;
 
+		$this->AuthenticationManager = $AuthenticationManager;
+
 		$this->Carbon = $Carbon;
 
-		$this->Database = $DB->table('ACCT_Journal_Entry AS je')
+		$this->Database = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Journal_Entry AS je')
 								->join('ACCT_Journal_Voucher AS jv', 'jv.id', '=', 'je.journal_voucher_id')
 								->join('ACCT_Account AS c', 'je.account_id', '=', 'c.id')
 								->where('jv.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
@@ -40,7 +43,8 @@ class EloquentTrialBalanceGridRepository extends EloquentRepositoryAbstract {
 												)
 								);
 
-		$this->Database2 = $DB->table('ACCT_Account AS c')
+		$this->Database2 = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Account AS c')
 								->where('c.is_group', '=', 1)
 								->where('c.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
 								->select(array($DB->raw('0 AS acct_tb_debit'), $DB->raw('0 AS acct_tb_credit'),
@@ -50,7 +54,8 @@ class EloquentTrialBalanceGridRepository extends EloquentRepositoryAbstract {
 												)
 								);
 
-		$this->Database3 = $DB->table('ACCT_Journal_Entry AS je')
+		$this->Database3 = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Journal_Entry AS je')
 								->join('ACCT_Journal_Voucher AS jv', 'jv.id', '=', 'je.journal_voucher_id')
 								->join('ACCT_Account AS c', 'je.account_id', '=', 'c.id')
 								->where('jv.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
@@ -238,7 +243,8 @@ class EloquentTrialBalanceGridRepository extends EloquentRepositoryAbstract {
 		$groupBy = "acct_tb_opening_balance, acct_tb_closing_balance, acct_tb_account_id, acct_tb_parent_account_id, acct_tb_account_key, acct_tb_account_name, acct_tb_is_group, acct_tb_balance_type";
 		$select = "SUM(acct_tb_debit) AS acct_tb_debit, SUM(acct_tb_credit) AS acct_tb_credit, SUM(acct_tb_total_debit) AS acct_tb_total_debit, SUM(acct_tb_total_credit) AS acct_tb_total_credit, $groupBy";
 
-		$rows = $this->DB->select("SELECT $select FROM ($querySql) AS A GROUP BY $groupBy ORDER BY $orderByRaw", $query->getBindings());
+		$rows = $this->DB->connection($this->AuthenticationManager->getCurrentUserOrganizationConnection())
+								->select("SELECT $select FROM ($querySql) AS A GROUP BY $groupBy ORDER BY $orderByRaw", $query->getBindings());
 
 		if(!is_array($rows))
 		{

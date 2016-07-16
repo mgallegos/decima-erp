@@ -1,6 +1,6 @@
 <?php namespace App\Providers;
 
-use Illuminate\Html\HtmlServiceProvider;
+// use Illuminate\Html\HtmlServiceProvider;
 
 class MacroServiceProvider extends HtmlServiceProvider
 {

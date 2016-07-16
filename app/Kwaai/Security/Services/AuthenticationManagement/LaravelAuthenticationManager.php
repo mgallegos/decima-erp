@@ -15,7 +15,7 @@ use Illuminate\Validation\Factory;
 
 use Illuminate\Contracts\Hashing\Hasher;
 
-use Illuminate\Auth\Passwords\PasswordBroker;
+use Illuminate\Auth\Passwords\PasswordBrokerManager;
 
 use Illuminate\Config\Repository;
 
@@ -136,7 +136,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	/**
 	 * Laravel Password instance
 	 *
-	 * @var Illuminate\Auth\Reminders\PasswordBroker
+	 * @var Illuminate\Auth\Passwords\PasswordBroker
 	 *
 	 */
 	protected $Password;
@@ -180,7 +180,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	protected $Cas;
 
-	public function __construct(OrganizationInterface $Organization, UserInterface $User, AuthManager $Auth, TranslatorInterface $Lang, UrlGenerator $Url, Dispatcher $Event, Redirector $Redirector, CookieJar $Cookie, Request $Input, Repository $Config, PasswordBroker $Password, Hasher $Hash, SessionManager $Session, Factory $Validator, CasManager $Cas)
+	public function __construct(OrganizationInterface $Organization, UserInterface $User, AuthManager $Auth, TranslatorInterface $Lang, UrlGenerator $Url, Dispatcher $Event, Redirector $Redirector, CookieJar $Cookie, Request $Input, Repository $Config, PasswordBrokerManager $Password, Hasher $Hash, SessionManager $Session, Factory $Validator, CasManager $Cas)
 	{
 		$this->Organization = $Organization;
 
@@ -654,9 +654,12 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getCurrentUserOrganizationConnection()
 	{
-		return 'default';
-		
 		$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), 'hola');
+
+		if(!is_int($value))
+		{
+			return 'default';
+		}
 
 		$value = $this->Organization->byId($value);
 
@@ -665,8 +668,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			$value = $value->database_connection_name;
 		}
 
-		//return $value;
-		return 'default';
+		return $value;
 	}
 
 	/**
@@ -748,6 +750,8 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function getLoggedUserFirstname()
 	{
+		// var_dump($value);
+
 		if ($this->isUserGuest())
 		{
 			return '';

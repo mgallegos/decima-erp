@@ -162,7 +162,12 @@ class EloquentCostCenter implements CostCenterInterface {
    */
   public function delete(array $data)
   {
-    $this->CostCenter->destroy($data);
+    foreach ($data as $key => $id)
+    {
+      $CostCenter = $this->byId($id);
+      $CostCenter->delete();
+    }
+    // $this->CostCenter->destroy($data);
 
     return true;
   }

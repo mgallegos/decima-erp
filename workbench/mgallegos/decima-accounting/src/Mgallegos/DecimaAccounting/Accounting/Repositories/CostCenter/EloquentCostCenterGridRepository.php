@@ -32,7 +32,8 @@ class EloquentCostCenterGridRepository extends EloquentRepositoryAbstract {
 		// $this->DB = $DB;
 		// $this->DB->connection()->enableQueryLog();
 
-		$this->Database = $DB->table('ACCT_Cost_Center AS c')
+		$this->Database = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Cost_Center AS c')
 								->leftJoin('ACCT_Cost_Center AS cp', 'cp.id', '=', 'c.parent_cc_id')
 								->where('c.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
 								->whereNull('c.deleted_at');

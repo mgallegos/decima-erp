@@ -29,9 +29,12 @@ class EloquentGeneralLedgerGridRepository extends EloquentRepositoryAbstract {
 
 		$this->AccountManager = $AccountManager;
 
+		$this->AuthenticationManager = $AuthenticationManager;
+
 		$this->Carbon = $Carbon;
 
-		$this->Database = $DB->table('ACCT_Journal_Entry AS je')
+		$this->Database = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Journal_Entry AS je')
 								->join('ACCT_Journal_Voucher AS jv', 'jv.id', '=', 'je.journal_voucher_id')
 								->join('ACCT_Account AS c', 'je.account_id', '=', 'c.id')
 								->where('jv.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
@@ -45,7 +48,8 @@ class EloquentGeneralLedgerGridRepository extends EloquentRepositoryAbstract {
 												)
 								);
 
-		$this->Database2 = $DB->table('ACCT_Account AS c')
+		$this->Database2 = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Account AS c')
 								->where('c.is_group', '=', 1)
 								->where('c.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
 								->select(array($DB->raw('0 AS acct_gl_debit'), $DB->raw('0 AS acct_gl_credit'),
@@ -55,7 +59,8 @@ class EloquentGeneralLedgerGridRepository extends EloquentRepositoryAbstract {
 												)
 								);
 
-		$this->Database3 = $DB->table('ACCT_Journal_Entry AS je')
+		$this->Database3 = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Journal_Entry AS je')
 								->join('ACCT_Journal_Voucher AS jv', 'jv.id', '=', 'je.journal_voucher_id')
 								->join('ACCT_Account AS c', 'je.account_id', '=', 'c.id')
 								->where('jv.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
@@ -69,7 +74,8 @@ class EloquentGeneralLedgerGridRepository extends EloquentRepositoryAbstract {
 												)
 								);
 
-		$this->Database4 = $DB->table('ACCT_Journal_Entry AS je')
+		$this->Database4 = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Journal_Entry AS je')
 								->join('ACCT_Journal_Voucher AS jv', 'jv.id', '=', 'je.journal_voucher_id')
 								->join('ACCT_Voucher_Type AS vt', 'vt.id', '=', 'jv.voucher_type_id')
 								->join('ACCT_Account AS c', 'je.account_id', '=', 'c.id')
@@ -284,7 +290,8 @@ class EloquentGeneralLedgerGridRepository extends EloquentRepositoryAbstract {
 
 		// var_dump("SELECT $select FROM ($querySql) AS A GROUP BY $groupBy ORDER BY $orderByRaw");
 
-		$rows = $this->DB->select("SELECT $select FROM ($querySql) AS A GROUP BY $groupBy ORDER BY $orderByRaw", $query->getBindings());
+		$rows = $this->DB->connection($this->AuthenticationManager->getCurrentUserOrganizationConnection())
+								->select("SELECT $select FROM ($querySql) AS A GROUP BY $groupBy ORDER BY $orderByRaw", $query->getBindings());
 
 		if(!is_array($rows))
 		{

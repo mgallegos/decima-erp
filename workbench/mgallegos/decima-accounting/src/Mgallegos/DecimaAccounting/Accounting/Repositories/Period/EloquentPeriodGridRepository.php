@@ -24,7 +24,8 @@ class EloquentPeriodGridRepository extends EloquentRepositoryAbstract {
 		// $this->DB = $DB;
 		// $this->DB->connection()->enableQueryLog();
 
-		$this->Database = $DB->table('ACCT_Period AS p')
+		$this->Database = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Period AS p')
 								->join('ACCT_Fiscal_Year AS f', 'f.id', '=', 'p.fiscal_year_id')
 								->where('p.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
 								->whereNull('p.deleted_at');

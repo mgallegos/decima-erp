@@ -23,6 +23,8 @@ class EloquentProfitAndLossGridRepository extends EloquentRepositoryAbstract {
 	{
 		$this->DB = $DB;
 
+		$this->AuthenticationManager = $AuthenticationManager;
+
 		/*
 		$this->Database = $DB->table('ACCT_Journal_Entry AS je')
 								->join('ACCT_Journal_Voucher AS jv', 'jv.id', '=', 'je.journal_voucher_id')
@@ -40,7 +42,8 @@ class EloquentProfitAndLossGridRepository extends EloquentRepositoryAbstract {
 								->whereNull('jv.deleted_at');
 		*/
 
-		$this->Database = $DB->table('ACCT_Journal_Entry AS je')
+		$this->Database = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Journal_Entry AS je')
 								->join('ACCT_Journal_Voucher AS jv', 'jv.id', '=', 'je.journal_voucher_id')
 								->rightJoin('ACCT_Account AS c', 'je.account_id', '=', 'c.id')
 								->join('ACCT_Account_Type AS at', 'at.id', '=', 'c.account_type_id')
@@ -51,7 +54,8 @@ class EloquentProfitAndLossGridRepository extends EloquentRepositoryAbstract {
 								->whereNull('je.deleted_at')
 								->whereNull('jv.deleted_at');
 
-	$this->Database2 = $DB->table('ACCT_Account AS c')
+	$this->Database2 = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+							->table('ACCT_Account AS c')
 							->join('ACCT_Account_Type AS at', 'at.id', '=', 'c.account_type_id')
 							->where('c.is_group', '=', 1)
 							->where('c.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
@@ -197,7 +201,8 @@ class EloquentProfitAndLossGridRepository extends EloquentRepositoryAbstract {
 
 		$querySql = $query->toSql();
 
-		$rows = $this->DB->select($querySql . ' ORDER BY ' . $orderByRaw, $query->getBindings());
+		$rows = $this->DB->connection($this->AuthenticationManager->getCurrentUserOrganizationConnection())
+								->select($querySql . ' ORDER BY ' . $orderByRaw, $query->getBindings());
 
 		if(!is_array($rows))
 		{

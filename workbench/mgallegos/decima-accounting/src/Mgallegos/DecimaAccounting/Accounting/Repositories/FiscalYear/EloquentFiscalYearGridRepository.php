@@ -24,7 +24,8 @@ class EloquentFiscalYearGridRepository extends EloquentRepositoryAbstract {
 		// $this->DB = $DB;
 		// $this->DB->connection()->enableQueryLog();
 
-		$this->Database = $DB->table('ACCT_Fiscal_Year AS f')
+		$this->Database = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('ACCT_Fiscal_Year AS f')
 								->where('f.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
 								->whereNull('f.deleted_at');
 

@@ -5,7 +5,8 @@
 /database/migrations/2015_01_13_150548_create_ctic_tables.php
 /database/migrations/2015_08_20_021856_create_migra_migracion_tables.php
 /database/migrations/2016_05_05_024924_create_emif_devueltos_table.php
-/database/migrations/2016_06_23_043514_create_observatorio_tables
+/database/migrations/2016_06_23_043514_create_observatorio_tables.php
+/database/migrations/2016_07_14_183436_create_generalidad_tables.php
 /app/Kwaai/Seeders
 /storage/*csv
 /node_modules
@@ -18,7 +19,7 @@ public/assets/.DS_Store
 workbench/.DS_Store
 workbench/mgallegos/.DS_Store
 .env
-.env.gae
+.env.gae*
 .env.local
 .env.test*
 test.php

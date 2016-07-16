@@ -66,6 +66,20 @@ return [
             'schema'   => env('DB_SCHEMA'),
         ],
 
+        'test' => [
+            'driver'    => env('DB_DRIVER', 'mysql'),
+            'unix_socket' => env('DB_SOCKET'),
+            'host'      => env('DB_HOST', 'localhost'),
+      			'database'  => env('DB_DATABASE_TEST', 'decimatest'),
+      			'username'  => env('DB_USERNAME', 'decima'),
+      			'password'  => env('DB_PASSWORD', 'decima'),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'strict'    => false,
+            'schema'   => env('DB_SCHEMA'),
+        ],
+
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),

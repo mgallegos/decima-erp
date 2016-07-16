@@ -166,8 +166,13 @@ class EloquentAccount implements AccountInterface {
    */
   public function delete(array $data)
   {
-    $this->Account->destroy($data);
-
+    foreach ($data as $key => $id)
+    {
+      $Account = $this->byId($id);
+      $Account->delete();
+    }
+    // $this->Account->destroy($data);
+    
     return true;
   }
 

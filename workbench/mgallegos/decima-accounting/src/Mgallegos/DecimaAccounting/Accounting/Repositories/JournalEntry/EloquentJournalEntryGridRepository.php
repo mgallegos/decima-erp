@@ -20,7 +20,8 @@ class EloquentJournalEntryGridRepository extends EloquentRepositoryAbstract {
 	public function __construct(DatabaseManager $DB, AuthenticationManagementInterface $AuthenticationManager)
 	{
 
-		$this->Database = $DB->table('ACCT_Journal_Entry AS je')
+		$this->Database = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+					->table('ACCT_Journal_Entry AS je')
 					->join('ACCT_Cost_Center AS cc', 'cc.id', '=', 'je.cost_center_id')
 					->join('ACCT_Account AS c', 'c.id', '=', 'je.account_id')
 					->where('c.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
