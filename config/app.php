@@ -176,9 +176,6 @@ return [
         App\Providers\SentryServiceProvider::class,
         Xavrsl\Cas\CasServiceProvider::class,//CAS
     		Mgallegos\DecimaAccounting\DecimaAccountingServiceProvider::class,
-    		env('CTIC_APP', false)?Mgallegos\M28gCtic\M28gCticServiceProvider::class:Mgallegos\DecimaAccounting\DecimaAccountingServiceProvider::class,
-    		env('PSIC_APP', false)?Mgallegos\Psicologia\PsicologiaServiceProvider::class:Mgallegos\DecimaAccounting\DecimaAccountingServiceProvider::class,
-    		env('PSIC_APP', false)?Mgallegos\DecimaCms\DecimaCmsServiceProvider::class:Mgallegos\DecimaAccounting\DecimaAccountingServiceProvider::class,
     		App\Kwaai\Organization\Services\ServicesServiceProvider::class,
     ],
 
