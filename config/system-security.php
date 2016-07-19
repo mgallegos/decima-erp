@@ -25,7 +25,7 @@ return array(
 	|
 	*/
 
-	'system_icon' => 'fa fa-hand-paper-o',
+	'system_icon' => 'fa fa-area-chart',
 
 	/*
 	|--------------------------------------------------------------------------

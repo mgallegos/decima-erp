@@ -73,6 +73,7 @@ string 'jjanaya' (length=7)
 // $h = array('hello' => array('value' => 'hola'));
 // var_dump(isset($h['hello']['value']));
 
+// var_dump('Hola decima');
 
 /*
 |--------------------------------------------------------------------------

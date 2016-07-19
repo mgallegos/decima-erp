@@ -16,6 +16,7 @@ Homestead.json
 .DS_Store
 public/.DS_Store
 public/assets/.DS_Store
+public/assets/mgallegos/decima-web
 workbench/.DS_Store
 workbench/mgallegos/.DS_Store
 .env
