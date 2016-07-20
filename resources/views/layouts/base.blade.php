@@ -102,7 +102,7 @@
 	  <div class="alert alert-warning hidden-lg hidden-md">
 		 {!! Lang::get('base.resolutionException') !!}
 	   </div>
-	   <a id="back-to-top" href="#" class="btn btn-info" role="button"><i class="fa fa-chevron-circle-up fa-2x"></i></a>
+	   <a id="back-to-top" class="btn btn-info" role="button"><i class="fa fa-chevron-circle-up fa-2x"></i></a>
 	</div>
 </body>
 </html>

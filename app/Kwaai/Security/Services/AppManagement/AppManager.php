@@ -172,7 +172,7 @@ class AppManager implements AppManagementInterface {
 			return array('id' => 'user-preferences', 'url' => $url, 'name' => $this->Lang->get('user-preferences.appName'), 'breadcrumb' => array($this->getSystemName(), $this->Lang->get('user-preferences.appName')));
 		}
 
-		if($this->Url->to('/') == $this->Url->current())
+		if($this->Url->to('/dashboard') == $this->Url->current())
 		{
 			return array('id' => 'dashboard', 'url' => '/', 'name' => $this->Lang->get('dashboard.appName'), 'breadcrumb' => array($this->getSystemName(), $this->Lang->get('dashboard.appName')));
 		}

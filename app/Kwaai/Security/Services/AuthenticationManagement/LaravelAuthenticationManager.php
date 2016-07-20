@@ -261,7 +261,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		{
 			if(strpos($intendedUrl, "logout") !== false)
 			{
-				$intendedUrl = $this->Url->to('/');
+				$intendedUrl = $this->Url->to('/dashboard');
 			}
 
 			$userDefaultOrganizationId = $this->getLoggedUserDefaultOrganization();

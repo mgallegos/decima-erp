@@ -643,7 +643,7 @@ $(document).ready(function()
 
 	$('#dashboard-top-bar-menu').click(function()
 	{
-		loadPage('/');
+		loadPage('/dashboard');
 		$('#user-apps-content').hideModulesApps();
 	});
 

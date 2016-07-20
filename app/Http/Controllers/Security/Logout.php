@@ -27,7 +27,7 @@ class Logout extends Controller {
 	{
 		$this->Auth = $Auth;
 
-		$this->beforeFilter('csrf', array('on' => 'post'));
+		// $this->beforeFilter('csrf', array('on' => 'post'));
 	}
 
 	public function getLogoutAttempt()

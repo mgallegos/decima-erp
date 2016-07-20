@@ -96,6 +96,11 @@ View::composer('*', function($view)
 	}
 });
 
+Route::get('/', function()
+{
+	return Redirect::to('dashboard');
+});
+
 Route::get('caslogout', 'Security\Logout@getCasLogoutAttempt');
 
 Route::group(array('middleware' => array ('guest', 'check.browser', 'csrf')), function()
@@ -135,7 +140,7 @@ Route::group(array('middleware' => array ('auth')), function()
 {
 	Route::group(array('middleware' => array('check.first.time.access')), function()
 	{
-		Route::get('/', function()
+		Route::get('/dashboard', function()
 		{
 			return View::make('dashboard')
 						->with('organizationJournals', OrganizationManager::getOrganizationJournals());
