@@ -313,7 +313,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			$this->setCurrentUserOrganization($this->Organization->byId($userDefaultOrganizationId));
 		}
 
-		return $this->Redirector->to('/');
+		return $this->Redirector->to('/dashboard');
 	}
 
 	/**

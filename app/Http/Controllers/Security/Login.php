@@ -113,6 +113,6 @@ class Login extends Controller {
 
 	public function postAuthenticationAttempt()
 	{
-		return $this->Auth->loginAttempt($this->Input->json()->get('email'), $this->Input->json()->get('password'), $this->Input->json()->get('rememberMe'), $this->Session->get('url.intended', $this->Url->to('/')), $this->Input->json()->all());
+		return $this->Auth->loginAttempt($this->Input->json()->get('email'), $this->Input->json()->get('password'), $this->Input->json()->get('rememberMe'), $this->Session->get('url.intended', $this->Url->to('/dashboard')), $this->Input->json()->all());
 	}
 }
