@@ -8,6 +8,7 @@
 /database/migrations/2016_06_23_043514_create_observatorio_tables.php
 /database/migrations/2016_07_14_183436_create_generalidad_tables.php
 /app/Kwaai/Seeders
+/config/app.php.bk*
 /storage/*csv
 /node_modules
 composer.lock
