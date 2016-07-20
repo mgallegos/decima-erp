@@ -214,7 +214,8 @@ class PeriodManager implements PeriodManagementInterface {
 
     $this->Period->byOrganizationWithYear($this->AuthenticationManager->getCurrentUserOrganizationId())->each(function($Period) use (&$periods)
     {
-      array_push($periods, array('value'=> $Period->id, 'label' => $this->Lang->get('decima-accounting::period-management.' . $Period->month) . ' ' . $Period->year->year));
+      // array_push($periods, array('value'=> $Period->id, 'label' => $this->Lang->get('decima-accounting::period-management.' . $Period->month) . ' ' . $Period->year->year));
+      array_push($periods, array('value'=> $Period->id, 'label' => $this->Lang->get('decima-accounting::period-management.' . $Period->month) . ' ' . $Period->year));
     });
 
     return $periods;

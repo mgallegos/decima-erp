@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Database\DatabaseManager;
 
+use Illuminate\Database\Eloquent\Collection;
+
 use Mgallegos\DecimaAccounting\Accounting\Period;
 
 class EloquentPeriod implements PeriodInterface {
@@ -95,7 +97,14 @@ class EloquentPeriod implements PeriodInterface {
    */
   public function byOrganizationWithYear($id)
   {
-    return $this->Period->where('organization_id', '=', $id)->with('year')->get();
+    // return $this->Period->where('organization_id', '=', $id)->with('year')->get(); -> Evitar los with
+
+    $periods = $this->DB->connection($this->databaseConnectionName)
+      ->table('ACCT_Period As p')
+      ->join('ACCT_Fiscal_Year AS f', 'f.id', '=', 'p.fiscal_year_id')
+      ->get(array('p.id', 'p.month', 'f.year'));
+
+    return new Collection($periods);
   }
 
   /**
