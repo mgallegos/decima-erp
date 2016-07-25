@@ -7,7 +7,8 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "mgallegos/laravel-jqgrid": "dev-master",
+        "mgallegos/decima-accounting": "1.*",
+        "mgallegos/laravel-jqgrid": "1.*",
     		"itsgoingd/clockwork": "dev-master",
     		"jenssegers/agent": "dev-master",
     		"pda/pheanstalk": "3.0.*@dev",
