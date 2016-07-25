@@ -1,2 +1,2 @@
 # decima-erp
-An open source ERP designed for small and medium-sized businesses
+Un ERP libre diseñado para la micro y pequeña empresa
