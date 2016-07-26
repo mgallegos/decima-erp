@@ -30,7 +30,7 @@ use Illuminate\Translation\Translator;
 use Illuminate\Database\DatabaseManager;
 
 
-class ModuleAppManager implements ModuleAppManagerInterface {
+class ModuleAppManager implements ModuleAppManagementInterface {
 
   /**
    * Authentication Management Interface
