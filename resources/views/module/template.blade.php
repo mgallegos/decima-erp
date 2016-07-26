@@ -136,6 +136,8 @@
 
 			$('#module-app-delete-message').html($('#module-app-delete-message').attr('data-default-label').replace(':field0', rowData.field0));
 
+			$('.module-app-btn-tooltip').tooltip('hide');
+
 			$('#module-app-modal-delete').modal('show');
 		});
 
