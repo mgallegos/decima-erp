@@ -1,4 +1,4 @@
-<?php
+le<?php
 /**
  * @file
  * Description of the script.
@@ -7,21 +7,21 @@
  * See COPYRIGHT and LICENSE.
  */
 
-namespace App\Kwaai\Template\Repositories\ModuleTableName;
+namespace Vendor\DecimaModule\Module\Repositories\ModuleTableName;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Kwaai\Template\TableName;
+use Vendor\DecimaModule\Module\ModuleTableName;
 
 class EloquentModuleTableName implements ModuleTableNameInterface {
 
   /**
-   * Account
+   * ModuleTableName
    *
-   * @var App\Kwaai\Template\TableName;
+   * @var Vendor\DecimaModule\Module\ModuleTableName;
    *
    */
-  protected $TableName;
+  protected $ModuleTableName;
 
   /**
    * Database Connection
@@ -31,13 +31,13 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   protected $databaseConnectionName;
 
-  public function __construct(Model $TableName, $databaseConnectionName)
+  public function __construct(Model $ModuleTableName, $databaseConnectionName)
   {
-      $this->Account = $TableName;
+      $this->ModuleTableName = $ModuleTableName;
 
       $this->databaseConnectionName = $databaseConnectionName;
 
-      $this->TableName->setConnection($databaseConnectionName);
+      $this->ModuleTableName->setConnection($databaseConnectionName);
   }
 
   /**
@@ -47,7 +47,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function getTable()
   {
-    return $this->TableName->getTable();
+    return $this->ModuleTableName->getTable();
   }
 
   /**
@@ -55,11 +55,11 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    *
    * @param  int $id
    *
-   * @return Mgallegos\DecimaAccounting\Account
+   * @return Vendor\DecimaModule\Module\ModuleTableName
    */
   public function byId($id)
   {
-  	return $this->TableName->on($this->databaseConnectionName)->find($id);
+  	return $this->ModuleTableName->on($this->databaseConnectionName)->find($id);
   }
 
   /**
@@ -71,7 +71,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function byOrganization($id)
   {
-    return $this->TableName->where('organization_id', '=', $id)->get();
+    return $this->ModuleTableName->where('organization_id', '=', $id)->get();
   }
 
   /**
@@ -85,11 +85,11 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function create(array $data)
   {
-    $TableName = new Account();
-    $TableName->setConnection($this->databaseConnectionName);
-    $TableName->fill($data)->save();
+    $ModuleTableName = new ModuleTableName();
+    $ModuleTableName->setConnection($this->databaseConnectionName);
+    $ModuleTableName->fill($data)->save();
 
-    return $TableName;
+    return $ModuleTableName;
   }
 
   /**
@@ -99,23 +99,42 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    * 	An array as follows: array('field0'=>$field0, 'field1'=>$field1
    *                            );
    *
-   * @param Mgallegos\DecimaAccounting\Account $TableName
+   * @param Vendor\DecimaModule\Module\ModuleTableName $ModuleTableName
    *
    * @return boolean
    */
-  public function update(array $data, $TableName = null)
+  public function update(array $data, $ModuleTableName = null)
   {
-    if(empty($TableName))
+    if(empty($ModuleTableName))
     {
-      $TableName = $this->byId($data['id']);
+      $ModuleTableName = $this->byId($data['id']);
     }
 
     foreach ($data as $key => $value)
     {
-      $TableName->$key = $value;
+      $ModuleTableName->$key = $value;
     }
 
-    return $TableName->save();
+    return $ModuleTableName->save();
+  }
+
+  /**
+   * Delete existing ... (soft delete)
+   *
+   * @param array $data
+   * 	An array as follows: array($id0, $id1,…);
+   * @return boolean
+   */
+  public function delete(array $data)
+  {
+    foreach ($data as $key => $id)
+    {
+      $ModuleTableName = $this->byId($id);
+      $ModuleTableName->delete();
+    }
+    // $this->Account->destroy($data);
+
+    return true;
   }
 
 }

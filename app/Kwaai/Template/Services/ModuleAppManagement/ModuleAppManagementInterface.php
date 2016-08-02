@@ -7,7 +7,7 @@
  * See COPYRIGHT and LICENSE.
  */
 
-namespace App\Kwaai\Template\Services\ModuleAppManagement;
+namespace Vendor\DecimaModule\Module\Services\ModuleAppManagement;
 
 interface ModuleAppManager {
 

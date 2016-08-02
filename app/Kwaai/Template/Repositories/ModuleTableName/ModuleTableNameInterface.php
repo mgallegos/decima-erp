@@ -7,7 +7,7 @@
  * See COPYRIGHT and LICENSE.
  */
 
-namespace App\Kwaai\Template\Repositories\ModuleTableName;
+namespace Vendor\DecimaModule\Module\Repositories\ModuleTableName;
 
 interface ModuleTableNameInterface {
 
@@ -37,30 +37,37 @@ interface ModuleTableNameInterface {
   public function byOrganization($id)
 
 	/**
-	* Create a new account type
-	*
-	* @param array $data
-	* 	An array as follows: array('name'=>$name, 'key'=>$key, 'balance_type'=>$balanceType,
-	*                              'account_type_id'=>$accountTypeId, 'parent_account_id' => $parentAccountId, 'organization_id'=>$organizationId
-	*                            );
-	*
-	* @return Mgallegos\DecimaAccounting\Account
-	*/
+   * Create a new ...
+   *
+   * @param array $data
+   * 	An array as follows: array('field0'=>$field0, 'field1'=>$field1
+   *                            );
+   *
+   * @return boolean
+   */
 	public function create(array $data);
 
 	/**
-	* Update an existing account type
-	*
-	* @param array $data
-	* 	An array as follows: array('name'=>$name, 'key'=>$key, 'balance_type'=>$balanceType,
-	*                              'account_type_id'=>$accountTypeId, 'parent_account_id' => $parentAccountId, 'organization_id'=>$organizationId
-	*                            );
-	*
-	* @param Mgallegos\DecimaAccounting\Account $Account
-	*
-	* @return boolean
-	*/
-	public function update(array $data, $Account = null);
+   * Update an existing ...
+   *
+   * @param array $data
+   * 	An array as follows: array('field0'=>$field0, 'field1'=>$field1
+   *                            );
+   *
+   * @param Vendor\DecimaModule\Module\ModuleTableName $ModuleTableName
+   *
+   * @return boolean
+   */
+	public function update(array $data, $ModuleTableName = null);
+
+	/**
+   * Delete existing ... (soft delete)
+   *
+   * @param array $data
+   * 	An array as follows: array($id0, $id1,…);
+   * @return boolean
+   */
+  public function delete(array $data);
 
 
 }

@@ -7,7 +7,7 @@
  * See COPYRIGHT and LICENSE.
  */
 
-namespace App\Kwaai\Template\Repositories\ModuleTableName;
+namespace Vendor\DecimaModule\Module\Repositories\ModuleTableName;
 
 use App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface;
 

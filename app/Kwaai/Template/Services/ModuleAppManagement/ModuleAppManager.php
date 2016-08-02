@@ -7,7 +7,7 @@
  * See COPYRIGHT and LICENSE.
  */
 
-namespace Mgallegos\DecimaModuleTableNameing\ModuleTableNameing\Services\ModuleAppManagement;
+namespace Vendor\DecimaModule\Module\Services\ModuleAppManagement;
 
 use App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface;
 
@@ -17,9 +17,9 @@ use App\Kwaai\Security\Repositories\Journal\JournalInterface;
 
 use Mgallegos\LaravelJqgrid\Encoders\RequestedDataInterface;
 
-use App\Kwaai\Template\Repositories\ModuleTableName\EloquentModuleTableNameGridRepository;
+use Vendor\DecimaModule\Module\Repositories\ModuleTableName\EloquentModuleTableNameGridRepository;
 
-use App\Kwaai\Template\Repositories\ModuleTableName\ModuleTableNameInterface;
+use Vendor\DecimaModule\Module\Repositories\ModuleTableName\ModuleTableNameInterface;
 
 use Carbon\Carbon;
 
@@ -67,7 +67,7 @@ class ModuleAppManager implements ModuleAppManagementInterface {
   /**
 	 * Eloquent Grid Repository
 	 *
-	 * @var App\Kwaai\Template\Repositories\ModuleTableName\EloquentModuleTableNameGridRepository
+	 * @var Vendor\DecimaModule\Module\Repositories\ModuleTableName\EloquentModuleTableNameGridRepository
 	 *
 	 */
 	protected $EloquentModuleTableNameGridRepository;
@@ -75,7 +75,7 @@ class ModuleAppManager implements ModuleAppManagementInterface {
   /**
 	 *  Module Table Name Interface
 	 *
-	 * @var App\Kwaai\Template\Repositories\ModuleTableName\ModuleTableNameInterface
+	 * @var Vendor\DecimaModule\Module\Repositories\ModuleTableName\ModuleTableNameInterface
 	 *
 	 */
 	protected $ModuleTableName;
