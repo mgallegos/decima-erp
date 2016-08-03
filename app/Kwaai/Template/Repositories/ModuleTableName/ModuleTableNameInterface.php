@@ -34,7 +34,7 @@ interface ModuleTableNameInterface {
    *
    * @return Illuminate\Database\Eloquent\Collection
    */
-  public function byOrganization($id)
+  public function byOrganization($id);
 
 	/**
    * Create a new ...
