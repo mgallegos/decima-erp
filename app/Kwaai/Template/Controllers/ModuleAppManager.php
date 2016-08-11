@@ -68,11 +68,9 @@ class ModuleAppManager extends Controller {
 	public function getIndex()
 	{
 		return $this->View->make('decima-module::module-app-management')
-						->with('newEmployeeAction', $this->Session->get('newEmployeeAction', false))
-						->with('editEmployeeAction', $this->Session->get('editEmployeeAction', false))
-						->with('deleteEmployeeAction', $this->Session->get('deleteEmployeeAction', false))
-						//->with('accounts', $this->EmployeeManagerService->getGroupsAccounts())
-						;
+						->with('newModuleAppAction', $this->Session->get('newModuleAppAction', false))
+						->with('editModuleAppAction', $this->Session->get('editModuleAppAction', false))
+						->with('deleteModuleAppAction', $this->Session->get('deleteModuleAppAction', false));
 	}
 
 	public function postGridData()

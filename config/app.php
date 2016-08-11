@@ -176,10 +176,6 @@ return [
         App\Providers\SentryServiceProvider::class,
         Xavrsl\Cas\CasServiceProvider::class,//CAS
     		Mgallegos\DecimaAccounting\DecimaAccountingServiceProvider::class,
-    		Mgallegos\DecimaCms\DecimaCmsServiceProvider::class,
-    		Mgallegos\Psicologia\PsicologiaServiceProvider::class,
-        Mgallegos\DecimaHumanResources\DecimaHumanResourcesServiceProvider::class,
-        Mgallegos\DecimaAsset\DecimaAssetServiceProvider::class,
     		App\Kwaai\Organization\Services\ServicesServiceProvider::class,
     ],
 
