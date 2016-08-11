@@ -205,8 +205,8 @@ class CreateAcctAccountingTables extends Migration {
 		{
 			$table->increments('id');
 			//$table->float('number');
-			$table->float('debit');
-			$table->float('credit');
+			$table->double('debit', 13, 2);
+			$table->double('credit', 13, 2);
 			$table->string('system_reference_type', 40)->index()->nullable();
 			$table->string('system_reference_field', 40)->index()->nullable();
 			$table->unsignedInteger('system_reference_id')->index()->nullable();

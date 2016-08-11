@@ -1,4 +1,4 @@
-le<?php
+<?php
 /**
  * @file
  * Description of the script.

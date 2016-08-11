@@ -9,7 +9,7 @@
 
 namespace Vendor\DecimaModule\Module\Services\ModuleAppManagement;
 
-interface ModuleAppManager {
+interface ModuleAppManagementInterface {
 
 
 
