@@ -108,7 +108,15 @@
 
 		$('#module-app-btn-edit').click(function()
 		{
-			var rowData;
+			var rowData, rowId;
+
+			rowId = $('#module-app-grid').jqGrid('getGridParam', 'selrow');
+
+			if(rowId == null)
+			{
+				$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+				return;
+			}
 
 			$('#module-app-btn-toolbar').disabledButtonGroup();
 			$('#module-app-btn-group-3').enableButtonGroup();
@@ -125,10 +133,18 @@
 
 		$('#module-app-btn-delete').click(function()
 		{
-			var rowData;
+			var rowData, rowId;
 
 			if($(this).hasAttr('disabled'))
 			{
+				return;
+			}
+
+			rowId = $('#module-app-grid').jqGrid('getGridParam', 'selrow');
+
+			if(rowId == null)
+			{
+				$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 				return;
 			}
 
