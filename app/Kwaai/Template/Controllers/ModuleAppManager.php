@@ -75,25 +75,21 @@ class ModuleAppManager extends Controller {
 
 	public function postGridData()
 	{
-		return $this->EmployeeManagerService->getGridData( $this->Input->all() );
+		return $this->ModuleAppManagerService->getGridData( $this->Input->all() );
 	}
 
 	public function postCreate()
 	{
-		return $this->EmployeeManagerService->create( $this->Input->json()->all() );
+		return $this->ModuleAppManagerService->create( $this->Input->json()->all() );
 	}
 
 	public function postUpdate()
 	{
-		return $this->EmployeeManagerService->update( $this->Input->json()->all() );
+		return $this->ModuleAppManagerService->update( $this->Input->json()->all() );
 	}
 
 	public function postDelete()
 	{
-		return $this->EmployeeManagerService->delete( $this->Input->json()->all() );
+		return $this->ModuleAppManagerService->delete( $this->Input->json()->all() );
 	}
-
-
-
-
 }
