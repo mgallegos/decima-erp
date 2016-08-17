@@ -24,7 +24,8 @@ class EloquentModuleTableNameGridRepository extends EloquentRepositoryAbstract {
 		// $this->DB = $DB;
 		// $this->DB->connection()->enableQueryLog();
 
-		$this->Database = $DB->table('MODULE_Table1 AS t1')
+		$this->Database = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
+								->table('MODULE_Table1 AS t1')
 								->leftJoin('MODULE_Table1 AS t1p', 't1.id', '=', 't1p.parent_id')
 								->join('MODULE_Table2 AS t2', 't2.id', '=', 't1.table2_id')
 								->where('t.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
