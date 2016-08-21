@@ -496,6 +496,11 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
         $organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
 
+				if($organizationId == -1)
+				{
+					$organizationId = null;
+				}
+
         foreach ($input as $key => $value)
         {
           if($unchangedUserValues[$key] != $value)
