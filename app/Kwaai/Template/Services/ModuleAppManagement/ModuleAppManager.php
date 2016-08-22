@@ -257,7 +257,7 @@ class ModuleAppManager implements ModuleAppManagementInterface {
       $ModuleTableName = $this->ModuleTableName->byId($input['id']);
       $Journal = $this->Journal->create(array('journalized_id' => $input['id'], 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.deletedJournal', array('number' => $ModuleTableName->number)), $Journal));
-      // $this->ModuleTableName->delete(array($input['id']));
+      $this->ModuleTableName->delete(array($input['id']));
     });
 
     return json_encode(array('success' => $this->Lang->get('module::app.successDeletedMessage')));
@@ -277,7 +277,7 @@ class ModuleAppManager implements ModuleAppManagementInterface {
    {
      $count = 0;
 
-     $this->DB->transaction(function() use ($input)
+     $this->DB->transaction(function() use ($input, &$count)
      {
        $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
        $organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
@@ -286,21 +286,22 @@ class ModuleAppManager implements ModuleAppManagementInterface {
        {
          $count++;
 
+         $ModuleTableName = $this->ModuleTableName->byId($input['id']);
+
          $Journal = $this->Journal->create(array('journalized_id' => $id, 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
          $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.deletedJournal', array('email' => $ModuleTableName->email, 'organization' => $organizationName))), $Journal);
 
          $this->ModuleTableName->delete(array($id));
        }
-
-       if($count == 1)
-       {
-         return json_encode(array('success' => $this->Lang->get('module::app.successDeleted0Message')));
-       }
-       else
-       {
-         return json_encode(array('success' => $this->Lang->get('module::app.successDeleted1Message')));
-       }
-
      });
+
+     if($count == 1)
+     {
+       return json_encode(array('success' => $this->Lang->get('module::app.successDeleted0Message')));
+     }
+     else
+     {
+       return json_encode(array('success' => $this->Lang->get('module::app.successDeleted1Message')));
+     }
    }
 }
