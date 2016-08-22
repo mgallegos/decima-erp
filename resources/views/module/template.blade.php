@@ -241,6 +241,7 @@
 					if(json.success)
 					{
 						$('#module-app-btn-close').click();
+						$('#module-app-btn-toolbar').showAlertAfterElement('alert-success alert-custom',json.success, 6000);
 					}
 					else if(json.info)
 					{
