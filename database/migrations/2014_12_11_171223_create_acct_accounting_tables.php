@@ -99,7 +99,7 @@ class CreateAcctAccountingTables extends Migration {
 			$table->char('key', 1)->nullable();
 			$table->char('pl_bs_category', 1)->index();//Pérdidas y Ganancias (Cuenta de ingresos) -- B, Pérdidas y Ganancias (Cuenta de gastos) -- C, Balance (Cuenta de activo)  -- D, Balance (Cuenta de pasivo) -- E
 
-			$table->char('deferral_method', 1);
+			$table->char('deferral_method', 1)->nullable();
 
 			//Foreign Keys
 			$table->unsignedInteger('organization_id')->index();
