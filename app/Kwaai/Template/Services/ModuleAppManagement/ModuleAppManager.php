@@ -149,6 +149,24 @@ class ModuleAppManager implements ModuleAppManagementInterface {
   }
 
   /**
+   * Get ...
+   *
+   * @return array
+   *  An array of arrays as follows: array( array('label'=>$name0, 'value'=>$id0), array('label'=>$name1, 'value'=>$id1),…)
+   */
+  public function getModuleTableNames()
+  {
+    $moduleTableNames = array();
+
+    $this->ModuleTableName->byOrganization($this->AuthenticationManager->getCurrentUserOrganizationId())->each(function($ModuleTableName) use (&$moduleTableNames)
+    {
+      array_push($moduleTableNames, array('label'=> $ModuleTableName->name , 'value'=>$ModuleTableName->id));
+    });
+
+    return $moduleTableNames;
+  }
+
+  /**
 	 * Create a new ...
 	 *
 	 * @param array $input
