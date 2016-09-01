@@ -525,7 +525,10 @@
 
 		this.find('input[type=checkbox]').each(function()
 		{
-			$(this).removeAttr('checked');
+			if($(this).attr('data-mg-clear-ignored') == undefined)
+			{
+				$(this).removeAttr('checked');
+			}
 		});
 
 		this.find('.has-error').each(function()
