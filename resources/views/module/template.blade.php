@@ -270,32 +270,32 @@
 			$('.module-app-btn-tooltip').tooltip('hide');
 			$('#module-app-form-section').collapse('hide');
 		});
+
+		$('#module-app-btn-edit-helper').click(function()
+	  {
+			showButtonHelper('module-app-btn-close', 'module-app-btn-group-2', $('#module-app-edit-action').attr('data-content'));
+	  });
+
+		$('#module-app-btn-delete-helper').click(function()
+	  {
+			showButtonHelper('module-app-btn-close', 'module-app-btn-group-2', $('#module-app-delete-action').attr('data-content'));
+	  });
+
+		if(!$('#module-app-new-action').isEmpty())
+		{
+			$('#module-app-btn-new').click();
+		}
+
+		if(!$('#module-app-edit-action').isEmpty())
+		{
+			showButtonHelper('module-app-btn-close', 'module-app-btn-group-2', $('#module-app-edit-action').attr('data-content'));
+		}
+
+		if(!$('#module-app-delete-action').isEmpty())
+		{
+			showButtonHelper('module-app-btn-close', 'module-app-btn-group-2', $('#module-app-delete-action').attr('data-content'));
+		}
 	});
-
-	$('#module-app-btn-edit-helper').click(function()
-  {
-		showButtonHelper('module-app-btn-close', 'module-app-btn-group-2', $('#module-app-edit-action').attr('data-content'));
-  });
-
-	$('#module-app-btn-delete-helper').click(function()
-  {
-		showButtonHelper('module-app-btn-close', 'module-app-btn-group-2', $('#module-app-delete-action').attr('data-content'));
-  });
-
-	if(!$('#module-app-new-action').isEmpty())
-	{
-		$('#module-app-btn-new').click();
-	}
-
-	if(!$('#module-app-edit-action').isEmpty())
-	{
-		showButtonHelper('module-app-btn-close', 'module-app-btn-group-2', $('#module-app-edit-action').attr('data-content'));
-	}
-
-	if(!$('#module-app-delete-action').isEmpty())
-	{
-		showButtonHelper('module-app-btn-close', 'module-app-btn-group-2', $('#module-app-delete-action').attr('data-content'));
-	}
 </script>
 
 <div class="row">
