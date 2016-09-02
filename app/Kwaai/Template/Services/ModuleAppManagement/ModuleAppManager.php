@@ -304,7 +304,7 @@ class ModuleAppManager implements ModuleAppManagementInterface {
        {
          $count++;
 
-         $ModuleTableName = $this->ModuleTableName->byId($input['id']);
+         $ModuleTableName = $this->ModuleTableName->byId($id);
 
          $Journal = $this->Journal->create(array('journalized_id' => $id, 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
          $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.deletedJournal', array('email' => $ModuleTableName->email, 'organization' => $organizationName))), $Journal);
