@@ -15,6 +15,8 @@ use Illuminate\Validation\Factory;
 
 use Illuminate\Contracts\Hashing\Hasher;
 
+use Illuminate\Auth\Passwords\PasswordBroker;
+
 use Illuminate\Auth\Passwords\PasswordBrokerManager;
 
 use Illuminate\Config\Repository;
