@@ -157,6 +157,27 @@ if ( ! function_exists('eloquent_array_filter'))
     }
   }
 
+  if ( ! function_exists('getYears'))
+  {
+    /**
+    * Get years
+    *
+    * @return array
+    *  An array of arrays as follows: array($year0 => $year0, $year1 => $year1,… )
+    */
+    public function getYears()
+    {
+      $years = array();
+
+      foreach (range(date('Y'), 1950) as $x)
+      {
+        $years = array_add($years, $x, $x);
+      }
+
+      return $years;
+    }
+  }
+
   if ( ! function_exists('checkbox_journal_value'))
   {
     /**
