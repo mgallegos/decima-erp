@@ -165,7 +165,7 @@ if ( ! function_exists('eloquent_array_filter'))
     * @return array
     *  An array of arrays as follows: array($year0 => $year0, $year1 => $year1,… )
     */
-    public function getYears()
+    function getYears()
     {
       $years = array();
 
