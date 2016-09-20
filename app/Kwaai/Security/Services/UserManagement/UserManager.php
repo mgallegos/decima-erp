@@ -1837,6 +1837,16 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 				}
 			}
 
+			foreach ($userMenus as $id => $menu)
+			{
+				if(empty($menu['parentId']) && !empty($menu['url']))
+				{
+					unset($menu['id']);
+					unset($menu['parentId']);
+					array_push($moduleChildMenus, $menu);
+				}
+			}
+
 			if(!empty($moduleChildMenus))
 			{
 				array_push($userApps, array('name' => $this->Lang->get($module->lang_key), 'icon' => $module->icon, 'childsMenus' => $moduleChildMenus));

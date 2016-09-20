@@ -20,7 +20,7 @@ class EloquentMenu implements MenuInterface {
     {
         $this->Menu = $Menu;
     }
-    
+
     /**
      * Retrieve menus by menu id
      *
@@ -29,22 +29,22 @@ class EloquentMenu implements MenuInterface {
      * @return Illuminate\Database\Eloquent\Collection
      */
     public function menusById(array $data)
-    {   	
+    {
     	return $this->Menu->whereIn('id', $data)->get();
     }
-    
+
     /**
 	 * Retrieve menu by url
 	 *
 	 * @param string $url
-	 * 
+	 *
 	 * @return Illuminate\Database\Eloquent\Collection
 	 */
 	public function menuByUrl($url)
     {
     	return $this->Menu->where('url', '=', $url)->get();
     }
-    
+
     /**
      * Retrieve parent menus
      * @param int $moduleId
@@ -55,7 +55,7 @@ class EloquentMenu implements MenuInterface {
     {
     	return $this->Menu->whereNull('url')->where('module_id', '=', $moduleId)->get();
     }
-        
+
     /**
      * Retrieve menu's permissions by menu id
      *
@@ -66,5 +66,5 @@ class EloquentMenu implements MenuInterface {
     {
     	return $this->Menu->find($id)->permissions;
     }
-        
+
 }
