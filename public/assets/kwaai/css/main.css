@@ -48,7 +48,7 @@ body {
   margin-left: 15px;
 }
 
-.btn-filter-left-margin {  
+.btn-filter-left-margin {
   margin-left: 15px;
 }
 
@@ -548,6 +548,11 @@ body {
 	bottom: 10px;
 	right: 10px;
 	display: none;
+}
+
+/* Images */
+.img-center {
+    margin: 0 auto;
 }
 
 /*Media*/
