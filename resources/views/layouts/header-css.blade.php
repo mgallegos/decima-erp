@@ -14,7 +14,7 @@
 @else
   <link href="{{URL::asset('assets/bootstrap-v3.3.6/css/' . $theme . '.min.css')}}" rel="stylesheet">
 @endif
-<link href="{{URL::asset('assets/font-awesome-v4.4.0/css/font-awesome.min.css')}}" rel="stylesheet">
+<link href="{{URL::asset('assets/font-awesome-v4.6.3/css/font-awesome.min.css')}}" rel="stylesheet">
 <link href="{{URL::asset('assets/jquery-ui-v1.10.3/css/smoothness/jquery-ui-1.10.3.custom.css')}}" rel="stylesheet">
 <!-- <link href="{{URL::asset('assets/jquery-jqGrid-v4.8.2/css/ui.jqgrid.css')}}" rel="stylesheet"> -->
 <!-- <link href="{{URL::asset('assets/jquery-jqGrid-v4.8.2/css/ui.jqgrid-bootstarp.css')}}" rel="stylesheet"> -->
