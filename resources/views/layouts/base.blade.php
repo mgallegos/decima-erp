@@ -39,7 +39,7 @@
         </div>
         <div id="user-organizations-modal-footer" class="modal-footer">
           <button id="change-to-organization" type="button" class="btn btn-primary">{{ Lang::get('base.changeOrganizationButton') }}</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">{{ Lang::get('toolbar.close') }}</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-undo"></i> {{ Lang::get('toolbar.close') }}</button>
         </div>
       </div>
     </div>

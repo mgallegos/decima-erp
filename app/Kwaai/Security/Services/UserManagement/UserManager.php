@@ -494,7 +494,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
         $diff = 0;
 
-        $organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+        $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 
 				if($organizationId == -1)
 				{
@@ -579,7 +579,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 		$this->DB->transaction(function() use ($input, &$count)
 		{
 			$loggedUserId = $this->AuthenticationManager->getLoggedUserId();
-      $organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+      $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
       $organizationName = $this->AuthenticationManager->getCurrentUserOrganization('name');
 
 			foreach ($input['id'] as $key => $id)
@@ -650,7 +650,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
       $User = $this->User->byId($input['id']);
 
       $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
-      $organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+      $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
       $organizationName = $this->AuthenticationManager->getCurrentUserOrganization('name');
 
 			$this->User->attachOrganizations($input['id'], array($organizationId), $loggedUserId);
@@ -869,7 +869,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 */
 	public function saveRoles(array $post)
 	{
-		$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+		$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 
 		$this->DB->transaction(function() use ($organizationId, $post, &$userMenus, &$userModuleMenus, &$permissionModuleMenus, &$menuPermissions, &$userPermissions)
 		{
@@ -953,7 +953,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 */
 	public function saveMenus(array $post)
 	{
-		$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+		$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 
 		$this->DB->transaction(function() use ($organizationId, $post, &$permissionModuleMenus, &$menuPermissions, &$userPermissions)
 		{
@@ -1024,7 +1024,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 */
 	public function resetMenus(array $post)
 	{
-		$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+		$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 
 		$this->DB->transaction(function() use ($organizationId, $post, &$userMenus, &$userModuleMenus, &$permissionModuleMenus, &$menuPermissions, &$userPermissions)
 		{
@@ -1088,7 +1088,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 */
 	public function savePermissions(array $post)
 	{
-		$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+		$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 
 		$this->DB->transaction(function() use ($organizationId, $post)
 		{
@@ -1141,7 +1141,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	{
 		$userRoles = array();
 
-		$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+		$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 
 		$this->User->rolesByUserAndByOrganization($post["userId"], $organizationId)->each(function($role) use (&$userRoles)
 		{
@@ -1212,7 +1212,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			return json_encode(array('userData' => false));
 		}
 
-		$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+		$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 
 		foreach ($this->getUserOrganizations($User[0]->id) as $key => $organization)
 		{
@@ -1290,7 +1290,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 */
 	public function getUserAndModuleMenus(array $post)
 	{
-		$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+		$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 
 		$userMenus = $this->getUserMenusByModule($post["userId"], $post["moduleId"], $organizationId);
 		$userModuleMenus = $permissionModuleMenus = $this->getMenusByModule($post["moduleId"]);
@@ -1315,7 +1315,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 */
 	public function getUserMenusByModuleAndMenuPermissions(array $post)
 	{
-		$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+		$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 		$userMenus = $this->getUserMenusByModule($post["userId"], $post["moduleId"], $organizationId);
 		$moduleMenus = $this->getMenusByModule($post["moduleId"]);
 
@@ -1358,7 +1358,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 */
 	public function getUserPermissionsByMenu(array $post)
 	{
-		$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+		$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 
 		$menuPermissions = $this->getPermissionsByMenus($post["menuId"]);
 		$userPermissions = $this->getUserPermissionByMenuAndByOrganization($post["userId"], $post["menuId"], $organizationId);
@@ -1570,7 +1570,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	{
 		if(empty($organizationId))
 		{
-			$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+			$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 			$organizationOwner = $this->AuthenticationManager->getCurrentUserOrganization('created_by');
 		}
 
@@ -1651,7 +1651,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	{
 		if(empty($organizationId))
 		{
-			$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+			$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 			$organizationOwner = $this->AuthenticationManager->getCurrentUserOrganization('created_by');
 		}
 
@@ -1748,7 +1748,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	{
 		if(empty($organizationId))
 		{
-			$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+			$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 			$organizationOwner = $this->AuthenticationManager->getCurrentUserOrganization('created_by');
 		}
 
