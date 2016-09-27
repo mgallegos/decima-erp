@@ -152,10 +152,10 @@ class AppManager implements AppManagementInterface {
 	{
 		$url = str_replace($this->Url->to('/'), '', $this->Url->current());
 
-		if(strpos($url, '/cms') !== false)
-		{
-			return;
-		}
+		// if(strpos($url, '/cms') !== false)
+		// {
+		// 	return;
+		// }
 
 		if($url == '/' . $this->getLoginPageUrl() || strpos($url,'/' . $this->getPasswordReminderPageUrl()) !== false || strpos($url,'/' . $this->getPasswordResetPageUrl()) !== false || strpos($url,'/' . $this->getUserActivationPageUrl()) !== false || strpos($url,'/' . $this->getErrorPageUrl()) !== false)
 		{
@@ -178,6 +178,11 @@ class AppManager implements AppManagementInterface {
 		}
 
 		$Menu = $this->Menu->menuByUrl($url);
+
+		if($Menu->count() == 0)
+		{
+			return;
+		}
 
 		$urlElements = explode('/', $Menu[0]->url);
 
