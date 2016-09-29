@@ -9,7 +9,10 @@
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container">
  		<div class="navbar-header">
-       <a class="navbar-brand" href="{{ AppManager::getBrandUrl() }}" target="_blank"><i class="{{ AppManager::getSystemIcon() }}"></i> {{ AppManager::getSystemName() }}</a>
+       <!-- <a class="navbar-brand" href="{{ AppManager::getBrandUrl() }}" target="_blank"><i class="{{ AppManager::getSystemIcon() }}"></i> {{ AppManager::getSystemName() }}</a> -->
+       <a class="navbar-brand" href="{{ AppManager::getBrandUrl() }}" target="_blank">
+         <img src="{{URL::asset('assets/kwaai/images/logo.png')}}">
+       </a>
 		</div>
 		<div class="navbar-left visible-md visible-lg">
 			<ul class="nav navbar-nav hidden-sm">
