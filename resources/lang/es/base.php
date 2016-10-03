@@ -17,10 +17,6 @@ return array(
 
 	'logout' => 'Salir',
 
-	'next' => 'Siguiente',
-
-	'end' => 'Finalizar',
-
 	'userAppsTitle' => 'Aplicaciones',
 
 	'userAppsPopoverContent' => '<strong>Menú de aplicaciones</strong><br>En esta sección encontrará todas las aplicaciones a las que tiene acceso.',

@@ -55,12 +55,12 @@
 		</ul>
 		<div class="row visible-md visible-lg">
       @if (count($userOrganizations) > 1)
-        <div id="search-action-container" class="col-lg-3 col-md-2 pull-right base-popover" data-position="bottom" data-step="3" data-intro="{{ Lang::get('base.searchActionPopoverContent') }}">
+        <div id="search-action-container" class="col-lg-3 col-md-2 pull-right base-popover" data-position="bottom">
       @else
-        <div id="search-action-container" class="col-lg-4 col-md-3 pull-right base-popover" data-position="bottom" data-step="3" data-intro="{{ Lang::get('base.searchActionPopoverContent') }}">
+        <div id="search-action-container" class="col-lg-4 col-md-3 pull-right base-popover" data-position="bottom">
       @endif
 			{!! Form::open(array('role' => 'search', 'class' => 'navbar-form navbar-right', 'onsubmit' => 'return false;')) !!}
-  			<div class="form-group">
+  			<div class="form-group" data-step="3" data-intro="{{ Lang::get('base.searchActionPopoverContent') }}">
   				{!! Form::autocomplete('search-action', $userActions, array('class' => 'form-control', 'placeholder' => Lang::get('base.search')), 'search-action', null, null, 'fa-pencil-square-o', 'input-group-sm') !!}
   			</div>
 			{!! Form::close() !!}

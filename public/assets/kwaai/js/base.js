@@ -402,6 +402,10 @@ function handleServerExceptions(jqXHR, id, alertAsFirstChild)
 function startIntro()
 {
 	introJs().
+		setOption("nextLabel", lang.next).
+		setOption("prevLabel", lang.previous).
+		setOption("skipLabel", lang.skip).
+		setOption("doneLabel", lang.done).
 		setOption("exitOnOverlayClick", false).
 		setOption("exitOnEsc", false).
 		onbeforechange(function(targetElement)
@@ -453,6 +457,7 @@ function startIntro()
 function showOrganizationHint()
 {
 	introJs().
+		setOption("hintButtonLabel", lang.done).
 		onhintclick(function()
 		{
 			changePopoverStatus(true, true);

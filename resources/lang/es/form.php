@@ -90,4 +90,12 @@ return array(
 	'defaultNumericValue' => '0.00',
 
 	'invalidSelection' => 'Debe seleccionar un registro antes de realizar esta operación.',
+
+	'previous' => 'Anterior',
+
+	'next' => 'Siguiente',
+
+	'skip' => 'Omitir',
+
+	'done' => 'Finalizar',
 );
