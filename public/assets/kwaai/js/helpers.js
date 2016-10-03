@@ -188,11 +188,12 @@ $.fn.isAutocompleteValid = function()
 	{
 		if($.isPlainObject(element))
 		{
-			// console.log(element);
+			console.log(element);
 			if(element.label.toLowerCase() == value || element.value.toString().toLowerCase() == value)
 			{
 				valid = true;
-				autocomplete.data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item: {label:element.label, value:element.value}});
+				// autocomplete.data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item: {label:element.label, value:element.value}});
+				autocomplete.data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item: element});
 				return false;
 			}
 		}
@@ -711,8 +712,10 @@ var jqMgValAutocompleteValidator = function($element)
 
 					if (elementLabel == value || elementValue == value)
 					{
+								// console.log(element);
 								valid = true;
-								$(autocomplete).data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item: {label:element.label, value:element.value}});
+								// $(autocomplete).data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item: {label:element.label, value:element.value}});
+								$(autocomplete).data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item: element});
 								return false;
 						}
 				}
