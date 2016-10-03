@@ -7,7 +7,6 @@
  --}}
 
 <script src="{{ URL::asset('assets/jquery-v2.0.3/jquery.js') }}"></script>
-<!-- <script src="{{ URL::asset('assets/jquery-jqGrid-v4.8.2/js/jquery.jqGrid.min.js') }}"></script> -->
 <script src="{{ URL::asset('assets/jquery-free-jqGrid-v4.13.1/js/jquery.jqgrid.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.core.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.position.min.js') }}"></script>
@@ -37,6 +36,7 @@
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/pie.js') }}"></script>
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/plugins/export/export.min.js') }}"></script>
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/plugins/responsive/responsive.min.js') }}"></script>
+<script src="{{ URL::asset('assets/intro-js-v2.3.0/minified/intro.min.js') }}"></script>
 
 
 <script type='text/javascript'>

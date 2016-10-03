@@ -555,6 +555,15 @@ body {
     margin: 0 auto;
 }
 
+/* IntroJs */
+.intro-js-custom-navbar {
+  position: absolute;
+}
+
+.introjs-fixedhint {
+    z-index: 9999;
+}
+
 /*Media*/
 @media (min-width: 992px) and (max-width: 1199px) {
 

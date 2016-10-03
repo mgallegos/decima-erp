@@ -62,7 +62,7 @@
   								@endif
   							@endforeach
   						</ul>
-  						<span class="label label-default breadcrumb-organization-name base-popover pull-right" data-container="body" data-toggle="popover" data-placement="left" data-html="true" data-trigger="manual" title="{{ Lang::get('base.currentOrganizationPopoverTitle') }}<button type='button' class='close' onclick='$(this).closeCurrentOrganizationPopover()' aria-hidden='true'>&times;</button>" data-content="{{ Lang::get('base.currentOrganizationPopoverContent', array('user' => AuthManager::getLoggedUserFirstname())) }}<button type='button' class='btn btn-info pull-right btn-popover-next' onclick='$(this).closeCurrentOrganizationPopover()'>{{Lang::get('base.next')}}</button>">{{ AuthManager::getCurrentUserOrganization('name') }}</span>
+  						<span class="label label-default breadcrumb-organization-name base-popover pull-right" data-position="left" data-step="1" data-intro="{{ Lang::get('base.currentOrganizationPopoverContent', array('user' => AuthManager::getLoggedUserFirstname())) }}">{{ AuthManager::getCurrentUserOrganization('name') }}</span>
   						<div class="panel panel-default panel-custom">
   							<div class="panel-body clearfix">
   								@section('container')
@@ -80,17 +80,19 @@
 				{!! Form::hidden('app-url', URL::to('/'), array('id' => 'app-url')) !!}
 				{!! Form::hidden('app-token', csrf_token(), array('id' => 'app-token')) !!}
         {!! Form::hidden('organization-currency-symbol', OrganizationManager::getOrganizationCurrencySymbol(), array('id' => 'organization-currency-symbol')) !!}
+        {!! Form::hidden('da-logged-user-popover-shown', AuthManager::getLoggedUserPopoversShown(), array('id' => 'da-logged-user-popover-shown')) !!}
+        {!! Form::hidden('da-logged-user-multiple-organization-popover-shown', AuthManager::getLoggedUserMultipleOrganizacionPopoversShown(), array('id' => 'da-logged-user-multiple-organization-popover-shown')) !!}
 			</fieldset>
 		</div>
 		<div class="col-lg-12">
       <fieldset id="user-apps-panel-fieldset">
-  			<div id='user-apps-container' class="panel panel-default">
+  			<div id='user-apps-container' class="panel panel-default base-popover" data-position="top" data-step="2" data-intro="{{ Lang::get('base.userAppsPopoverContent') }}">
   				<div class="panel-heading">
   					<button type="button" class="btn btn-default btn-sm btn-dashboard-toggle pull-right" data-toggle="collapse" data-target="#user-apps-content"><i class="fa fa-chevron-up"></i></button>
-  		    	<h3 id="user-apps-title" class="panel-title base-popover" data-container="body" data-toggle="popover" data-placement="top" data-html="true" data-trigger="manual" title="{{ Lang::get('base.userAppsPopoverTitle') }}<button type='button' class='close' onclick='$(this).closeUserAppsPopover()' aria-hidden='true'>&times;</button>" data-content="{{ Lang::get('base.userAppsPopoverContent') }}<button type='button' class='btn btn-info pull-right btn-popover-next' onclick='$(this).closeUserAppsPopover()'>{{Lang::get('base.next')}}</button>"><i class="fa fa-tasks"></i> {{ Lang::get('base.userAppsTitle') }}</h3>
+  		    	<h3 id="user-apps-title" class="panel-title"><i class="fa fa-tasks"></i> {{ Lang::get('base.userAppsTitle') }}</h3>
   			  	</div>
   				<div id="user-apps-content" class="panel-body collapse in clearfix">
-  					<div class="alert alert-block alert-info">
+  					<div id="user-apps-content-alert" class="alert alert-block alert-info">
   						<a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
   						 {{ Lang::get('base.noAppsException') }}
   					</div>

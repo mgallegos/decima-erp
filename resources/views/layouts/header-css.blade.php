@@ -16,13 +16,12 @@
 @endif
 <link href="{{URL::asset('assets/font-awesome-v4.6.3/css/font-awesome.min.css')}}" rel="stylesheet">
 <link href="{{URL::asset('assets/jquery-ui-v1.10.3/css/smoothness/jquery-ui-1.10.3.custom.css')}}" rel="stylesheet">
-<!-- <link href="{{URL::asset('assets/jquery-jqGrid-v4.8.2/css/ui.jqgrid.css')}}" rel="stylesheet"> -->
-<!-- <link href="{{URL::asset('assets/jquery-jqGrid-v4.8.2/css/ui.jqgrid-bootstarp.css')}}" rel="stylesheet"> -->
 <link href="{{URL::asset('assets/jquery-free-jqGrid-v4.13.1/css/ui.jqgrid.css')}}" rel="stylesheet">
-<!-- <link href="{{URL::asset('assets/jquery-free-jqGrid-v4.13.1/css/ui.jqgrid-bootstarp.css')}}" rel="stylesheet"> -->
 <link href="{{URL::asset('assets/jquery-calculator-v1.4.1/css/jquery.calculator.css')}}" rel="stylesheet">
 <link href="{{URL::asset('assets/jquery-uix-multiselect-v2.0/css/jquery.uix.multiselect.css')}}" rel="stylesheet">
 <link href="{{URL::asset('assets/amcharts-v3.17.0/plugins/export/export.css')}}" rel="stylesheet">
 <link href="{{URL::asset('assets/bootstrap-tokenfield-dev-9c06df4/css/bootstrap-tokenfield.min.css')}}" rel="stylesheet">
+<link href="{{URL::asset('assets/intro-js-v2.3.0/minified/introjs.min.css')}}" rel="stylesheet">
+<!-- <link href="{{URL::asset('assets/intro-js-v2.3.0/minified/introjs-rtl.min.css')}}" rel="stylesheet"> -->
 <link href="{{URL::asset('assets/kwaai/css/main.css')}}" rel="stylesheet">
 <link href="{{URL::asset('assets/kwaai/css/button-custom-classes.css')}}" rel="stylesheet">

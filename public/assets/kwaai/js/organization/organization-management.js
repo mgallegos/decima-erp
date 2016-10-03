@@ -244,7 +244,8 @@ $(document).ready(function()
 					$('.breadcrumb-organization-name').html(json.organizationName);
 					$('#user-apps-content').collapse('show');
 					$('#search-action').removeAttr('disabled');
-					$('#apps-tabs-content').children('.active').children('.breadcrumb-organization-name').popover('show');
+					// $('#apps-tabs-content').children('.active').children('.breadcrumb-organization-name').popover('show');
+					startIntro();
 				}
 
 				if(json.userOrganizations)
@@ -255,7 +256,8 @@ $(document).ready(function()
 				if(json.organizationMenuTooltip)
 				{
 					window.scrollTo(0, 0);
-					$('#user-organizations-dropdown-menu').popover('show');
+					// $('#user-organizations-dropdown-menu').popover('show');
+					showOrganizationHint();
 					$('#search-action-container').removeClass('col-lg-4 col-md-3').addClass('col-lg-3 col-md-2');
 				}
 
@@ -343,8 +345,9 @@ $(document).ready(function()
 					$('#user-organizations-dropdown-menu').html('');
 				}
 
+				$('#om-modal-delete').modal('hide');
 				$('#app-loader').addClass('hidden');
-				enaom-delete-message
+				enableAll();
 			}
 		});
 	});
