@@ -756,7 +756,7 @@ $(document).ready(function()
 		changeLoggedUserOrganization($('#change-to-organization-id').val());
 	});
 
-	if($('#da-logged-user-popover-shown').val() == '0')
+	if($('#da-logged-user-popover-shown').val() == '0' || $('#da-logged-user-popover-shown').isEmpty())
 	{
 		if($('#user-apps-content-alert').length == 0)
 		{
@@ -768,7 +768,7 @@ $(document).ready(function()
 		}
 	}
 
-	if($('#da-logged-user-popover-shown').val() == '1' && $('#da-logged-user-multiple-organization-popover-shown').val() == '0')
+	if($('#da-logged-user-popover-shown').val() == '1' && ($('#da-logged-user-multiple-organization-popover-shown').val() == '0' || $('#da-logged-user-multiple-organization-popover-shown').isEmpty()))
 	{
 		if($('#user-organizations-dropdown-menu').children().length > 0)
 		{
