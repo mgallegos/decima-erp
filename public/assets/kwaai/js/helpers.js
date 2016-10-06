@@ -188,7 +188,7 @@ $.fn.isAutocompleteValid = function()
 	{
 		if($.isPlainObject(element))
 		{
-			console.log(element);
+			// console.log(element);
 			if(element.label.toLowerCase() == value || element.value.toString().toLowerCase() == value)
 			{
 				valid = true;
@@ -211,6 +211,35 @@ $.fn.isAutocompleteValid = function()
  	return valid;
 };
 
+/**
+ * Set the label of an autocomplete based on a given value.
+ *
+ *  @returns true if valid, false otherwise
+ */
+$.fn.setAutocompleteLabel = function(value)
+{
+	var value = value.toLowerCase(), autocomplete = this;
+
+	$.each(this.autocomplete( "option", "source" ), function(index, element)
+	{
+		if($.isPlainObject(element))
+		{
+			if(element.label.toLowerCase() == value || element.value.toString().toLowerCase() == value)
+			{
+				autocomplete.data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item: element});
+				return false;
+			}
+		}
+		else
+		{
+    	if(element.toLowerCase() == value)
+			{
+				autocomplete.val(element);
+				return false;
+      }
+   	}
+ 	});
+};
 
 /**
  * Populate form fields.
