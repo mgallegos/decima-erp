@@ -73,11 +73,33 @@ $.fn.getSelectedRowsIdCell = function(columnIdName)
  */
 $.fn.getSelectedRowId = function(columnIdName)
 {
-	var	row = this.getRowData(this.jqGrid('getGridParam', 'selrow')),
+	var	row = this.getRowData(this.jqGrid('getGridParam', 'selrow'));
 
 	columnIdName = columnIdName || 'id';
 
 	return row[columnIdName];
+};
+
+/**
+ * Check in a grid if a row is selected.
+ *
+ * @param string columnIdName
+ * 	Grid Column Id name, default: id.
+ *
+ *  @returns true if at least one row is selected, false otherwise
+ */
+$.fn.isRowSelected = function(cssSelectedClass)
+{
+	cssSelectedClass = cssSelectedClass || 'success';
+
+	var	count = this.find('.' + cssSelectedClass).length;
+
+	if(count == 0)
+	{
+		return false;
+	}
+
+	return true;
 };
 
 
