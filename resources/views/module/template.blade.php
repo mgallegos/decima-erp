@@ -94,6 +94,8 @@
 		{
 			$('.module-app-btn-tooltip').tooltip('hide');
 			$('#module-app-grid').trigger('reloadGrid');
+			$('#module-app-btn-toolbar').disabledButtonGroup();
+			$('#module-app-btn-group-1').enableButtonGroup();
 			cleanJournals('module-app-');
 		});
 

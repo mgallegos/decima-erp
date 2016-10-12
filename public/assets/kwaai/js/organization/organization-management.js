@@ -114,7 +114,7 @@ $(document).ready(function()
 
 		rowId = $('#organizations-grid').jqGrid('getGridParam', 'selrow');
 
-		if(rowId == null)
+		if(!$('#organizations-grid').isRowSelected())
 		{
 			$('#om-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 			return;
@@ -274,16 +274,14 @@ $(document).ready(function()
 
 	$('#om-btn-delete').click(function()
 	{
-		var rowData, rowId;
+		var rowData;
 
 		if($(this).hasAttr('disabled'))
 		{
 			return;
 		}
 
-		rowId = $('#organizations-grid').jqGrid('getGridParam', 'selrow');
-
-		if(rowId == null)
+		if(!$('#organizations-grid').isRowSelected())
 		{
 			$('#om-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 			return;

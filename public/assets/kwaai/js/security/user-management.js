@@ -993,6 +993,14 @@ $(document).ready(function()
 			return;
 		}
 
+		$('.um-btn-tooltip').tooltip('hide');
+
+		if(!$('#users-grid').isRowSelected())
+		{
+			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+			return;
+		}
+
 		selectedRowData = $('#users-grid').getRowData($('#users-grid').jqGrid('getGridParam', 'selrow'));
 
 		if($('#um-logged-user-email').val() != selectedRowData.created_by && $('#um-user-root').isEmpty())
@@ -1022,7 +1030,6 @@ $(document).ready(function()
 		}
 
 		$('#um-email').focus();
-		$('.um-btn-tooltip').tooltip('hide');
 	});
 
 	$('#um-btn-close').click(function(event)
@@ -1152,6 +1159,12 @@ $(document).ready(function()
 
 		if($(this).hasAttr('disabled'))
 		{
+			return;
+		}
+
+		if(!$('#users-grid').isRowSelected())
+		{
+			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 			return;
 		}
 
