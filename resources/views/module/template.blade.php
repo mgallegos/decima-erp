@@ -93,10 +93,14 @@
 		$('#module-app-btn-refresh').click(function()
 		{
 			$('.module-app-btn-tooltip').tooltip('hide');
-			$('#module-app-grid').trigger('reloadGrid');
 			$('#module-app-btn-toolbar').disabledButtonGroup();
 			$('#module-app-btn-group-1').enableButtonGroup();
-			cleanJournals('module-app-');
+
+			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+			{
+				$('#module-app-grid').trigger('reloadGrid');
+				cleanJournals('module-app-');
+			}
 		});
 
 		$('#module-app-btn-export-xls').click(function()
@@ -113,24 +117,32 @@
 		{
 			var rowData;
 
-			if(!$('#module-app-grid').isRowSelected())
-			{
-				$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
-				return;
-			}
-
+			$('.module-app-btn-tooltip').tooltip('hide');
 			$('#module-app-btn-toolbar').disabledButtonGroup();
 			$('#module-app-btn-group-3').enableButtonGroup();
-			$('#module-app-form-edit-title').removeClass('hidden');
 
-			rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
+			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+			{
+				if(!$('#module-app-grid').isRowSelected())
+				{
+					$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+					return;
+				}
 
-			populateFormFields(rowData);
+				$('#module-app-form-edit-title').removeClass('hidden');
 
-			$('#module-app-grid-section').collapse('hide');
-			$('#module-app-journals-section').attr('data-target-id', '#module-app-form-section');
-			$('#module-app-journals-section').collapse('hide');
-			$('.module-app-btn-tooltip').tooltip('hide');
+				rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
+
+				populateFormFields(rowData);
+
+				$('#module-app-grid-section').collapse('hide');
+				$('#module-app-journals-section').attr('data-target-id', '#module-app-form-section');
+				$('#module-app-journals-section').collapse('hide');
+			}
+			else
+			{
+
+			}
 		});
 
 		$('#module-app-btn-delete').click(function()
@@ -142,18 +154,22 @@
 				return;
 			}
 
-			if(!$('#module-app-grid').isRowSelected())
+			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
 			{
-				$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
-				return;
+				if(!$('#module-app-grid').isRowSelected())
+				{
+					$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+					return;
+				}
+
+				rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
+			}
+			else
+			{
+
 			}
 
-			rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
-
-			$('#module-app-delete-message').html($('#module-app-delete-message').attr('data-default-label').replace(':field0', rowData.field0));
-
 			$('.module-app-btn-tooltip').tooltip('hide');
-
 			$('#module-app-modal-delete').modal('show');
 		});
 
@@ -170,12 +186,21 @@
 			//For grids with multiselect disabled
 			// var id = $('#module-app-grid').getSelectedRowId('module_app_id');
 
+			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+			{
+				url = $('#module-app-form').attr('action') + '/delete';
+			}
+			else
+			{
+
+			}
+
 			$.ajax(
 			{
 				type: 'POST',
 				data: JSON.stringify({'_token':$('#app-token').val(), 'id':id}),
 				dataType : 'json',
-				url:  $('#module-app-form').attr('action') + '/delete',
+				url:  url,
 				error: function (jqXHR, textStatus, errorThrown)
 				{
 					handleServerExceptions(jqXHR, 'module-app-btn-toolbar', false);
@@ -224,6 +249,10 @@
 				}
 
 				data = $('#module-app-form').formToObject('module-app-');
+			}
+			else
+			{
+
 			}
 
 			$.ajax(
