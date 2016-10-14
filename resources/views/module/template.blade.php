@@ -121,7 +121,7 @@
 			$('#module-app-btn-toolbar').disabledButtonGroup();
 			$('#module-app-btn-group-3').enableButtonGroup();
 
-			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+			if($('#module-app-journals-section').attr('data-target-id') == '')
 			{
 				if(!$('#module-app-grid').isRowSelected())
 				{
@@ -154,7 +154,7 @@
 				return;
 			}
 
-			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+			if($('#module-app-journals-section').attr('data-target-id') == '')
 			{
 				if(!$('#module-app-grid').isRowSelected())
 				{
@@ -309,10 +309,6 @@
 				return;
 			}
 
-			$('#module-app-btn-group-1').enableButtonGroup();
-			$('#module-app-btn-group-3').disabledButtonGroup();
-			$('.module-app-btn-tooltip').tooltip('hide');
-
 			// module-app-form-section
 			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
 			{
@@ -326,6 +322,11 @@
 			{
 
 			}
+
+			$('#module-app-btn-group-1').enableButtonGroup();
+			$('#module-app-btn-group-3').disabledButtonGroup();
+			$('.module-app-btn-tooltip').tooltip('hide');
+			$('#module-app-journals-section').attr('data-target-id', '')
 		});
 
 		$('#module-app-btn-edit-helper').click(function()
