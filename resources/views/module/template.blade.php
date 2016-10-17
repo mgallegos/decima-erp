@@ -101,16 +101,34 @@
 				$('#module-app-grid').trigger('reloadGrid');
 				cleanJournals('module-app-');
 			}
+			else
+			{
+
+			}
 		});
 
 		$('#module-app-btn-export-xls').click(function()
 		{
+			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+			{
 				$('#module-app-gridXlsButton').click();
+			}
+			else
+			{
+
+			}
 		});
 
 		$('#module-app-btn-export-csv').click(function()
 		{
+			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+			{
 				$('#module-app-gridCsvButton').click();
+			}
+			else
+			{
+
+			}
 		});
 
 		$('#module-app-btn-edit').click(function()
@@ -175,20 +193,15 @@
 
 		$('#module-app-btn-modal-delete').click(function()
 		{
-			//For grids with multiselect enabled
-			var id = $('#module-app-grid').getSelectedRowsIdCell('module_app_id');
-
-			if(id.length == 0)
-			{
-				return;
-			}
-
-			//For grids with multiselect disabled
-			// var id = $('#module-app-grid').getSelectedRowId('module_app_id');
+			var id, url;
 
 			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
 			{
 				url = $('#module-app-form').attr('action') + '/delete';
+				//For grids with multiselect enabled
+				id = $('#module-app-grid').getSelectedRowsIdCell('module_app_id');
+				//For grids with multiselect disabled
+				// id = $('#module-app-grid').getSelectedRowId('module_app_id');
 			}
 			else
 			{
