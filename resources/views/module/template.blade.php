@@ -91,7 +91,7 @@
 			$('#module-app-btn-toolbar').disabledButtonGroup();
 			$('#module-app-btn-group-1').enableButtonGroup();
 
-			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+			if($('#module-app-journals-section').attr('data-target-id') == '' || $('#module-app-journals-section').attr('data-target-id') == 'module-app-form-section')
 			{
 				$('#module-app-grid').trigger('reloadGrid');
 				cleanJournals('module-app-');
@@ -104,7 +104,7 @@
 
 		$('#module-app-btn-export-xls').click(function()
 		{
-			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+			if($('#module-app-journals-section').attr('data-target-id') == '')
 			{
 				$('#module-app-gridXlsButton').click();
 			}
@@ -116,7 +116,7 @@
 
 		$('#module-app-btn-export-csv').click(function()
 		{
-			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+			if($('#module-app-journals-section').attr('data-target-id') == '')
 			{
 				$('#module-app-gridCsvButton').click();
 			}
@@ -192,7 +192,7 @@
 		{
 			var id, url;
 
-			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+			if($('#module-app-journals-section').attr('data-target-id') == '')
 			{
 				url = $('#module-app-form').attr('action') + '/delete';
 				//For grids with multiselect enabled
