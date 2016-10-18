@@ -52,11 +52,6 @@
 
 		$('#module-app-form').jqMgVal('addFormFieldsValidations');
 
-		$('#module-app-grid-section').on('shown.bs.collapse', function ()
-		{
-			$('#module-app-btn-refresh').click();
-		});
-
 		$('#module-app-journals-section').on('hidden.bs.collapse', function ()
 		{
 			$($(this).attr('data-target-id')).collapse('show');
@@ -181,6 +176,8 @@
 				}
 
 				rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
+
+				$('#module-app-delete-message').html($('#module-app-delete-message').attr('data-default-label').replace(':name', rowData.module_app_name));
 			}
 			else
 			{
@@ -327,7 +324,7 @@
 			{
 				$('#module-app-form-new-title').addClass('hidden');
 				$('#module-app-form-edit-title').addClass('hidden');
-				$('#module-app-grid').jqGrid('clearGridData');
+				$('#module-app-btn-refresh').click();
 				$('#module-app-form').jqMgVal('clearForm');
 				$('#module-app-form-section').collapse('hide');
 			}
