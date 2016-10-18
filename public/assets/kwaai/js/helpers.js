@@ -281,7 +281,7 @@ function populateFormFields(object, prefix)
 	{
 		var element = prefix +  index.replace(/_/g,'-');
 
-		if($('#' + element).is("input") || $('#' + element).is("textarea"))
+		if($('#' + element).is('input') || $('#' + element).is("textarea"))
 		{
 			switch ($('#' + element).attr('type'))
 			{
@@ -316,7 +316,13 @@ $.fn.formToObject = function(removePrefix)
 
 	this.find('input,select,textarea').each(function()
 	{
-		if($(this).attr("type") == 'radio')
+		if($(this).attr('id') == undefined && $(this).attr('name') == undefined)
+		{
+			console.log('The following element does not have an id nor have a name ' + $(this)[0].outerHTML);
+			return true;
+		}
+
+		if($(this).attr('type') == 'radio')
 		{
 			index = $(this).attr('name');
 		}
@@ -328,11 +334,11 @@ $.fn.formToObject = function(removePrefix)
 		index = index.replace(removePrefix, '');
 		index =	index.replace(/-/g,'_');
 
-		if($(this).is("input") && $(this).attr("type") == 'checkbox')
+		if($(this).is('input') && $(this).attr('type') == 'checkbox')
 		{
 			object[index] = $(this).is(':checked')?'1':'0';
 		}
-		else if($(this).is("input") && $(this).attr("type") == 'radio')
+		else if($(this).is('input') && $(this).attr('type') == 'radio')
 		{
 			if($(this).is(':checked'))
 			{
