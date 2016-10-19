@@ -855,3 +855,34 @@ $.fn.buildPieChart = function(data, showLegend, legendLocation, showDataLabels, 
 			}
 		);
 };
+
+/**
+* Show uploader modal
+*
+* @param string prefix
+* @param boolean systemReferenceId
+* @param string parentFolder
+* @param integer minWidth
+* @param array sizes
+*		An array of array as follows: [200, 300, 400]
+* 	Sizes should not be greater than minimun width provider
+* @param integer maxFileCount
+* @param isPublic string
+* 	'1' if is public, '0' if is not public
+* @param integer parentFileId
+*
+*  @returns void
+*/
+function openUploader(prefix, systemReferenceId, parentFolder, minWidth, sizes, maxFileCount, isPublic, parentFileId)
+{
+	systemReferenceId = systemReferenceId || '';
+	parentFolder = parentFolder || '';
+	minWidth = minWidth || '';
+	sizes = sizes || [];
+	maxFileCount = maxFileCount || 0;
+	isPublic = isPublic || '0';
+	parentFileId = parentFileId || '';
+	$('#' + prefix + 'file-uploader-file').fileinput('refresh', {uploadExtraData: {parent_file_id: parentFileId, system_reference_id: systemReferenceId, parent_folder: parentFolder, minWidth: minWidth, sizes: sizes, isPublic: isPublic}, maxFileCount: maxFileCount});
+	$('#' + prefix + 'file-uploader-modal').attr('data-files', '[]');
+	$('#' + prefix + 'file-uploader-modal').modal('show');
+}
