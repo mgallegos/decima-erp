@@ -148,6 +148,7 @@
 
 				populateFormFields(rowData);
 
+				$('#module-app-form-edit-title').removeClass('hidden');
 				$('#module-app-grid-section').collapse('hide');
 				$('#module-app-journals-section').attr('data-target-id', '#module-app-form-section');
 				$('#module-app-journals-section').collapse('hide');
