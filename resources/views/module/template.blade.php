@@ -297,7 +297,8 @@
 						}
 						else
 						{
-							// $('#module-app-form').showAlertAsFirstChild('alert-success', json.info, 12000);
+							// $('#module-app-btn-toolbar').showAlertAfterElement('alert-success alert-custom',json.success, 6000);
+							// $('#module-app-form').showAlertAsFirstChild('alert-success', json.success, 6000)
 						}
 					}
 					else if(json.info)
