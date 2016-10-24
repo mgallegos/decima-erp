@@ -354,6 +354,7 @@ $.fn.formToObject = function(removePrefix)
 	return object;
 };
 
+
 /**
  * Clean all form fields.
  * Use: $('#formId').cleanForm();
@@ -805,55 +806,15 @@ var jqMgValAutocompleteValidator = function($element)
 };
 
 /**
-* Build Pie Chart
-*
-* @param array options
-* 	An array of array as follows: [['label0', 'value0'], ['label0', 'value0'], …]
-* @param boolean showLegend
-* @param string showLegend
-* @param boolean showDataLabels
-* @param string dataLabels
-*
-*  @returns void
-*/
-$.fn.buildPieChart = function(data, showLegend, legendLocation, showDataLabels, dataLabels, placement, title)
+ * Clear all tags.
+ * Use: $('#elementId').clearTags();
+ *
+ * @returns void
+ */
+$.fn.clearTags = function()
 {
-		showLegend = showLegend || true;
-
-		legendLocation = legendLocation || 's';
-
-		showDataLabels = showDataLabels || true;
-
-		dataLabels = dataLabels || 'value';
-
-		placement = placement || 'inside';
-
-		title = title || '';
-
-		if(dataLabels == 'custom')
-		{
-			total = 0;
-    	$(data).map(function(){total += this[1];});
-			dataLabels = $.makeArray($(data).map(function(){return this[1] + " " + Math.round(this[1]/total * 100) + "%";}));
-		}
-
-		return jQuery.jqplot (this.attr('id'), [data],
-			{
-				title:{text: title},
-				seriesDefaults: {
-					// Make this a pie chart.
-					renderer: $.jqplot.PieRenderer,
-					trendline:{ show:false },
-					rendererOptions: {
-						// Put data labels on the pie slices.
-						// By default, labels show the percentage of the slice.
-						showDataLabels: showDataLabels,
-						dataLabels: dataLabels
-					}
-				},
-				legend: { show: showLegend, location: legendLocation, placement: placement }
-			}
-		);
+	this.val('');
+	this.parent().find('.token').remove();
 };
 
 /**
