@@ -22,6 +22,7 @@
 <link href="{{URL::asset('assets/amcharts-v3.17.0/plugins/export/export.css')}}" rel="stylesheet">
 <link href="{{URL::asset('assets/bootstrap-tokenfield-dev-9c06df4/css/bootstrap-tokenfield.min.css')}}" rel="stylesheet">
 <link href="{{URL::asset('assets/intro-js-v2.3.0/minified/introjs.min.css')}}" rel="stylesheet">
+{!! Html::style('assets/bootstrap-fileinput-v4.3.5/css/fileinput.min.css') !!}
 <!-- <link href="{{URL::asset('assets/intro-js-v2.3.0/minified/introjs-rtl.min.css')}}" rel="stylesheet"> -->
 <link href="{{URL::asset('assets/kwaai/css/main.css')}}" rel="stylesheet">
 <link href="{{URL::asset('assets/kwaai/css/button-custom-classes.css')}}" rel="stylesheet">
