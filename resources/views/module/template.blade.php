@@ -215,6 +215,7 @@
 				error: function (jqXHR, textStatus, errorThrown)
 				{
 					handleServerExceptions(jqXHR, 'module-app-btn-toolbar', false);
+					$('#module-app-modal-delete').modal('hide');
 				},
 				beforeSend:function()
 				{
@@ -226,10 +227,14 @@
 					if(json.success)
 					{
 						$('#module-app-btn-refresh').click();
-						$('#module-app-modal-delete').modal('hide');
 						$('#module-app-btn-toolbar').showAlertAfterElement('alert-success alert-custom',json.success, 5000);
 					}
+					else if(json.info)
+					{
+						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 12000);
+					}
 
+					$('#module-app-modal-delete').modal('hide');
 					$('#app-loader').addClass('hidden');
 					enableAll();
 				}
@@ -292,18 +297,18 @@
 						}
 						else
 						{
-							// $('#module-app-form').showAlertAsFirstChild('alert-success', json.info);
+							// $('#module-app-form').showAlertAsFirstChild('alert-success', json.info, 12000);
 						}
 					}
 					else if(json.info)
 					{
 						if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
 						{
-							$('#module-app-form').showAlertAsFirstChild('alert-info', json.info);
+							$('#module-app-form').showAlertAsFirstChild('alert-info', json.info, 12000);
 						}
 						else
 						{
-							// $('#module-app-form').showAlertAsFirstChild('alert-info', json.info);
+							// $('#module-app-form').showAlertAsFirstChild('alert-info', json.info, 12000);
 						}
 					}
 
