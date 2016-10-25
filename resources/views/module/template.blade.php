@@ -413,9 +413,6 @@
 		</div>
 	</div>
 </div>
-<div id='module-app-journals-section' class="row collapse in section-block" data-target-id="">
-	{!! Form::journals('module-app-', $appInfo['id']) !!}
-</div>
 <div id='module-app-form-section' class="row collapse">
 	<div class="col-lg-12 col-md-12">
 		<div class="form-container">
@@ -445,6 +442,9 @@
 			{!! Form::close() !!}
 		</div>
 	</div>
+</div>
+<div id='module-app-journals-section' class="row collapse in section-block" data-target-id="">
+	{!! Form::journals('module-app-', $appInfo['id']) !!}
 </div>
 <div id='module-app-modal-delete' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
   <div class="modal-dialog modal-sm module-app-btn-delete">
