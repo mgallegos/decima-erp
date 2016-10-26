@@ -104,166 +104,6 @@ function changePopoverStatus(popovers, organizationPopover)
 }
 
 /**
- * On click tab event.
- *
- * @param string url
- *
- *  @returns void
- */
-function getAppJournals(appPrefix, action, journalizedId)
-{
-  journal = $('#' + appPrefix + 'journals');
-
-  if(journal.length == 0)
-  {
-    return;
-  }
-
-  if(journalizedId == undefined)
-  {
-    journalizedId = journal.attr('data-journalized-id');
-  }
-  else
-  {
-    journal.attr('data-journalized-id', journalizedId);
-  }
-
-	if($('#' + appPrefix + 'journals').attr('data-action-by') == '')
-	{
-		userId  = null;
-	}
-	else
-	{
-		userId  = $('#' + appPrefix + 'journals').attr('data-action-by');
-	}
-
-	if($('#' + appPrefix + 'journals').attr('data-only-actions') == '')
-	{
-		onlyActions = false;
-	}
-	else
-	{
-		onlyActions = true;
-	}
-
-	if($('#' + appPrefix + 'journals').attr('data-organization-not-null') == '')
-	{
-		organizationNotNull = false;
-	}
-	else
-	{
-		organizationNotNull = true;
-	}
-
-	if($('#' + appPrefix + 'journals').attr('data-two-columns') == '')
-	{
-		twoColumns = false;
-	}
-	else
-	{
-		twoColumns = true;
-	}
-
-	if($('#' + appPrefix + 'journal-search').isEmpty())
-	{
-		filter = null;
-	}
-	else
-	{
-		filter = $('#' + appPrefix + 'journal-search').val();
-	}
-
-	switch (action)
-	{
-		case 'firstPage':
-			page = 1;
-			break;
-		case 'previousPage':
-			page = parseInt(journal.attr('data-page')) - 1;
-			break;
-		case 'nextPage':
-			page = parseInt(journal.attr('data-page')) + 1;
-			break;
-		case 'lastPage':
-			page = parseInt(journal.attr('data-total-pages'));
-			break;
-		default:
-			console.log('Something went wrong, value of action: ' + action);
-			return;
-	}
-
-	$.ajax(
-	{
-		type: 'POST',
-		data: JSON.stringify({'_token':$('#app-token').val(), 'appId': journal.attr('data-app-id'), 'page': page, 'journalizedId': journalizedId, 'filter': filter, 'userId': userId, 'onlyActions': onlyActions, 'organizationNotNull': organizationNotNull}),
-		dataType : 'json',
-		url: $('#app-url').val() + '/general-setup/security/journals-management/journals',
-		error: function (jqXHR, textStatus, errorThrown)
-		{
-			$('#apps-tabs-content').children('.active').children('.breadcrumb').showAlertAfterElement('alert-danger alert-custom', textStatus, 7000);
-			$('#app-loader').addClass('hidden');
-			enableAll();
-    },
-		beforeSend:function()
-		{
-			$('#app-loader').removeClass('hidden');
-			disabledAll();
-		},
-		success:function(journals)
-		{
-      if(journals.totalPages == 0 || journals.totalPages == 1)
-      {
-        $('#' + appPrefix + 'step-backward').attr('disabled', 'disabled');
-        $('#' + appPrefix + 'backward').attr('disabled', 'disabled');
-        $('#' + appPrefix + 'forward').attr('disabled', 'disabled');
-        $('#' + appPrefix + 'step-forward').attr('disabled', 'disabled');
-      }
-      else if(page == 1)
-			{
-				$('#' + appPrefix + 'step-backward').attr('disabled', 'disabled');
-				$('#' + appPrefix + 'backward').attr('disabled', 'disabled');
-				$('#' + appPrefix + 'forward').removeAttr('disabled');
-				$('#' + appPrefix + 'step-forward').removeAttr('disabled');
-			}
-			else if(page == journals.totalPages)
-			{
-				$('#' + appPrefix + 'step-backward').removeAttr('disabled');
-				$('#' + appPrefix + 'backward').removeAttr('disabled');
-				$('#' + appPrefix + 'forward').attr('disabled', 'disabled');
-				$('#' + appPrefix + 'step-forward').attr('disabled', 'disabled');
-			}
-			else
-			{
-				$('#' + appPrefix + 'step-backward').removeAttr('disabled');
-				$('#' + appPrefix + 'backward').removeAttr('disabled');
-				$('#' + appPrefix + 'forward').removeAttr('disabled');
-				$('#' + appPrefix + 'step-forward').removeAttr('disabled');
-			}
-
-			journal.attr('data-page', page);
-			journal.attr('data-total-pages', journals.totalPages);
-
-			$('#' + appPrefix + 'pager-pages-info').html(journals.pagerPagesInfo);
-			$('#' + appPrefix + 'pager-records-info').html(journals.pagerRecordsInfo);
-			$('#' + appPrefix + 'journal-fieldset').removeAttr('disabled');
-
-			buildJournals(appPrefix, journals, twoColumns);
-
-			if(filter)
-			{
-				$.each(filter.split(' '), function( index, value )
-				{
-					$('#' + appPrefix + 'journals-body').highlight(value);
-				});
-			}
-
-			$('#app-loader').addClass('hidden');
-			enableAll();
-		}
-	});
-}
-
-/**
  * Build HTML code of journals
  *
  * @param string appPrefix
@@ -463,6 +303,299 @@ function showOrganizationHint()
 			changePopoverStatus(true, true);
 		}).
 		addHints();
+}
+
+/**
+ * Get elements files
+ *
+ * @param string appPrefix
+ * @param integer systemReferenceId
+ * @param array systemReferences
+ * 	An array of array as follows: array(array(appId => $appId, systemReferenceId = $systemReferenceId), array(appId => $appId, systemReferenceId = $systemReferenceId));
+ *
+ *  @returns void
+ */
+function getElementFiles(appPrefix, systemReferenceId, systemReferences)
+{
+	systemReferences = systemReferences || [];
+
+	$('#' + appPrefix + 'btn-file-modal-delete').attr('data-system-reference-id', systemReferenceId);
+	$('#' + appPrefix + 'btn-file-modal-delete').attr('data-system-references', JSON.stringify(systemReferences));
+
+	systemReferences.push({appId: $('#' + appPrefix + 'file-viewer-section').attr('data-app-id'), systemReferenceId: systemReferenceId});
+
+	$.ajax(
+	{
+		type: 'POST',
+		data: JSON.stringify({'_token':$('#app-token').val(), 'systemReferences': systemReferences}),
+		dataType : 'json',
+		url: $('#app-url').val() + '/files/file-manager/element-files',
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			handleServerExceptions(jqXHR, appPrefix + 'btn-toolbar', false);
+			enableAll();
+    },
+		beforeSend:function()
+		{
+			$('#app-loader').removeClass('hidden');
+			disabledAll();
+		},
+		success:function(json)
+		{
+			$('#' + appPrefix + 'file-body').html('');
+
+			row = $('<div/>', {class:'row'});
+
+			$.each(json, function( index, file )
+			{
+				filePreviewFrame = $('<div/>', {class:'file-viewer-preview-frame clearfix'});
+				filePreviewData = $('<div/>', {class:'kv-preview-data file-preview-other-frame'});
+
+				$('<a/>', {
+				    'class': 'file-other-icon',
+				    'target': '_blank',
+				    'href': file.url,
+						'html': file.icon
+				}).appendTo(filePreviewData);
+
+				filePreviewFrame.append(filePreviewData);
+
+				$('<div/>', {
+				    'class': 'file-footer-caption file-viewer-footer-caption',
+						'html': file.name + '<br><samp>(' + file.size + ')</samp>'
+				}).appendTo(filePreviewFrame);
+
+				$('<button/>', {
+				    'class': 'kv-file-remove btn btn-xs btn-default pull-right',
+				    'onclick': 'deleteFile(\'' + appPrefix + '\', ' + file.id + ', \''+ file.name +'\')',
+						'html': '<i class="glyphicon glyphicon-trash text-danger"></i>'
+				}).appendTo(filePreviewFrame);
+
+				row.append($('<div/>', {class:'col-md-2'}).append(filePreviewFrame));
+
+				if((index + 1) % 6 == 0)
+				{
+					$('#' + appPrefix + 'file-body').append(row);
+					row = $('<div/>', {class:'row', style:'margin-top:15px'});
+				}
+			});
+
+			$('#' + appPrefix + 'file-body').append(row);
+
+			$('#app-loader').addClass('hidden');
+			enableAll();
+		}
+	});
+}
+
+/**
+ * Get elements files
+ *
+ * @param string appPrefix
+ * @param integer fileId
+ * @param strinf fileName
+ *
+ *  @returns void
+ */
+function deleteFile(appPrefix, fileId, fileName)
+{
+	// alert(fileId);
+	$('#' + appPrefix + 'file-delete-message').html($('#' + appPrefix + 'file-delete-message').attr('data-default-label').replace(':name', fileName));
+	$('#' + appPrefix + 'btn-file-modal-delete').attr('data-file-id', fileId);
+	$('#' + appPrefix + 'btn-file-modal-delete').attr('data-prefix', appPrefix);
+	$('#' + appPrefix + 'file-modal-delete').modal('show');
+}
+
+function deleteFileAux(button)
+{
+	$.ajax(
+	{
+		type: 'POST',
+		data: JSON.stringify({'_token':$('#app-token').val(), 'id': $(button).attr('data-file-id')}),
+		dataType : 'json',
+		url:  $('#app-url').val() + '/files/file-manager/delete',
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			handleServerExceptions(jqXHR, $(button).attr('data-prefix') + 'btn-toolbar', false);
+			$('#' + $(button).attr('data-prefix') + 'file-modal-delete').modal('hide');
+		},
+		beforeSend:function()
+		{
+			$('#app-loader').removeClass('hidden');
+			disabledAll();
+		},
+		success:function(json)
+		{
+			if(json.success)
+			{
+				getElementFiles($(button).attr('data-prefix'), $(button).attr('data-system-reference-id'), $.parseJSON($(button).attr('data-system-references')))
+				$('#' + $(button).attr('data-prefix') + 'file-modal-delete').modal('hide');
+			}
+
+			$('#app-loader').addClass('hidden');
+			enableAll();
+		}
+	});
+}
+
+/**
+ * Get application journals
+ *
+ * @param string url
+ *
+ *  @returns void
+ */
+function getAppJournals(appPrefix, action, journalizedId)
+{
+  journal = $('#' + appPrefix + 'journals');
+
+  if(journal.length == 0)
+  {
+    return;
+  }
+
+  if(journalizedId == undefined)
+  {
+    journalizedId = journal.attr('data-journalized-id');
+  }
+  else
+  {
+    journal.attr('data-journalized-id', journalizedId);
+  }
+
+	if($('#' + appPrefix + 'journals').attr('data-action-by') == '')
+	{
+		userId  = null;
+	}
+	else
+	{
+		userId  = $('#' + appPrefix + 'journals').attr('data-action-by');
+	}
+
+	if($('#' + appPrefix + 'journals').attr('data-only-actions') == '')
+	{
+		onlyActions = false;
+	}
+	else
+	{
+		onlyActions = true;
+	}
+
+	if($('#' + appPrefix + 'journals').attr('data-organization-not-null') == '')
+	{
+		organizationNotNull = false;
+	}
+	else
+	{
+		organizationNotNull = true;
+	}
+
+	if($('#' + appPrefix + 'journals').attr('data-two-columns') == '')
+	{
+		twoColumns = false;
+	}
+	else
+	{
+		twoColumns = true;
+	}
+
+	if($('#' + appPrefix + 'journal-search').isEmpty())
+	{
+		filter = null;
+	}
+	else
+	{
+		filter = $('#' + appPrefix + 'journal-search').val();
+	}
+
+	switch (action)
+	{
+		case 'firstPage':
+			page = 1;
+			break;
+		case 'previousPage':
+			page = parseInt(journal.attr('data-page')) - 1;
+			break;
+		case 'nextPage':
+			page = parseInt(journal.attr('data-page')) + 1;
+			break;
+		case 'lastPage':
+			page = parseInt(journal.attr('data-total-pages'));
+			break;
+		default:
+			console.log('Something went wrong, value of action: ' + action);
+			return;
+	}
+
+	$.ajax(
+	{
+		type: 'POST',
+		data: JSON.stringify({'_token':$('#app-token').val(), 'appId': journal.attr('data-app-id'), 'page': page, 'journalizedId': journalizedId, 'filter': filter, 'userId': userId, 'onlyActions': onlyActions, 'organizationNotNull': organizationNotNull}),
+		dataType : 'json',
+		url: $('#app-url').val() + '/general-setup/security/journals-management/journals',
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			$('#apps-tabs-content').children('.active').children('.breadcrumb').showAlertAfterElement('alert-danger alert-custom', textStatus, 7000);
+			$('#app-loader').addClass('hidden');
+			enableAll();
+    },
+		beforeSend:function()
+		{
+			$('#app-loader').removeClass('hidden');
+			disabledAll();
+		},
+		success:function(journals)
+		{
+      if(journals.totalPages == 0 || journals.totalPages == 1)
+      {
+        $('#' + appPrefix + 'step-backward').attr('disabled', 'disabled');
+        $('#' + appPrefix + 'backward').attr('disabled', 'disabled');
+        $('#' + appPrefix + 'forward').attr('disabled', 'disabled');
+        $('#' + appPrefix + 'step-forward').attr('disabled', 'disabled');
+      }
+      else if(page == 1)
+			{
+				$('#' + appPrefix + 'step-backward').attr('disabled', 'disabled');
+				$('#' + appPrefix + 'backward').attr('disabled', 'disabled');
+				$('#' + appPrefix + 'forward').removeAttr('disabled');
+				$('#' + appPrefix + 'step-forward').removeAttr('disabled');
+			}
+			else if(page == journals.totalPages)
+			{
+				$('#' + appPrefix + 'step-backward').removeAttr('disabled');
+				$('#' + appPrefix + 'backward').removeAttr('disabled');
+				$('#' + appPrefix + 'forward').attr('disabled', 'disabled');
+				$('#' + appPrefix + 'step-forward').attr('disabled', 'disabled');
+			}
+			else
+			{
+				$('#' + appPrefix + 'step-backward').removeAttr('disabled');
+				$('#' + appPrefix + 'backward').removeAttr('disabled');
+				$('#' + appPrefix + 'forward').removeAttr('disabled');
+				$('#' + appPrefix + 'step-forward').removeAttr('disabled');
+			}
+
+			journal.attr('data-page', page);
+			journal.attr('data-total-pages', journals.totalPages);
+
+			$('#' + appPrefix + 'pager-pages-info').html(journals.pagerPagesInfo);
+			$('#' + appPrefix + 'pager-records-info').html(journals.pagerRecordsInfo);
+			$('#' + appPrefix + 'journal-fieldset').removeAttr('disabled');
+
+			buildJournals(appPrefix, journals, twoColumns);
+
+			if(filter)
+			{
+				$.each(filter.split(' '), function( index, value )
+				{
+					$('#' + appPrefix + 'journals-body').highlight(value);
+				});
+			}
+
+			$('#app-loader').addClass('hidden');
+			enableAll();
+		}
+	});
 }
 
 /**
