@@ -443,6 +443,7 @@
 		</div>
 	</div>
 </div>
+@include('decima-file::file-viewer')
 <div id='module-app-journals-section' class="row collapse in section-block" data-target-id="">
 	{!! Form::journals('module-app-', $appInfo['id']) !!}
 </div>
