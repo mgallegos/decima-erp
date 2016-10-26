@@ -27,8 +27,8 @@ class CreateOrganizationTables extends Migration {
 			$table->string('street2')->nullable();
       $table->string('city_name')->nullable();
       $table->string('state_name')->nullable();
-			$table->string('zip_code')->nullable();
-			$table->string('web_site',300)->nullable();
+			$table->string('zip_code', 20)->nullable();
+			$table->string('web_site')->nullable();
 			$table->string('phone_number',60)->nullable();
 			$table->string('fax',60)->nullable();
 			$table->string('email')->nullable();
