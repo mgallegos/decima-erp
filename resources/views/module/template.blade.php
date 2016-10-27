@@ -13,25 +13,34 @@
 	//For grids with multiselect enabled
 	function moduleAppOnSelectRowEvent(id)
 	{
-		var selRowIds = $('#module-app-grid').jqGrid('getGridParam', 'selarrrow');
+		var selRowIds = $('#module-app-grid').jqGrid('getGridParam', 'selarrrow'), id;
 
 		if(selRowIds.length == 0)
 		{
 			$('#module-app-btn-group-2').disabledButtonGroup();
 			cleanJournals('module-app-');
+			// cleanFiles('module-app-')
 		}
 		else if(selRowIds.length == 1)
 		{
 			$('#module-app-btn-group-2').enableButtonGroup();
-			cleanJournals('module-app-');
-			// getElementFiles('module-app-', $('#module-app-grid').getSelectedRowId('module_app_id'));
-			getAppJournals('module-app-','firstPage', $('#module-app-grid').getSelectedRowId('module_app_id'));
+
+			id = $('#module-app-grid').getSelectedRowId('module_app_id');
+
+			if($('#module-app-journals').attr('data-journalized-id') != id)
+			{
+				cleanJournals('module-app-');
+				// getElementFiles('module-app-', id);
+				getAppJournals('module-app-','firstPage', id);
+			}
+
 		}
 		else if(selRowIds.length > 1)
 		{
 			$('#module-app-btn-group-2').disabledButtonGroup();
 			$('#module-app-btn-delete').removeAttr('disabled');
 			cleanJournals('module-app-');
+			// cleanFiles('module-app-')
 		}
 	}
 
@@ -41,7 +50,11 @@
 	{
 		var id = $('#module-app-grid').getSelectedRowId('module_app_id');
 
-		getAppJournals('module-app-', 'firstPage', id);
+		if($('#module-app-journals').attr('data-journalized-id') != id)
+		{
+			getAppJournals('module-app-', 'firstPage', id);
+			// getElementFiles('module-app-', id);
+		}
 
 		$('#module-app-btn-group-2').enableButtonGroup();
 	}
@@ -92,10 +105,11 @@
 			$('#module-app-btn-toolbar').disabledButtonGroup();
 			$('#module-app-btn-group-1').enableButtonGroup();
 
-			if($('#module-app-journals-section').attr('data-target-id') == '' || $('#module-app-journals-section').attr('data-target-id') == 'module-app-form-section')
+			if($('#module-app-journals-section').attr('data-target-id') == '' || $('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
 			{
 				$('#module-app-grid').trigger('reloadGrid');
 				cleanJournals('module-app-');
+				// cleanFiles('module-app-')
 			}
 			else
 			{
