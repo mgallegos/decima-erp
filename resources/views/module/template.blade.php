@@ -24,6 +24,7 @@
 		{
 			$('#module-app-btn-group-2').enableButtonGroup();
 			cleanJournals('module-app-');
+			// getElementFiles('module-app-', $('#module-app-grid').getSelectedRowId('module_app_id'));
 			getAppJournals('module-app-','firstPage', $('#module-app-grid').getSelectedRowId('module_app_id'));
 		}
 		else if(selRowIds.length > 1)
@@ -443,7 +444,6 @@
 		</div>
 	</div>
 </div>
-@include('decima-file::file-viewer')
 <div id='module-app-journals-section' class="row collapse in section-block" data-target-id="">
 	{!! Form::journals('module-app-', $appInfo['id']) !!}
 </div>
