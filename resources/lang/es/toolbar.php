@@ -21,6 +21,8 @@ return array(
 
 	'nulify' => 'Anular',
 
+	'upload' => 'Adjuntar archivo',
+
 	'add' => 'Agregar',
 
 	'open' => 'Abrir',
