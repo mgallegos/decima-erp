@@ -311,6 +311,8 @@ function showOrganizationHint()
 * @param string prefix
 * @param boolean systemReferenceId
 * @param string parentFolder
+* @param array allowedFileTypes
+* 	An array with any of the following values: ['text', 'spreadsheet', 'pdf', 'document', 'presentation', 'image', 'compression', 'sound'];
 * @param integer minWidth
 * @param array sizes
 *		An array of array as follows: [200, 300, 400]
@@ -322,7 +324,7 @@ function showOrganizationHint()
 *
 *  @returns void
 */
-function openUploader(prefix, systemReferenceId, parentFolder, minWidth, sizes, maxFileCount, isPublic, parentFileId)
+function openUploader(prefix, systemReferenceId, parentFolder, allowedFileTypes, minWidth, sizes, maxFileCount, isPublic, parentFileId)
 {
 	systemReferenceId = systemReferenceId || '';
 	parentFolder = parentFolder || '';
@@ -330,8 +332,26 @@ function openUploader(prefix, systemReferenceId, parentFolder, minWidth, sizes, 
 	sizes = sizes || [];
 	maxFileCount = maxFileCount || 0;
 	isPublic = isPublic || '0';
+	allowedFileTypes = allowedFileTypes || [];
 	parentFileId = parentFileId || '';
-	$('#' + prefix + 'file-uploader-file').fileinput('refresh', {uploadExtraData: {parent_file_id: parentFileId, system_reference_id: systemReferenceId, parent_folder: parentFolder, minWidth: minWidth, sizes: sizes, isPublic: isPublic}, maxFileCount: maxFileCount});
+
+	if(allowedFileTypes.length == 0)
+	{
+		allowedFileExtensions = fileFmExtensions;
+	}
+	else
+	{
+		allowedFileExtensions = [];
+
+		$.each(allowedFileTypes, function( index, type )
+		{
+			$.merge(allowedFileExtensions, fileFmExtensionsType[type]);
+		});
+	}
+
+	console.log(allowedFileExtensions);
+
+	$('#' + prefix + 'file-uploader-file').fileinput('refresh', {allowedFileExtensions: allowedFileExtensions, maxFileCount: maxFileCount, uploadExtraData: {parent_file_id: parentFileId, system_reference_id: systemReferenceId, parent_folder: parentFolder, minWidth: minWidth, sizes: sizes, isPublic: isPublic}});
 	$('#' + prefix + 'file-uploader-modal').attr('data-files', '[]');
 	$('#' + prefix + 'file-uploader-modal').modal('show');
 }
