@@ -98,4 +98,6 @@ return array(
 	'skip' => 'Omitir',
 
 	'done' => 'Finalizar',
+
+	'uploadImage' => 'Clic aquí para cambiar la imagen',
 );
