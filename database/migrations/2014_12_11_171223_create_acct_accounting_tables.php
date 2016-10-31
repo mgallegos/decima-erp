@@ -188,7 +188,7 @@ class CreateAcctAccountingTables extends Migration {
 			//document
 			$table->date('document_date')->nullable();
 			$table->unsignedInteger('document_type_id')->index()->nullable();
-			$table->integer('document_number')->index()->nullable();
+			$table->string('document_number', 20)->index()->nullable();
 			$table->unsignedInteger('supplier_id')->index()->nullable();
 			$table->unsignedInteger('client_id')->index()->nullable();
 
