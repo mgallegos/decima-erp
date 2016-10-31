@@ -185,6 +185,13 @@ class CreateAcctAccountingTables extends Migration {
 			$table->boolean('is_editable')->default(false);
 			$table->char('status', 1)->index();//A = No Cuadrada, B = Cuadrada
 
+			//document
+			$table->date('document_date')->nullable();
+			$table->unsignedInteger('document_type_id')->index()->nullable();
+			$table->integer('document_number')->index()->nullable();
+			$table->unsignedInteger('supplier_id')->index()->nullable();
+			$table->unsignedInteger('client_id')->index()->nullable();
+
 			//Foreign Keys
 			$table->unsignedInteger('voucher_type_id')->index();
 			$table->foreign('voucher_type_id')->references('id')->on('ACCT_Voucher_Type');
