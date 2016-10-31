@@ -314,26 +314,46 @@ function showOrganizationHint()
 * @param array allowedFileTypes
 * 	An array with any of the following values: ['text', 'spreadsheet', 'pdf', 'document', 'presentation', 'image', 'compression', 'sound'];
 * @param integer minWidth
+* @param boolean sameWidthAsHeight
 * @param array sizes
 *		An array of array as follows: [200, 300, 400]
 * 	Sizes should not be greater than minimun width provider
 * @param integer maxFileCount
-* @param isPublic string
-* 	'1' if is public, '0' if is not public
+* @param isPublic boolean
+* 	true if is public, false if is not public
 * @param integer parentFileId
 *
 *  @returns void
 */
-function openUploader(prefix, systemReferenceId, parentFolder, allowedFileTypes, minWidth, sizes, maxFileCount, isPublic, parentFileId)
+function openUploader(prefix, systemReferenceId, parentFolder, allowedFileTypes, minWidth, sameWidthAsHeight, sizes, maxFileCount, isPublic, parentFileId)
 {
 	systemReferenceId = systemReferenceId || '';
 	parentFolder = parentFolder || '';
 	minWidth = minWidth || '';
+	sameWidthAsHeight = sameWidthAsHeight || '';
 	sizes = sizes || [];
 	maxFileCount = maxFileCount || 0;
 	isPublic = isPublic || '0';
 	allowedFileTypes = allowedFileTypes || [];
 	parentFileId = parentFileId || '';
+
+	if(sameWidthAsHeight)
+	{
+		sameWidthAsHeight = '1';
+	}
+	else
+	{
+		sameWidthAsHeight = '0';
+	}
+
+	if(isPublic)
+	{
+		isPublic = '1';
+	}
+	else
+	{
+		isPublic = '0';
+	}
 
 	if(allowedFileTypes.length == 0)
 	{
@@ -351,7 +371,7 @@ function openUploader(prefix, systemReferenceId, parentFolder, allowedFileTypes,
 
 	console.log(allowedFileExtensions);
 
-	$('#' + prefix + 'file-uploader-file').fileinput('refresh', {allowedFileExtensions: allowedFileExtensions, maxFileCount: maxFileCount, uploadExtraData: {parent_file_id: parentFileId, system_reference_id: systemReferenceId, parent_folder: parentFolder, minWidth: minWidth, sizes: sizes, isPublic: isPublic}});
+	$('#' + prefix + 'file-uploader-file').fileinput('refresh', {allowedFileExtensions: allowedFileExtensions, maxFileCount: maxFileCount, uploadExtraData: {parent_file_id: parentFileId, system_reference_id: systemReferenceId, parent_folder: parentFolder, minWidth: minWidth, sameWidthAsHeight: sameWidthAsHeight, sizes: sizes, isPublic: isPublic}});
 	$('#' + prefix + 'file-uploader-modal').attr('data-files', '[]');
 	$('#' + prefix + 'file-uploader-modal').modal('show');
 }
