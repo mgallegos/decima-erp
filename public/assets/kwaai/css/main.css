@@ -152,6 +152,11 @@ body {
 	margin-top: 10px;
 }
 
+.form-container-followed-by-grid-section {
+  border-bottom: none !important;
+  border-radius: 0 !important;
+}
+
 /* Section classes */
 
 .section-header {
