@@ -369,7 +369,7 @@ function openUploader(prefix, systemReferenceId, parentFolder, allowedFileTypes,
 		});
 	}
 
-	console.log(allowedFileExtensions);
+	// console.log(allowedFileExtensions);
 
 	$('#' + prefix + 'file-uploader-file').fileinput('refresh', {allowedFileExtensions: allowedFileExtensions, maxFileCount: maxFileCount, uploadExtraData: {parent_file_id: parentFileId, system_reference_id: systemReferenceId, parent_folder: parentFolder, minWidth: minWidth, sameWidthAsHeight: sameWidthAsHeight, sizes: sizes, isPublic: isPublic}});
 	$('#' + prefix + 'file-uploader-modal').attr('data-files', '[]');
