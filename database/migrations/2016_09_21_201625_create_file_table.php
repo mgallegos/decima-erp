@@ -24,6 +24,8 @@ class CreateFileTable extends Migration
             $table->string('key');
             $table->string('icon' , 20);
             $table->string('icon_html');
+            $table->float('width');
+            $table->float('height');
             $table->unsignedInteger('parent_file_id')->nullable();
             $table->string('system_reference_type' , 40);
             $table->unsignedInteger('system_reference_id');
