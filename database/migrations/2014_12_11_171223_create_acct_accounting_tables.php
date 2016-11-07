@@ -176,7 +176,7 @@ class CreateAcctAccountingTables extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('number')->index();
-			$table->dateTime('date');
+			$table->date('date');
 			$table->string('manual_reference')->nullable();
 			$table->text('remark');
 			$table->string('system_reference_type', 40)->index()->nullable();
