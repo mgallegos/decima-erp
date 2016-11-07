@@ -53,6 +53,8 @@ return array(
 
 	'defaultSuccessDeleteMessage' => 'El registro se ha eliminado exitosamente.',
 
+	'defaultSuccessDeleteMessage1' => 'Los registros eliminaron exitosamente.',
+
 	'defaultErrorMessage' => 'Su petición no ha podido ser procesada, por favor intente de nuevo más tarde.',
 
 	'tokenMismatchException' => 'El token de seguridad de su sesión ha expirado, por seguridad se procederá a refrescar la ventana de su navegador.',

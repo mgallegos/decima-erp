@@ -278,7 +278,7 @@ class ModuleAppManager implements ModuleAppManagementInterface {
       $this->ModuleTableName->delete(array($input['id']));
     });
 
-    return json_encode(array('success' => $this->Lang->get('module::app.successDeletedMessage')));
+    return json_encode(array('success' => $this->Lang->get('form.defaultSuccessDeleteMessage')));
   }
 
   /**
@@ -315,11 +315,11 @@ class ModuleAppManager implements ModuleAppManagementInterface {
 
      if($count == 1)
      {
-       return json_encode(array('success' => $this->Lang->get('module::app.successDeleted0Message')));
+       return json_encode(array('success' => $this->Lang->get('form.defaultSuccessDeleteMessage')));
      }
      else
      {
-       return json_encode(array('success' => $this->Lang->get('module::app.successDeleted1Message')));
+       return json_encode(array('success' => $this->Lang->get('form.defaultSuccessDeleteMessage1')));
      }
    }
 }

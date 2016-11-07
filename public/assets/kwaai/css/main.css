@@ -212,17 +212,17 @@ body {
 
 /* Grid app classes */
 
-.app-grid > .ui-jqgrid {
+.app-responsive-grid > .ui-jqgrid, .app-grid > .ui-jqgrid {
   border: 1px solid #cccccc !important;
   border-radius: 0 !important;
   border-top: 0 !important;
 }
 
-.app-grid-stand-alone > .ui-jqgrid {
+.app-responsive-stand-alone > .ui-jqgrid, .app-grid-stand-alone > .ui-jqgrid {
   border: 1px solid #cccccc !important;
 }
 
-.app-grid > .ui-jqgrid > .ui-jqgrid-view > .ui-jqgrid-titlebar {
+.app-responsive-grid > .ui-jqgrid > .ui-jqgrid-view > .ui-jqgrid-titlebar, .app-grid > .ui-jqgrid > .ui-jqgrid-view > .ui-jqgrid-titlebar {
   border-top-right-radius: 0px !important;
   border-top-left-radius: 0px !important;
 }
