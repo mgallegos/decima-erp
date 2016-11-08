@@ -264,6 +264,38 @@ $.fn.setAutocompleteLabel = function(value)
 };
 
 /**
+ * Get the value of an autocomplete based on its label.
+ *
+ *  @returns object
+ */
+$.fn.getAutocompleteValue = function()
+{
+	var label = $(this).val().toLowerCase(), value = false, autocomplete = this;
+
+	$.each(this.autocomplete( "option", "source" ), function(index, element)
+	{
+		if($.isPlainObject(element))
+		{
+			if(element.label.toLowerCase() == label)
+			{
+				value = element;
+				return false;
+			}
+		}
+		else
+		{
+    	if(element.toLowerCase() == label)
+			{
+				value = element;
+				return false;
+      }
+   	}
+ 	});
+
+	return value;
+};
+
+/**
  * Populate form fields.
  *
  * @param string object
