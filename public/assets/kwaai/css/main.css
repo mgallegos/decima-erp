@@ -585,6 +585,17 @@ body {
   width: auto !important;
 }
 
+/* File Upload */
+.image-uploader-link {
+  display: block !important;
+  width:100% !important;
+  padding: 8px !important;
+  color:white !important;
+  background-color: black !important;
+  opacity:0.7 !important;
+}
+
+
 /*Media*/
 @media (min-width: 992px) and (max-width: 1199px) {
 
