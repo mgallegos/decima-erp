@@ -102,4 +102,8 @@ return array(
 	'done' => 'Finalizar',
 
 	'uploadImage' => 'Clic aquí para cambiar la imagen',
+
+	'name' => 'Nombre',
+
+	'deleteMessageConfirmation' => '¿Está seguro que desea eliminar los registros seleccionados?',
 );

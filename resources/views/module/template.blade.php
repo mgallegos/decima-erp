@@ -193,7 +193,7 @@
 
 				rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
 
-				$('#module-app-delete-message').html($('#module-app-delete-message').attr('data-default-label').replace(':name', rowData.module_app_name));
+				// $('#module-app-delete-message').html($('#module-app-delete-message').attr('data-default-label').replace(':name', rowData.module_app_name));
 			}
 			else
 			{
@@ -437,7 +437,7 @@
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
 						<div class="form-group mg-hm">
-							{!! Form::label('module-app-name', Lang::get('module::app.name'), array('class' => 'control-label')) !!}
+							{!! Form::label('module-app-name', Lang::get('form.name'), array('class' => 'control-label')) !!}
 					    {!! Form::text('module-app-name', null , array('id' => 'module-app-name', 'class' => 'form-control', 'data-mg-required' => '')) !!}
 					    {!! Form::hidden('module-app-id', null, array('id' => 'module-app-id')) !!}
 			  		</div>
@@ -465,7 +465,8 @@
   <div class="modal-dialog modal-sm module-app-btn-delete">
     <div class="modal-content">
 			<div class="modal-body" style="padding: 20px 20px 0px 20px;">
-				<p id="module-app-delete-message" data-default-label="{{ Lang::get('module::app.deleteMessageConfirmation') }}"></p>
+				<p id="module-app-delete-message" data-default-label="{{ Lang::get('form.deleteMessageConfirmation') }}"></p>
+				<!-- <p id="module-app-delete-message" data-default-label="{{ Lang::get('module::app.deleteMessageConfirmation') }}"></p> -->
       </div>
 			<div class="modal-footer" style="text-align:center;">
 				<button type="button" class="btn btn-default" data-dismiss="modal">{{ Lang::get('form.no') }}</button>

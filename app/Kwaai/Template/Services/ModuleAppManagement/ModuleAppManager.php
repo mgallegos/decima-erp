@@ -246,6 +246,10 @@ class ModuleAppManager implements ModuleAppManagementInterface {
           {
             $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.field1'), 'field_lang_key' => 'module::app.field1', 'old_value' => ' ', 'new_value' => ''), $Journal);
           }
+          else if ($key == 'name')
+          {
+            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('form.' . camel_case($key)), 'field_lang_key' => 'form.' . camel_case($key), 'old_value' => $unchangedModuleTableNameValues[$key], 'new_value' => $value), $Journal);
+          }
           else
           {
             $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $unchangedModuleTableNameValues[$key], 'new_value' => $value), $Journal);
