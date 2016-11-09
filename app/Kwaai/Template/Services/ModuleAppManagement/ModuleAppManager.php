@@ -187,6 +187,7 @@ class ModuleAppManager implements ModuleAppManagementInterface {
     $input = eloquent_array_filter_for_insert($input);
 		$input = array_add($input, 'organization_id', $organizationId);
     // $input['date'] = $this->Carbon->createFromFormat($this->Lang->get('form.phpShortDateFormat'), $input['date'])->format('Y-m-d');
+    // $input['amount'] = remove_thousands_separator($input['amount']);
 
     $this->DB->transaction(function() use ($input, $loggedUserId, $organizationId)
 		{
@@ -215,6 +216,7 @@ class ModuleAppManager implements ModuleAppManagementInterface {
     unset($input['_token']);
     $input = eloquent_array_filter_for_update($input);
     // $input['date'] = $this->Carbon->createFromFormat($this->Lang->get('form.phpShortDateFormat'), $input['date'])->format('Y-m-d');
+    // $input['amount'] = remove_thousands_separator($input['amount']);
 
     $this->DB->transaction(function() use (&$input)
     {
