@@ -422,7 +422,7 @@
 	    	->setGridOption('postData',array('_token' => Session::token()))
 				->setGridEvent('onSelectRow', 'moduleAppOnSelectRowEvent')
 	    	->addColumn(array('index' => 'id', 'name' => 'module_app_id', 'hidden' => true))
-	    	->addColumn(array('label' => Lang::get('module::app.name'), 'index' => 'name' ,'name' => 'module_app_name'))
+	    	->addColumn(array('label' => Lang::get('form.name'), 'index' => 'name' ,'name' => 'module_app_name'))
 	    	->renderGrid();
 			!!}
 		</div>
