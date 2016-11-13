@@ -191,6 +191,7 @@ class CreateAcctAccountingTables extends Migration {
 			$table->string('document_number', 20)->index()->nullable();
 			$table->unsignedInteger('supplier_id')->index()->nullable();
 			$table->unsignedInteger('client_id')->index()->nullable();
+			$table->unsignedInteger('employee_id')->index()->nullable();
 
 			//Foreign Keys
 			$table->unsignedInteger('voucher_type_id')->index();
