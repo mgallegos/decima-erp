@@ -106,7 +106,7 @@
 								<span class="input-group-addon">
 									<i class="fa fa-envelope-o"></i>
 								</span>
-					    	{!! Form::text('om-email', null , array('id' => 'om-email', 'class' => 'form-control', 'placeholder'  =>  Lang::get('organization/organization-management.emailPlaceHolder'))) !!}
+					    	{!! Form::text('om-email', null , array('id' => 'om-email', 'class' => 'form-control', 'placeholder' => Lang::get('organization/organization-management.emailPlaceHolder'))) !!}
 					    </div>
 			  		</div>
 			  		<div class="form-group mg-hm">

@@ -51,9 +51,13 @@ return array(
 
 	'emailPlaceHolder' => 'info@suorganizacion.com',
 
-	'taxId' => 'ID de impuesto',
+	// 'taxId' => 'ID de impuesto',
 
-	'companyRegistration' => 'Número de Registro',
+	'taxId' => 'NIT',
+
+	// 'companyRegistration' => 'Número de Registro',
+
+	'companyRegistration' => 'NRC',
 
 	'address' => 'Dirección',
 

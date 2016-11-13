@@ -27,5 +27,5 @@ return array(
 
   'deleteMessageConfirmation' => '¿Está seguro que desea eliminar el ... ":name"?',
 
-  'deletedJournal' => 'Se ha eliminado el ... ":name"'
+  'deletedJournal' => 'Se eliminó el ... ":name"'
 );

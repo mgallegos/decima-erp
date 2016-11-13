@@ -25,7 +25,7 @@ function umGetAccessControlList()
 	permissionsModuleId = $('#um-permissions-module').val();
 	token = $('#app-token').val();
 
-	if(userId == undefined)
+	if(!$('#users-grid').isRowSelected())
 	{
 		$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 		return;
@@ -69,7 +69,7 @@ function umOnSelectRowEvent(id)
 	{
 		row = $('#users-grid').getRowData(value);
 
-		if(row['id'] == $('#um-organization-owner').val())
+		if(row['id'] == $('#um-organization-owner').val() && $('#um-user-root').isEmpty())
 		{
 			$('#um-organization-owner-info-message').html($('#um-organization-owner-info-message').html().replace(':email', row['email']));
 			$('#um-organization-owner-info-message').removeClass('hidden');
@@ -370,7 +370,7 @@ $(document).ready(function()
 		permissionsModuleId = $('#um-permissions-module').val();
 		token = $('#app-token').val();
 
-		if(userId == undefined)
+		if(!$('#users-grid').isRowSelected())
 		{
 			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 			return;
@@ -419,7 +419,7 @@ $(document).ready(function()
 		permissionsModuleId = $('#um-permissions-module').val();
 		token = $('#app-token').val();
 
-		if(userId == undefined)
+		if(!$('#users-grid').isRowSelected())
 		{
 			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 			return;
@@ -466,7 +466,7 @@ $(document).ready(function()
 		userId = $('#users-grid').getSelectedRowId();
 		token = $('#app-token').val();
 
-		if(userId == undefined)
+		if(!$('#users-grid').isRowSelected())
 		{
 			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 			return;
@@ -532,7 +532,7 @@ $(document).ready(function()
 		menuOptionModuleId = ui.item.value;
 		token = $('#app-token').val();
 
-		if(userId == undefined)
+		if(!$('#users-grid').isRowSelected())
 		{
 			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 			return;
@@ -592,7 +592,7 @@ $(document).ready(function()
 		permissionsModuleId = ui.item.value;
 		token = $('#app-token').val();
 
-		if(userId == undefined)
+		if(!$('#users-grid').isRowSelected())
 		{
 			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 			return;
@@ -654,7 +654,7 @@ $(document).ready(function()
 		menuId = ui.item.value;
 		token = $('#app-token').val();
 
-		if(userId == undefined)
+		if(!$('#users-grid').isRowSelected())
 		{
 			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 			return;
@@ -912,7 +912,7 @@ $(document).ready(function()
 		permissionsModuleId = $('#um-permissions-module').val();
 		token = $('#app-token').val();
 
-		if(userId == undefined)
+		if(!$('#users-grid').isRowSelected())
 		{
 			$('#um-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 			return;
