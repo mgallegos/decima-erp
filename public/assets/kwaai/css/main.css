@@ -157,6 +157,10 @@ body {
   border-radius: 0 !important;
 }
 
+.toolbar-preceded-by-form-section {
+  border-radius: 0 !important;
+}
+
 /* Section classes */
 
 .section-header {

@@ -848,3 +848,29 @@ $.fn.clearTags = function()
 	this.val('');
 	this.parent().find('.token').remove();
 };
+
+/**
+ * Validate token
+ *
+ * @param array event
+ * @param array availableTokens
+ *
+ * @returns void
+ */
+function validateToken(event, availableTokens)
+{
+	var exists = true;
+
+	$.each(availableTokens, function(index, token)
+	{
+		if (token.value == event.attrs.value)
+		{
+			exists = false;
+		}
+	});
+
+	if(exists === true)
+	{
+		event.preventDefault();
+	}
+}
