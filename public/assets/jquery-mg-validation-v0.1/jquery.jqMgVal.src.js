@@ -88,6 +88,7 @@
 				requiredFieldText: '* Required field',
 				dateRangeValidation: 'La fecha inicial no puede ser mayor a la fecha final.',
 				invalidDateHelpMessage: 'La fecha ingresada no cumple con el formato: día/mes/año.',
+				invalidDateTimeHelpMessage: 'La fecha y hora ingresada no cumple con el formato: día/mes/año hora:minutos a.m.',
 				positiveIntegerRegexHelpMessage: 'The value entered must be a positive integer, example: 1,000 o 1000',
 				positiveIntegerNoZeroRegexHelpMessage: 'The value entered must be a positive integer (zero is not allowed), example: 1,000 o 1000',
 				signedIntegerRegexHelpMessage: 'The value entered must be an integer, example: -1 o 1 o 1,000 o 1000',
@@ -141,7 +142,7 @@
 	{
 		var regex;
 
-		if(this.jqMgValIsEmpty() || (this.val() == '__/__/____' && this.attr('data-mg-validator') == 'date'))
+		if(this.jqMgValIsEmpty() || (this.val() == '__/__/____' && this.attr('data-mg-validator') == 'date') || (this.val() == '__/__/____ __:__ _._.' && this.attr('data-mg-validator') == 'datetime'))
 		{
 			if(this.attr('data-mg-required') != undefined)
 			{
@@ -149,7 +150,7 @@
 			}
 			else
 			{
-				if(this.val() == '__/__/____')
+				if(this.val() == '__/__/____' || this.val() == '__/__/____ __:__ _._.')
 				{
 					this.val('');
 				}
@@ -190,6 +191,43 @@
 				catch(e)
 				{
 					return opts.lang.invalidDateHelpMessage;
+				}
+			}
+			else if(this.attr('data-mg-validator')  == 'datetime')
+			{
+				// console.log('entre 1');
+				// console.log($.datepicker._getInst(this[0]));
+				// console.log($.datepicker.parseDateTime($.datepicker._defaults.dateFormat,  $.timepicker._defaults.timeFormat, this.val(), $.datepicker._getFormatConfig($.datepicker._getFormatConfig($.datepicker._getInst(this[0]))), $.timepicker._defaults));
+				// $.datepicker.parseDateTime($.datepicker._defaults.dateFormat,  $.timepicker._defaults.timeFormat, this.val(), $.datepicker._getFormatConfig($.datepicker._getFormatConfig($.datepicker._getInst(this[0]))), $.timepicker._defaults)
+				// $.datepicker.parseDateTime($.datepicker._defaults.dateFormat, $.timepicker._defaults.timeFormat, $('#inv-mm-date').val(), $.datepicker._getFormatConfig($.datepicker._getInst($('#inv-mm-date')[0])), $.timepicker._defaults);
+				// console.log($.datepicker.parseDateTime($.datepicker._defaults.dateFormat, $.timepicker._defaults.timeFormat, this.val(), $.datepicker._getFormatConfig($.datepicker._getInst(this[0])), $.timepicker._defaults));
+				// console.log($.datepicker.parseDateTime($.datepicker._defaults.dateFormat, $.timepicker._defaults.timeFormat, this.val(), $.datepicker._getFormatConfig($.datepicker._getInst(this[0])), $.timepicker._defaults));
+
+				try
+				{
+					console.log('entre 1');
+
+					$.datepicker.parseDateTime($.datepicker._defaults.dateFormat, $.timepicker._defaults.timeFormat, this.val(), $.datepicker._getFormatConfig($.datepicker._getInst(this[0])), $.timepicker._defaults);
+					// parseRes = $.datepicker.parseDateTime($.datepicker._defaults.dateFormat, $.timepicker._defaults.timeFormat, $('#inv-mm-date').val(), $.datepicker._getFormatConfig($.datepicker._getInst($('#inv-mm-date')[0])), $.timepicker._defaults);
+
+					console.log('entre 2');
+					// console.log(parseRes);
+
+					return true;
+
+					// if(parseRes)
+					// {
+					// 	return true;
+					// }
+
+					// return opts.lang.invalidDateTimeHelpMessage;
+				}
+				catch(e)
+				{
+					console.log(e);
+					console.log('entre 1.1');
+					console.log(opts.lang.invalidDateTimeHelpMessage);
+					return opts.lang.invalidDateTimeHelpMessage;
 				}
 			}
 			else
@@ -315,7 +353,7 @@
 	{
 		this.find('input[type=text],input[type=password],input[type=file],textarea,select').each(function()
 		{
-			if($(this).attr('data-mg-validator') != undefined && $(this).attr('data-mg-validator') != 'date')
+			if($(this).attr('data-mg-validator') != undefined && $(this).attr('data-mg-validator') != 'date' && $(this).attr('data-mg-validator') != 'datetime')
 			{
 				if(opts['validators'][$(this).attr('data-mg-validator')]['validationRegex'] != undefined)
 				{

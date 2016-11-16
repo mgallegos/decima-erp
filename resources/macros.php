@@ -146,6 +146,43 @@ Form::macro('date', function($name, $options = array(), $value = null)
 			</div>';
 });
 
+Form::macro('datetime', function($name, $options = array(), $value = null)
+{
+	if ( ! isset($options['name']))
+  {
+		$options['name'] = $name;
+	}
+	if ( !isset($options['placeholder']))
+  {
+		$options['placeholder'] = Lang::get('form.dateTimePlaceHolder');
+	}
+
+	if(!empty($value))
+	{
+		$options['value'] = $value;
+	}
+
+
+
+	$options['id'] = $name;
+	$options['type'] = 'text';
+	$options['data-mg-validator'] = 'datetime';
+	//$options['regex'] = Regex::getDate();
+	$options['maxlength'] = 10;
+
+	// FormJavascript::setCode("$('#".$options['id']."').datetimepicker({timeFormat: 'hh:mm tt', changeMonth: true, changeYear: true, onClose: function(selectedDate) { $( '#".$options['id']."' ).focusout(); $( '#".$options['id']."-calendar-button' ).focus(); }});$('#".$options['id']."').unbind('focus');$('#".$options['id']."').unbind('keypress');$('#".$options['id']."').mask('99/99/9999');$('#".$options['id']."').unbind('blur');$('#".$options['id']."-calendar-button').click(function(){ $('#".$options['id']."').datetimepicker('show');});");
+	FormJavascript::setCode("$('#".$options['id']."').datetimepicker({timeFormat: $.timepicker._defaults.timeFormat, changeMonth: true, changeYear: true, onClose: function(selectedDate) { $( '#".$options['id']."' ).focusout(); $( '#".$options['id']."-calendar-button' ).focus(); }});  $('#".$options['id']."').unbind('focus'); $('#".$options['id']."').unbind('keypress');  $('#".$options['id']."').mask('99/99/9999 99:99 *.*.');$('#".$options['id']."').unbind('blur');$('#".$options['id']."-calendar-button').click(function(){ $('#".$options['id']."').datetimepicker('show');});");
+
+	return '<div class="input-group">
+				<input'.Html::attributes($options).'>
+				<span class="input-group-btn">
+					<button id="'.$options['id'].'-calendar-button" class="btn btn-default" type="button">
+						<i class="fa fa-calendar-o"></i>
+					</button>
+				</span>
+			</div>';
+});
+
 
 Form::macro('daterange', function($nameFrom, $nameTo, $options = array(), $valueFrom = null, $valueTo = null)
 {

@@ -19,6 +19,7 @@
 {!! Html::style('assets/jquery-free-jqGrid-v4.13.1/css/ui.jqgrid.css') !!}
 {!! Html::style('assets/jquery-calculator-v1.4.1/css/jquery.calculator.css') !!}
 {!! Html::style('assets/jquery-uix-multiselect-v2.0/css/jquery.uix.multiselect.css') !!}
+{!! Html::style('assets/jquery-ui-timepicker-addon-v1.6.3/dist/jquery-ui-timepicker-addon.min.css') !!}
 {!! Html::style('assets/amcharts-v3.17.0/plugins/export/export.css') !!}
 {!! Html::style('assets/bootstrap-tokenfield-dev-9c06df4/css/bootstrap-tokenfield.min.css') !!}
 {!! Html::style('assets/intro-js-v2.3.0/minified/introjs.min.css') !!}

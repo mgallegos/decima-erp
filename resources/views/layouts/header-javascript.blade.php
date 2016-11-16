@@ -18,6 +18,7 @@
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/jquery.ui.autocomplete.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.datepicker.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.menu.min.js') }}"></script>
+<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.slider.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect-shake.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect-highlight.min.js') }}"></script>
@@ -29,6 +30,7 @@
 <script src="{{ URL::asset('assets/jquery-maskedinput-v1.4.1/jquery.maskedinput.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-uix-multiselect-v2.0/js/jquery.uix.multiselect.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-highlight-v4.0/jquery.highlight.min.js') }}"></script>
+<script src="{{ URL::asset('assets/jquery-ui-timepicker-addon-v1.6.3/dist/jquery-ui-timepicker-addon.min.js') }}"></script>
 <script src="{{ URL::asset('assets/bootstrap-tokenfield-dev-9c06df4/bootstrap-tokenfield.min.js') }}"></script>
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/amcharts.js') }}"></script>
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/themes/light.js') }}"></script>
@@ -62,6 +64,7 @@
 {{-- Localization scripts --}}
 <script src="{{ URL::asset('assets/jquery-mg-validation-v0.1/i18n/jquery.jqMgVal.locale-es.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/i18n/jquery.ui.datepicker-es.min.js') }}"></script>
+<script src="{{ URL::asset('assets/jquery-ui-timepicker-addon-v1.6.3/dist/i18n/jquery-ui-timepicker-es.js') }}"></script>
 <!-- <script src="{{ URL::asset('assets/jquery-jqGrid-v4.8.2/js/i18n/grid.locale-en.js') }}"></script> -->
 <!-- <script src="{{ URL::asset('assets/jquery-jqGrid-v4.8.2/js/i18n/grid.locale-es.js') }}"></script> -->
 <script src="{{ URL::asset('assets/jquery-free-jqGrid-v4.13.1/js/i18n/grid.locale-es.min.js') }}"></script>

@@ -83,6 +83,8 @@ return array(
 
 	'dateFormat' => 'dd/mm/yy',
 
+	'dateTimePlaceHolder' => 'dd/mm/yy 12:00 a.m.',
+
 	'phpShortDateFormat' => 'd/m/Y',
 
 	'phpDateFormat' => 'd/m/Y h:i:s A',
