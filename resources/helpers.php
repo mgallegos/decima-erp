@@ -61,7 +61,7 @@ if ( ! function_exists('eloquent_array_filter'))
                 {
                   return false;
                 }
-                elseif (is_string($a) && trim($a) === "")
+                elseif (is_string($a) && (trim($a) == ''  || trim($a) == ' '))
                 {
                   $a = null;
                   return true;
