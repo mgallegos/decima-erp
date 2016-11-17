@@ -338,8 +338,9 @@
 				//->setGridOption('groupingView', array('groupField' => array('acct_tc_pl_bs_category'), 'groupColumnShow' => array(false), 'groupSummary' => array(false), 'groupOrder' => array('asc')))
 				->setGridEvent('loadComplete', 'moduleAppLoadCompleteEvent')
 				->addColumn(array('label' => Lang::get('form.name'), 'index' => 'name' ,'name' => 'module_app_name'))
-				->addColumn(array('label' => Lang::get('module::app.date'), 'index' => 't.date', 'name' => 'date', 'width' => 90, 'formatter' => 'date', 'align' => 'center'))
-				->addColumn(array('label' => Lang::get('module::app.money'), 'index' => '', 'name' => 'money', 'formatter' => 'currency', 'align'=>'right', 'width' => 100, 'hidden' => false, 'formatoptions' => array('prefix' => OrganizationManager::getOrganizationCurrencySymbol() . ' ')))
+				->addColumn(array('label' => Lang::get('form.status'), 'index' => 'status', 'name' => 'module_app_status', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('form.statusGridText')), 'align' => 'center', 'hidden' => false))
+				->addColumn(array('label' => Lang::get('module::app.date'), 'index' => 'date', 'name' => 'date', 'width' => 90, 'formatter' => 'date', 'align' => 'center'))
+				->addColumn(array('label' => Lang::get('module::app.money'), 'index' => 'money', 'name' => 'money', 'formatter' => 'currency', 'align'=>'right', 'width' => 100, 'hidden' => false, 'formatoptions' => array('prefix' => OrganizationManager::getOrganizationCurrencySymbol() . ' ')))
 				->renderGrid();
 			!!}
 		</div>

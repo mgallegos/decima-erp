@@ -109,6 +109,8 @@ return array(
 
 	'deleteMessageConfirmation' => '¿Está seguro que desea eliminar los registros seleccionados?',
 
+	'status' => 'Estado',
+
 	'P' => 'Pendiente',
 
   'U' => 'Autorizado',
