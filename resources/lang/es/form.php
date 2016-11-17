@@ -114,4 +114,34 @@ return array(
   'U' => 'Autorizado',
 
   'A' => 'Anulado',
+
+	'M' => 'Masculino',
+
+  'F' => 'Femenino',
+
+  'S' => 'Soltero',
+
+  'C' => 'Casado',
+
+  'V' => 'Viudo',
+
+	'O' => 'Aprobada',
+
+  'R' => 'Rechazada',
+
+  'B' => 'Abierta',
+
+	'T' => 'Activo',
+
+  'I' => 'Inactivo',
+
+  'L' => 'Con licencia',
+
+	'D' => 'Borrador',
+
+	'E' => 'Publicado',
+
+	'H' => 'Oculto',
+
+	'statusGridText' => ':;P:Pendiente;U:Autorizado;A:Anulado;M:Masculino;F:Femenino;S:Soltero,C:Casado;V:Viudo,O:Aprobada;R:Rechazada;B:Abierta;T:Activo;I:Inactivo;L:Con licencia;D:Borrador;E:Publicado;H:Oculto',
 );
