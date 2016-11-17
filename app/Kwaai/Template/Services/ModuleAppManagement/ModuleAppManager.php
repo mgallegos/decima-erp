@@ -221,7 +221,7 @@ class ModuleAppManager implements ModuleAppManagementInterface {
     $this->DB->transaction(function() use (&$input)
     {
       $ModuleTableName = $this->ModuleTableName->byId($input['id']);
-      $unchangedModuleTableNameValues = $ModuleTableName->toArray();
+      $unchangedValues = $ModuleTableName->toArray();
 
       $this->ModuleTableName->update($input, $ModuleTableName);
 
@@ -229,7 +229,7 @@ class ModuleAppManager implements ModuleAppManagementInterface {
 
       foreach ($input as $key => $value)
       {
-        if($unchangedModuleTableNameValues[$key] != $value)
+        if($unchangedValues[$key] != $value)
         {
           $diff++;
 
@@ -240,7 +240,7 @@ class ModuleAppManager implements ModuleAppManagementInterface {
 
           if($key == 'field0')//Para autocomple de estados
           {
-            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.field0'), 'field_lang_key' => 'module::app.field0', 'old_value' => $this->Lang->get('form.' . $unchangedModuleTableNameValues[$key]), 'new_value' => $this->Lang->get('form.' . $value)), $Journal);
+            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.field0'), 'field_lang_key' => 'module::app.field0', 'old_value' => $this->Lang->get('form.' . $unchangedValues[$key]), 'new_value' => $this->Lang->get('form.' . $value)), $Journal);
           }
           else if ($key == 'field1')
           {
@@ -248,11 +248,11 @@ class ModuleAppManager implements ModuleAppManagementInterface {
           }
           else if ($key == 'name')
           {
-            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('form.' . camel_case($key)), 'field_lang_key' => 'form.' . camel_case($key), 'old_value' => $unchangedModuleTableNameValues[$key], 'new_value' => $value), $Journal);
+            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('form.' . camel_case($key)), 'field_lang_key' => 'form.' . camel_case($key), 'old_value' => $unchangedValues[$key], 'new_value' => $value), $Journal);
           }
           else
           {
-            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $unchangedModuleTableNameValues[$key], 'new_value' => $value), $Journal);
+            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $unchangedValues[$key], 'new_value' => $value), $Journal);
           }
         }
       }
