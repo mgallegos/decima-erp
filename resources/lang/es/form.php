@@ -89,6 +89,8 @@ return array(
 
 	'phpDateFormat' => 'd/m/Y h:i:s A',
 
+	'phpDateTimeFormat' => 'd/m/Y h:i a',
+
 	'mysqlDateFormat' => '%d/%m/%Y',
 
 	'defaultNumericValue' => '0.00',
