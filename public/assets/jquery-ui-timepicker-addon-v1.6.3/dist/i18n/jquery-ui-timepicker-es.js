@@ -16,8 +16,8 @@
 		// timeFormat: 'HH:mm',
 		timeFormat: 'hh:mm tt',
 		timeSuffix: '',
-		amNames: ['a.m.', 'AM', 'A'],
-		pmNames: ['p.m.', 'PM', 'P'],
+		amNames: ['am', 'AM', 'A'],
+		pmNames: ['pm', 'PM', 'P'],
 		isRTL: false
 	};
 	$.timepicker.setDefaults($.timepicker.regional['es']);
