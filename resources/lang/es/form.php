@@ -113,6 +113,8 @@ return array(
 
 	'status' => 'Estado',
 
+	'statusPlural' => 'Estado',
+
 	'P' => 'Pendiente',
 
   'U' => 'Autorizado',

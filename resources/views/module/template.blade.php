@@ -468,7 +468,7 @@
   <div class="modal-dialog modal-sm module-app-btn-delete">
     <div class="modal-content">
 			<div class="modal-body" style="padding: 20px 20px 0px 20px;">
-				<p id="module-app-delete-message" data-default-label="{{ Lang::get('form.deleteMessageConfirmation') }}"></p>
+				<p id="module-app-delete-message">{{ Lang::get('form.deleteMessageConfirmation') }}</p>
 				<!-- <p id="module-app-delete-message" data-default-label="{{ Lang::get('module::app.deleteMessageConfirmation') }}"></p> -->
       </div>
 			<div class="modal-footer" style="text-align:center;">
