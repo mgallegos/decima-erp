@@ -238,9 +238,9 @@ class ModuleAppManager implements ModuleAppManagementInterface {
             $Journal = $this->Journal->create(array('journalized_id' => $ModuleTableName->id, 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $this->AuthenticationManager->getLoggedUserId(), 'organization_id' => $this->AuthenticationManager->getCurrentUserOrganizationId()));
           }
 
-          if($key == 'field0')//Para autocomple de estados
+          if($key == 'status')//Para autocomple de estados
           {
-            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.field0'), 'field_lang_key' => 'module::app.field0', 'old_value' => $this->Lang->get('form.' . $unchangedValues[$key]), 'new_value' => $this->Lang->get('form.' . $value)), $Journal);
+            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('form.status'), 'field_lang_key' => 'form.status', 'old_value' => $this->Lang->get('form.' . $unchangedValues[$key]), 'new_value' => $this->Lang->get('form.' . $value)), $Journal);
           }
           else if ($key == 'field1')
           {

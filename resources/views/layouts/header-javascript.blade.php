@@ -8,7 +8,7 @@
 
 <script src="{{ URL::asset('assets/jquery-v2.0.3/jquery.js') }}"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script> -->
-<script src="{{ URL::asset('assets/jquery-free-jqGrid-v4.13.1/js/jquery.jqgrid.min.js') }}"></script>
+<script src="{{ URL::asset('assets/jquery-free-jqGrid-v4.13.5/js/jquery.jqgrid.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.core.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.position.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.widget.min.js') }}"></script>
@@ -64,25 +64,4 @@
   $.fn.jqMgVal.defaults.failureIconClass = 'fa fa-times-circle';
 </script>
 
-{{-- Localization scripts --}}
-<script src="{{ URL::asset('assets/jquery-mg-validation-v0.1/i18n/jquery.jqMgVal.locale-es.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/i18n/jquery.ui.datepicker-es.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-timepicker-addon-v1.6.3/dist/i18n/jquery-ui-timepicker-es.js') }}"></script>
-<!-- <script src="{{ URL::asset('assets/jquery-jqGrid-v4.8.2/js/i18n/grid.locale-en.js') }}"></script> -->
-<!-- <script src="{{ URL::asset('assets/jquery-jqGrid-v4.8.2/js/i18n/grid.locale-es.js') }}"></script> -->
-<script src="{{ URL::asset('assets/jquery-free-jqGrid-v4.13.1/js/i18n/grid.locale-es.min.js') }}"></script>
-<!-- <script src="{{ URL::asset('assets/jquery-free-jqGrid-v4.13.1/js/i18n/grid.locale-en.min.js') }}"></script> -->
-<script src="{{ URL::asset('assets/jquery-calculator-v1.4.1/js/i18n/jquery.calculator-es.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-uix-multiselect-v2.0/js/locales/jquery.uix.multiselect_es.js') }}"></script>
-<script src="{{ URL::asset('assets/amcharts-v3.17.0/lang/es.js') }}"></script>
-
-<script type='text/javascript'>
-	$.jgrid.locales["{{ Lang::locale() }}"].formatter.date.newformat = "{{ Lang::get('form.phpShortDateFormat')}}";
-  $.jgrid.locales["{{ Lang::locale() }}"].formatter.integer.thousandsSeparator = "{{ Lang::get('form.thousandsSeparator')}}";
-  $.jgrid.locales["{{ Lang::locale() }}"].formatter.number.thousandsSeparator = "{{ Lang::get('form.thousandsSeparator')}}";
-  $.jgrid.locales["{{ Lang::locale() }}"].formatter.number.decimalSeparator = "{{ Lang::get('form.decimalSeparator')}}";
-  $.jgrid.locales["{{ Lang::locale() }}"].formatter.number.defaultValue = "{{ Lang::get('form.defaultNumericValue')}}";
-  $.jgrid.locales["{{ Lang::locale() }}"].formatter.currency.thousandsSeparator = "{{ Lang::get('form.thousandsSeparator')}}";
-  $.jgrid.locales["{{ Lang::locale() }}"].formatter.currency.decimalSeparator = "{{ Lang::get('form.decimalSeparator')}}";
-  $.jgrid.locales["{{ Lang::locale() }}"].formatter.currency.defaultValue = "{{ Lang::get('form.defaultNumericValue')}}";
-</script>
+@include('layouts.header-javascript-localization')
