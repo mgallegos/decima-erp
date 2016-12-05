@@ -7,9 +7,10 @@
  --}}
 <script src="{{ URL::asset('assets/jquery-mg-validation-v0.1/i18n/jquery.jqMgVal.locale-es.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/i18n/jquery.ui.datepicker-es.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-timepicker-addon-v1.6.3/dist/i18n/jquery-ui-timepicker-es.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-free-jqGrid-v4.13.5/js/i18n/grid.locale-es.min.js') }}"></script>
-<!-- <script src="{{ URL::asset('assets/jquery-free-jqGrid-v4.13.5/js/i18n/grid.locale-en.min.js') }}"></script> -->
+<script src="{{ URL::asset('assets/jquery-ui-timepicker-addon-v1.6.3/dist/i18n/jquery-ui-timepicker-es.js') }}"></script> <!-- No cambiar, tiene diferente el am y pm-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.13.5/js/i18n/grid.locale-es.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.13.5/js/i18n/grid.locale-en.min.js"></script> -->
+
 <script src="{{ URL::asset('assets/jquery-calculator-v2.0.1/jquery.calculator-es.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-uix-multiselect-v2.0/js/locales/jquery.uix.multiselect_es.js') }}"></script>
 <!-- <script src="{{ URL::asset('assets/amcharts-v3.17.0/lang/es.js') }}"></script> -->

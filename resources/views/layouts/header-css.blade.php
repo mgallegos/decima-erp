@@ -18,10 +18,10 @@
 {!! Html::style('assets/font-awesome-v4.7.0/css/font-awesome.min.css') !!}
 {!! Html::style('assets/jquery-ui-v1.10.3/css/smoothness/jquery-ui-1.10.3.custom.css') !!}
 {!! Html::style('assets/jquery-free-jqGrid-v4.13.5/css/ui.jqgrid.css') !!}
-{!! Html::style('assets/jquery-calculator-v1.4.1/css/jquery.calculator.css') !!}
+{!! Html::style('assets/jquery-calculator-v2.0.1/jquery.calculator.css') !!}
 {!! Html::style('assets/jquery-uix-multiselect-v2.0/css/jquery.uix.multiselect.css') !!}
 {!! Html::style('assets/jquery-ui-timepicker-addon-v1.6.3/dist/jquery-ui-timepicker-addon.min.css') !!}
-{!! Html::style('assets/amcharts-v3.17.0/plugins/export/export.css') !!}
+<!-- {!! Html::style('assets/amcharts-v3.17.0/plugins/export/export.css') !!} -->
 {!! Html::style('assets/bootstrap-tokenfield-dev-9c06df4/css/bootstrap-tokenfield.min.css') !!}
 {!! Html::style('assets/intro-js-v2.3.0/minified/introjs.min.css') !!}
 {!! Html::style('assets/bootstrap-fileinput-v4.3.5/css/fileinput.min.css') !!}

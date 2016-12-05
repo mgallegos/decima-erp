@@ -6,7 +6,7 @@
  * See COPYRIGHT and LICENSE.
  --}}
 
-<script src="{{ URL::asset('assets/jquery-v2.0.3/jquery.js') }}"></script>
+<script src="{{ URL::asset('assets/jquery-v2.2.4/jquery.js') }}"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script> -->
 <script src="{{ URL::asset('assets/jquery-free-jqGrid-v4.13.5/js/jquery.jqgrid.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.core.min.js') }}"></script>
@@ -29,18 +29,19 @@
 <script src="{{ URL::asset('assets/jquery-history-v1.8/jquery.history.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-scrollto-v1.4.11/jquery.scrollTo.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-localscroll-v1.3.5/jquery.localScroll.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-calculator-v1.4.1/js/jquery.calculator.min.js') }}"></script>
+<script src="{{ URL::asset('assets/jquery-calculator-v2.0.1/jquery.plugin.min.js') }}"></script>
+<script src="{{ URL::asset('assets/jquery-calculator-v2.0.1/jquery.calculator.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-maskedinput-v1.4.1/jquery.maskedinput.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-uix-multiselect-v2.0/js/jquery.uix.multiselect.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-highlight-v4.0/jquery.highlight.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-timepicker-addon-v1.6.3/dist/jquery-ui-timepicker-addon.min.js') }}"></script>
 <script src="{{ URL::asset('assets/bootstrap-tokenfield-dev-9c06df4/bootstrap-tokenfield.min.js') }}"></script>
-<script src="{{ URL::asset('assets/amcharts-v3.17.0/amcharts.js') }}"></script>
+<!-- <script src="{{ URL::asset('assets/amcharts-v3.17.0/amcharts.js') }}"></script>
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/themes/light.js') }}"></script>
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/serial.js') }}"></script>
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/pie.js') }}"></script>
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/plugins/export/export.min.js') }}"></script>
-<script src="{{ URL::asset('assets/amcharts-v3.17.0/plugins/responsive/responsive.min.js') }}"></script>
+<script src="{{ URL::asset('assets/amcharts-v3.17.0/plugins/responsive/responsive.min.js') }}"></script> -->
 <script src="{{ URL::asset('assets/intro-js-v2.3.0/minified/intro.min.js') }}"></script>
 
 
