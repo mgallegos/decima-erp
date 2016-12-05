@@ -16,7 +16,7 @@ return array(
 	|
 	*/
 
-	'system_name' => 'DecimaERP v1.0.1',
+	'system_name' => 'DecimaERP v1.1.0',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -128,5 +128,13 @@ return array(
 	|
 	*/
 	'email_organization_user' => env('EMAIL_ORGANIZATION_USER', true),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Use CDN jasvascript libraries (requieres an internet conection)
+	|--------------------------------------------------------------------------
+	|
+	*/
+	'cdnjs' => env('CDNJS', true),
 
 );
