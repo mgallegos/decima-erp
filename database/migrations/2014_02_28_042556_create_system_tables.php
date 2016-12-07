@@ -46,8 +46,8 @@ class CreateSystemTables extends Migration {
 			$table->string('tax_id_abbreviation')->nullable();
 			$table->string('registration_number_name')->nullable();
 			$table->string('registration_number_abbreviation')->nullable();
-			$table->string('single_identity_document_number_name')-nullable();
-			$table->string('single_identity_document_number_abbreviation')-nullable();
+			$table->string('single_identity_document_number_name')->nullable();
+			$table->string('single_identity_document_number_abbreviation')->nullable();
 			$table->string('social_security_number_name')->nullable();
 			$table->string('social_security_number_abbreviation')->nullable();
 			$table->string('single_previsional_number_name')->nullable();
