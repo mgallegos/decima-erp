@@ -42,6 +42,16 @@ class CreateSystemTables extends Migration {
 			$table->string('name',60);
 			$table->string('region_name',60);
 			$table->string('region_lang_key',100);
+			$table->string('tax_id_name')->nullable();
+			$table->string('tax_id_abbreviation')->nullable();
+			$table->string('registration_number_name')->nullable();
+			$table->string('registration_number_abbreviation')->nullable();
+			$table->string('single_identity_document_number_name')-nullable();
+			$table->string('single_identity_document_number_abbreviation')-nullable();
+			$table->string('social_security_number_name')->nullable();
+			$table->string('social_security_number_abbreviation')->nullable();
+			$table->string('single_previsional_number_name')->nullable();
+			$table->string('single_previsional_number_abbreviation')->nullable();
 
 			//Foreign Keys
 			$table->unsignedInteger('currency_id')->nullable();
