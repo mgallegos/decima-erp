@@ -3,7 +3,7 @@
    Written by David Esperalta (http://www.davidesperalta.com) October 2008. */
 (function($) { // hide the namespace
 	$.calculator.regionalOptions['es'] = {
-		decimalChar: ',',
+		decimalChar: '.',
 		buttonText: '...', buttonStatus: 'Abrir la calculadora',
 		closeText: 'Cerrar', closeStatus: 'Cerrar la calculadora',
 		useText: 'Usar', useStatus: 'Usar el valor actual',
