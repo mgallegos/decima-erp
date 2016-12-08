@@ -99,7 +99,7 @@ Form::macro('money', function($name, $options = array(), $value = null)
 	$options['data-mg-validator'] = 'money';
 	$options['value'] = $value;
 
-	FormJavascript::setCode("$('#".$options['id']."-calculator').click(function(){ $('#".$options['id']."').calculator({useThemeRoller: true, onOpen: function(value, inst) { $(this).val($.isNumeric(value.replace(/,/g,''))?value.replace(/,/g,''):'0.00');},onClose: function(value, inst) { $( '#".$options['id']."' ).focusout(); $( '#".$options['id']."-calculator' ).focus(); $( '#".$options['id']."' ).calculator('destroy') }}); $('#".$options['id']."').calculator('show');});");
+	FormJavascript::setCode("$('#".$options['id']."-calculator').click(function(){ $('#".$options['id']."').calculator({precision:2, useThemeRoller: true, onOpen: function(value, inst) { $(this).val($.isNumeric(value.replace(/,/g,''))?value.replace(/,/g,''):'0.00');},onClose: function(value, inst) { $( '#".$options['id']."' ).focusout(); $( '#".$options['id']."-calculator' ).focus(); $( '#".$options['id']."' ).calculator('destroy') }}); $('#".$options['id']."').calculator('show');});");
 
 	return '<div class="input-group">
 				<span class="input-group-addon">' . OrganizationManager::getOrganizationCurrencySymbol() . '</span>
