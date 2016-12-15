@@ -43,6 +43,14 @@
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/plugins/export/export.min.js') }}"></script>
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/plugins/responsive/responsive.min.js') }}"></script> -->
 <script src="{{ URL::asset('assets/intro-js-v2.3.0/minified/intro.min.js') }}"></script>
+{!! Html::script('assets/bootstrap-fileinput-v4.3.5/js/plugins/canvas-to-blob.min.js') !!}
+{!! Html::script('assets/bootstrap-fileinput-v4.3.5/js/plugins/sortable.min.js') !!}
+{!! Html::script('assets/bootstrap-fileinput-v4.3.5/js/plugins/purify.min.js') !!}
+{!! Html::script('assets/bootstrap-fileinput-v4.3.5/js/fileinput.min.js') !!}
+{!! Html::script('assets/bootstrap-fileinput-v4.3.5/themes/fa/theme.js') !!}
+{!! Html::script('assets/bootstrap-fileinput-v4.3.5/js/locales/es.js') !!}
+{!! Html::script('assets/quill-v1.0.4/js/quill.min.js') !!}
+{!! Html::style('assets/quill-v1.0.4/css/quill.snow.css') !!}
 
 
 <script type='text/javascript'>
