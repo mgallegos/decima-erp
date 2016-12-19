@@ -50,7 +50,6 @@
 {!! Html::script('assets/bootstrap-fileinput-v4.3.5/themes/fa/theme.js') !!}
 {!! Html::script('assets/bootstrap-fileinput-v4.3.5/js/locales/es.js') !!}
 {!! Html::script('assets/quill-v1.0.4/js/quill.min.js') !!}
-{!! Html::style('assets/quill-v1.0.4/css/quill.snow.css') !!}
 
 
 <script type='text/javascript'>
