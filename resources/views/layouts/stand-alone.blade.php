@@ -9,8 +9,13 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	@include('layouts.header-css')
-	@include('layouts.header-javascript')
+  @if (Config::get('system-security.cdnjs'))
+    @include('layouts.header-css-cdn')
+    @include('layouts.header-javascript-cdn')
+  @else
+    @include('layouts.header-css')
+    @include('layouts.header-javascript')
+  @endif
 	<title>{{ AppManager::getSystemName() }}</title>
 </head>
 <body id='body'>
