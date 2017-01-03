@@ -13,8 +13,8 @@
 	<div class="col-lg-12 col-md-12">
 		<div id="om-btn-toolbar" class="section-header btn-toolbar" role="toolbar">
 			<div id="om-btn-group-1" class="btn-group btn-group-app-toolbar">
-				{!! Form::button('<i class="fa fa-plus"></i> ' . Lang::get('toolbar.new'), array('id' => 'om-btn-new', 'class' => 'btn btn-default om-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('organization/organization-management.new'))) !!}
-				{!! Form::button('<i class="fa fa-refresh"></i> ' . Lang::get('toolbar.refresh'), array('id' => 'om-btn-refresh', 'class' => 'btn btn-default om-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('toolbar.refreshLongText'))) !!}
+				{!! Form::button('<i class="fa fa-plus"></i> ' . Lang::get('toolbar.new'), array('id' => 'om-btn-new', 'class' => 'btn btn-default om-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('organization/organization-management.new'))) !!}
+				{!! Form::button('<i class="fa fa-refresh"></i> ' . Lang::get('toolbar.refresh'), array('id' => 'om-btn-refresh', 'class' => 'btn btn-default om-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('toolbar.refreshLongText'))) !!}
 				<div class="btn-group">
 					{!! Form::button('<i class="fa fa-share-square-o"></i> ' . Lang::get('toolbar.export') . ' <span class="caret"></span>', array('class' => 'btn btn-default dropdown-toggle', 'data-container' => 'body', 'data-toggle' => 'dropdown')) !!}
 					<ul class="dropdown-menu">
@@ -24,12 +24,12 @@
 				</div>
 			</div>
 			<div id="om-btn-group-2" class="btn-group btn-group-app-toolbar">
-				{!! Form::button('<i class="fa fa-edit"></i> ' . Lang::get('toolbar.edit'), array('id' => 'om-btn-edit', 'class' => 'btn btn-default om-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('organization/organization-management.edit'))) !!}
-				{!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.remove'), array('id' => 'om-btn-delete', 'class' => 'btn btn-default om-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('organization/organization-management.delete'))) !!}
+				{!! Form::button('<i class="fa fa-edit"></i> ' . Lang::get('toolbar.edit'), array('id' => 'om-btn-edit', 'class' => 'btn btn-default om-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('organization/organization-management.edit'))) !!}
+				{!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.remove'), array('id' => 'om-btn-delete', 'class' => 'btn btn-default om-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('organization/organization-management.delete'))) !!}
 			</div>
 			<div id="om-btn-group-3" class="btn-group btn-group-app-toolbar">
-				{!! Form::button('<i class="fa fa-save"></i> ' . Lang::get('toolbar.save'), array('id' => 'om-btn-save', 'class' => 'btn btn-default om-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('organization/organization-management.save'))) !!}
-				{!! Form::button('<i class="fa fa-undo"></i> ' . Lang::get('toolbar.close'), array('id' => 'om-btn-close', 'class' => 'btn btn-default om-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
+				{!! Form::button('<i class="fa fa-save"></i> ' . Lang::get('toolbar.save'), array('id' => 'om-btn-save', 'class' => 'btn btn-default om-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('organization/organization-management.save'))) !!}
+				{!! Form::button('<i class="fa fa-undo"></i> ' . Lang::get('toolbar.close'), array('id' => 'om-btn-close', 'class' => 'btn btn-default om-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
 			</div>
 		</div>
 		@if ($showWelcomeMessage)

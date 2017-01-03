@@ -16,7 +16,7 @@
  */
 function closeTab(id)
 {
-	if($('a[href=#' + id +']').parent().hasClass('active'))
+	if($('a[href="#' + id +'"]').parent().hasClass('active'))
 	{
 		destroyApp(id);
 		$('#apps-tabs a:last').click();
@@ -42,7 +42,7 @@ function closeTab(id)
  */
 function destroyApp(id)
 {
-	$('a[href=#' + id +']').parent().remove();
+	$('a[href="#' + id +'"]').parent().remove();
 	$('#' + id).remove();
 }
 
@@ -58,6 +58,7 @@ function onClickTabEvent(url)
 	changeWindowsUrl(url);
 	$('#user-apps-content').hideModulesApps();
 	setCurrentApp();
+	$('.decima-erp-tooltip').tooltip('hide');
 }
 
 /**

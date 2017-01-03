@@ -30,10 +30,10 @@
 							<li><a id='um-grid-admin-users-mode' class="fake-link"><i class="fa fa-users"></i> {{ Lang::get('security/user-management.gridAdminUserMode') }}</a></li>
 						</ul>
 					</div>
-					{!! Form::button('<i class="fa fa-plus"></i> ' . Lang::get('security/user-management.newAdmin'), array('id' => 'um-btn-new-admin', 'class' => 'btn btn-default um-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('security/user-management.newAdminLongText'))) !!}
+					{!! Form::button('<i class="fa fa-plus"></i> ' . Lang::get('security/user-management.newAdmin'), array('id' => 'um-btn-new-admin', 'class' => 'btn btn-default um-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('security/user-management.newAdminLongText'))) !!}
 				@endif
-				{!! Form::button('<i class="fa fa-plus"></i> ' . Lang::get('toolbar.new'), array('id' => 'um-btn-new', 'class' => 'btn btn-default um-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('security/user-management.new'))) !!}
-				{!! Form::button('<i class="fa fa-refresh"></i> ' . Lang::get('toolbar.refresh'), array('id' => 'um-btn-refresh', 'class' => 'btn btn-default um-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('toolbar.refreshLongText'))) !!}
+				{!! Form::button('<i class="fa fa-plus"></i> ' . Lang::get('toolbar.new'), array('id' => 'um-btn-new', 'class' => 'btn btn-default um-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('security/user-management.new'))) !!}
+				{!! Form::button('<i class="fa fa-refresh"></i> ' . Lang::get('toolbar.refresh'), array('id' => 'um-btn-refresh', 'class' => 'btn btn-default um-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('toolbar.refreshLongText'))) !!}
 				<div class="btn-group">
 					{!! Form::button('<i class="fa fa-share-square-o"></i> ' . Lang::get('toolbar.export') . ' <span class="caret"></span>', array('class' => 'btn btn-default dropdown-toggle', 'data-container' => 'body', 'data-toggle' => 'dropdown')) !!}
 					<ul class="dropdown-menu">
@@ -43,13 +43,13 @@
 				</div>
 			</div>
 			<div id="um-btn-group-2" class="btn-group btn-group-app-toolbar">
-				{!! Form::button('<i class="fa fa-edit"></i> ' . Lang::get('toolbar.edit'), array('id' => 'um-btn-edit', 'class' => 'btn btn-default um-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('security/user-management.edit'))) !!}
-				{!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.remove'), array('id' => 'um-btn-delete', 'class' => 'btn btn-default um-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('security/user-management.deleteLongText'), 'data-non-admin-title' => Lang::get('security/user-management.deleteLongText'), 'data-admin-title' => Lang::get('security/user-management.deleteNonAdminLongText'))) !!}
-				{!! Form::button('<i class="fa fa-tasks"></i> ' . Lang::get('security/user-management.preview'), array('id' => 'um-btn-menu-preview', 'class' => 'btn btn-default um-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('security/user-management.previewLongText'))) !!}
+				{!! Form::button('<i class="fa fa-edit"></i> ' . Lang::get('toolbar.edit'), array('id' => 'um-btn-edit', 'class' => 'btn btn-default um-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('security/user-management.edit'))) !!}
+				{!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.remove'), array('id' => 'um-btn-delete', 'class' => 'btn btn-default um-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('security/user-management.deleteLongText'), 'data-non-admin-title' => Lang::get('security/user-management.deleteLongText'), 'data-admin-title' => Lang::get('security/user-management.deleteNonAdminLongText'))) !!}
+				{!! Form::button('<i class="fa fa-tasks"></i> ' . Lang::get('security/user-management.preview'), array('id' => 'um-btn-menu-preview', 'class' => 'btn btn-default um-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('security/user-management.previewLongText'))) !!}
 			</div>
 			<div id="um-btn-group-3" class="btn-group btn-group-app-toolbar toolbar-block">
-				{!! Form::button('<i class="fa fa-save"></i> ' . Lang::get('toolbar.save'), array('id' => 'um-btn-save', 'class' => 'btn btn-default um-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('security/user-management.save'))) !!}
-				{!! Form::button('<i class="fa fa-undo"></i> ' . Lang::get('toolbar.close'), array('id' => 'um-btn-close', 'class' => 'btn btn-default um-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
+				{!! Form::button('<i class="fa fa-save"></i> ' . Lang::get('toolbar.save'), array('id' => 'um-btn-save', 'class' => 'btn btn-default um-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('security/user-management.save'))) !!}
+				{!! Form::button('<i class="fa fa-undo"></i> ' . Lang::get('toolbar.close'), array('id' => 'um-btn-close', 'class' => 'btn btn-default um-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
 			</div>
 		</div>
 		<div id="um-organization-owner-info-message" class="alert alert-block alert-info alert-custom hidden">
@@ -144,7 +144,7 @@
 				<div class="section-header">
 					<legend>
 						{{ Lang::get('security/user-management.menuOptionsTitles') }}
-						{!! Form::button('<i class="fa fa-undo"></i>',array('id' => 'um-btn-reset', 'class' => 'btn btn-default um-btn-tooltip pull-right', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('security/user-management.reset'))) !!}
+						{!! Form::button('<i class="fa fa-undo"></i>',array('id' => 'um-btn-reset', 'class' => 'btn btn-default um-btn-tooltip decima-erp-tooltip pull-right', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('security/user-management.reset'))) !!}
 					</legend>
 			  		<div class="form-group clearfix">
 						{!! Form::label('um-menu-options-module-label', Lang::get('security/user-management.module'), array('class' => 'control-label')) !!}

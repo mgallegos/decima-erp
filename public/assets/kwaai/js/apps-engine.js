@@ -300,6 +300,7 @@ function loadPage(url, aliasUrl, actionButtonId)
     },
 		beforeSend:function(msg)
 		{
+			$('.decima-erp-tooltip').tooltip('hide');
 			disabledAll();
 			$('#app-loader').removeClass('hidden');
 		},
@@ -328,6 +329,7 @@ function loadPage(url, aliasUrl, actionButtonId)
 			$('#app-loader').addClass('hidden');
 			changeWindowsUrl(aliasUrl);
 			enableAll();
+			$('.decima-erp-tooltip').tooltip('hide');
 		}
 	});
 }
