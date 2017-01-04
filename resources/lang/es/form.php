@@ -115,6 +115,8 @@ return array(
 
 	'statusPlural' => 'Estado',
 
+	'total' => 'Total',
+
 	'P' => 'Pendiente',
 
   'U' => 'Autorizado',
