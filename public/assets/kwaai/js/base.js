@@ -201,19 +201,23 @@ function handleServerExceptions(jqXHR, id, alertAsFirstChild)
 {
 	alertAsFirstChild = (alertAsFirstChild == undefined ? true : alertAsFirstChild);
 
+	console.log(jqXHR);
+
 	try
 	{
 		response = JSON.parse(jqXHR.responseText);
 		response = response.error.type;
+		console.log('1');
 	}
 	catch (e)
 	{
+		console.log('2');
 		response = $.trim(jqXHR.responseText);
 	}
 
 	switch (response)
 	{
-		case 'Illuminate\\Session\\TokenMismatchException':
+		case 'TokenMismatchException':
 			alert(lang.tokenMismatchException);
 			window.location.reload();
 			return;
