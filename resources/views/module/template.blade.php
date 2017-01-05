@@ -96,12 +96,12 @@
 			$('#module-app-grid-section').collapse('hide');
 			$('#module-app-journals-section').attr('data-target-id', '#module-app-form-section');
 			$('#module-app-journals-section').collapse('hide');
-			$('.module-app-btn-tooltip').tooltip('hide');
+			$('.decima-erp-tooltip').tooltip('hide');
 		});
 
 		$('#module-app-btn-refresh').click(function()
 		{
-			$('.module-app-btn-tooltip').tooltip('hide');
+			$('.decima-erp-tooltip').tooltip('hide');
 			$('#module-app-btn-toolbar').disabledButtonGroup();
 			$('#module-app-btn-group-1').enableButtonGroup();
 
@@ -145,7 +145,7 @@
 		{
 			var rowData;
 
-			$('.module-app-btn-tooltip').tooltip('hide');
+			$('.decima-erp-tooltip').tooltip('hide');
 			$('#module-app-btn-toolbar').disabledButtonGroup();
 			$('#module-app-btn-group-3').enableButtonGroup();
 
@@ -200,7 +200,7 @@
 
 			}
 
-			$('.module-app-btn-tooltip').tooltip('hide');
+			$('.decima-erp-tooltip').tooltip('hide');
 			$('#module-app-modal-delete').modal('show');
 		});
 
@@ -252,6 +252,7 @@
 					$('#module-app-modal-delete').modal('hide');
 					$('#app-loader').addClass('hidden');
 					enableAll();
+					$('.decima-erp-tooltip').tooltip('hide');
 				}
 			});
 		});
@@ -260,7 +261,7 @@
 		{
 			var url = $('#module-app-form').attr('action'), action = 'new';
 
-			$('.module-app-btn-tooltip').tooltip('hide');
+			$('.decima-erp-tooltip').tooltip('hide');
 
 			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
 			{
@@ -330,6 +331,7 @@
 
 					$('#app-loader').addClass('hidden');
 					enableAll();
+					$('.decima-erp-tooltip').tooltip('hide');
 				}
 			});
 		});
@@ -357,7 +359,7 @@
 
 			$('#module-app-btn-group-1').enableButtonGroup();
 			$('#module-app-btn-group-3').disabledButtonGroup();
-			$('.module-app-btn-tooltip').tooltip('hide');
+			$('.decima-erp-tooltip').tooltip('hide');
 			$('#module-app-journals-section').attr('data-target-id', '')
 		});
 

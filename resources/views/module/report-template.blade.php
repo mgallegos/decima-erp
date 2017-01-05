@@ -105,6 +105,7 @@
 		$('#module-app-btn-refresh').click(function()
 		{
 			$('#module-app-grid').trigger('reloadGrid');
+			$('.decima-erp-tooltip').tooltip('hide');
 		});
 
 		$('#module-app-btn-export-xls').click(function()
