@@ -82,7 +82,7 @@ function changeLoggedUserOrganization(id)
 		},
 		success:function()
 		{
-			window.location.replace($('#app-url').val());
+			window.location.replace($('#app-url').val() + '/dashboard');
 		}
 	});
 }
