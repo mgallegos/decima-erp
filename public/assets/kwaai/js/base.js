@@ -623,9 +623,10 @@ function getAppJournals(appPrefix, action, journalizedId)
 		url: $('#app-url').val() + '/general-setup/security/journals-management/journals',
 		error: function (jqXHR, textStatus, errorThrown)
 		{
-			$('#apps-tabs-content').children('.active').children('.breadcrumb').showAlertAfterElement('alert-danger alert-custom', textStatus, 7000);
-			$('#app-loader').addClass('hidden');
-			enableAll();
+			handleServerExceptions(jqXHR, '', false);
+			// $('#apps-tabs-content').children('.active').children('.breadcrumb').showAlertAfterElement('alert-danger alert-custom', textStatus, 7000);
+			// $('#app-loader').addClass('hidden');
+			// enableAll();
     },
 		beforeSend:function()
 		{
