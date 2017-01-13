@@ -338,7 +338,7 @@ function openUploader(prefix, systemReferenceId, parentFolder, allowedFileTypes,
 	sameWidthAsHeight = sameWidthAsHeight || '';
 	sizes = sizes || [];
 	maxFileCount = maxFileCount || 0;
-	isPublic = isPublic || '0';
+	isPublic = isPublic || '';
 	allowedFileTypes = allowedFileTypes || [];
 	parentFileId = parentFileId || '';
 
