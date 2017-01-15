@@ -9,7 +9,7 @@
 
 Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '')
 {
-	$autocompleteEvent = $prefix = '';
+	$autocompleteEvent = $autocompleteFocusEvent = $prefix = '';
 	$autocompleteWidgetName = 'autocomplete';
 
 	if ( ! isset($options['name']))
@@ -19,6 +19,7 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 
 	if ( isset($inputTextLabelName))
 	{
+		$autocompleteFocusEvent.="$('#$inputTextLabelName').val( ui.item.label );";
 		$autocompleteEvent.="$('#$inputTextLabelName').val( ui.item.label );";
 	}
 
@@ -29,7 +30,7 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 
 	if ( isset($inputTextLabelName) || isset($inputTextValueName))
 	{
-		$autocompleteEvent=",select: function( event, ui ) { $autocompleteEvent }";
+		$autocompleteEvent=",focus: function( event, ui ) { $autocompleteFocusEvent return false;},select: function( event, ui ) { $autocompleteEvent return false;}";
 	}
 
 	if(!empty($source) && is_array($source[0]) && array_key_exists('category',$source[0]))

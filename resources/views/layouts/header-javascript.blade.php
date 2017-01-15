@@ -9,20 +9,7 @@
 <script src="{{ URL::asset('assets/jquery-v2.2.4/jquery.js') }}"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script> -->
 <script src="{{ URL::asset('assets/jquery-free-jqGrid-v4.13.5/js/jquery.jqgrid.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.core.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.position.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.widget.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.mouse.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.draggable.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.droppable.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.resizable.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/jquery.ui.autocomplete.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.datepicker.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.menu.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.slider.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect-shake.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/minified/jquery.ui.effect-highlight.min.js') }}"></script>
+<script src="{{ URL::asset('assets/jquery-ui-v1.12.1/jquery-ui.min.js') }}"></script>
 <script src="{{ URL::asset('assets/bootstrap-v3.3.6/js/bootstrap.min.js') }}"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script> -->
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script> -->

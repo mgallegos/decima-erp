@@ -8,20 +8,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.13.5/js/jquery.jqgrid.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.core.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.position.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.widget.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.mouse.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.draggable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.droppable.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.resizable.min.js"></script>
-<script src="{{ URL::asset('assets/jquery-ui-v1.10.3/dev/jquery.ui.autocomplete.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.datepicker.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.menu.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.slider.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.effect.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.effect-shake.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.ui/1.10.3/jquery.ui.effect-highlight.min.js"></script>
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
