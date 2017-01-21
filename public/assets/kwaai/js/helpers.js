@@ -781,7 +781,7 @@ var jqMgValAutocompleteValidator = function($element)
 		{
 			if($element.attr('data-mg-required') != undefined)
 			{
-				$element.jqMgValDisplayMessage('has-error', '');
+				$element.jqMgValDisplayMessage('has-error has-danger', '');
 			}
 			else
 			{
@@ -823,10 +823,12 @@ var jqMgValAutocompleteValidator = function($element)
 		if ( valid )
 		{
 			$element.jqMgValDisplayMessage('has-success', '');
+			return true;
 		}
 		else
 		{
-			$element.jqMgValDisplayMessage('has-error', lang.autocompleteValidation);;
+			$element.jqMgValDisplayMessage('has-error has-danger', lang.autocompleteValidation);;
+			return false;
 		}
 
 	});

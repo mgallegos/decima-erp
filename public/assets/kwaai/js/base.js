@@ -77,7 +77,7 @@ function changeLoggedUserOrganization(id)
 		url: $('#app-url').val() + '/general-setup/security/user-management/change-logged-user-organization',
 		beforeSend:function()
 		{
-			$('#app-loader').removeClass('hidden');
+			$('#app-loader').removeClass('hidden hidden-xs-up');
 			disabledAll();
 		},
 		success:function()
@@ -240,7 +240,7 @@ function handleServerExceptions(jqXHR, id, alertAsFirstChild)
 
 	}
 
-	$('#app-loader').addClass('hidden');
+	$('#app-loader').addClass('hidden hidden-xs-up');
 	enableAll();
 }
 
@@ -425,7 +425,7 @@ function getElementFiles(appPrefix, systemReferenceId, systemReferences)
     },
 		beforeSend:function()
 		{
-			$('#app-loader').removeClass('hidden');
+			$('#app-loader').removeClass('hidden hidden-xs-up');
 			disabledAll();
 		},
 		success:function(json)
@@ -470,7 +470,7 @@ function getElementFiles(appPrefix, systemReferenceId, systemReferences)
 
 			$('#' + appPrefix + 'file-body').append(row);
 
-			$('#app-loader').addClass('hidden');
+			$('#app-loader').addClass('hidden hidden-xs-up');
 			enableAll();
 		}
 	});
@@ -509,7 +509,7 @@ function deleteFileAux(button)
 		},
 		beforeSend:function()
 		{
-			$('#app-loader').removeClass('hidden');
+			$('#app-loader').removeClass('hidden hidden-xs-up');
 			disabledAll();
 		},
 		success:function(json)
@@ -520,7 +520,7 @@ function deleteFileAux(button)
 				$('#' + $(button).attr('data-prefix') + 'file-modal-delete').modal('hide');
 			}
 
-			$('#app-loader').addClass('hidden');
+			$('#app-loader').addClass('hidden hidden-xs-up');
 			enableAll();
 		}
 	});
@@ -625,12 +625,12 @@ function getAppJournals(appPrefix, action, journalizedId)
 		{
 			handleServerExceptions(jqXHR, '', false);
 			// $('#apps-tabs-content').children('.active').children('.breadcrumb').showAlertAfterElement('alert-danger alert-custom', textStatus, 7000);
-			// $('#app-loader').addClass('hidden');
+			// $('#app-loader').addClass('hidden hidden-xs-up');
 			// enableAll();
     },
 		beforeSend:function()
 		{
-			$('#app-loader').removeClass('hidden');
+			$('#app-loader').removeClass('hidden hidden-xs-up');
 			disabledAll();
 		},
 		success:function(journals)
@@ -681,7 +681,7 @@ function getAppJournals(appPrefix, action, journalizedId)
 				});
 			}
 
-			$('#app-loader').addClass('hidden');
+			$('#app-loader').addClass('hidden hidden-xs-up');
 			enableAll();
 		}
 	});
@@ -842,7 +842,8 @@ $(document).ready(function()
 	  }
   });
 
-  $(window).scroll(function () {
+  $(window).scroll(function ()
+	{
 	  if ($(this).scrollTop() != 0)
 	  {
 		  $('#back-to-top').fadeIn();
@@ -982,7 +983,8 @@ $(document).ready(function()
 	{
 		if($('#user-apps-content-alert').length == 0)
 		{
-			setTimeout(function () {
+			setTimeout(function ()
+			{
 				window.scrollTo(0, 0);
 				// $('#apps-tabs-content').children('.active').children('.breadcrumb-organization-name').popover('show');
 				startIntro();

@@ -113,12 +113,12 @@
 
 		if(helpMessageLocation == 'append')
 		{
-			this.closest('.' + opts.helpMessageClass).append('<p class="help-block">' + opts.lang.requiredFieldText + '</p>');
+			this.closest('.' + opts.helpMessageClass).append('<p class="help-block form-text text-muted">' + opts.lang.requiredFieldText + '</p>');
 		}
 		else if(helpMessageLocation == 'prepend')
 		{
 			this.closest('.' + opts.helpMessageClass).find('.sr-only').attr('style','position: inherit !important;');
-			this.closest('.' + opts.helpMessageClass).prepend('<spam class="help-block pull-right" style="margin: 0 !important;">' + opts.lang.requiredFieldText + '</spam>');
+			this.closest('.' + opts.helpMessageClass).prepend('<spam class="help-block form-text text-muted pull-right" style="margin: 0 !important;">' + opts.lang.requiredFieldText + '</spam>');
 		}
 		else
 		{
@@ -258,16 +258,16 @@
 			helpMessageDiv.find(".help-block").filter('p').attr('style', 'margin-bottom: 0 !important;');
 		}
 
-		if(cssClass == 'has-error')
+		if(cssClass == 'has-error has-danger')
 		{
-			helpMessageDiv.append('<p class="mg-hmt help-block" style="' + helpMessageTextStyle + '">' + textMsg + '</p>');
+			helpMessageDiv.append('<p class="mg-hmt help-block form-control-feedback" style="' + helpMessageTextStyle + '">' + textMsg + '</p>');
 			icon = opts.failureIconClass;
 		}
 
 		var formGroupDiv = this.closest('.' + opts.fieldDivContainer);
 		formGroupDiv.children('.control-label').children('.' + opts.successIconClass.split(' ')[0] + ',.' + opts.failureIconClass.split(' ')[0] + ',.mg-is').remove();
 		//formGroupDiv.children('label').children('.' + opts.successIconClass.split(' ')[0] + ',.' + opts.failureIconClass.split(' ')[0] + ',.mg-is').remove();
-		formGroupDiv.removeClass('has-error');
+		formGroupDiv.removeClass('has-error has-danger');
 		formGroupDiv.removeClass('has-success');
 		formGroupDiv.addClass(cssClass);
 		formGroupDiv.children('.control-label').append("<i class='mg-is'>&nbsp;</i><i class='" + icon + "'></i>");
@@ -281,15 +281,15 @@
 
 		if($.type(validFrom) == "string" && $.type(validTo) != "string")
 		{
-			this.jqMgValDisplayMessage('has-error', validFrom);
+			this.jqMgValDisplayMessage('has-error has-danger', validFrom);
 		}
 		else if ($.type(validFrom) != "string" && $.type(validTo) == "string")
 		{
-			this.jqMgValDisplayMessage('has-error', validTo);
+			this.jqMgValDisplayMessage('has-error has-danger', validTo);
 		}
 		else if ($.type(validFrom) == "string" && $.type(validTo) == "string")
 		{
-			this.jqMgValDisplayMessage('has-error', validFrom + '<br>' + validTo);
+			this.jqMgValDisplayMessage('has-error has-danger', validFrom + '<br>' + validTo);
 		}
 		else
 		{
@@ -300,7 +300,7 @@
 
 				if(dateFrom.getTime() > dateTo.getTime())
 				{
-					this.jqMgValDisplayMessage('has-error', lang.dateRangeValidation);
+					this.jqMgValDisplayMessage('has-error has-danger', lang.dateRangeValidation);
 				}
 				else
 				{
@@ -415,7 +415,7 @@
 
 					if($.type(valid) == 'string')
 					{
-						$(this).jqMgValDisplayMessage('has-error', valid);
+						$(this).jqMgValDisplayMessage('has-error has-danger', valid);
 					}
 					else
 					{
@@ -479,7 +479,7 @@
 				{
 					if(!$('input[name=' + $(this).attr('name') + ']:checked').val() && $(this).parent().parent().parent().attr('data-mg-required') != undefined)
 					{
-						$(this).jqMgValDisplayMessage('has-error', '');
+						$(this).jqMgValDisplayMessage('has-error has-danger', '');
 					}
 					else
 					{
@@ -574,6 +574,11 @@
 			$(this).removeClass('has-error');
 		});
 
+		this.find('.has-danger').each(function()
+		{
+			$(this).removeClass('has-danger');
+		});
+
 		this.find('.has-success').each(function()
 		{
 			$(this).removeClass('has-success');
@@ -593,6 +598,11 @@
 		this.find('.has-error').each(function()
 		{
 			$(this).removeClass('has-error');
+		});
+
+		this.find('.has-danger').each(function()
+		{
+			$(this).removeClass('has-danger');
 		});
 
 		this.find('.has-success').each(function()
@@ -615,22 +625,26 @@
 			$(this).focusout();
 		});
 
-		if(this.find('.has-error').length>0)
+		if(this.find('.has-error').length>0 || this.find('.has-danger').length>0)
 		{
 			this.find('.has-error').first().find('.form-control').focus();
+			// this.find('.has-danger').first().find('.form-control').focus();
 
 			$.scrollTo(this.find('.has-error').first().position());
+			// $.scrollTo(this.find('.has-danger').first().position());
 
 			//console.log(opts.scrollToFirstFieldWithError);
 
 			if(opts.scrollToFirstFieldWithError)
 			{
 				$.scrollTo(this.children('.has-error').first().position());
+				// $.scrollTo(this.children('.has-danger').first().position());
 			}
 
 			if(opts.invalidFieldJqueryUiEffect != 'none')
 			{
 					this.find('.has-error').effect(opts.invalidFieldJqueryUiEffect, null, opts.invalidFieldJqueryUiEffectDuration);
+					// this.find('.has-danger').effect(opts.invalidFieldJqueryUiEffect, null, opts.invalidFieldJqueryUiEffectDuration);
 			}
 
 			return false;
