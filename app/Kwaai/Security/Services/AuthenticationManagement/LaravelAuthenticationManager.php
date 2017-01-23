@@ -654,7 +654,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		if(!is_int($value))
 		{
 			$userDefaultOrganizationId = $this->getLoggedUserDefaultOrganization();
-			
+
 			if(!empty($userDefaultOrganizationId))
 			{
 				$this->setCurrentUserOrganization($this->Organization->byId($userDefaultOrganizationId));
@@ -671,11 +671,16 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	/**
 	* Get current user organization connection
 	*
+	* @param  int $value organization id
+	*
 	* @return string
 	*/
-	public function getCurrentUserOrganizationConnection()
+	public function getCurrentUserOrganizationConnection($value = null)
 	{
-		$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
+		if(empty($value))
+		{
+			$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
+		}
 
 		if(!is_int($value))
 		{

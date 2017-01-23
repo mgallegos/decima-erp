@@ -131,9 +131,11 @@ interface AuthenticationManagementInterface {
 	/**
 	* Get current user organization connection
 	*
+	* @param  int $id organization id
+	*
 	* @return string
 	*/
-	public function getCurrentUserOrganizationConnection();
+	public function getCurrentUserOrganizationConnection($id = null);
 
 	/**
 	* Get current user organization country
