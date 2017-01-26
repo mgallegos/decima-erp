@@ -444,7 +444,7 @@ $.fn.showAlertAfterElement = function (cssClass, textAlert, delay)
 	$("#" + this.attr("id") + "-alert").hide();
 	$("#" + this.attr("id") + "-alert").alert('close');
 
-	this.after('<div id="' + this.attr("id") + '-alert" class="alert alert-block ' + cssClass + ' fade in"><a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>' + textAlert + '</div>');
+	this.after('<div id="' + this.attr("id") + '-alert" class="alert alert-block ' + cssClass + ' fade in show"><a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>' + textAlert + '</div>');
 
 	$.scrollTo($("#" + this.attr("id") + "-alert").position());
 	$("#" + this.attr("id") + "-alert").alert();
@@ -473,7 +473,7 @@ $.fn.showAlertAsFirstChild = function (cssClass, textAlert, delay)
 	$("#" + this.attr("id") + "-alert").hide();
 	$("#" + this.attr("id") + "-alert").alert('close');
 
-	this.prepend('<div id="' + this.attr("id") + '-alert" class="alert alert-block ' + cssClass + ' fade in"><a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>' + textAlert + '</div>');
+	this.prepend('<div id="' + this.attr("id") + '-alert" class="alert alert-block ' + cssClass + ' fade in show"><a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>' + textAlert + '</div>');
 
 	$.scrollTo($("#" + this.attr("id") + "-alert").position());
 	$("#" + this.attr("id") + "-alert").alert();
