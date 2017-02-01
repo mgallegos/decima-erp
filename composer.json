@@ -9,7 +9,7 @@
         "laravel/framework": "5.2.*",
         "mgallegos/decima-file": "1.*",
         "mgallegos/decima-accounting": "1.*",
-        "mgallegos/laravel-jqgrid": "1.*",
+        "mgallegos/laravel-jqgrid": "dev-master",
     		"itsgoingd/clockwork": "dev-master",
     		"jenssegers/agent": "dev-master",
     		"pda/pheanstalk": "3.0.*@dev",
@@ -19,7 +19,8 @@
         "raven/raven": "0.13.0",
         "xavrsl/cas": "1.2.*",
         "intervention/image": "^2.3",
-        "guzzlehttp/guzzle": "^6.2"
+        "guzzlehttp/guzzle": "^6.2",
+        "google/cloud": "^0.20"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
