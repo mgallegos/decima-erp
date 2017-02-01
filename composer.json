@@ -18,7 +18,8 @@
     		"shpasser/gae-support-l5": "dev-master",
         "raven/raven": "0.13.0",
         "xavrsl/cas": "1.2.*",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
