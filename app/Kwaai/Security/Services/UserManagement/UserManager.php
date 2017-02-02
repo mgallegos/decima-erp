@@ -2050,19 +2050,19 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 		$this->User->permissionsByUserByMenuAndByOrganization($userId, $menuId, $organizationId)->each(function($permission) use (&$permissionsId)
 		{
-			if(empty($permission->url))
+			if(!empty($permission->url))
 			{
-				continue;
-			}
-			if(!$permission->pivot->is_assigned && isset($permissionsId[$permission->id]))
-			{
-				unset($permissionsId[$permission->id]);
+				if(!$permission->pivot->is_assigned && isset($permissionsId[$permission->id]))
+				{
+					unset($permissionsId[$permission->id]);
+				}
+
+				if($permission->pivot->is_assigned)
+				{
+					$permissionsId = array_add($permissionsId, $permission->id, $permission->name);
+				}
 			}
 
-			if($permission->pivot->is_assigned)
-			{
-				$permissionsId = array_add($permissionsId, $permission->id, $permission->name);
-			}
 		});
 
 		return array_keys($permissionsId);
