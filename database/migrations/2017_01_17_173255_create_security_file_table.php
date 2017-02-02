@@ -17,7 +17,7 @@ class CreateSecurityFileTable extends Migration
             $table->unsignedInteger('file_id')->index();
             $table->string('key');
             $table->unsignedInteger('organization_id')->index();
-            
+
             //Timestamps
       			$table->timestamps(); //Adds created_at and updated_at columns
       			$table->softDeletes(); //Adds deleted_at column for soft deletes
@@ -31,6 +31,6 @@ class CreateSecurityFileTable extends Migration
      */
     public function down()
     {
-        Schema::drop('ORG_Organization_File');
+        Schema::drop('SEC_File');
     }
 }
