@@ -86,6 +86,79 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Default Export Buttons Options
+	|--------------------------------------------------------------------------
+	|
+	| An array of toolbar button options that will be set to all grids of your applications.
+	| xlsButtonVisible: show or hide the xls export button
+	| xlsButtonText: text of the xls export button
+	| xlsIcon: xls icon (jquery ui icon)
+	| csvButtonVisible: show or hide the csv export button
+	| csvButtonText: text of the csv export button
+	| csvIcon: csv icon (jquery ui icon)
+	| srcDateFormat: source (database) date format (php available formats: http://php.net/manual/en/datetime.formats.date.php)
+	| newDateFormat: new date format (php available formats: http://php.net/manual/en/datetime.formats.date.php)
+	|
+	*/
+
+	'default_export_buttons_options' => array('xlsButtonVisible' => true, 'xlsButtonText' => 'xls', 'xlsIcon' => 'ui-icon-arrowthickstop-1-s', 'csvButtonVisible' => true, 'csvButtonText' => 'csv', 'csvIcon' => 'ui-icon-arrowthickstop-1-s', 'srcDateFormat' => 'Y-m-d', 'newDateFormat' => 'd/m/Y'),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Default Laravel Excel File Properties
+	|--------------------------------------------------------------------------
+	|
+	| Default Laravel Excel File Properties that will be set to all grid of your applications,
+	| the key of the array must correspond to a Laravel Excel File Property.
+	| These properties can override by setting a different value in a specific grid.
+	| Online documentation available at http://www.maatwebsite.nl/laravel-excel/docs/reference-guide
+	|
+	*/
+
+	'default_file_properties' => array(),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Default Laravel Excel Sheet Properties
+	|--------------------------------------------------------------------------
+	|
+	| Default Laravel Excel Sheet Properties that will be set to all grid of your applications,
+	| the key of the array must correspond to a Laravel Excel Sheet Property.
+	| These properties can override by setting a different value in a specific grid.
+	| Online documentation available at http://www.maatwebsite.nl/laravel-excel/docs/reference-guide
+	|
+	*/
+
+	'default_sheet_properties' => array(),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Pivot options
+	|--------------------------------------------------------------------------
+	|
+	| Pivots options defined by the jqGrid documentation.
+	| Warning: This options are vital when using the grid as a pivot grid, do not modify them unless you know what you are doing.
+	| Online documentation available at http://www.trirand.com/jqgridwiki/doku.php?id=wiki:pivotsettings
+	|
+	*/
+
+	'pivot_options' => array('aggregates', 'colTotals', 'frozenStaticCols', 'groupSummary', 'groupSummaryPos', 'rowTotals', 'rowTotalsText', 'xDimension', 'yDimension'),
+
+	/*
+	|--------------------------------------------------------------------------
+	| Group header options
+	|--------------------------------------------------------------------------
+	|
+	| Group header options options defined by the jqGrid documentation.
+	| Warning: This options are vital when grouping header columns, do not modify them unless you know what you are doing.
+	| Online documentation available at http://www.trirand.com/jqgridwiki/doku.php?id=wiki:groupingheadar
+	|
+	*/
+
+	'group_header_options' => array('useColSpanStyle', 'groupHeaders'),
+
+	/*
+	|--------------------------------------------------------------------------
 	| Function type Grid options and column properties
 	|--------------------------------------------------------------------------
 	|
