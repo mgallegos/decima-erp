@@ -63,6 +63,7 @@ class CreateAcctSystemTables extends Migration {
 			$table->char('balance_type', 1);
 			$table->char('account_type_key', 1);
 			$table->boolean('is_group')->default(false);
+			$table->boolean('is_general_ledger_account')->default(false);
 
 			//Foreign Keys
 			$table->unsignedInteger('account_chart_type_id')->nullable();

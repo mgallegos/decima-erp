@@ -116,6 +116,7 @@ class CreateAcctAccountingTables extends Migration {
 			$table->string('name');
 			$table->char('balance_type', 1);//Deudor,Receivable:D and Acreedor,Payable: A
 			$table->boolean('is_group')->index()->default(false);
+			$table->boolean('is_general_ledger_account')->index()->default(false);
 
 			//Foreign Keys
 			$table->unsignedInteger('account_type_id')->index();
