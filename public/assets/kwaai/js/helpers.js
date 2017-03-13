@@ -460,7 +460,12 @@ $.fn.showAlertAfterElement = function (cssClass, textAlert, delay)
 
 	if(delay)
 	{
-		$("#" + this.attr("id") + "-alert").delay( delay ).fadeOut();
+		alert = this;
+		// $("#" + this.attr("id") + "-alert").delay( delay ).fadeOut();
+		setTimeout(function ()
+		{
+			$("#" + alert.attr("id") + "-alert").alert('close');
+		}, delay);
 	}
 };
 
@@ -489,7 +494,13 @@ $.fn.showAlertAsFirstChild = function (cssClass, textAlert, delay)
 
 	if(delay)
 	{
-		$("#" + this.attr("id") + "-alert").delay( delay ).fadeOut();
+		// $("#" + this.attr("id") + "-alert").delay( delay ).fadeOut();
+		alert = this;
+		// $("#" + this.attr("id") + "-alert").delay( delay ).fadeOut();
+		setTimeout(function ()
+		{
+			$("#" + alert.attr("id") + "-alert").alert('close');
+		}, delay);
 	}
 };
 
