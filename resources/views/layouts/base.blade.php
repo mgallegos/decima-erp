@@ -72,6 +72,7 @@
   							<div class="panel-body clearfix">
   								@section('container')
   									<script type='text/javascript'>
+                      {!! FormJavascript::getGlobalCode() !!}
   										$(document).ready(function(){
   											{!! FormJavascript::getCode() !!}
   										});

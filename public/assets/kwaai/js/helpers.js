@@ -204,9 +204,18 @@ $.fn.isAutocompleteValid = function()
 		return false;
 	}
 
-	var value = $(this).val().toLowerCase(), valid = false, autocomplete = this;
+	var value = $(this).val().toLowerCase(), valid = false, autocomplete = this, source;
 
-	$.each(this.autocomplete( "option", "source" ), function(index, element)
+	if(this.attr('data-autocomplete-source') != undefined)
+	{
+		source = window[this.attr('data-autocomplete-source')];
+	}
+	else
+	{
+		source = this.autocomplete( "option", "source" );
+	}
+
+	$.each(source, function(index, element)
 	{
 		if($.isPlainObject(element))
 		{
@@ -786,41 +795,55 @@ var jqMgValAutocompleteValidator = function($element)
 			else
 			{
 				$element.jqMgValDisplayMessage('has-success','');
+
+				if($element.attr('data-autocomplete-value-name') != undefined)
+				{
+					$('#' + $element.attr('data-autocomplete-value-name')).val('');
+				}
 			}
 
 			return;
 		}
 
-		var value = $element.val().toLowerCase(), valid = false, autocomplete = this;
+		var value = $element.val().toLowerCase(), valid = false, autocomplete = this, source;
 
-		$.each($element.autocomplete( "option", "source" ), function(index, element)
+		if($element.attr('data-autocomplete-source') != undefined)
 		{
-				if($.isPlainObject(element))
-				{
-					elementLabel = $.isNumeric(element.label)?element.label.toString().toLowerCase():element.label.toLowerCase();
-					elementValue = $.isNumeric(element.value)?element.value.toString().toLowerCase():element.value.toLowerCase();
+			source = window[$element.attr('data-autocomplete-source')];
+		}
+		else
+		{
+			source = $element.autocomplete( "option", "source" );
+		}
 
-					if (elementLabel == value || elementValue == value)
-					{
-								// console.log(element);
-								valid = true;
-								// $(autocomplete).data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item: {label:element.label, value:element.value}});
-								$(autocomplete).data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item: element});
-								return false;
-						}
-				}
-				else
+		$.each(source, function(index, element)
+		{
+			if($.isPlainObject(element))
+			{
+				elementLabel = $.isNumeric(element.label)?element.label.toString().toLowerCase():element.label.toLowerCase();
+				elementValue = $.isNumeric(element.value)?element.value.toString().toLowerCase():element.value.toLowerCase();
+
+				if(elementLabel == value || elementValue == value)
 				{
-					if (element.toLowerCase() == value)
-					{
-								valid = true;
-								$(autocomplete).val(element);
-								return false;
-						}
+					// console.log(element);
+					valid = true;
+					// $(autocomplete).data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item: {label:element.label, value:element.value}});
+					$(autocomplete).data('ui-autocomplete')._trigger('select', 'autocompleteselect', {item: element});
+					return false;
 				}
+			}
+			else
+			{
+				if (element.toLowerCase() == value)
+				{
+					valid = true;
+					$(autocomplete).val(element);
+					return false;
+				}
+			}
 		});
 
-		if ( valid )
+		if (valid)
 		{
 			$element.jqMgValDisplayMessage('has-success', '');
 			return true;

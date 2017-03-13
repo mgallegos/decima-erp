@@ -13,6 +13,8 @@ class FormJavascript
 {
 	protected  $code='';
 
+	protected  $globalCode='';
+
 	public function getCode()
 	{
 	    return $this->code;
@@ -21,5 +23,15 @@ class FormJavascript
 	public function setCode($code)
 	{
 	    $this->code .= $code;
+	}
+
+	public function getGlobalCode()
+	{
+	    return $this->globalCode;
+	}
+
+	public function setGlobalCode($code)
+	{
+	    $this->globalCode .= $code;
 	}
 }

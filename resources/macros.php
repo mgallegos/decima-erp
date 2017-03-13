@@ -7,28 +7,29 @@
  * See COPYRIGHT and LICENSE.
  */
 
-Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '')
+Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null)
 {
 	$autocompleteEvent = $autocompleteFocusEvent = $prefix = '';
 	$autocompleteWidgetName = 'autocomplete';
 
-	if ( ! isset($options['name']))
+	if (!isset($options['name']))
 	{
 		$options['name'] = $inputTextAutocompleteName;
 	}
 
-	if ( isset($inputTextLabelName))
+	if (isset($inputTextLabelName))
 	{
-		$autocompleteFocusEvent.="$('#$inputTextLabelName').val( ui.item.label );";
-		$autocompleteEvent.="$('#$inputTextLabelName').val( ui.item.label );";
+		$autocompleteFocusEvent .= "$('#$inputTextLabelName').val( ui.item.label );";
+		$autocompleteEvent .=" $('#$inputTextLabelName').val( ui.item.label );";
 	}
 
-	if ( isset($inputTextValueName))
+	if (isset($inputTextValueName))
 	{
-		$autocompleteEvent.="$('#$inputTextValueName').val( ui.item.value );";
+		$autocompleteEvent .= "$('#$inputTextValueName').val( ui.item.value );";
+		$options['data-autocomplete-value-name'] = $inputTextValueName;
 	}
 
-	if ( isset($inputTextLabelName) || isset($inputTextValueName))
+	if (isset($inputTextLabelName) || isset($inputTextValueName))
 	{
 		$autocompleteEvent=",focus: function( event, ui ) { $autocompleteFocusEvent return false;},select: function( event, ui ) { $autocompleteEvent return false;}";
 	}
@@ -38,12 +39,12 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 		$autocompleteWidgetName='categoryautocomplete';
 	}
 
-	if ( !empty($value))
+	if (!empty($value))
 	{
 		$options['value'] = $value;
 	}
 
-	if( !is_null($prefixIcon))
+	if(!is_null($prefixIcon))
 	{
 		$prefix = '<span class="input-group-addon">
 				      <i class="fa '. $prefixIcon . '"></i>
@@ -57,7 +58,25 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 
 	$inputTextAutocompleteName = camel_case($inputTextAutocompleteName);
 
-	FormJavascript::setCode('var '. $inputTextAutocompleteName . 'ArrayData = ' . json_encode($source) . '; $("#'. $options['id'] .'").' . $autocompleteWidgetName . '({ minLength: 0, source: '. $inputTextAutocompleteName .'ArrayData' . $autocompleteEvent . '}); $("#'.  $options['id'] . '-show-all-button").click(function(){ $("#' . $options['id'] .'").autocomplete( "search", "" ); $("#' . $options['id'] .'").focus(); });');
+	if(!empty($limitResourceTo))
+	{
+		$autocompleteSource = '
+			function(request, response)
+			{
+  			var results = $.ui.autocomplete.filter(' . $inputTextAutocompleteName . 'ArrayData, request.term);
+				response(results.slice(0, ' . $limitResourceTo . '));
+    	}
+		';
+
+		$options['data-autocomplete-source'] = $inputTextAutocompleteName .'ArrayData';
+	}
+	else
+	{
+		$autocompleteSource = $inputTextAutocompleteName .'ArrayData';
+	}
+
+	FormJavascript::setCode('$("#'. $options['id'] .'").' . $autocompleteWidgetName . '({ minLength: 0, source: '. $autocompleteSource . $autocompleteEvent . '}); $("#'.  $options['id'] . '-show-all-button").click(function(){ $("#' . $options['id'] .'").autocomplete( "search", "" ); $("#' . $options['id'] .'").focus(); });');
+	FormJavascript::setGlobalCode('var '. $inputTextAutocompleteName . 'ArrayData = ' . json_encode($source) . ';');
 
 	return '<div class="input-group ' . $inputGroupSizeClass . '">
 				' . $prefix . '
