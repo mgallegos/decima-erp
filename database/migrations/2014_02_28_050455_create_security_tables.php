@@ -134,7 +134,9 @@ class CreateSecurityTables extends Migration {
 			$table->string('action_button_id',60)->nullable();
 			$table->string('action_lang_key',100)->nullable();
 			$table->string('icon',60)->nullable();
+			$table->string('shortcut_icon',60)->nullable();
 			$table->boolean('is_only_shortcut')->default(false);
+			$table->boolean('is_dashboard_shortcut_visible')->default(false);
 			$table->boolean('hidden')->default(false);
 
 			//Foreign Keys
