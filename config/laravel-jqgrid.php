@@ -22,7 +22,7 @@ return array(
 	*/
 
 	'default_grid_options' => array('datatype'=>'json', 'mtype' => 'POST', 'viewrecords'=>true, 'rowList' => array(10,15,20,25,30),
-																	'rowNum' => 10, 'multiselect'=> true, 'height' => 225, 'autowidth' => true, 'regional' => 'es',
+																	'rowNum' => 10, 'multiselect'=> true, 'height' => 'auto', 'autowidth' => true, 'regional' => 'es',
 																	'treeGridModel' => 'adjacency', 'treeIcons' => array('leaf' => 'fa-leaf'), 'guiStyle' => 'bootstrap', 'iconSet' => 'fontAwesome'
 																),
 
