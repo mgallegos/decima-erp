@@ -9,7 +9,7 @@
         "laravel/framework": "5.2.*",
         "mgallegos/decima-file": "1.*",
         "mgallegos/decima-accounting": "1.*",
-        "mgallegos/laravel-jqgrid": "dev-master",
+        "mgallegos/laravel-jqgrid": "1.*",
     		"itsgoingd/clockwork": "dev-master",
     		"jenssegers/agent": "dev-master",
     		"pda/pheanstalk": "3.0.*@dev",
@@ -21,7 +21,8 @@
         "intervention/image": "^2.3",
         "guzzlehttp/guzzle": "^6.2",
         "google/cloud": "^0.20",
-        "superbalist/laravel-google-cloud-storage": "^1.0"
+        "superbalist/laravel-google-cloud-storage": "^1.0",
+        "barryvdh/laravel-dompdf": "^0.8.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
