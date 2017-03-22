@@ -1226,6 +1226,25 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	}
 
 	/**
+	 * Get user names by id.
+	 *
+	 * @param int $id
+	 *
+	 * @return string
+	 */
+	public function getUserNameById($id)
+	{
+		$User = $this->User->byId($id);
+
+		if(empty($User))
+		{
+			return '';
+		}
+
+		return $User->firstname . ' ' . $User->lastname;
+	}
+
+	/**
 	 * Get an specific column of a user by email.
 	 *
 	 * @param string $email
