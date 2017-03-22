@@ -755,6 +755,25 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	}
 
 	/**
+	* Get current user organization name
+	*
+	* @return string
+	*/
+		public function getCurrentUserOrganizationLogoUrl()
+	{
+		$value = $this->getCurrentUserOrganizationId();
+
+		$value = $this->Organization->byId($value);
+
+		if(is_object($value))
+		{
+			$value = $value->logo_url;
+		}
+
+		return $value;
+	}
+
+	/**
 	 * Get logged user ID
 	 *
 	 * @return int
