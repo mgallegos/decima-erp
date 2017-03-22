@@ -117,6 +117,18 @@ return array(
 
 	'total' => 'Total',
 
+	'date' => 'Fecha',
+
+	'madeBy' => 'Hecho por',
+
+	'revisedBy' => 'Revisado por',
+
+	'authorizedBy' => 'Autorizado por',
+
+	'signature' => 'F.',
+
+	'number' => 'No.',
+
 	'P' => 'Pendiente',
 
   'U' => 'Autorizado',

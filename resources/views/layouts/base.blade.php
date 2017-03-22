@@ -67,7 +67,7 @@
   								@endif
   							@endforeach
   						</ul>
-  						<span class="label label-default breadcrumb-organization-name base-popover pull-right" data-position="left" data-step="1" data-intro="{{ Lang::get('base.currentOrganizationPopoverContent', array('user' => AuthManager::getLoggedUserFirstname())) }}">{{ AuthManager::getCurrentUserOrganization('name') }}</span>
+  						<span class="label label-default breadcrumb-organization-name base-popover pull-right" data-position="left" data-step="1" data-intro="{{ Lang::get('base.currentOrganizationPopoverContent', array('user' => AuthManager::getLoggedUserFirstname())) }}">{{ AuthManager::getCurrentUserOrganizationName() }}</span>
   						<div class="panel panel-default panel-custom">
   							<div class="panel-body clearfix">
   								@section('container')
@@ -105,12 +105,12 @@
   				</div>
   			</div>
       </fieldset>
-	    </div>
-	  </div>
-	  <div class="alert alert-warning hidden-lg hidden-md">
-		 {!! Lang::get('base.resolutionException') !!}
-	   </div>
-	   <a id="back-to-top" class="btn btn-info" role="button"><i class="fa fa-chevron-circle-up fa-2x"></i></a>
-	</div>
+    </div>
+  </div>
+  <div class="alert alert-warning hidden-lg hidden-md">
+	 {!! Lang::get('base.resolutionException') !!}
+   </div>
+   <a id="back-to-top" class="btn btn-info" role="button"><i class="fa fa-chevron-circle-up fa-2x"></i></a>
+  </div>
 </body>
 </html>
