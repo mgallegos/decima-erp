@@ -129,6 +129,8 @@ return array(
 
 	'number' => 'No.',
 
+	'page' => 'Página',
+
 	'P' => 'Pendiente',
 
   'U' => 'Autorizado',
