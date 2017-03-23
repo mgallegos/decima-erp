@@ -9,7 +9,7 @@
         "laravel/framework": "5.2.*",
         "mgallegos/decima-file": "1.*",
         "mgallegos/decima-accounting": "dev-master",
-        "mgallegos/laravel-jqgrid": "1.*",
+        "mgallegos/laravel-jqgrid": "dev-master",
     		"itsgoingd/clockwork": "dev-master",
     		"jenssegers/agent": "dev-master",
     		"pda/pheanstalk": "3.0.*@dev",
