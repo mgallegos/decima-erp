@@ -468,6 +468,10 @@ body {
 	z-index: 1500;
 }
 
+.ui-autocomplete {
+	z-index: 1500 !important;
+}
+
 /* Custom form classes*/
 .help-block-custom {
 	margin: 0 !important;
