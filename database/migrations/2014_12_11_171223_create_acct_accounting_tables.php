@@ -40,11 +40,16 @@ class CreateAcctAccountingTables extends Migration {
 		Schema::create('ACCT_Setting', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->smallInteger('initial_year')->nullable();;
+			$table->smallInteger('initial_year')->nullable();
 			$table->char('voucher_numeration_type', 1)->nullable();//Periodo,Period:P and Periodo y tipo de partida, Period and Voucher Type: A
 			$table->boolean('create_opening_period')->default(false);
 			$table->boolean('create_closing_period')->default(false);
 			$table->boolean('is_configured')->default(false);
+
+			//PDF Journal Voucher
+			$table->boolean('cost_center_is_visible')->default(false);
+			$table->string('revised_by', 100)->nullable();
+			$table->string('authorized_by', 100)->nullable();
 
 			//Foreign Keys
 			$table->unsignedInteger('account_chart_type_id')->index()->nullable();
