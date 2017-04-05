@@ -10,7 +10,7 @@
  * Close tab and destroy its content.
  *
  * @param string id
- * 	App ID
+ * 	App IDch
  *
  *  @returns void
  */
@@ -75,6 +75,11 @@ function changeLoggedUserOrganization(id)
 		type: 'POST',
 		data: JSON.stringify({'id':id, '_token':$('#app-token').val()}),
 		url: $('#app-url').val() + '/general-setup/security/user-management/change-logged-user-organization',
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			handleServerExceptions(jqXHR, appPrefix + 'btn-toolbar', false);
+			enableAll();
+    },
 		beforeSend:function()
 		{
 			$('#app-loader').removeClass('hidden hidden-xs-up');
