@@ -298,8 +298,6 @@ Form::macro('daterange', function($nameFrom, $nameTo, $options = array(), $value
 
 Form::macro('journals', function($appPrefix, $appId, $twoColumns = true, $userId = '', $journalizedId = '', $onlyActions = '', $journalLengend = null, $journals = null, $organizationNotNull = true)
 {
-	return '';
-	
 	$journalsHtml = '';
 
 	$journalCounter = 0;
