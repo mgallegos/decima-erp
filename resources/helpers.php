@@ -33,6 +33,7 @@
                   return false;
                 }
                 elseif (is_string($a) && trim($a) === "")
+                // elseif (is_string($a) && (trim($a) === '' || trim($a) == ''  || trim($a) == ' ' || trim($a) == ' '))
                 {
                   return false;
                 }
@@ -61,7 +62,7 @@ if ( ! function_exists('eloquent_array_filter'))
                 {
                   return false;
                 }
-                elseif (is_string($a) && (trim($a) == ''  || trim($a) == ' '))
+                elseif (is_string($a) && (trim($a) === '' || trim($a) == ''  || trim($a) == ' ' || trim($a) == ' ' || trim($a) == '\xC2\xA0'))
                 {
                   $a = null;
                   return true;
