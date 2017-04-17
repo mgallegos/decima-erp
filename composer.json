@@ -5,7 +5,7 @@
     "license": "GNU AGPL version 3 or any later version",
     "type": "project",
     "require": {
-        "php": ">=5.5.9",
+        "php": "~5.6.1",
         "laravel/framework": "5.2.*",
         "mgallegos/decima-file": "1.*",
         "mgallegos/decima-accounting": "dev-master",
