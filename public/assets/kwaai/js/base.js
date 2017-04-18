@@ -61,36 +61,6 @@ function onClickTabEvent(url)
 	$('.decima-erp-tooltip').tooltip('hide');
 }
 
-/**
- * Send a request to change current user organization.
- *
- * @param integer id
- *
- *  @returns void
- */
-function changeLoggedUserOrganization(id)
-{
-	$.ajax(
-	{
-		type: 'POST',
-		data: JSON.stringify({'id':id, '_token':$('#app-token').val()}),
-		url: $('#app-url').val() + '/general-setup/security/user-management/change-logged-user-organization',
-		error: function (jqXHR, textStatus, errorThrown)
-		{
-			handleServerExceptions(jqXHR, appPrefix + 'btn-toolbar', false);
-			enableAll();
-    },
-		beforeSend:function()
-		{
-			$('#app-loader').removeClass('hidden hidden-xs-up');
-			disabledAll();
-		},
-		success:function()
-		{
-			window.location.replace($('#app-url').val() + '/dashboard');
-		}
-	});
-}
 
 /**
 * Send a request to change current user organization.
@@ -688,6 +658,37 @@ function getAppJournals(appPrefix, action, journalizedId)
 
 			$('#app-loader').addClass('hidden hidden-xs-up');
 			enableAll();
+		}
+	});
+}
+
+/**
+ * Send a request to change current user organization.
+ *
+ * @param integer id
+ *
+ *  @returns void
+ */
+function changeLoggedUserOrganization(id)
+{
+	$.ajax(
+	{
+		type: 'POST',
+		data: JSON.stringify({'id':id, '_token':$('#app-token').val()}),
+		url: $('#app-url').val() + '/general-setup/security/user-management/change-logged-user-organization',
+		error: function (jqXHR, textStatus, errorThrown)
+		{
+			handleServerExceptions(jqXHR, '', false);
+			enableAll();
+    },
+		beforeSend:function()
+		{
+			$('#app-loader').removeClass('hidden hidden-xs-up');
+			disabledAll();
+		},
+		success:function()
+		{
+			window.location.replace($('#app-url').val() + '/dashboard');
 		}
 	});
 }
