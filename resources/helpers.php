@@ -62,7 +62,7 @@ if ( ! function_exists('eloquent_array_filter'))
                 {
                   return false;
                 }
-                elseif (is_string($a) && (empty($a) || trim($a) === '' || trim($a) == ''  || trim($a) == ' ' || trim($a) == ' ' || trim($a) == '\xC2\xA0' || $a == ' '))
+                elseif (is_string($a) && (empty($a) || trim($a) === '' || trim($a) == ''  || trim($a) == ' ' || trim($a) == ' ' || trim($a) == '\xC2\xA0' || $a == ' ' || $a == ' ' || $a == ''))
                 {
                   // return false;
                   $a = null;
