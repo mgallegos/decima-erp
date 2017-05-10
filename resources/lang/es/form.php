@@ -27,6 +27,10 @@ return array(
 
 	'dateRangeTo' => 'Hasta:',
 
+	'dateRangeFromPlaceHolder' => 'Desde: dd/mm/yy',
+
+	'dateRangeToPlaceHolder' => 'Hasta: dd/mm/yy',
+
 	'dateRangeValidation' => 'La fecha inicial no puede ser mayor a la fecha final.',
 
 	'defaultinvalidDateHelpMessage' => 'La fecha es inválida.',
@@ -130,6 +134,8 @@ return array(
 	'number' => 'No.',
 
 	'page' => 'Página',
+
+	'orderBy' => 'Ordenar por',
 
   'A' => 'Anulado',
 
