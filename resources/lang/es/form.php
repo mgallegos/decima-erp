@@ -27,9 +27,9 @@ return array(
 
 	'dateRangeTo' => 'Hasta:',
 
-	'dateRangeFromPlaceHolder' => 'Desde: dd/mm/yy',
+	'dateRangeFromPlaceHolder' => 'Desde',
 
-	'dateRangeToPlaceHolder' => 'Hasta: dd/mm/yy',
+	'dateRangeToPlaceHolder' => 'Hasta',
 
 	'dateRangeValidation' => 'La fecha inicial no puede ser mayor a la fecha final.',
 
@@ -136,6 +136,8 @@ return array(
 	'page' => 'Página',
 
 	'orderBy' => 'Ordenar por',
+
+	'search' => 'Buscar',
 
   'A' => 'Anulado',
 
