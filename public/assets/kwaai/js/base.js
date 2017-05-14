@@ -176,17 +176,17 @@ function handleServerExceptions(jqXHR, id, alertAsFirstChild)
 {
 	alertAsFirstChild = (alertAsFirstChild == undefined ? true : alertAsFirstChild);
 
-	console.log(jqXHR);
+	// console.log(jqXHR);
 
 	try
 	{
 		response = JSON.parse(jqXHR.responseText);
 		response = response.error.type;
-		console.log('1');
+		// console.log('1');
 	}
 	catch (e)
 	{
-		console.log('2');
+		// console.log('2');
 		response = $.trim(jqXHR.responseText);
 	}
 
@@ -776,7 +776,10 @@ $(document).ready(function()
 
 	History.Adapter.bind(window,'statechange',function(){
 		var State = History.getState();
-		loadPage(State.url.replace($('#app-url').val(), ''));
+		if(State.data.load)
+		{
+			loadPage(State.url.replace($('#app-url').val(), ''));
+		}
 	});
 
 

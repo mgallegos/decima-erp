@@ -703,7 +703,7 @@ function changeWindowsUrl(url)
 
 	if(State.url != ($('#app-url').val() + url))
 	{
-		History.pushState(null, $('a[appurl=\'' + url +'\']').html(), $('#app-url').val() + url);
+		History.pushState({load:true}, $('a[appurl=\'' + url +'\']').html(), $('#app-url').val() + url);
 	}
 }
 

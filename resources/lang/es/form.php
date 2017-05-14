@@ -139,6 +139,8 @@ return array(
 
 	'search' => 'Buscar',
 
+	'enterComment' => 'Escriba su comentario',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
