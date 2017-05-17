@@ -551,7 +551,7 @@ $.fn.showServerErrorsByField = function(fieldValidationMessages, prefix)
 
 	$.each(fieldValidationMessages, function( field, message )
 	{
-		$('#' + prefix + field).jqMgValDisplayMessage('has-error', message);
+		$('#' + prefix + field).jqMgValDisplayMessage('has-error has-danger', message);
 
 		if(count == 0)
 		{

@@ -246,7 +246,7 @@
 			helpMessageLocation = this.attr('data-mg-help-message-location');
 		}
 
-		var helpMessageTextStyle='';
+		var helpMessageTextStyle='position: inherit;top: inherit;right: inherit;width: inherit;height: inherit;line-height: inherit;text-align: inherit;';
 		var helpMessageDiv = this.closest('.' + opts.helpMessageClass);
 		var icon = opts.successIconClass;
 
@@ -254,7 +254,7 @@
 
 		if(helpMessageDiv.find("p").length >= 1 || helpMessageDiv.find("textarea").length == 1)
 		{
-			helpMessageTextStyle = 'margin: 0 !important;';
+			helpMessageTextStyle += 'margin: 0 !important;';
 			helpMessageDiv.find(".help-block").filter('p').attr('style', 'margin-bottom: 0 !important;');
 		}
 
