@@ -139,6 +139,8 @@ return array(
 
 	'search' => 'Buscar',
 
+	'hours' => 'Horas',
+
 	'enterComment' => 'Escriba su comentario',
 
   'A' => 'Anulado',
