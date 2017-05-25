@@ -862,6 +862,7 @@ var jqMgValAutocompleteValidator = function($element)
 		else
 		{
 			$element.jqMgValDisplayMessage('has-error has-danger', lang.autocompleteValidation);;
+			$('#' + $element.attr('data-autocomplete-value-name')).val('');
 			return false;
 		}
 
