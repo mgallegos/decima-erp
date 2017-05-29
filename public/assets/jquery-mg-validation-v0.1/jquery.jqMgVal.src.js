@@ -630,14 +630,15 @@
 			this.find('.has-error').first().find('.form-control').focus();
 			// this.find('.has-danger').first().find('.form-control').focus();
 
-			$.scrollTo(this.find('.has-error').first().position());
+			// $.scrollTo(this.find('.has-error').first().offset());
+			// $.scrollTo(this.find('.has-error').first().position());
 			// $.scrollTo(this.find('.has-danger').first().position());
 
 			//console.log(opts.scrollToFirstFieldWithError);
 
 			if(opts.scrollToFirstFieldWithError)
 			{
-				$.scrollTo(this.children('.has-error').first().position());
+				$.scrollTo(this.children('.has-error').first().offset());
 				// $.scrollTo(this.children('.has-danger').first().position());
 			}
 

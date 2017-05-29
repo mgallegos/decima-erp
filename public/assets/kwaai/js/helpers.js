@@ -455,7 +455,7 @@ $.fn.showAlertAfterElement = function (cssClass, textAlert, delay)
 
 	this.after('<div id="' + this.attr("id") + '-alert" class="alert alert-block ' + cssClass + ' fade in show"><a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>' + textAlert + '</div>');
 
-	$.scrollTo($("#" + this.attr("id") + "-alert").position());
+	$.scrollTo($("#" + this.attr("id") + "-alert").offset());
 	$("#" + this.attr("id") + "-alert").alert();
 
 	if(delay)
@@ -489,7 +489,7 @@ $.fn.showAlertAsFirstChild = function (cssClass, textAlert, delay)
 
 	this.prepend('<div id="' + this.attr("id") + '-alert" class="alert alert-block ' + cssClass + ' fade in show"><a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>' + textAlert + '</div>');
 
-	$.scrollTo($("#" + this.attr("id") + "-alert").position());
+	$.scrollTo($("#" + this.attr("id") + "-alert").offset());
 	$("#" + this.attr("id") + "-alert").alert();
 
 	if(delay)
@@ -530,7 +530,7 @@ $.fn.showYesNoQuestionAsFirstChild = function (question, functionToCallIfYes, fu
 	html += '<div class="btn-group" style="margin-top: 10px;"><button class="btn btn-success" type="button" onclick="' + functionToCallIfYes + '();"><i class="fa fa-check"></i> ' + lang.yes + '</button><button class="btn btn-danger" type="button" onclick="' + functionToCallIfNo + '();"><i class="fa fa-times"></i> ' + lang.no + '</button></div></div>';
 	this.prepend(html);
 
-	$.scrollTo($("#" + this.attr("id") + "-yes-no-question").position());
+	$.scrollTo($("#" + this.attr("id") + "-yes-no-question").offset());
 	$("#" + this.attr("id") + "-yes-no-question").alert();
 };
 
@@ -555,7 +555,7 @@ $.fn.showServerErrorsByField = function(fieldValidationMessages, prefix)
 
 		if(count == 0)
 		{
-				$.scrollTo($('#' + prefix + field).position());
+				$.scrollTo($('#' + prefix + field).offset());
 		}
 
 		count++;
