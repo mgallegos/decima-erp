@@ -67,7 +67,7 @@ return array(
 
 	'databaseConnectionNameInfoMessage' => 'Una vez creada la organización, el nombre de la conexión a la base de datos puede ser modificado únicamente por el administrador de la aplicación.',
 
-	'booleanText' => '0:No;1:Sí',
+	'booleanText' => ':;0:No;1:Sí',
 
 	'loadButton' => 'Cargando...',
 
