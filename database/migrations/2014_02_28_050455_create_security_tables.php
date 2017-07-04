@@ -100,16 +100,16 @@ class CreateSecurityTables extends Migration {
 			$table->increments('id');
 			$table->string('name',60);
 			$table->string('lang_key',100)->nullable();
-			$table->string('url',300)->nullable();
+			$table->string('url',300)->index()->nullable();
 			$table->string('action_button_id',60)->default('');
 			$table->string('action_lang_key',100)->nullable();
 			$table->string('icon',60)->nullable();
 
 			//Foreign Keys
-			$table->unsignedInteger('parent_id')->nullable();
+			$table->unsignedInteger('parent_id')->index()->nullable();
 			$table->unsignedInteger('created_by');
 			$table->foreign('created_by')->references('id')->on('SEC_User');
-			$table->unsignedInteger('module_id');
+			$table->unsignedInteger('module_id')->index();
 			$table->foreign('module_id')->references('id')->on('SEC_Module');
 
 			//Timestamps

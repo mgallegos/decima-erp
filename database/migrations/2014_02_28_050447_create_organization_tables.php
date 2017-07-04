@@ -34,6 +34,7 @@ class CreateOrganizationTables extends Migration {
 			$table->string('email')->nullable();
 			$table->string('tax_id')->nullable();
 			$table->string('company_registration')->nullable();
+			$table->string('commercial_trade')->nullable();
 			$table->text('logo_url')->nullable();
 			$table->string('database_connection_name',60);
 
