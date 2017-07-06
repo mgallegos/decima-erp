@@ -59,6 +59,8 @@ return array(
 
 	'companyRegistration' => 'NRC',
 
+	'commercialTrade' => 'Giro',
+
 	'address' => 'Dirección',
 
 	'street1PlaceHolder' => 'Calle línea 1ª',
