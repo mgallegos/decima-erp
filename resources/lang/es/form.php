@@ -147,7 +147,7 @@ return array(
 
 	'generic' => 'Genérico',
 
-	'generatePdf' => 'Personalizado',
+	'custom' => 'Personalizado',
 
   'A' => 'Anulado',
 
