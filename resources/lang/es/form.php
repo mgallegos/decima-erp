@@ -143,6 +143,12 @@ return array(
 
 	'enterComment' => 'Escriba su comentario',
 
+	'generatePdf' => 'Generar PDF',
+
+	'generic' => 'Genérico',
+
+	'generatePdf' => 'Personalizado',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
