@@ -68,6 +68,7 @@ class ServicesServiceProvider extends ServiceProvider {
 			return new LaravelAuthenticationManager(
 					$app->make('App\Kwaai\Organization\Repositories\Organization\OrganizationInterface'),
 					$app->make('App\Kwaai\Security\Repositories\User\UserInterface'),
+					$app->make('App\Kwaai\System\Repositories\Currency\CurrencyInterface'),
 					$app['auth'],
 					$app['translator'],
 					$app['url'],

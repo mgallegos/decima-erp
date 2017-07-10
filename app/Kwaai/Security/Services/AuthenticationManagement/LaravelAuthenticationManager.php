@@ -41,6 +41,8 @@ use App\Kwaai\Organization\Organization;
 
 use App\Kwaai\Security\Repositories\User\UserInterface;
 
+use App\Kwaai\System\Repositories\Currency\CurrencyInterface;
+
 use App\Kwaai\System\Services\Validation\AbstractLaravelValidator;
 
 use App\Kwaai\Organization\Repositories\Organization\OrganizationInterface;
@@ -70,6 +72,14 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 *
 	 */
 	protected $User;
+
+	/**
+	* Currency Interface
+	*
+	* @var App\Kwaai\System\Repositories\Currency\CurrencyInterface
+	*
+	*/
+	protected $Currency;
 
 	/**
 	 * Laravel Authenticator instance
@@ -182,11 +192,13 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	protected $Cas;
 
-	public function __construct(OrganizationInterface $Organization, UserInterface $User, AuthManager $Auth, TranslatorInterface $Lang, UrlGenerator $Url, Dispatcher $Event, Redirector $Redirector, CookieJar $Cookie, Request $Input, Repository $Config, PasswordBrokerManager $Password, Hasher $Hash, SessionManager $Session, Factory $Validator, CasManager $Cas)
+	public function __construct(OrganizationInterface $Organization, UserInterface $User, CurrencyInterface $Currency, AuthManager $Auth, TranslatorInterface $Lang, UrlGenerator $Url, Dispatcher $Event, Redirector $Redirector, CookieJar $Cookie, Request $Input, Repository $Config, PasswordBrokerManager $Password, Hasher $Hash, SessionManager $Session, Factory $Validator, CasManager $Cas)
 	{
 		$this->Organization = $Organization;
 
 		$this->User = $User;
+
+		$this->Currency = $Currency;
 
 		$this->Auth = $Auth;
 
@@ -730,6 +742,26 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		if(is_object($value))
 		{
 			$value = $value->currency_id;
+		}
+
+		return $value;
+	}
+
+	/**
+	* Get current user organization courrency
+	*
+	* @return string
+	*/
+	public function getCurrentUserOrganizationCurrencySymbol()
+	{
+		$value = $this->getCurrentUserOrganizationId();
+
+		$value = $this->Organization->byId($value);
+
+		if(is_object($value))
+		{
+			$Currency = $this->Currency->byId($value->currency_id);
+			$value = $Currency->symbol;
 		}
 
 		return $value;
