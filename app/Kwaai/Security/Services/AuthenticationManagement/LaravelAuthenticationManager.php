@@ -628,9 +628,9 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 *
 	 * @param string $columnName
 	 *
-	 * @return void
+	 * @return column or object
 	 */
-	public function getCurrentUserOrganization($columnName)
+	public function getCurrentUserOrganization($columnName = null)
 	{
 		$value = $this->getCurrentUserOrganizationId();
 
@@ -641,6 +641,11 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		if(is_object($value))
 		{
+			if(empty($columnName))
+			{
+				return $value;
+			}
+
 			$value = $value->$columnName;
 		}
 		else
