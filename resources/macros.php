@@ -435,3 +435,59 @@ Form::macro('journals', function($appPrefix, $appId, $twoColumns = true, $userId
   			</div>
 			";
 });
+
+Form::macro('imageuploader', function($name, $options = array(), $appPrefix, $folder, $minWidth = '""', $sameWidthAsHeight = '""', $sizes = '[]', $isPublic = true, $flag = null, $value = null, $prefixIcon = 'fa-link', $inputGroupSizeClass = '')
+{
+	$prefix = '';
+
+	if (!isset($options['name']))
+	{
+		$options['name'] = $name;
+	}
+
+	if (empty($flag))
+	{
+		$flag = $name;
+	}
+
+	if (!empty($value))
+	{
+		$options['value'] = $value;
+	}
+
+	if ($isPublic)
+	{
+		$isPublic = 'true';
+	}
+	else
+	{
+		$isPublic = 'false';
+	}
+
+	if(!empty($prefixIcon))
+	{
+		$prefix = '<span class="input-group-addon">
+				      <i class="fa '. $prefixIcon . '"></i>
+				   </span>';
+	}
+
+	$options['id'] = $name;
+	$options['type'] = 'text';
+
+	$name = camel_case($name);
+
+
+	FormJavascript::setCode('$("#'.  $options['id'] . '-uploader").click(function(){ $("#' . $appPrefix .'file-uploader-modal").attr("data-flag", "' . $flag .'"); openUploader("' . $appPrefix .'", "", "' . $folder .'", ["image"], ' . $minWidth .', ' . $sameWidthAsHeight .', ' . $sizes .', 1, ' . $isPublic .'); });');
+	// FormJavascript::setCode('$("#'. $options['id'] .'").' . $autocompleteWidgetName . '({ minLength: 0, source: '. $autocompleteSource . $autocompleteEvent . '}); $("#'.  $options['id'] . '-show-all-button").click(function(){ $("#' . $options['id'] .'").autocomplete( "search", "" ); $("#' . $options['id'] .'").focus(); });');
+	// FormJavascript::setGlobalCode('var '. $name . 'ArrayData = ' . json_encode($source) . ';');
+
+	return '<div class="input-group ' . $inputGroupSizeClass . '">
+				' . $prefix . '
+				<input'.Html::attributes($options).'>
+				<span class="input-group-btn">
+					<button id="' . $options['id'] . '-uploader" class="btn btn-default" type="button">
+						<i class="fa fa-upload"></i>
+					</button>
+				</span>
+			</div>';
+});
