@@ -273,6 +273,38 @@ $.fn.setAutocompleteLabel = function(value)
 };
 
 /**
+ * Set the label of an autocomplete based on a given value.
+ *
+ *  @returns true if valid, false otherwise
+ */
+$.fn.getAutocompleteLabel = function(value)
+{
+	var value = value.toLowerCase(), autocomplete = this, label = '';
+
+	$.each(this.autocomplete( "option", "source" ), function(index, element)
+	{
+		if($.isPlainObject(element))
+		{
+			if(element.value.toString().toLowerCase() == value)
+			{
+				label = element.label;
+				return false;
+			}
+		}
+		else
+		{
+    	if(element.toLowerCase() == value)
+			{
+				label = value;
+				return false;
+      }
+   	}
+ 	});
+
+	return label;
+};
+
+/**
  * Get the value of an autocomplete based on its label.
  *
  *  @returns object
