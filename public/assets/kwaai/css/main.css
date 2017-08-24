@@ -611,6 +611,16 @@ body {
   margin-right: auto !important;
 }
 
+
+/*Modal Fixes*/
+.ui-datepicker {
+	z-index: 2147483647 !important;
+}
+
+.ui-autocomplete {
+	z-index: 2147483647 !important;
+}
+
 /*Media*/
 @media (min-width: 992px) and (max-width: 1199px) {
 
