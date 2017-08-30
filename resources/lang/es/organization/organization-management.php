@@ -69,7 +69,7 @@ return array(
 
 	'cityNamePlaceHolder' => 'Ciudad',
 
-	'stateNamePlaceHolder' => 'Provincia',
+	'stateNamePlaceHolder' => 'Municipio',
 
 	'zipCodePlaceHolder' => 'Código Postal',
 

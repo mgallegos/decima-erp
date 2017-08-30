@@ -161,6 +161,10 @@ body {
   border-radius: 0 !important;
 }
 
+.visibility-hidden {
+  visibility: hidden;
+}
+
 /* Section classes */
 
 .section-header {
