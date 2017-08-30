@@ -49,6 +49,8 @@ return array(
 
 	'moneyRegexHelpMessage' => 'El valor ingresado debe ser númerico, ejemplo: 1,000.00 o 1000.00 o 1000',
 
+	'multipleDefaultSuccessOperationMessage' => 'Se realizaron las siguientes operaciones exitosamente:',
+
 	'defaultSuccessOperationMessage' => 'La operación se realizó exitosamente.',
 
 	'defaultSuccessSaveMessage' => 'El registro se ha guardado exitosamente.',
