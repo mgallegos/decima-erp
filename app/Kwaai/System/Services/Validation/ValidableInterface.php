@@ -6,7 +6,7 @@
  * All DecimaERP code is copyright by the original authors and released under the GNU Aferro General Public License version 3 (AGPLv3) or later.
  * See COPYRIGHT and LICENSE.
  */
- 
+
 namespace App\Kwaai\System\Services\Validation;
 
 interface ValidableInterface {
@@ -25,7 +25,7 @@ interface ValidableInterface {
      * @return boolean
      */
     public function passes();
-    
+
     /**
      * Test if validation fails or passes
      *
@@ -39,12 +39,40 @@ interface ValidableInterface {
      * @return object
      */
     public function errors();
-    
+
     /**
      * Organize an array with field and its corresponding validation message
      *
      * @return array
      */
     function singleMessageStringByField();
+
+    /**
+  	 * Open database transactions
+  	 *
+  	 * @param boolean $openTransaction
+  	 * @param string $databaseConnectionName
+  	 *
+  	 * @return array
+  	 */
+  	function beginTransaction($openTransaction, $databaseConnectionName);
+
+    /**
+  	 * Commit database transactions
+  	 *
+  	 * @param boolean $openTransaction
+  	 *
+  	 * @return array
+  	 */
+  	function commit($openTransaction);
+
+    /**
+  	 * RollBack database transactions
+  	 *
+  	 * @param boolean $openTransaction
+  	 *
+  	 * @return array
+  	 */
+  	function rollBack($openTransaction);
 
 }

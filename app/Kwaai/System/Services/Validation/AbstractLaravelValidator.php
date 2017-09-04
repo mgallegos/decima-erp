@@ -33,13 +33,20 @@ abstract class AbstractLaravelValidator implements ValidableInterface {
 	 * @var Array
 	 */
 	protected $rules = array();
-	
+
 	/**
 	 * Custom validation messages
 	 *
 	 * @var Array
 	 */
 	protected $messages = array();
+
+	/**
+	 * Database Connection Name
+	 *
+	 * @var string
+	 */
+	protected $databaseConnectionName;
 
 	/**
 	 * Set data to validate
@@ -65,17 +72,17 @@ abstract class AbstractLaravelValidator implements ValidableInterface {
 			$this->rules,
 			$this->messages
 		);
-		
+
 		if( $Validator->fails() )
 		{
 			$this->errors = $Validator->messages();
-			
+
 			return false;
 		}
 
 		return true;
 	}
-	
+
 	/**
 	 * Test if validation fails or passes
 	 *
@@ -88,14 +95,14 @@ abstract class AbstractLaravelValidator implements ValidableInterface {
 			$this->rules,
 			$this->messages
 		);
-	
+
 		if( $Validator->fails() )
 		{
 			$this->errors = $Validator->messages();
-			
+
 			return true;
 		}
-	
+
 		return false;
 	}
 
@@ -108,7 +115,7 @@ abstract class AbstractLaravelValidator implements ValidableInterface {
 	{
 		return $this->errors;
 	}
-	
+
 	/**
 	 * Organize an array with field and its corresponding validation message
 	 *
@@ -117,13 +124,85 @@ abstract class AbstractLaravelValidator implements ValidableInterface {
 	function singleMessageStringByField()
 	{
 		$validations = array();
-			
+
 		foreach ($this->errors->toArray() as $key => $messages)
 		{
 			$validations = array_add($validations, $key, implode($messages, '<br>'));
 		}
-	
+
 		return $validations;
+	}
+
+	/**
+	 * Open database transactions
+	 *
+	 * @param boolean $openTransaction
+	 * @param string $databaseConnectionName
+	 *
+	 * @return array
+	 */
+	function beginTransaction($openTransaction, $databaseConnectionName)
+	{
+		if(!$openTransaction)
+		{
+			return;
+		}
+
+		if(empty($databaseConnectionName))
+    {
+      $this->databaseConnectionName = $this->AuthenticationManager->getCurrentUserOrganizationConnection();
+    }
+
+		$this->DB->beginTransaction();
+
+    if(!$this->AuthenticationManager->isDefaultDatabaseConnectionName($this->databaseConnectionName))
+    {
+      $this->DB->connection($this->databaseConnectionName)->beginTransaction();
+    }
+	}
+
+	/**
+	 * Commit database transactions
+	 *
+	 * @param boolean $openTransaction
+	 *
+	 * @return array
+	 */
+	function commit($openTransaction)
+	{
+		if(!$openTransaction)
+		{
+			return;
+		}
+
+		$this->DB->commit();
+
+		if(!$this->AuthenticationManager->isDefaultDatabaseConnectionName($this->databaseConnectionName))
+    {
+      $this->DB->connection($this->databaseConnectionName)->commit();
+    }
+	}
+
+	/**
+	 * RollBack database transactions
+	 *
+	 * @param boolean $openTransaction
+	 *
+	 * @return array
+	 */
+	function rollBack($openTransaction)
+	{
+		if(!$openTransaction)
+		{
+			return;
+		}
+
+		$this->DB->rollBack();
+
+		if(!$this->AuthenticationManager->isDefaultDatabaseConnectionName($this->databaseConnectionName))
+    {
+      $this->DB->connection($this->databaseConnectionName)->rollBack();
+    }
 	}
 
 }

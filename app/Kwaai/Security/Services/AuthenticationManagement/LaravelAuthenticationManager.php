@@ -226,6 +226,8 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		$this->Cas = $Cas;
 
+		$this->defaultDatabaseConnectionName = 'default';
+
 		$this->rules = array(
 			'kwaai_name' => 'honeypot',
 			'kwaai_time' => 'required|honeytime:5'
@@ -624,6 +626,43 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	}
 
 	/**
+	 * Verify is the connection is the default connection
+	 *
+	 * @param string $databaseConnectionName
+	 *
+	 * @return true if it is the default database connection name, false otherwise
+	 */
+	public function isDefaultDatabaseConnectionName($databaseConnectionName = null)
+	{
+		if(empty($databaseConnectionName))
+		{
+			$databaseConnectionName = $this->getCurrentUserOrganizationConnection();
+		}
+
+		if($databaseConnectionName == $this->defaultDatabaseConnectionName)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
+	/**
+	 * Get default database connection name
+	 *
+	 * @param string $columnName
+	 *
+	 * @return column or object
+	 */
+	public function getDefaultDatabaseConnectionName()
+	{
+		return $this->defaultDatabaseConnectionName;
+	}
+
+	/**
 	 * Get current user organization
 	 *
 	 * @param string $columnName
@@ -701,7 +740,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		if(!is_int($value))
 		{
-			return 'default';
+			return $this->defaultDatabaseConnectionName;
 		}
 
 		$value = $this->Organization->byId($value);
