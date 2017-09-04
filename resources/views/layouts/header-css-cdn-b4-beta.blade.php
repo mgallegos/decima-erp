@@ -25,3 +25,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.0/quill.snow.min.css" />
 {!! Html::style('assets/kwaai/css/main.css') !!}
 {!! Html::style('assets/kwaai/css/button-custom-classes.css') !!}
+
+<!-- B4 CSS Fixes-->
+<style>
+.hidden-xs-up {
+  display: none;
+}
+</style>

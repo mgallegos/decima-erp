@@ -165,10 +165,6 @@ body {
   visibility: hidden;
 }
 
-.hidden-xs-up {
-  display: none;
-}
-
 /* Section classes */
 
 .section-header {
