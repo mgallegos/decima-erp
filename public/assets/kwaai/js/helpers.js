@@ -482,6 +482,7 @@ $.fn.cleanForm = function()
  */
 $.fn.showAlertAfterElement = function (cssClass, textAlert, delay)
 {
+	var top;
 	$("#" + this.attr("id") + "-alert").hide();
 	$("#" + this.attr("id") + "-alert").alert('close');
 
@@ -489,7 +490,18 @@ $.fn.showAlertAfterElement = function (cssClass, textAlert, delay)
 
 	$("#" + this.attr("id") + "-alert").alert();
 	// $.scrollTo($("#" + this.attr("id") + "-alert").offset());
-	$.scrollTo({top: $("#" + this.attr("id") + "-alert").offset().top - 200, left:0});
+	top = $("#" + this.attr("id") + "-alert").offset().top;
+
+	if(top == undefined)
+	{
+		top = 0;
+	}
+	else
+	{
+		top = top - 200;
+	}
+
+	$.scrollTo({top: top, left:0});
 
 	if(delay)
 	{
@@ -523,7 +535,19 @@ $.fn.showAlertAsFirstChild = function (cssClass, textAlert, delay)
 	this.prepend('<div id="' + this.attr("id") + '-alert" class="alert alert-block ' + cssClass + ' fade in show"><a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>' + textAlert + '</div>');
 
 	$("#" + this.attr("id") + "-alert").alert();
-	$.scrollTo({top: $("#" + this.attr("id") + "-alert").offset().top - 200, left:0});
+
+	top = $("#" + this.attr("id") + "-alert").offset().top;
+
+	if(top == undefined)
+	{
+		top = 0;
+	}
+	else
+	{
+		top = top - 200;
+	}
+
+	$.scrollTo({top: top, left:0});
 	// $.scrollTo(0, $("#" + this.attr("id") + "-alert").offset().top);
 
 	if(delay)
@@ -565,8 +589,20 @@ $.fn.showYesNoQuestionAsFirstChild = function (question, functionToCallIfYes, fu
 	this.prepend(html);
 
 	// $.scrollTo($("#" + this.attr("id") + "-yes-no-question").offset());
-	$.scrollTo({top: $("#" + this.attr("id") + "-yes-no-question").offset().top - 200, left:0});
 	$("#" + this.attr("id") + "-yes-no-question").alert();
+
+	top = $("#" + this.attr("id") + "-yes-no-question").offset().top;
+
+	if(top == undefined)
+	{
+		top = 0;
+	}
+	else
+	{
+		top = top - 200;
+	}
+
+	$.scrollTo({top: top, left:0});
 };
 
 /**
@@ -591,7 +627,18 @@ $.fn.showServerErrorsByField = function(fieldValidationMessages, prefix)
 		if(count == 0)
 		{
 				// $.scrollTo($('#' + prefix + field).offset());
-				$.scrollTo({top: $("#" + prefix + field).offset().top - 200, left:0});
+				top = $("#" + prefix + field).offset().top;
+
+				if(top == undefined)
+				{
+					top = 0;
+				}
+				else
+				{
+					top = top - 200;
+				}
+
+				$.scrollTo({top: top, left:0});
 		}
 
 		count++;
