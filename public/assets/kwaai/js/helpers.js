@@ -490,7 +490,7 @@ $.fn.showAlertAfterElement = function (cssClass, textAlert, delay)
 
 	$("#" + this.attr("id") + "-alert").alert();
 	// $.scrollTo($("#" + this.attr("id") + "-alert").offset());
-	top = $("#" + this.attr("id") + "-alert").offset().top;
+	top = $("#" + this.attr("id") + "-alert").offset();
 
 	if(top == undefined)
 	{
@@ -498,7 +498,7 @@ $.fn.showAlertAfterElement = function (cssClass, textAlert, delay)
 	}
 	else
 	{
-		top = top - 200;
+		top = top.top - 200;
 	}
 
 	$.scrollTo({top: top, left:0});
@@ -536,7 +536,7 @@ $.fn.showAlertAsFirstChild = function (cssClass, textAlert, delay)
 
 	$("#" + this.attr("id") + "-alert").alert();
 
-	top = $("#" + this.attr("id") + "-alert").offset().top;
+	top = $("#" + this.attr("id") + "-alert").offset();
 
 	if(top == undefined)
 	{
@@ -544,7 +544,7 @@ $.fn.showAlertAsFirstChild = function (cssClass, textAlert, delay)
 	}
 	else
 	{
-		top = top - 200;
+		top = top.top - 200;
 	}
 
 	$.scrollTo({top: top, left:0});
@@ -591,7 +591,7 @@ $.fn.showYesNoQuestionAsFirstChild = function (question, functionToCallIfYes, fu
 	// $.scrollTo($("#" + this.attr("id") + "-yes-no-question").offset());
 	$("#" + this.attr("id") + "-yes-no-question").alert();
 
-	top = $("#" + this.attr("id") + "-yes-no-question").offset().top;
+	top = $("#" + this.attr("id") + "-yes-no-question").offset();
 
 	if(top == undefined)
 	{
@@ -599,7 +599,7 @@ $.fn.showYesNoQuestionAsFirstChild = function (question, functionToCallIfYes, fu
 	}
 	else
 	{
-		top = top - 200;
+		top = top.top - 200;
 	}
 
 	$.scrollTo({top: top, left:0});
@@ -627,7 +627,7 @@ $.fn.showServerErrorsByField = function(fieldValidationMessages, prefix)
 		if(count == 0)
 		{
 				// $.scrollTo($('#' + prefix + field).offset());
-				top = $("#" + prefix + field).offset().top;
+				top = $("#" + prefix + field).offset();
 
 				if(top == undefined)
 				{
@@ -635,7 +635,7 @@ $.fn.showServerErrorsByField = function(fieldValidationMessages, prefix)
 				}
 				else
 				{
-					top = top - 200;
+					top = top.top - 200;
 				}
 
 				$.scrollTo({top: top, left:0});
