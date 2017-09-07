@@ -18,7 +18,7 @@
 				<div class="form-group">
 					<div class="input-group">
 						<span class="input-group-addon">
-							<i class="fa fa-key"></i>&nbsp;
+							<i class="fa fa-key"></i>
 						</span>
 						{!! Form::password('password', array('id'=>'password', 'class'=>'form-control', 'data-mg-required'=>'', 'placeholder' => Lang::get('security/user-management.password'))) !!}
 			    	</div>
