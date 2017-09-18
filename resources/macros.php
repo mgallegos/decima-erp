@@ -75,7 +75,14 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 		$autocompleteSource = $inputTextAutocompleteName .'ArrayData';
 	}
 
-	FormJavascript::setCode('$("#'. $options['id'] .'").' . $autocompleteWidgetName . '({ minLength: 0, source: '. $autocompleteSource . $autocompleteEvent . '}); $("#'.  $options['id'] . '-show-all-button").click(function(){ $("#' . $options['id'] .'").autocomplete( "search", "" ); $("#' . $options['id'] .'").focus(); });');
+	$searchEvent = '
+		function(e,ui)
+		{
+			$(this).data("ui-autocomplete").menu.bindings = $();
+		}
+	';
+
+	FormJavascript::setCode('$("#'. $options['id'] .'").' . $autocompleteWidgetName . '({ minLength: 0, search: '. $searchEvent . ', source: '. $autocompleteSource . $autocompleteEvent . '}); $("#'.  $options['id'] . '-show-all-button").click(function(){ $("#' . $options['id'] .'").autocomplete( "search", "" ); $("#' . $options['id'] .'").focus(); });');
 	FormJavascript::setGlobalCode('var '. $inputTextAutocompleteName . 'ArrayData = ' . json_encode($source) . ';');
 
 	return '<div class="input-group ' . $inputGroupSizeClass . '">
