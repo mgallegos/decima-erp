@@ -151,6 +151,8 @@ return array(
 
 	'custom' => 'Personalizado',
 
+	'correlative' => 'Correlativo',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
