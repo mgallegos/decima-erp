@@ -113,7 +113,7 @@ Form::macro('textareacustom', function($name, $rows, $maxLength, $options = arra
 	return '<textarea'.Html::attributes($options).'>'. $value . '</textarea><div id="'.$options['id'].'-label-container" class="clearfix"><p id="'.$options['id'].'-label" class="help-block">'.Lang::get('form.charactersAvailable').' '.$maxLength.'</p></div>';
 });
 
-Form::macro('money', function($name, $options = array(), $value = null)
+Form::macro('money', function($name, $options = array(), $value = null, $showCalculator = true)
 {
 	if ( ! isset($options['name']))
   {
@@ -125,17 +125,24 @@ Form::macro('money', function($name, $options = array(), $value = null)
 	//$options['regex'] = Regex::getMoney();
 	$options['data-mg-validator'] = 'money';
 	$options['value'] = $value;
+	$calcultorHtml = '';
 
-	FormJavascript::setCode("$('#".$options['id']."-calculator').click(function(){ $('#".$options['id']."').calculator({precision:2, useThemeRoller: true, onOpen: function(value, inst) { $(this).val($.isNumeric(value.replace(/,/g,''))?value.replace(/,/g,''):'0.00');},onClose: function(value, inst) { $( '#".$options['id']."' ).focusout(); $( '#".$options['id']."-calculator' ).focus(); $( '#".$options['id']."' ).calculator('destroy') }}); $('#".$options['id']."').calculator('show');});");
+	if($showCalculator)
+	{
+		FormJavascript::setCode("$('#".$options['id']."-calculator').click(function(){ $('#".$options['id']."').calculator({precision:2, useThemeRoller: true, onOpen: function(value, inst) { $(this).val($.isNumeric(value.replace(/,/g,''))?value.replace(/,/g,''):'0.00');},onClose: function(value, inst) { $( '#".$options['id']."' ).focusout(); $( '#".$options['id']."-calculator' ).focus(); $( '#".$options['id']."' ).calculator('destroy') }}); $('#".$options['id']."').calculator('show');});");
+		$calcultorHtml = '
+			<span class="input-group-btn">
+			<button id="' . $options['id'] . '-calculator" class="btn btn-default" type="button">
+				<i class="fa fa-keyboard-o"></i>
+			</button>
+			</span>
+		';
+	}
 
 	return '<div class="input-group">
 				<span class="input-group-addon">' . OrganizationManager::getOrganizationCurrencySymbol() . '</span>
 				<input' . Html::attributes($options) . '>
-				<span class="input-group-btn">
-					<button id="' . $options['id'] . '-calculator" class="btn btn-default" type="button">
-						<i class="fa fa-keyboard-o"></i>
-					</button>
-				</span>
+				' . $calcultorHtml . '
 			</div>';
 });
 
