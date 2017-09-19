@@ -153,6 +153,8 @@ return array(
 
 	'correlative' => 'Correlativo',
 
+	'remark' => 'Observación',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
