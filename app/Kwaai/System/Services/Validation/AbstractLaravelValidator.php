@@ -196,10 +196,10 @@ abstract class AbstractLaravelValidator implements ValidableInterface {
 	 */
 	function rollBack($openTransaction)
 	{
-		// if(!$openTransaction)
-		// {
-		// 	return;
-		// }
+		if(!$openTransaction)
+		{
+			return;
+		}
 
 		$this->DB->rollBack();
 
