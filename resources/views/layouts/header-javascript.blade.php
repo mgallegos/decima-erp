@@ -36,7 +36,7 @@
 {!! Html::script('assets/bootstrap-fileinput-v4.3.5/js/fileinput.min.js') !!}
 {!! Html::script('assets/bootstrap-fileinput-v4.3.5/themes/fa/theme.js') !!}
 {!! Html::script('assets/bootstrap-fileinput-v4.3.5/js/locales/es.js') !!}
-{!! Html::script('assets/quill-v1.2.4/js/quill.min.js') !!}
+{!! Html::script('assets/quill-v1.3.0/js/quill.min.js') !!}
 
 
 <script type='text/javascript'>
