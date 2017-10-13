@@ -26,6 +26,8 @@ class RepositoriesServiceProvider extends ServiceProvider {
 		$this->registerOrganizationInterface();
 
 		$this->registerNewOrganizationTriggerInterface();
+
+		$this->registerCustomPrintFormats();
 	}
 
 	/**
@@ -41,6 +43,7 @@ class RepositoriesServiceProvider extends ServiceProvider {
 		});
 	}
 
+
 	/**
 	* Register the new organization trigger interface array instance.
 	*
@@ -49,6 +52,19 @@ class RepositoriesServiceProvider extends ServiceProvider {
 	protected function registerNewOrganizationTriggerInterface()
 	{
 		$this->app->bind('NewOrganizationTriggerInterface', function()
+		{
+			return array();
+		});
+	}
+
+	/**
+	* Register the new organization trigger interface array instance.
+	*
+	* @return void
+	*/
+	protected function registerCustomPrintFormats()
+	{
+		$this->app->bind('customPrintFormats', function()
 		{
 			return array();
 		});
