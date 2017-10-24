@@ -39,7 +39,9 @@ return array(
 
 	'invaliddateToHelpMessage' => 'La fecha final es inválida.',
 
-	'year' => 'year',
+	'month' => 'Mes',
+
+	'year' => 'Año',
 
 	'positiveIntegerRegexHelpMessage' => 'El valor ingresado debe ser un entero positivo, ejemplo: 1,000 o 1000',
 
