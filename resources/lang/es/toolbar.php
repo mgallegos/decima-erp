@@ -11,6 +11,8 @@ return array(
 
 	'new' => 'Nuevo',
 
+	'view' => 'Ver',
+
 	'edit' => 'Editar',
 
 	'save' => 'Guardar',
