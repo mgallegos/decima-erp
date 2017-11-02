@@ -69,6 +69,8 @@ return array(
 
 	'authenticationException' => 'Su sesión ha expirado, por seguridad se procederá a refrescar la ventana de su navegador para que pueda iniciar sesión nuevamente.',
 
+	'formatIdentifierValidation' => 'El formato personalizado: :id, no ha sido creado en el sistema!',
+
 	'databaseConnectionNameInfoMessage' => 'Una vez creada la organización, el nombre de la conexión a la base de datos puede ser modificado únicamente por el administrador de la aplicación.',
 
 	'booleanText' => ':;0:No;1:Sí',
