@@ -9,6 +9,8 @@
 
 return array(
 
+	0 => 'cero ',
+
 	1 => 'uno ',
 
 	2 => 'dos ',

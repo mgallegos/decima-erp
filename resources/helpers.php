@@ -193,6 +193,7 @@ if ( ! function_exists('eloquent_array_filter'))
     {
       $exactNumbers =
         array(
+          0 => Lang::get('numbers.0'),
           1 => Lang::get('numbers.1'),
           2 => Lang::get('numbers.2'),
           3 => Lang::get('numbers.3'),
