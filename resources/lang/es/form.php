@@ -159,6 +159,10 @@ return array(
 
 	'remark' => 'Observación',
 
+	'sums' => 'Sumas',
+
+	'son' => 'Son',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
