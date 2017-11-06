@@ -149,6 +149,8 @@ return array(
 
 	'enterComment' => 'Escriba su comentario',
 
+	'generate' => 'Generar',
+
 	'generatePdf' => 'Generar PDF',
 
 	'generic' => 'Genérico',
