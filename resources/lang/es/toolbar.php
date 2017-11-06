@@ -25,7 +25,7 @@ return array(
 
 	'authorize' => 'Autorizar',
 
-	'upload' => 'Adjuntar archivo',
+	'upload' => 'Adjuntar',
 
 	'add' => 'Agregar',
 
