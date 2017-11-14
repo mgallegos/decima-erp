@@ -251,7 +251,16 @@ $.fn.setAutocompleteLabel = function(value)
 {
 	var value = value.toLowerCase(), autocomplete = this;
 
-	$.each(this.autocomplete( "option", "source" ), function(index, element)
+	if(this.attr('data-autocomplete-source') != undefined)
+	{
+		source = window[this.attr('data-autocomplete-source')];
+	}
+	else
+	{
+		source = this.autocomplete('option', 'source');
+	}
+
+	$.each(source, function(index, element)
 	{
 		if($.isPlainObject(element))
 		{
@@ -281,7 +290,16 @@ $.fn.getAutocompleteLabel = function(value)
 {
 	var value = value.toLowerCase(), autocomplete = this, label = '';
 
-	$.each(this.autocomplete( "option", "source" ), function(index, element)
+	if(this.attr('data-autocomplete-source') != undefined)
+	{
+		source = window[this.attr('data-autocomplete-source')];
+	}
+	else
+	{
+		source = this.autocomplete('option', 'source');
+	}
+
+	$.each(source, function(index, element)
 	{
 		if($.isPlainObject(element))
 		{
@@ -313,7 +331,16 @@ $.fn.getAutocompleteValue = function()
 {
 	var label = $(this).val().toLowerCase(), value = false, autocomplete = this;
 
-	$.each(this.autocomplete( "option", "source" ), function(index, element)
+	if(this.attr('data-autocomplete-source') != undefined)
+	{
+		source = window[this.attr('data-autocomplete-source')];
+	}
+	else
+	{
+		source = this.autocomplete('option', 'source');
+	}
+
+	$.each(source, function(index, element)
 	{
 		if($.isPlainObject(element))
 		{
