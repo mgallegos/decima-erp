@@ -161,6 +161,8 @@ return array(
 
 	'remark' => 'Observación',
 
+	'concept' => 'Concepto',
+
 	'sums' => 'Sumas',
 
 	'son' => 'Son',
