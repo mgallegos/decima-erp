@@ -14,8 +14,8 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script> -->
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script> -->
 <script src="{{ URL::asset('assets/jquery-history-v1.8/jquery.history.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-scrollto-v1.4.11/jquery.scrollTo.min.js') }}"></script>
-<script src="{{ URL::asset('assets/jquery-localscroll-v1.3.5/jquery.localScroll.min.js') }}"></script>
+<script src="{{ URL::asset('assets/jquery-scrollto-v2.1.2/jquery.scrollTo.min.js') }}"></script>
+<script src="{{ URL::asset('assets/jquery-localscroll-v2.0.0/jquery.localScroll.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-calculator-v2.0.1/jquery.plugin.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-calculator-v2.0.1/jquery.calculator.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-maskedinput-v1.4.1/jquery.maskedinput.min.js') }}"></script>

@@ -146,8 +146,6 @@
 			var rowData;
 
 			$('.decima-erp-tooltip').tooltip('hide');
-			$('#module-app-btn-toolbar').disabledButtonGroup();
-			$('#module-app-btn-group-3').enableButtonGroup();
 
 			if($('#module-app-journals-section').attr('data-target-id') == '')
 			{
@@ -156,6 +154,9 @@
 					$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
 					return;
 				}
+
+				$('#module-app-btn-toolbar').disabledButtonGroup();
+				$('#module-app-btn-group-3').enableButtonGroup();
 
 				$('#module-app-form-edit-title').removeClass('hidden');
 
