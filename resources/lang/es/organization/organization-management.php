@@ -67,9 +67,9 @@ return array(
 
 	'street2PlaceHolder' => 'Calle línea 2ª',
 
-	'cityNamePlaceHolder' => 'Ciudad',
+	'cityNamePlaceHolder' => 'Municipio',
 
-	'stateNamePlaceHolder' => 'Municipio',
+	'stateNamePlaceHolder' => 'Departamento',
 
 	'zipCodePlaceHolder' => 'Código Postal',
 
