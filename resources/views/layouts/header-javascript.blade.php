@@ -1,11 +1,3 @@
-{{--
- * @file
- * Header Javascript layout.
- *
- * All DecimaERP code is copyright by the original authors and released under the GNU Aferro General Public License version 3 (AGPLv3) or later.
- * See COPYRIGHT and LICENSE.
- --}}
-
 <script src="{{ URL::asset('assets/jquery-v2.2.4/jquery.js') }}"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script> -->
 <script src="{{ URL::asset('assets/jquery-free-jqGrid-v4.13.5/js/jquery.jqgrid.min.js') }}"></script>

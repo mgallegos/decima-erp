@@ -1,10 +1,3 @@
-{{--
- * @file
- * Header Javascript layout.
- *
- * All DecimaERP code is copyright by the original authors and released under the GNU Aferro General Public License version 3 (AGPLv3) or later.
- * See COPYRIGHT and LICENSE.
- --}}
 <script src="{{ URL::asset('assets/jquery-mg-validation-v0.1/i18n/jquery.jqMgVal.locale-es.js') }}"></script>
 <script src="{{ URL::asset('assets/kwaai/js/datepicker-es.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-timepicker-addon-v1.6.3/dist/i18n/jquery-ui-timepicker-es.js') }}"></script> <!-- No cambiar, tiene diferente el am y pm-->
