@@ -237,7 +237,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    *  A string as follows:
    *	In case of success: {"success" : form.defaultSuccessUpdateMessage}
    */
-  public function update(array $input, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
+  public function update(array $input, $ModuleTableName = null, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
   {
     unset($input['_token']);
 
@@ -259,7 +259,11 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
 
     try
     {
-      $ModuleTableName = $this->ModuleTableName->byId($input['id']);
+      if(empty($ModuleTableName))
+      {
+        $ModuleTableName = $this->ModuleTableName->byId($input['id']);
+      }
+
       $unchangedValues = $ModuleTableName->toArray();
 
       $this->ModuleTableName->update($input, $ModuleTableName);
