@@ -9,6 +9,8 @@
 
 namespace Vendor\DecimaModule\Module\Services\ModuleAppManagement;
 
+use App\Kwaai\System\Services\Validation\AbstractLaravelValidator;
+
 use App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface;
 
 use App\Kwaai\Security\Services\JournalManagement\JournalManagementInterface;
@@ -30,7 +32,7 @@ use Illuminate\Translation\Translator;
 use Illuminate\Database\DatabaseManager;
 
 
-class ModuleAppManager implements ModuleAppManagementInterface {
+class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppManagementInterface {
 
   /**
    * Authentication Management Interface
@@ -177,26 +179,50 @@ class ModuleAppManager implements ModuleAppManagementInterface {
 	 *  A string as follows:
 	 *	In case of success: {"success" : form.defaultSuccessSaveMessage}
 	 */
-	public function create(array $input)
+	public function create(array $input, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
 	{
     unset($input['_token']);
 
-    $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
-    $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
-
     $input = eloquent_array_filter_for_insert($input);
+
+    if(empty($organizationId))
+    {
+      $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
+    }
+
+    if(empty($loggedUserId))
+    {
+      $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
+    }
+
 		$input = array_add($input, 'organization_id', $organizationId);
+    // $input = array_add($input, 'created_by', $loggedUserId);
     // $input['date'] = $this->Carbon->createFromFormat($this->Lang->get('form.phpShortDateFormat'), $input['date'])->format('Y-m-d');
     // $input['amount'] = remove_thousands_separator($input['amount']);
 
-    $this->DB->transaction(function() use ($input, $loggedUserId, $organizationId)
+    $this->beginTransaction($openTransaction, $databaseConnectionName);
+
+    try
 		{
-      $ModuleTableName = $this->ModuleTableName->create($input);
+      $ModuleTableName = $this->ModuleTableName->create($input, $databaseConnectionName);
 
       $Journal = $this->Journal->create(array('journalized_id' => $ModuleTableName->id, 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
-      $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.addedJournal', array('ModuleTableName' => $ModuleTableName->key . ' ' , $ModuleTableName->key)), $Journal));
+      $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.addedJournal', array('name' => $ModuleTableName->name)), $Journal));
 
-    });
+      $this->commit($openTransaction);
+    }
+    catch (\Exception $e)
+    {
+      $this->rollBack($openTransaction);
+
+      throw $e;
+    }
+    catch (\Throwable $e)
+    {
+      $this->rollBack($openTransaction);
+
+      throw $e;
+    }
 
     return json_encode(array('success' => $this->Lang->get('form.defaultSuccessSaveMessage')));
   }
@@ -211,14 +237,27 @@ class ModuleAppManager implements ModuleAppManagementInterface {
    *  A string as follows:
    *	In case of success: {"success" : form.defaultSuccessUpdateMessage}
    */
-  public function update(array $input)
+  public function update(array $input, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
   {
     unset($input['_token']);
+
     $input = eloquent_array_filter_for_update($input);
     // $input['date'] = $this->Carbon->createFromFormat($this->Lang->get('form.phpShortDateFormat'), $input['date'])->format('Y-m-d');
     // $input['amount'] = remove_thousands_separator($input['amount']);
 
-    $this->DB->transaction(function() use (&$input)
+    if(empty($organizationId))
+    {
+      $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
+    }
+
+    if(empty($loggedUserId))
+    {
+      $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
+    }
+
+    $this->beginTransaction($openTransaction, $databaseConnectionName);
+
+    try
     {
       $ModuleTableName = $this->ModuleTableName->byId($input['id']);
       $unchangedValues = $ModuleTableName->toArray();
@@ -235,7 +274,7 @@ class ModuleAppManager implements ModuleAppManagementInterface {
 
           if($diff == 1)
           {
-            $Journal = $this->Journal->create(array('journalized_id' => $ModuleTableName->id, 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $this->AuthenticationManager->getLoggedUserId(), 'organization_id' => $this->AuthenticationManager->getCurrentUserOrganizationId()));
+            $Journal = $this->Journal->create(array('journalized_id' => $ModuleTableName->id, 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
           }
 
           if($key == 'status')//Para autocomple de estados
@@ -250,13 +289,31 @@ class ModuleAppManager implements ModuleAppManagementInterface {
           {
             $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('form.' . camel_case($key)), 'field_lang_key' => 'form.' . camel_case($key), 'old_value' => $unchangedValues[$key], 'new_value' => $value), $Journal);
           }
+          else if ($key == 'chekbox0' || $key == 'chekbox1')
+          {
+            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $this->Lang->get('journal.' . $unchangedPaymentFormValues[$key]), 'new_value' => $this->Lang->get('journal.' . $value)), $Journal);
+          }
           else
           {
             $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $unchangedValues[$key], 'new_value' => $value), $Journal);
           }
         }
       }
-    });
+
+      $this->commit($openTransaction);
+    }
+    catch (\Exception $e)
+    {
+      $this->rollBack($openTransaction);
+
+      throw $e;
+    }
+    catch (\Throwable $e)
+    {
+      $this->rollBack($openTransaction);
+
+      throw $e;
+    }
 
     return json_encode(array('success' => $this->Lang->get('form.defaultSuccessUpdateMessage')));
   }
@@ -271,18 +328,43 @@ class ModuleAppManager implements ModuleAppManagementInterface {
    *  A string as follows:
    *	In case of success: {"success" : form.defaultSuccessDeleteMessage}
    */
-  public function delete0(array $input)
+  public function delete0(array $input, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
   {
-    $this->DB->transaction(function() use ($input)
+    if(empty($organizationId))
+    {
+      $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
+    }
+
+    if(empty($loggedUserId))
     {
       $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
-      $organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+    }
 
+    $this->beginTransaction($openTransaction, $databaseConnectionName);
+
+    try
+    {
       $ModuleTableName = $this->ModuleTableName->byId($input['id']);
+
       $Journal = $this->Journal->create(array('journalized_id' => $input['id'], 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.deletedJournal', array('number' => $ModuleTableName->number)), $Journal));
+
       $this->ModuleTableName->delete(array($input['id']));
-    });
+
+      $this->commit($openTransaction);
+    }
+    catch (\Exception $e)
+    {
+      $this->rollBack($openTransaction);
+
+      throw $e;
+    }
+    catch (\Throwable $e)
+    {
+      $this->rollBack($openTransaction);
+
+      throw $e;
+    }
 
     return json_encode(array('success' => $this->Lang->get('form.defaultSuccessDeleteMessage')));
   }
@@ -297,11 +379,23 @@ class ModuleAppManager implements ModuleAppManagementInterface {
    *  A string as follows:
    *	In case of success: {"success" : form.defaultSuccessDeleteMessage}
    */
-   public function delete1(array $input)
+   public function delete1(array $input, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
    {
+     if(empty($organizationId))
+     {
+       $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
+     }
+
+     if(empty($loggedUserId))
+     {
+       $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
+     }
+
      $count = 0;
 
-     $this->DB->transaction(function() use ($input, &$count)
+     $this->beginTransaction($openTransaction, $databaseConnectionName);
+
+     try
      {
        $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
        $organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
@@ -317,7 +411,21 @@ class ModuleAppManager implements ModuleAppManagementInterface {
 
          $this->ModuleTableName->delete(array($id));
        }
-     });
+
+       $this->commit($openTransaction);
+     }
+     catch (\Exception $e)
+     {
+       $this->rollBack($openTransaction);
+
+       throw $e;
+     }
+     catch (\Throwable $e)
+     {
+       $this->rollBack($openTransaction);
+
+       throw $e;
+     }
 
      if($count == 1)
      {

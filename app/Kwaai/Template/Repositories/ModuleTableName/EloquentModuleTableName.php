@@ -59,7 +59,12 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function byId($id)
   {
-  	return $this->ModuleTableName->on($this->databaseConnectionName)->find($id);
+    if(empty($databaseConnectionName))
+    {
+      $databaseConnectionName = $this->databaseConnectionName;
+    }
+
+  	return $this->ModuleTableName->on($databaseConnectionName)->find($id);
   }
 
   /**
@@ -69,9 +74,14 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    *
    * @return Illuminate\Database\Eloquent\Collection
    */
-  public function byOrganization($id)
+  public function byOrganization($id, $databaseConnectionName = null)
   {
-    return $this->ModuleTableName->where('organization_id', '=', $id)->get();
+    if(empty($databaseConnectionName))
+    {
+      $databaseConnectionName = $this->databaseConnectionName;
+    }
+
+    return $this->ModuleTableName->setConnection($databaseConnectionName)->where('organization_id', '=', $id)->get();
   }
 
   /**
@@ -83,10 +93,15 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    *
    * @return boolean
    */
-  public function create(array $data)
+  public function create(array $data, $databaseConnectionName = null)
   {
+    if(empty($databaseConnectionName))
+    {
+      $databaseConnectionName = $this->databaseConnectionName;
+    }
+
     $ModuleTableName = new ModuleTableName();
-    $ModuleTableName->setConnection($this->databaseConnectionName);
+    $ModuleTableName->setConnection($databaseConnectionName);
     $ModuleTableName->fill($data)->save();
 
     return $ModuleTableName;
@@ -103,11 +118,11 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    *
    * @return boolean
    */
-  public function update(array $data, $ModuleTableName = null)
+  public function update(array $data, $ModuleTableName = null, $databaseConnectionName = null)
   {
     if(empty($ModuleTableName))
     {
-      $ModuleTableName = $this->byId($data['id']);
+      $ModuleTableName = $this->byId($data['id'], $databaseConnectionName);
     }
 
     foreach ($data as $key => $value)
@@ -125,11 +140,11 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    * 	An array as follows: array($id0, $id1,…);
    * @return boolean
    */
-  public function delete(array $data)
+  public function delete(array $data, $databaseConnectionName = null)
   {
     foreach ($data as $key => $id)
     {
-      $ModuleTableName = $this->byId($id);
+      $ModuleTableName = $this->byId($id, $databaseConnectionName);
       $ModuleTableName->delete();
     }
     // $this->Account->destroy($data);

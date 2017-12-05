@@ -25,7 +25,7 @@ interface ModuleTableNameInterface {
 	*
 	* @return Mgallegos\DecimaAccounting\Account
 	*/
-	public function byId($id);
+	public function byId($id, $databaseConnectionName = null);
 
 	/**
    * Retrieve ... by organization
@@ -34,7 +34,7 @@ interface ModuleTableNameInterface {
    *
    * @return Illuminate\Database\Eloquent\Collection
    */
-  public function byOrganization($id);
+  public function byOrganization($id, $databaseConnectionName = null);
 
 	/**
    * Create a new ...
@@ -45,7 +45,7 @@ interface ModuleTableNameInterface {
    *
    * @return boolean
    */
-	public function create(array $data);
+	public function create(array $data, $databaseConnectionName = null);
 
 	/**
    * Update an existing ...
@@ -58,7 +58,7 @@ interface ModuleTableNameInterface {
    *
    * @return boolean
    */
-	public function update(array $data, $ModuleTableName = null);
+	public function update(array $data, $ModuleTableName = null, $databaseConnectionName = null);
 
 	/**
    * Delete existing ... (soft delete)
@@ -67,7 +67,7 @@ interface ModuleTableNameInterface {
    * 	An array as follows: array($id0, $id1,…);
    * @return boolean
    */
-  public function delete(array $data);
+  public function delete(array $data, $databaseConnectionName = null);
 
 
 }
