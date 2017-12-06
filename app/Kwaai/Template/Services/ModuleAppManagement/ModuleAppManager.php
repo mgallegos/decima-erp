@@ -396,14 +396,11 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
      {
        $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
      }
-     
+
      $this->beginTransaction($openTransaction, $databaseConnectionName);
 
      try
      {
-       $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
-       $organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
-
        foreach ($input['id'] as $key => $id)
        {
          $count++;
