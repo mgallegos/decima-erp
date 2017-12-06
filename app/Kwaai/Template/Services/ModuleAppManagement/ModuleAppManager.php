@@ -299,7 +299,11 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
           {
             $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $this->Lang->get('journal.' . $unchangedPaymentFormValues[$key]), 'new_value' => $this->Lang->get('journal.' . $value)), $Journal);
           }
-          else if($key == 'table_name_id')
+          else if($key == 'table_name_id')//field required
+          {
+            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $this->TableName->byId($unchangedValues[$key])->name, 'new_value' => $newValues[$key]), $Journal);
+          }
+          else if($key == 'table_name_id')//field not required
           {
             if(!empty($unchangedValues[$key]))
             {
