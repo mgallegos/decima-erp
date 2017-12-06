@@ -385,6 +385,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    */
    public function delete1(array $input, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
    {
+     $count = 0;
+
      if(empty($organizationId))
      {
        $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
@@ -394,9 +396,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
      {
        $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
      }
-
-     $count = 0;
-
+     
      $this->beginTransaction($openTransaction, $databaseConnectionName);
 
      try
