@@ -239,6 +239,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    */
   public function update(array $input, $ModuleTableName = null, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
   {
+    // $newValues = $input['table_name_id'];
+
     unset($input['_token']);
 
     $input = eloquent_array_filter_for_update($input);
@@ -296,6 +298,19 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
           else if ($key == 'chekbox0' || $key == 'chekbox1')
           {
             $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $this->Lang->get('journal.' . $unchangedPaymentFormValues[$key]), 'new_value' => $this->Lang->get('journal.' . $value)), $Journal);
+          }
+          else if($key == 'table_name_id')
+          {
+            if(!empty($unchangedValues[$key]))
+            {
+              $oldValue = $this->TableName->byId($unchangedValues[$key])->name;
+            }
+            else
+            {
+              $oldValue = '';
+            }
+
+            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $oldValue, 'new_value' => $newValues[$key]), $Journal);
           }
           else
           {
