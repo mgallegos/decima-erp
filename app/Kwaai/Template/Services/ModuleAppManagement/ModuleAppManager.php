@@ -297,7 +297,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
           }
           else if ($key == 'chekbox0' || $key == 'chekbox1')
           {
-            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $this->Lang->get('journal.' . $unchangedPaymentFormValues[$key]), 'new_value' => $this->Lang->get('journal.' . $value)), $Journal);
+            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $this->Lang->get('journal.' . $unchangedValues[$key]), 'new_value' => $this->Lang->get('journal.' . $value)), $Journal);
           }
           else if($key == 'table_name_id')//field required
           {
