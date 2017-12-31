@@ -125,6 +125,8 @@ return array(
 
 	'statusPlural' => 'Estado',
 
+	'type' => 'Tipo',
+
 	'total' => 'Total',
 
 	'date' => 'Fecha',

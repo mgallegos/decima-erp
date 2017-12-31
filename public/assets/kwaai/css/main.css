@@ -650,7 +650,11 @@ body {
   }
 
   .checkbox-filter-margin-left {
-    margin-left: 155px;
+    margin-left: 155px !important;
+  }
+
+  .checkbox-filter-margin-bottom {
+    margin-bottom: 25px !important;
   }
 }
 
