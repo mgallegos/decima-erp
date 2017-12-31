@@ -119,7 +119,7 @@ return array(
 
 	'name' => 'Nombre',
 
-	'deleteMessageConfirmation' => '¿Está seguro que desea eliminar los registros seleccionados?',
+	'deleteMessageConfirmation' => '¿Está seguro que desea eliminar el(los) registro(s) seleccionado(s)?',
 
 	'status' => 'Estado',
 

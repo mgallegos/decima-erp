@@ -648,6 +648,10 @@ body {
   .navbar-nav {
     font-size: 13px;
   }
+
+  .checkbox-filter-margin-left {
+    margin-left: 155px;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -657,5 +661,9 @@ body {
 
   .no-margin-bottom-min-1200 {
     margin-bottom: 0px !important;
+  }
+
+  .checkbox-filter-margin-left {
+    margin-left: 55px;
   }
 }
