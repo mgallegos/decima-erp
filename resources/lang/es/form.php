@@ -127,6 +127,8 @@ return array(
 
 	'type' => 'Tipo',
 
+	'typeHelperText' => 'Filtrar por uno o más tipos',
+
 	'total' => 'Total',
 
 	'date' => 'Fecha',
