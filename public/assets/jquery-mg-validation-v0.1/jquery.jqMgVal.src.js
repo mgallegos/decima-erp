@@ -638,7 +638,10 @@
 
 			if(opts.scrollToFirstFieldWithError)
 			{
-				$.scrollTo(this.children('.has-error').first().offset());
+				if(this.children('.has-error').first().offset() != undefined)
+				{
+					$.scrollTo(this.children('.has-error').first().offset());
+				}
 				// $.scrollTo(this.children('.has-danger').first().position());
 			}
 
