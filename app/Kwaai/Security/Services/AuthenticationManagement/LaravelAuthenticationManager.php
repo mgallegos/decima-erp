@@ -805,18 +805,22 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*
 	* @return string
 	*/
-	public function getCurrentUserOrganizationConnection($value = null)
+	public function getCurrentUserOrganizationConnection($organizationId = null)
 	{
 		$organization = $this->getSessionOrganization();
 
-		if(empty($organization))
+		if(empty($organization) && empty($organizationId))
 		{
 			return $this->defaultDatabaseConnectionName;
 		}
-		else
+
+		if(!empty($organizationId) && $organization['id'] != $organizationId)
 		{
-			return $organization['database_connection_name'];
+			return $this->getOrganizationConnection($organizationId);
 		}
+
+		return $organization['database_connection_name'];
+
 		// var_dump('getCurrentUserOrganizationConnection');
 		// if(empty($value))
 		// {
@@ -836,6 +840,28 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		// }
     //
 		// return $value;
+	}
+
+	/**
+	* Get organization connection
+	*
+	* @param  int $value organization id
+	*
+	* @return string
+	*/
+	public function getOrganizationConnection($organizationId)
+	{
+		if($this->Session->has('organization' . $organizationId))
+		{
+			$organization = json_decode($this->Session->get('organization' . $organizationId), true);
+		}
+		else
+		{
+			$organization = $this->Organization->byId($organizationId)->toArray();
+			$this->Session->put('organization' . $organizationId, json_encode($organization));
+		}
+
+		return $organization['database_connection_name'];
 	}
 
 	/**
