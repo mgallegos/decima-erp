@@ -23,7 +23,9 @@ use App\Kwaai\Security\Repositories\Menu\MenuInterface;
 
 use Illuminate\Routing\UrlGenerator;
 
-use Symfony\Component\Translation\TranslatorInterface;
+use Illuminate\Translation\Translator;
+
+use Illuminate\Cache\CacheManager AS Cache;
 
 class AppManager implements AppManagementInterface {
 
@@ -38,7 +40,7 @@ class AppManager implements AppManagementInterface {
 	/**
 	 * Laravel Translator instance
 	 *
-	 * @var \Symfony\Component\Translation\TranslatorInterface
+	 * @var \Illuminate\Translation\Translator
 	 *
 	 */
 	protected $Lang;
@@ -91,8 +93,25 @@ class AppManager implements AppManagementInterface {
 	 */
 	protected $Config;
 
+	/**
+	 * Laravel Cache instance
+	 *
+	 * @var \Illuminate\Cache\CacheManager
+	 *
+	 */
+	protected $Cache;
 
-	public function __construct(AuthenticationManagementInterface $AuthenticationManager, TranslatorInterface $Lang, UrlGenerator $Url, Repository $Config, MenuInterface $Menu, ModuleInterface $Module, UserInterface $User)
+
+	public function __construct(
+		AuthenticationManagementInterface $AuthenticationManager,
+		MenuInterface $Menu,
+		ModuleInterface $Module,
+		UserInterface $User,
+		Translator $Lang,
+		UrlGenerator $Url,
+		Repository $Config,
+		Cache $Cache
+	)
 	{
 		$this->AuthenticationManager = $AuthenticationManager;
 
@@ -107,6 +126,8 @@ class AppManager implements AppManagementInterface {
 		$this->User = $User;
 
 		$this->Config = $Config;
+
+		$this->Cache = $Cache;
 	}
 
 	/**
@@ -177,24 +198,54 @@ class AppManager implements AppManagementInterface {
 			return array('id' => 'dashboard', 'url' => '/', 'name' => $this->Lang->get('dashboard.appName'), 'breadcrumb' => array($this->getSystemName(), $this->Lang->get('dashboard.appName')));
 		}
 
-		$Menu = $this->Menu->menuByUrl($url);
-
-		if($Menu->count() == 0)
+		if($this->Cache->has('urlInfo' . $url))
 		{
-			return;
+			return json_decode($this->Cache->get('urlInfo' . $url), true);
 		}
 
-		$urlElements = explode('/', $Menu[0]->url);
+		if($this->Cache->has($url))
+		{
+			$menu = json_decode($this->Cache->get($url), true);
+		}
+		else
+		{
+			$Menu = $this->Menu->menuByUrl($url);
 
-		$parentMenus = $this->Menu->parentMenusByModule( $Menu[0]->module_id );
+			if($Menu->count() == 0)
+			{
+				return array();
+			}
+
+			$menu = $Menu[0]->toArray();
+			$this->Cache->put($url, json_encode($menu), 360);
+		}
+
+		$urlElements = explode('/', $menu['url']);
+
+		if($this->Cache->has('moduleParents' . $menu['module_id']))
+		{
+			$parentMenus = json_decode($this->Cache->get('moduleParents' . $menu['module_id']), true);
+		}
+		else
+		{
+			$parentMenus = $this->Menu->parentMenusByModule($menu['module_id'])->toArray();
+			$this->Cache->put('moduleParents' . $menu['module_id'], json_encode($parentMenus), 360);
+		}
+
+		// $parentMenus = $this->Menu->parentMenusByModule($Menu[0]->module_id);
 
 		$breadcrumb = array();
 
-		$this->getParent($Menu[0]->parent_id, $breadcrumb, $parentMenus->toArray());
+		// $this->getParent($Menu[0]->parent_id, $breadcrumb, $parentMenus->toArray());
+		$this->getParent($menu['parent_id'], $breadcrumb, $parentMenus);
 
-		array_push($breadcrumb, $this->Lang->has($Menu[0]->lang_key) ? $this->Lang->get($Menu[0]->lang_key) : $Menu[0]->name);
+		array_push($breadcrumb, $this->Lang->has($menu['lang_key']) ? $this->Lang->get($menu['lang_key']) : $menu['name']);
 
-		return array('id' => $urlElements[count($urlElements) -1], 'url' => $Menu[0]->url, 'name'=>($this->Lang->has($Menu[0]->lang_key) ? $this->Lang->get($Menu[0]->lang_key) : $Menu[0]->name), 'breadcrumb' => $breadcrumb);
+		$appInfo = array('id' => $urlElements[count($urlElements) -1], 'url' => $menu['url'], 'name'=>($this->Lang->has($menu['lang_key']) ? $this->Lang->get($menu['lang_key']) : $menu['name']), 'breadcrumb' => $breadcrumb);
+
+		$this->Cache->put('urlInfo' . $url, json_encode($appInfo), 360);
+
+		return $appInfo;
 	}
 
 	/**
@@ -413,8 +464,18 @@ class AppManager implements AppManagementInterface {
 				}
 				else
 				{
-					$Module = $this->Module->byId($menu['module_id']);
-					array_push($breadcrumb, $this->Lang->has($Module->lang_key) ? $this->Lang->get($Module->lang_key) : $Module->name);
+					if($this->Cache->has('module' . $menu['module_id']))
+					{
+						$module = json_decode($this->Cache->get('module' . $menu['module_id']), true);
+					}
+					else
+					{
+						$module = $this->Module->byId($menu['module_id'])->toArray();
+						$this->Cache->put('module' . $menu['module_id'], json_encode($module), 360);
+					}
+
+					// $Module = $this->Module->byId($menu['module_id']);
+					array_push($breadcrumb, $this->Lang->has($module['lang_key']) ? $this->Lang->get($module['lang_key']) : $module['name']);
 
 					array_push($breadcrumb, $this->Lang->has($menu['lang_key']) ? $this->Lang->get($menu['lang_key']) : $menu['name']);
 

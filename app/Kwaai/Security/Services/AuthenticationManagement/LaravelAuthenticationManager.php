@@ -35,7 +35,9 @@ use Illuminate\Routing\UrlGenerator;
 
 use Illuminate\Auth\AuthManager;
 
-use Symfony\Component\Translation\TranslatorInterface;
+use Illuminate\Translation\Translator;
+
+use Illuminate\Cache\CacheManager AS Cache;
 
 use App\Kwaai\Organization\Organization;
 
@@ -92,10 +94,18 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	/**
 	 * Laravel Translator instance
 	 *
-	 * @var \Symfony\Component\Translation\TranslatorInterface
+	 * @var \Illuminate\Translation\Translator
 	 *
 	 */
 	protected $Lang;
+
+	/**
+	 * Laravel Cache instance
+	 *
+	 * @var \Illuminate\Cache\CacheManager
+	 *
+	 */
+	protected $Cache;
 
 	/**
 	 * The URL generator instance
@@ -192,7 +202,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	protected $Cas;
 
-	public function __construct(OrganizationInterface $Organization, UserInterface $User, CurrencyInterface $Currency, AuthManager $Auth, TranslatorInterface $Lang, UrlGenerator $Url, Dispatcher $Event, Redirector $Redirector, CookieJar $Cookie, Request $Input, Repository $Config, PasswordBrokerManager $Password, Hasher $Hash, SessionManager $Session, Factory $Validator, CasManager $Cas)
+	public function __construct(OrganizationInterface $Organization, UserInterface $User, CurrencyInterface $Currency, AuthManager $Auth, Translator $Lang, Cache $Cache, UrlGenerator $Url, Dispatcher $Event, Redirector $Redirector, CookieJar $Cookie, Request $Input, Repository $Config, PasswordBrokerManager $Password, Hasher $Hash, SessionManager $Session, Factory $Validator, CasManager $Cas)
 	{
 		$this->Organization = $Organization;
 
@@ -203,6 +213,8 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		$this->Auth = $Auth;
 
 		$this->Lang = $Lang;
+
+		$this->Cache = $Cache;
 
 		$this->Url = $Url;
 
@@ -230,7 +242,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		$this->rules = array(
 			'kwaai_name' => 'honeypot',
-			'kwaai_time' => 'required|honeytime:5'
+			'kwaai_time' => 'required|honeytime:2'
 		);
 	}
 
@@ -506,6 +518,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function isUserGuest()
 	{
+		// var_dump('isUserGuest');
 		return $this->Auth->guest();
 	}
 
@@ -521,6 +534,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function isUserRoot($id = null)
 	{
+		// var_dump('isUserRoot');
 		if(empty($id))
 		{
 			$id = $this->getLoggedUserId();
@@ -547,6 +561,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function isUserDefaultRoot($id = null)
 	{
+		// var_dump('isUserDefaultRoot');
 		if(!$this->isUserRoot($id))
 		{
 			return false;
@@ -554,14 +569,15 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		if(empty($id))
 		{
-			$User = $this->Auth->user();
+			$user = $this->getSessionLoggedUser();
+			// $User = $this->Auth->user();
 		}
 		else
 		{
-			$User = $this->User->byId($id);
+			$user = $this->User->byId($id)->toArray();
 		}
 
-		if($User->email == $this->Config->get('system-security.root_default_email'))
+		if($user['email'] == $this->Config->get('system-security.root_default_email'))
 		{
 			return true;
 		}
@@ -583,19 +599,37 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function isUserAdmin($id = null, $User = null)
 	{
+		// var_dump('isUserAdmin');
+		// if(empty($id))
+		// {
+		// 	$User = $this->Auth->user();
+		// }
+		// else
+		// {
+		// 	if(empty($User))
+    //   {
+    //     $User = $this->User->byId($id);
+    //   }
+		// }
+
 		if(empty($id))
 		{
-			$User = $this->Auth->user();
+			$user = $this->getSessionLoggedUser();
+			// $User = $this->Auth->user();
 		}
 		else
 		{
 			if(empty($User))
       {
-        $User = $this->User->byId($id);
+				$user = $this->User->byId($id)->toArray();
       }
+			else
+			{
+				$user = $User->toArray();
+			}
 		}
 
-		if($User->is_admin)
+		if(!empty($user['is_admin']))
 		{
 			return true;
 		}
@@ -612,7 +646,8 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function setCurrentUserOrganization(Organization $Organization)
 	{
-		$this->Cookie->queue($this->Cookie->forever($this->getCurrentOrganizationCookieName(), $Organization->id));
+		// $this->Cookie->queue($this->Cookie->forever($this->getCurrentOrganizationCookieName(), $Organization->id));
+		$this->Session->put('currentOrganization', json_encode($Organization->toArray()));
 	}
 
 	/**
@@ -622,7 +657,8 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function unsetCurrentUserOrganization()
 	{
-		$this->Cookie->queue($this->Cookie->forget($this->getCurrentOrganizationCookieName()));
+		// $this->Cookie->queue($this->Cookie->forget($this->getCurrentOrganizationCookieName()));
+		$this->Session->forget('currentOrganization');
 	}
 
 	/**
@@ -634,6 +670,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function isDefaultDatabaseConnectionName($databaseConnectionName = null)
 	{
+		// var_dump('isDefaultDatabaseConnectionName');
 		if(empty($databaseConnectionName))
 		{
 			$databaseConnectionName = $this->getCurrentUserOrganizationConnection();
@@ -663,39 +700,13 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	}
 
 	/**
-	 * Get current user organization
+	 * Get logged user ID
 	 *
-	 * @param string $columnName
-	 *
-	 * @return column or object
+	 * @return int
 	 */
-	public function getCurrentUserOrganization($columnName = null)
+	public function getSessionOrganization()
 	{
-		$value = $this->getCurrentUserOrganizationId();
-
-		if(!empty($value))
-		{
-			$value = $this->Organization->byId($value);
-		}
-
-		if(is_object($value))
-		{
-			if(empty($columnName))
-			{
-				return $value;
-			}
-
-			$value = $value->$columnName;
-		}
-		else
-		{
-			if($columnName == 'id')
-			{
-				return -1;
-			}
-		}
-
-		return $value;
+		return json_decode($this->Session->get('currentOrganization'), true);
 	}
 
 	/**
@@ -705,23 +716,86 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getCurrentUserOrganizationId()
 	{
-		$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
+		$organization = $this->getSessionOrganization();
 
-		if(!is_int($value))
+		if(empty($organization))
 		{
-			$userDefaultOrganizationId = $this->getLoggedUserDefaultOrganization();
+			return -1;
+		}
+		else
+		{
+			return $organization['id'];
+		}
 
-			if(!empty($userDefaultOrganizationId))
-			{
-				$this->setCurrentUserOrganization($this->Organization->byId($userDefaultOrganizationId));
+		// // var_dump('getCurrentUserOrganizationId');
+		// $value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
+    //
+		// if(!is_int($value))
+		// {
+		// 	$userDefaultOrganizationId = $this->getLoggedUserDefaultOrganization();
+    //
+		// 	if(!empty($userDefaultOrganizationId))
+		// 	{
+		// 		$this->setCurrentUserOrganization($this->Organization->byId($userDefaultOrganizationId));
+    //
+		// 		return $userDefaultOrganizationId;
+		// 	}
+    //
+		// 	return -1;
+		// }
+    //
+		// return $value;
+	}
 
-				return $userDefaultOrganizationId;
-			}
+	/**
+	 * Get current user organization
+	 *
+	 * @param string $columnName
+	 *
+	 * @return column or object
+	 */
+	public function getCurrentUserOrganization($columnName = null)
+	{
+		$Organization = json_decode($this->Session->get('currentOrganization'));
 
+		if(empty($Organization))
+		{
 			return -1;
 		}
 
-		return $value;
+		if(empty($columnName))
+		{
+			return $Organization;
+		}
+
+		return $Organization->$columnName;
+
+		// var_dump('getCurrentUserOrganization');
+		// $value = $this->getCurrentUserOrganizationId();
+    //
+		// if(!empty($value))
+		// {
+		// 	$value = $this->Organization->byId($value);
+		// }
+    //
+		// if(is_object($value))
+		// {
+		// 	if(empty($columnName))
+		// 	{
+		// 		return $value;
+		// 	}
+    //
+		// 	$value = $value->$columnName;
+		// }
+		// else
+		// {
+		// 	if($columnName == 'id')
+		// 	{
+		// 		return -1;
+		// 	}
+		// }
+    //
+		// return $value;
 	}
 
 	/**
@@ -733,24 +807,35 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getCurrentUserOrganizationConnection($value = null)
 	{
-		if(empty($value))
-		{
-			$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
-		}
+		$organization = $this->getSessionOrganization();
 
-		if(!is_int($value))
+		if(empty($organization))
 		{
 			return $this->defaultDatabaseConnectionName;
 		}
-
-		$value = $this->Organization->byId($value);
-
-		if(is_object($value))
+		else
 		{
-			$value = $value->database_connection_name;
+			return $organization['database_connection_name'];
 		}
-
-		return $value;
+		// var_dump('getCurrentUserOrganizationConnection');
+		// if(empty($value))
+		// {
+		// 	$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
+		// }
+    //
+		// if(!is_int($value))
+		// {
+		// 	return $this->defaultDatabaseConnectionName;
+		// }
+    //
+		// $value = $this->Organization->byId($value);
+    //
+		// if(is_object($value))
+		// {
+		// 	$value = $value->database_connection_name;
+		// }
+    //
+		// return $value;
 	}
 
 	/**
@@ -760,16 +845,27 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getCurrentUserOrganizationCountry()
 	{
-		$value = $this->getCurrentUserOrganizationId();
+		$organization = $this->getSessionOrganization();
 
-		$value = $this->Organization->byId($value);
-
-		if(is_object($value))
+		if(empty($organization))
 		{
-			$value = $value->country_id;
+			return -1;
+		}
+		else
+		{
+			return $organization['country_id'];
 		}
 
-		return $value;
+		// $value = $this->getCurrentUserOrganizationId();
+    //
+		// $value = $this->Organization->byId($value);
+    //
+		// if(is_object($value))
+		// {
+		// 	$value = $value->country_id;
+		// }
+    //
+		// return $value;
 	}
 
 	/**
@@ -779,16 +875,26 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getCurrentUserOrganizationCurrency()
 	{
-		$value = $this->getCurrentUserOrganizationId();
+		$organization = $this->getSessionOrganization();
 
-		$value = $this->Organization->byId($value);
-
-		if(is_object($value))
+		if(empty($organization))
 		{
-			$value = $value->currency_id;
+			return -1;
 		}
-
-		return $value;
+		else
+		{
+			return $organization['currency_id'];
+		}
+		// $value = $this->getCurrentUserOrganizationId();
+    //
+		// $value = $this->Organization->byId($value);
+    //
+		// if(is_object($value))
+		// {
+		// 	$value = $value->currency_id;
+		// }
+    //
+		// return $value;
 	}
 
 	/**
@@ -798,17 +904,37 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getCurrentUserOrganizationCurrencySymbol()
 	{
-		$value = $this->getCurrentUserOrganizationId();
+		$organization = $this->getSessionOrganization();
 
-		$value = $this->Organization->byId($value);
-
-		if(is_object($value))
+		if(empty($organization))
 		{
-			$Currency = $this->Currency->byId($value->currency_id);
-			$value = $Currency->symbol;
+			return -1;
 		}
+		else
+		{
+			if($this->Cache->has('currency' . $organization['currency_id']))
+			{
+				$currency = json_decode($this->Cache->get('currency' . $organization['currency_id']), true);
+			}
+			else
+			{
+				$currency = $this->Currency->byId($organization['currency_id'])->toArray();
+				$this->Cache->put('currency' . $organization['currency_id'], json_encode($currency), 360);
+			}
 
-		return $value;
+			return $currency['symbol'];
+		}
+		// $value = $this->getCurrentUserOrganizationId();
+    //
+		// $value = $this->Organization->byId($value);
+    //
+		// if(is_object($value))
+		// {
+		// 	$Currency = $this->Currency->byId($value->currency_id);
+		// 	$value = $Currency->symbol;
+		// }
+    //
+		// return $value;
 	}
 
 	/**
@@ -816,18 +942,29 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*
 	* @return string
 	*/
-		public function getCurrentUserOrganizationName()
+	public function getCurrentUserOrganizationName()
 	{
-		$value = $this->getCurrentUserOrganizationId();
+		$organization = $this->getSessionOrganization();
 
-		$value = $this->Organization->byId($value);
-
-		if(is_object($value))
+		if(empty($organization))
 		{
-			$value = $value->name;
+			return '';
 		}
-
-		return $value;
+		else
+		{
+			return $organization['name'];
+		}
+		// var_dump('getCurrentUserOrganizationName');
+		// $value = $this->getCurrentUserOrganizationId();
+    //
+		// $value = $this->Organization->byId($value);
+    //
+		// if(is_object($value))
+		// {
+		// 	$value = $value->name;
+		// }
+    //
+		// return $value;
 	}
 
 	/**
@@ -835,18 +972,50 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*
 	* @return string
 	*/
-		public function getCurrentUserOrganizationLogoUrl()
+	public function getCurrentUserOrganizationLogoUrl()
 	{
-		$value = $this->getCurrentUserOrganizationId();
+		$organization = $this->getSessionOrganization();
 
-		$value = $this->Organization->byId($value);
-
-		if(is_object($value))
+		if(empty($organization))
 		{
-			$value = $value->logo_url;
+			return '';
+		}
+		else
+		{
+			return $organization['logo_url'];
 		}
 
-		return $value;
+		// $value = $this->getCurrentUserOrganizationId();
+    //
+		// $value = $this->Organization->byId($value);
+    //
+		// if(is_object($value))
+		// {
+		// 	$value = $value->logo_url;
+		// }
+    //
+		// return $value;
+	}
+
+	/**
+	 * Get logged user ID
+	 *
+	 * @return int
+	 */
+	public function getSessionLoggedUser()
+	{
+		if($this->Session->has('loggedUser'))
+		{
+			$user = json_decode($this->Session->get('loggedUser'), true);
+		}
+		else
+		{
+			$User =  $this->Auth->user();
+			$user = $User->toArray();
+			$this->Session->put('loggedUser', json_encode($user));
+		}
+
+		return $user;
 	}
 
 	/**
@@ -861,7 +1030,9 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			return -1;
 		}
 
-		return $this->Auth->user()->id;
+		$user = $this->getSessionLoggedUser();
+
+		return $user['id'];
 	}
 
 	/**
@@ -871,14 +1042,17 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function getLoggedUserFirstname()
 	{
-		// var_dump($value);
+		// // var_dump($value);
 
 		if ($this->isUserGuest())
 		{
 			return '';
 		}
 
-		return $this->Auth->user()->firstname;
+		$user = $this->getSessionLoggedUser();
+
+		// return $this->Auth->user()->firstname;
+		return $user['firstname'];
 	}
 
 	/**
@@ -893,7 +1067,10 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			return '';
 		}
 
-		return $this->Auth->user()->lastname;
+		$user = $this->getSessionLoggedUser();
+
+		// return $this->Auth->user()->lastname;
+		return $user['lastname'];
 	}
 
 	/**
@@ -908,7 +1085,10 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			return '';
 		}
 
-		return $this->Auth->user()->email;
+		$user = $this->getSessionLoggedUser();
+
+		// return $this->Auth->user()->email;
+		return $user['email'];
 	}
 
 	/**
@@ -918,12 +1098,20 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function getLoggedUserTimeZone()
 	{
-		if ($this->isUserGuest() || empty($this->Auth->user()->timezone))
+		if ($this->isUserGuest())
 		{
 			return $this->Config->get('app.timezone');
 		}
 
-		return $this->Auth->user()->timezone;
+		$user = $this->getSessionLoggedUser();
+
+		if (empty($user['timezone']))
+		{
+			return $this->Config->get('app.timezone');
+		}
+
+		// return $this->Auth->user()->timezone;
+		return $user['timezone'];
 	}
 
 	/**
@@ -933,12 +1121,17 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function getLoggedUserDefaultOrganization()
 	{
+		// var_dump('getLoggedUserDefaultOrganization');
 		if ($this->isUserGuest())
 		{
 			return null;
 		}
 
-		return $this->Auth->user()->default_organization;
+		$user = $this->getSessionLoggedUser();
+
+		// return $this->Auth->user()->default_organization;
+
+		return $user['default_organization'];
 	}
 
 	/**
@@ -953,7 +1146,10 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			return true;
 		}
 
-		return $this->Auth->user()->popovers_shown;
+		$user = $this->getSessionLoggedUser();
+
+		// return $this->Auth->user()->popovers_shown;
+		return $user['popovers_shown'];
 	}
 
 	/**
@@ -968,7 +1164,10 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			return true;
 		}
 
-		return $this->Auth->user()->multiple_organization_popover_shown;
+		$user = $this->getSessionLoggedUser();
+
+		// return $this->Auth->user()->multiple_organization_popover_shown
+		return $user['multiple_organization_popover_shown'];
 	}
 
 	/**

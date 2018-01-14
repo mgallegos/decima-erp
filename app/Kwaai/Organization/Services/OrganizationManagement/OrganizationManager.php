@@ -51,7 +51,7 @@ use Illuminate\Database\DatabaseManager;
 
 use Illuminate\Routing\UrlGenerator;
 
-use Symfony\Component\Translation\TranslatorInterface;
+use Illuminate\Translation\Translator;
 
 class OrganizationManager implements OrganizationManagementInterface {
 
@@ -154,7 +154,7 @@ class OrganizationManager implements OrganizationManagementInterface {
 	/**
 	 * Laravel Translator instance
 	 *
-	 * @var \Symfony\Component\Translation\TranslatorInterface
+	 * @var \Illuminate\Translation\Translator
 	 *
 	 */
 	protected $Lang;
@@ -175,7 +175,7 @@ class OrganizationManager implements OrganizationManagementInterface {
 	 */
 	protected $Event;
 
-	public function __construct(AuthenticationManagementInterface $AuthenticationManager, UserManagementInterface $UserManager, JournalManagementInterface $JournalManager, RequestedDataInterface $GridEncoder, EloquentOrganizationGridRepository $EloquentOrganizationGridRepository, CountryInterface $Country, CurrencyInterface $Currency, OrganizationInterface $Organization, UserInterface $User, RoleInterface $Role, JournalInterface $Journal, array $newOrganizationTrigger, DatabaseManager $DB, TranslatorInterface $Lang, Writer $Log, Dispatcher $Event)
+	public function __construct(AuthenticationManagementInterface $AuthenticationManager, UserManagementInterface $UserManager, JournalManagementInterface $JournalManager, RequestedDataInterface $GridEncoder, EloquentOrganizationGridRepository $EloquentOrganizationGridRepository, CountryInterface $Country, CurrencyInterface $Currency, OrganizationInterface $Organization, UserInterface $User, RoleInterface $Role, JournalInterface $Journal, array $newOrganizationTrigger, DatabaseManager $DB, Translator $Lang, Writer $Log, Dispatcher $Event)
 	{
 		$this->AuthenticationManager = $AuthenticationManager;
 

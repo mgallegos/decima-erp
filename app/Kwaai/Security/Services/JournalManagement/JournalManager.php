@@ -146,7 +146,7 @@ class JournalManager implements JournalManagementInterface {
    {
     if(empty($organizationId))
 		{
-			$organizationId = $this->AuthenticationManager->getCurrentUserOrganization('id');
+			$organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
 		}
 
 		$count = $this->Journal->countJournalsByDynamicWhere($organizationId, $journalizedType, $journalizedId, $userId, $filter, $onlyActions, $organizationNotNull);

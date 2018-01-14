@@ -71,6 +71,7 @@ class ServicesServiceProvider extends ServiceProvider {
 					$app->make('App\Kwaai\System\Repositories\Currency\CurrencyInterface'),
 					$app['auth'],
 					$app['translator'],
+					$app['cache'],
 					$app['url'],
 					$app['events'],
 					$app['redirect'],
@@ -145,12 +146,13 @@ class ServicesServiceProvider extends ServiceProvider {
 		{
 			return new AppManager(
 					$app->make('App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface'),
+					$app->make('App\Kwaai\Security\Repositories\Menu\MenuInterface'),
+					$app->make('App\Kwaai\Security\Repositories\Module\ModuleInterface'),
+					$app->make('App\Kwaai\Security\Repositories\User\UserInterface'),
 					$app['translator'],
 					$app['url'],
 					$app['config'],
-					$app->make('App\Kwaai\Security\Repositories\Menu\MenuInterface'),
-					$app->make('App\Kwaai\Security\Repositories\Module\ModuleInterface'),
-					$app->make('App\Kwaai\Security\Repositories\User\UserInterface')
+					$app['cache']
 			);
 		});
 	}

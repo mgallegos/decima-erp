@@ -59,7 +59,7 @@ use App\Events\OnNewInfoMessage;
 
 use App\Events\OnNewWarningMessage;
 
-use Symfony\Component\Translation\TranslatorInterface;
+use Illuminate\Translation\Translator;
 
 use Mgallegos\LaravelJqgrid\Encoders\RequestedDataInterface;
 
@@ -172,7 +172,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	/**
 	 * Laravel Translator instance
 	 *
-	 * @var Symfony\Component\Translation\TranslatorInterface
+	 * @var Illuminate\Translation\Translator
 	 *
 	 */
 	protected $Lang;
@@ -180,7 +180,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	/**
 	 * Laravel Translator instance
 	 *
-	 * @var Symfony\Component\Translation\TranslatorInterface
+	 * @var Illuminate\Translation\Translator
 	 *
 	 */
 	protected $Hash;
@@ -245,7 +245,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 */
 	protected $messages;
 
-	public function __construct(UserInterface $User, OrganizationInterface  $Organization, ModuleInterface $Module, MenuInterface $Menu, RoleInterface $Role, PermissionInterface $Permission, JournalInterface $Journal, AuthenticationManagementInterface $AuthenticationManager, JournalManagementInterface $JournalManager, RequestedDataInterface $GridEncoder, EloquentUserGridRepository $EloquentUserGridRepository, EloquentAdminUserGridRepository $EloquentAdminUserGridRepository, DateTimeZone $DateTimeZone, DatabaseManager $DB, TranslatorInterface $Lang, Hasher $Hash, Repository $Config, UrlGenerator $Url, Mailer $Mailer, Dispatcher $Event, Factory $Validator, $hashKey)
+	public function __construct(UserInterface $User, OrganizationInterface  $Organization, ModuleInterface $Module, MenuInterface $Menu, RoleInterface $Role, PermissionInterface $Permission, JournalInterface $Journal, AuthenticationManagementInterface $AuthenticationManager, JournalManagementInterface $JournalManager, RequestedDataInterface $GridEncoder, EloquentUserGridRepository $EloquentUserGridRepository, EloquentAdminUserGridRepository $EloquentAdminUserGridRepository, DateTimeZone $DateTimeZone, DatabaseManager $DB, Translator $Lang, Hasher $Hash, Repository $Config, UrlGenerator $Url, Mailer $Mailer, Dispatcher $Event, Factory $Validator, $hashKey)
 	{
 		$this->User = $User;
 
@@ -383,6 +383,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			}
 			else
 			{
+				$input['is_admin'] = '0';
         $User = $this->User->create($input);
         $this->User->attachOrganizations($User->id, array($input['default_organization']), $input['created_by'], $User);
         $Journal = $this->Journal->create(array('journalized_id' => $User->id, 'journalized_type' => $this->User->getTable(), 'user_id' => $input['created_by'], 'organization_id' => $input['default_organization']));
