@@ -37,7 +37,7 @@ use Illuminate\Auth\AuthManager;
 
 use Illuminate\Translation\Translator;
 
-use Illuminate\Cache\CacheManager AS Cache;
+use Illuminate\Cache\CacheManager;
 
 use App\Kwaai\Organization\Organization;
 
@@ -202,7 +202,25 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	protected $Cas;
 
-	public function __construct(OrganizationInterface $Organization, UserInterface $User, CurrencyInterface $Currency, AuthManager $Auth, Translator $Lang, Cache $Cache, UrlGenerator $Url, Dispatcher $Event, Redirector $Redirector, CookieJar $Cookie, Request $Input, Repository $Config, PasswordBrokerManager $Password, Hasher $Hash, SessionManager $Session, Factory $Validator, CasManager $Cas)
+	public function __construct(
+		OrganizationInterface $Organization,
+		UserInterface $User,
+		CurrencyInterface $Currency,
+		AuthManager $Auth,
+		Translator $Lang,
+		CacheManager $Cache,
+		UrlGenerator $Url,
+		Dispatcher $Event,
+		Redirector $Redirector,
+		CookieJar $Cookie,
+		Request $Input,
+		Repository $Config,
+		PasswordBrokerManager $Password,
+		Hasher $Hash,
+		SessionManager $Session,
+		Factory $Validator,
+		CasManager $Cas
+	)
 	{
 		$this->Organization = $Organization;
 
@@ -356,6 +374,8 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		$this->Auth->logout();
 
 		$this->unsetCurrentUserOrganization();
+
+		$this->Session->forget('loggedUser');
 
 		if($this->Config->get('system-security.cas'))
 		{
@@ -851,14 +871,14 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getOrganizationConnection($organizationId)
 	{
-		if($this->Session->has('organization' . $organizationId))
+		if($this->Cache->has('organization' . $organizationId))
 		{
-			$organization = json_decode($this->Session->get('organization' . $organizationId), true);
+			$organization = json_decode($this->Cache->get('organization' . $organizationId), true);
 		}
 		else
 		{
 			$organization = $this->Organization->byId($organizationId)->toArray();
-			$this->Session->put('organization' . $organizationId, json_encode($organization));
+			$this->Cache->put('organization' . $organizationId, json_encode($organization), 360);
 		}
 
 		return $organization['database_connection_name'];

@@ -10,11 +10,19 @@
 namespace App\Http\Controllers\Security;
 
 use App\Kwaai\Security\Services\UserManagement\UserManagementInterface;
+
 use App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface;
+
 use App\Kwaai\Organization\Services\OrganizationManagement\OrganizationManagementInterface;
+
+use App\Kwaai\Security\Services\AppManagement\AppManagementInterface;
+
 use Illuminate\Session\SessionManager;
+
 use Illuminate\Http\Request;
+
 use Illuminate\View\Factory;
+
 use App\Http\Controllers\Controller;
 
 class UserManager extends Controller {
@@ -67,13 +75,23 @@ class UserManager extends Controller {
 	 */
 	protected $Session;
 
-	public function __construct(UserManagementInterface $UserManagerService, AuthenticationManagementInterface $AuthenticationManagerService, OrganizationManagementInterface $OrganizationManagerService, Factory $View, Request $Input, SessionManager $Session)
+	public function __construct(
+		UserManagementInterface $UserManagerService,
+		AuthenticationManagementInterface $AuthenticationManagerService,
+		OrganizationManagementInterface $OrganizationManagerService,
+		AppManagementInterface $AppManagerService,
+		Factory $View,
+		Request $Input,
+		SessionManager $Session
+	)
 	{
 		$this->UserManagerService = $UserManagerService;
 
 		$this->AuthenticationManagerService = $AuthenticationManagerService;
 
 		$this->OrganizationManagerService = $OrganizationManagerService;
+
+		$this->AppManagerService = $AppManagerService;
 
 		$this->View = $View;
 
@@ -90,6 +108,9 @@ class UserManager extends Controller {
             ->with('removeUserAction', $this->Session->get('removeUserAction', false))
             ->with('assignRoleAction', $this->Session->get('assignRoleAction', false))
             ->with('unassignRoleAction', $this->Session->get('unassignRoleAction', false))
+						->with('appInfo', $this->AppManagerService->getAppInfo())
+						->with('userOrganizations', $this->UserManagerService->getUserOrganizations())
+						->with('userActions', $this->UserManagerService->getUserActions())
           	->withModules($this->UserManagerService->getSystemModules())
           	->withTimezones($this->UserManagerService->getTimezones());
 	}

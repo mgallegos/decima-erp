@@ -17,6 +17,10 @@ use Illuminate\Http\Request;
 
 use App\Kwaai\Organization\Services\OrganizationManagement\OrganizationManagementInterface;
 
+use App\Kwaai\Security\Services\UserManagement\UserManagementInterface;
+
+use App\Kwaai\Security\Services\AppManagement\AppManagementInterface;
+
 use Illuminate\View\Factory;
 
 use App\Http\Controllers\Controller;
@@ -30,6 +34,22 @@ class OrganizationManager extends Controller {
 	 *
 	 */
 	protected $OrganizationManagerService;
+
+	/**
+	 * User Manager Service
+	 *
+	 * @var App\Kwaai\Security\Services\UserManagement\UserManagementInterface
+	 *
+	 */
+	protected $UserManagerService;
+
+	/**
+	* App Manager Service
+	*
+	* @var App\Kwaai\Security\Services\AppManagement\AppManagementInterface;
+	*
+	*/
+	protected $AppManagerService;
 
 	/**
 	 * View
@@ -55,9 +75,20 @@ class OrganizationManager extends Controller {
 	 */
 	protected $Session;
 
-	public function __construct(OrganizationManagementInterface $OrganizationManagerService, Factory $View, Request $Input, SessionManager $Session)
+	public function __construct(
+		OrganizationManagementInterface $OrganizationManagerService,
+		UserManagementInterface $UserManagerService,
+		AppManagementInterface $AppManagerService,
+		Factory $View,
+		Request $Input,
+		SessionManager $Session
+	)
 	{
 		$this->OrganizationManagerService = $OrganizationManagerService;
+
+		$this->UserManagerService = $UserManagerService;
+
+		$this->AppManagerService = $AppManagerService;
 
 		$this->View = $View;
 
@@ -75,6 +106,9 @@ class OrganizationManager extends Controller {
 						->with('removeOrganizationAction', $this->Session->get('removeOrganizationAction', false))
 						->with('hideCreatedByColumn', $this->OrganizationManagerService->hideCreatedByColumn())
 						->with('currencies', $this->OrganizationManagerService->getSystemCurrencies())
+						->with('appInfo', $this->AppManagerService->getAppInfo())
+						->with('userOrganizations', $this->UserManagerService->getUserOrganizations())
+						->with('userActions', $this->UserManagerService->getUserActions())
 						->withCountries($this->OrganizationManagerService->getSystemCountries());
 	}
 

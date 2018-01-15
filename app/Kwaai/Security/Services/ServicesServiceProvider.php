@@ -135,6 +135,8 @@ class ServicesServiceProvider extends ServiceProvider {
 				$app['mailer'],
 				$app['events'],
 				$app['validator'],
+				$app['cache'],
+				$app['session'],
 				$app['config']['app.key']
 			);
 		});

@@ -25,6 +25,12 @@ use Illuminate\Database\DatabaseManager;
 
 use Illuminate\Contracts\Hashing\Hasher;
 
+use Illuminate\Translation\Translator;
+
+use Illuminate\Cache\CacheManager;
+
+use Illuminate\Session\SessionManager;
+
 use DateTimeZone;
 
 use Exception;
@@ -58,8 +64,6 @@ use App\Kwaai\Security\Services\UserManagement\UserManagementInterface;
 use App\Events\OnNewInfoMessage;
 
 use App\Events\OnNewWarningMessage;
-
-use Illuminate\Translation\Translator;
 
 use Mgallegos\LaravelJqgrid\Encoders\RequestedDataInterface;
 
@@ -225,6 +229,22 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	protected $Validator;
 
 	/**
+	 * Laravel Cache instance
+	 *
+	 * @var \Illuminate\Cache\CacheManager
+	 *
+	 */
+	protected $Cache;
+
+	/**
+	 * Laravel Session instance
+	 *
+	 * @var \Illuminate\Session\SessionManager
+	 *
+	 */
+	protected $Session;
+
+	/**
 	 * The hashing key.
 	 *
 	 * @var string
@@ -245,7 +265,32 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 */
 	protected $messages;
 
-	public function __construct(UserInterface $User, OrganizationInterface  $Organization, ModuleInterface $Module, MenuInterface $Menu, RoleInterface $Role, PermissionInterface $Permission, JournalInterface $Journal, AuthenticationManagementInterface $AuthenticationManager, JournalManagementInterface $JournalManager, RequestedDataInterface $GridEncoder, EloquentUserGridRepository $EloquentUserGridRepository, EloquentAdminUserGridRepository $EloquentAdminUserGridRepository, DateTimeZone $DateTimeZone, DatabaseManager $DB, Translator $Lang, Hasher $Hash, Repository $Config, UrlGenerator $Url, Mailer $Mailer, Dispatcher $Event, Factory $Validator, $hashKey)
+	public function __construct(
+		UserInterface $User,
+		OrganizationInterface  $Organization,
+		ModuleInterface $Module,
+		MenuInterface $Menu,
+		RoleInterface $Role,
+		PermissionInterface $Permission,
+		JournalInterface $Journal,
+		AuthenticationManagementInterface $AuthenticationManager,
+		JournalManagementInterface $JournalManager,
+		RequestedDataInterface $GridEncoder,
+		EloquentUserGridRepository $EloquentUserGridRepository,
+		EloquentAdminUserGridRepository $EloquentAdminUserGridRepository,
+		DateTimeZone $DateTimeZone,
+		DatabaseManager $DB,
+		Translator $Lang,
+		Hasher $Hash,
+		Repository $Config,
+		UrlGenerator $Url,
+		Mailer $Mailer,
+		Dispatcher $Event,
+		Factory $Validator,
+		CacheManager $Cache,
+		SessionManager $Session,
+		$hashKey
+	)
 	{
 		$this->User = $User;
 
@@ -288,6 +333,10 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 		$this->Event = $Event;
 
 		$this->Validator = $Validator;
+
+		$this->Cache = $Cache;
+
+		$this->Session = $Session;
 
 		$this->hashKey = $hashKey;
 
@@ -559,6 +608,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 		unset($input['_token']);
 		$input['id'] = $this->AuthenticationManager->getLoggedUserId();
 		$this->User->update($input);
+		$this->Session->forget('loggedUser');
 	}
 
 
@@ -655,6 +705,8 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
       $organizationName = $this->AuthenticationManager->getCurrentUserOrganization('name');
 
 			$this->User->attachOrganizations($input['id'], array($organizationId), $loggedUserId);
+
+			$this->Cache->forget('userOrganizations' . $loggedUserId);
 
       $Journal = $this->Journal->create(array('journalized_id' => $input['id'], 'journalized_type' => $this->User->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('security/user-management.userAddedJournal', array('email' => $User->email, 'organization' => $organizationName))), $Journal);
@@ -880,6 +932,9 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 			$Journal = $this->Journal->create(array('journalized_id' => $post['userId'], 'journalized_type' => $this->User->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
 
+			$this->Cache->forget('userActions' . $post['userId'] . $organizationId);
+			$this->Cache->forget('userApps' . $post['userId'] . $organizationId);
+
 			if($post['selected'])
 			{
 				$this->User->attachRoles($post['userId'], $post['rolesId'], $loggedUserId, $User);
@@ -965,6 +1020,9 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
       $Journal = $this->Journal->create(array('journalized_id' => $post['userId'], 'journalized_type' => $this->User->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
 
+			$this->Cache->forget('userActions' . $post['userId'] . $organizationId);
+			$this->Cache->forget('userApps' . $post['userId'] . $organizationId);
+
       $this->Menu->menusById($post['menusId'])->each(function($Menu) use($Journal, $User, $post)
       {
         $appName = $this->Lang->has($Menu->lang_key) ? $this->Lang->get($Menu->lang_key) : $Menu->name;
@@ -979,27 +1037,30 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
         }
       });
 
-			$userMenus = $this->getUserMenusByModule($post["userId"], $post["permissionsModuleId"], $organizationId);
-			$permissionModuleMenus = $this->getMenusByModule($post["permissionsModuleId"]);
-
-			foreach ($permissionModuleMenus as $key => $menu)
+			if(!empty($post["permissionsModuleId"]))
 			{
-				if(!isset($userMenus[$menu['value']]))
+				$userMenus = $this->getUserMenusByModule($post["userId"], $post["permissionsModuleId"], $organizationId);
+				$permissionModuleMenus = $this->getMenusByModule($post["permissionsModuleId"]);
+
+				foreach ($permissionModuleMenus as $key => $menu)
 				{
-					unset($permissionModuleMenus[$key]);
+					if(!isset($userMenus[$menu['value']]))
+					{
+						unset($permissionModuleMenus[$key]);
+					}
 				}
-			}
 
-			$permissionModuleMenus = array_merge(array(), $permissionModuleMenus);
+				$permissionModuleMenus = array_merge(array(), $permissionModuleMenus);
 
-			if(isset($permissionModuleMenus[0]['value']))
-			{
-				$menuPermissions = $this->getPermissionsByMenus($permissionModuleMenus[0]['value']);
-				$userPermissions = $this->getUserPermissionByMenuAndByOrganization($post["userId"], $permissionModuleMenus[0]['value'], $organizationId);
-			}
-			else
-			{
-				$menuPermissions = $userPermissions = array();
+				if(isset($permissionModuleMenus[0]['value']))
+				{
+					$menuPermissions = $this->getPermissionsByMenus($permissionModuleMenus[0]['value']);
+					$userPermissions = $this->getUserPermissionByMenuAndByOrganization($post["userId"], $permissionModuleMenus[0]['value'], $organizationId);
+				}
+				else
+				{
+					$menuPermissions = $userPermissions = array();
+				}
 			}
 		});
 
@@ -1100,9 +1161,11 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
       $Journal = $this->Journal->create(array('journalized_id' => $post['userId'], 'journalized_type' => $this->User->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
 
-      $this->Permission->permissionsById($post['permissionsId'])->each(function($Permission) use($Journal, $User, $post)
+      $this->Permission->permissionsById($post['permissionsId'])->each(function($Permission) use($Journal, $User, $post, $organizationId, $loggedUserId)
       {
         $permissionName = $this->Lang->has($Permission->lang_key) ? $this->Lang->get($Permission->lang_key) : $Permission->name;
+
+				$this->Session->forget('userAppPermissions' . $loggedUserId . $Permission->menu_id . $organizationId);
 
         if($post['selected'] == true)
         {
@@ -1533,12 +1596,34 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 		if($this->AuthenticationManager->isUserRoot($id))
 		{
-			return $this->Organization->all()->toArray();
+			if($this->Cache->has('allOrganization'))
+			{
+				$organizations = json_decode($this->Cache->get('allOrganization'), true);
+			}
+			else
+			{
+				$organizations = $this->Organization->all()->toArray();
+				$this->Cache->put('allOrganization', json_encode($organizations), 360);
+			}
+
+			// return $this->Organization->all()->toArray();
 		}
 		else
 		{
-			return $this->User->organizationByUser($id)->toArray();
+			if($this->Cache->has('userOrganizations' . $id))
+			{
+				$organizations = json_decode($this->Cache->get('userOrganizations' . $id), true);
+			}
+			else
+			{
+				$organizations = $this->User->organizationByUser($id)->toArray();
+				$this->Cache->put('userOrganizations' . $id, json_encode($organizations), 360);
+			}
+
+			// return $this->User->organizationByUser($id)->toArray();
 		}
+
+		return $organizations;
 	}
 
 	/**
@@ -1554,26 +1639,49 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			$id = $this->AuthenticationManager->getLoggedUserId();
 		}
 
-		$organizations = array();
+		$organizationsAutocomplete = array();
 
 		if($this->AuthenticationManager->isUserRoot($id))
 		{
-			$this->Organization->all()->each(function($Organization) use (&$organizations)
+			if($this->Cache->has('allOrganization'))
 			{
-				array_push($organizations, array('label' => $Organization->name, 'value' => $Organization->id));
-			});
+				$organizations = json_decode($this->Cache->get('allOrganization'), true);
+			}
+			else
+			{
+				$organizations = $this->Organization->all()->toArray();
+				$this->Cache->put('allOrganization', json_encode($organizations), 360);
+			}
+
+			// $this->Organization->all()->each(function($Organization) use (&$organizations)
+			// {
+			// 	array_push($organizations, array('label' => $Organization->name, 'value' => $Organization->id));
+			// });
 		}
 		else
 		{
-			$this->User->organizationByUser($id)->each(function($Organization) use (&$organizations)
+			if($this->Cache->has('userOrganizations' . $id))
 			{
-				array_push($organizations, array('label' => $Organization->name, 'value' => $Organization->id));
-			});
+				$organizations = json_decode($this->Cache->get('userOrganizations' . $id), true);
+			}
+			else
+			{
+				$organizations = $this->User->organizationByUser($id)->toArray();
+				$this->Cache->put('userOrganizations' . $id, json_encode($organizations), 360);
+			}
+
+			// $this->User->organizationByUser($id)->each(function($Organization) use (&$organizations)
+			// {
+			// 	array_push($organizations, array('label' => $Organization->name, 'value' => $Organization->id));
+			// });
 		}
 
+		foreach ($organizations as $key => $organization)
+		{
+			array_push($organizationsAutocomplete, array('label' => $organization['name'], 'value' => $organization['id']));
+		}
 
-
-		return $organizations;
+		return $organizationsAutocomplete;
 	}
 
 	/**
@@ -1604,6 +1712,11 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			{
 				$userId = $this->AuthenticationManager->getLoggedUserId();
 			}
+		}
+
+		if($this->Cache->has('userActions' . $userId . $organizationId))
+		{
+			return json_decode($this->Cache->get('userActions' . $userId . $organizationId), true);
 		}
 
 		$userActions = array();
@@ -1654,7 +1767,11 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			$userActions = array_add($userActions, $key, array('label' => $this->Lang->get($shortcut['langKey']), 'actionButtonId' => $shortcut['actionButtonId'], 'value' => $key));
 		}
 
-		return array_values($userActions);
+		$userActions = array_values($userActions);
+
+		$this->Cache->put('userActions' . $userId . $organizationId, json_encode($userActions), 360);
+
+		return $userActions;
 	}
 
 	/**
@@ -1689,14 +1806,40 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 		if(empty($menuId))
 		{
-			$Menu = $this->Menu->menuByUrl(str_replace($this->Url->to('/'), '', $this->Url->current()));
+			$url = str_replace($this->Url->to('/'), '', $this->Url->current());
 
-			if($Menu->isEmpty())
+			if($this->Cache->has($url))
 			{
-				return array();
+				$menu = json_decode($this->Cache->get($url), true);
+			}
+			else
+			{
+				$Menu = $this->Menu->menuByUrl($url);
+
+				if($Menu->count() == 0)
+				{
+					return array();
+				}
+
+				$menu = $Menu[0]->toArray();
+				$this->Cache->put($url, json_encode($menu), 360);
 			}
 
-			$menuId = $Menu[0]->id;
+			$menuId = $menu['id'];
+
+			// $Menu = $this->Menu->menuByUrl($url);
+      //
+			// if($Menu->isEmpty())
+			// {
+			// 	return array();
+			// }
+      //
+			// $menuId = $Menu[0]->id;
+		}
+
+		if($this->Cache->has('userAppPermissions' . $userId . $menuId . $organizationId))
+		{
+			return json_decode($this->Cache->get('userAppPermissions' . $userId . $menuId . $organizationId), true);
 		}
 
 		$userAppPermissions = array();
@@ -1718,6 +1861,8 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 				$userAppPermissions = array_add($userAppPermissions, $permission->key, $permission->name);
 			}
 		});
+
+		$this->Cache->put('userAppPermissions' . $userId . $menuId . $organizationId, json_encode($userAppPermissions), 360);
 
 		return $userAppPermissions;
 	}
@@ -1786,6 +1931,18 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			{
 				$userId = $this->AuthenticationManager->getLoggedUserId();
 			}
+		}
+
+		if($this->Cache->has('userApps' . $userId . $organizationId))
+		{
+			$userApps = json_decode($this->Cache->get('userApps' . $userId . $organizationId), true);
+
+			if($returnArray)
+			{
+				return $userApps;
+			}
+
+			return json_encode($userApps);
 		}
 
 		$userApps = array();
@@ -1873,12 +2030,16 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			}
 		});
 
+		$userAppsJsonEncoded = json_encode($userApps);
+
+		$this->Cache->put('userApps' . $userId . $organizationId, $userAppsJsonEncoded, 360);
+
 		if($returnArray)
 		{
 			return $userApps;
 		}
 
-		return json_encode($userApps);
+		return $userAppsJsonEncoded;
 	}
 
 	/**

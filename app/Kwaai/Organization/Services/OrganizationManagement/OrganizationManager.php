@@ -300,7 +300,8 @@ class OrganizationManager implements OrganizationManagementInterface {
 	{
 		if(empty($id))
 		{
-			$currencyId = $this->AuthenticationManager->getCurrentUserOrganizationCurrency();
+			// $currencyId = $this->AuthenticationManager->getCurrentUserOrganizationCurrency();
+			return $this->AuthenticationManager->getCurrentUserOrganizationCurrencySymbol();
 		}
 		else
 		{
