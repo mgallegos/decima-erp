@@ -120,7 +120,10 @@ class UserManager extends Controller {
 		return $this->View->make('security.user-preferences')
 						->with('changesJournal', $this->UserManagerService->getUserChangesJournals())
             ->with('actionsJournal', $this->UserManagerService->getUserActionsJournals())
-						->with('userDefaultOrganizationName', $this->OrganizationManagerService->getOrganizationColumnById($this->AuthenticationManagerService->getLoggedUserDefaultOrganization()));
+						->with('userDefaultOrganizationName', $this->OrganizationManagerService->getOrganizationColumnById($this->AuthenticationManagerService->getLoggedUserDefaultOrganization()))
+						->with('appInfo', $this->AppManagerService->getAppInfo())
+						->with('userOrganizations', $this->UserManagerService->getUserOrganizations())
+						->with('userActions', $this->UserManagerService->getUserActions());
 	}
 
 	public function postStoreUser()
