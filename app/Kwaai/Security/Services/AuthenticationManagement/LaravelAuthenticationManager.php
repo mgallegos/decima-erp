@@ -984,6 +984,35 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	}
 
 	/**
+	* Get current user organization courrency
+	*
+	* @return string
+	*/
+	public function getCurrentUserOrganizationCurrencyIsoCode()
+	{
+		$organization = $this->getSessionOrganization();
+
+		if(empty($organization))
+		{
+			return -1;
+		}
+		else
+		{
+			if($this->Cache->has('currency' . $organization['currency_id']))
+			{
+				$currency = json_decode($this->Cache->get('currency' . $organization['currency_id']), true);
+			}
+			else
+			{
+				$currency = $this->Currency->byId($organization['currency_id'])->toArray();
+				$this->Cache->put('currency' . $organization['currency_id'], json_encode($currency), 360);
+			}
+
+			return $currency['iso_code'];
+		}
+	}
+
+	/**
 	* Get current user organization name
 	*
 	* @return string

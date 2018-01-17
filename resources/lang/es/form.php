@@ -41,6 +41,10 @@ return array(
 
 	'month' => 'Mes',
 
+	'of' => 'de',
+
+	'monthOf' => 'Mes de :month',
+
 	'year' => 'Año',
 
 	'positiveIntegerRegexHelpMessage' => 'El valor ingresado debe ser un entero positivo, ejemplo: 1,000 o 1000',
@@ -174,6 +178,8 @@ return array(
 	'sums' => 'Sumas',
 
 	'son' => 'Son',
+
+	'in' => 'En',
 
   'A' => 'Anulado',
 
