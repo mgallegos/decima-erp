@@ -167,6 +167,10 @@ return array(
 
 	'concept' => 'Concepto',
 
+	'spreadsheet' => 'Hoja de Cálculo',
+
+	'abbreviation' => 'Abreviatura',
+
 	'sums' => 'Sumas',
 
 	'son' => 'Son',
