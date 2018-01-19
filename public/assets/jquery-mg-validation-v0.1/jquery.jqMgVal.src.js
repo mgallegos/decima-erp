@@ -82,6 +82,61 @@
 				validationRegex: '^\\$?([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$',
 				allowedCharactersRegex: '^(\\d|,|\\.)$',
 				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			money2:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 2,
+						defaultValue: '0.00'
+				},
+				validationRegex: '^\\$?([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			money3:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 2,
+						defaultValue: '0.00'
+				},
+				validationRegex: '^\\$?([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			money4:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 2,
+						defaultValue: '0.00'
+				},
+				validationRegex: '^\\$?([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			money5:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 2,
+						defaultValue: '0.00'
+				},
+				validationRegex: '^\\$?([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			money6:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 2,
+						defaultValue: '0.00'
+				},
+				validationRegex: '^\\$?([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
 			}
 		},
 		lang: {
