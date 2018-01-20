@@ -1073,6 +1073,25 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	}
 
 	/**
+	* Get current user organization cost price precision
+	*
+	* @return string
+	*/
+	public function getCurrentUserOrganizationCostPricePrecision()
+	{
+		$organization = $this->getSessionOrganization();
+
+		if(empty($organization))
+		{
+			return 2;
+		}
+		else
+		{
+			return $organization['cost_price_precision'];
+		}
+	}
+
+	/**
 	 * Get logged user ID
 	 *
 	 * @return int
