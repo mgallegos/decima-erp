@@ -57,7 +57,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    *
    * @return Vendor\DecimaModule\Module\ModuleTableName
    */
-  public function byId($id)
+  public function byId($id, $databaseConnectionName = null)
   {
     if(empty($databaseConnectionName))
     {
