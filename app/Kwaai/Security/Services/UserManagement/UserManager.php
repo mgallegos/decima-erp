@@ -1165,7 +1165,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
       {
         $permissionName = $this->Lang->has($Permission->lang_key) ? $this->Lang->get($Permission->lang_key) : $Permission->name;
 
-				$this->Session->forget('userAppPermissions' . $loggedUserId . $Permission->menu_id . $organizationId);
+				$this->Cache->forget('userAppPermissions' . $loggedUserId . $Permission->menu_id . $organizationId);
 
         if($post['selected'] == true)
         {
@@ -2262,6 +2262,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 		$this->Menu->permissionsByMenu($menuId)->each(function($permission) use (&$menuPermissions)
 		{
+			// var_dump($permission->toArray());
 			if(!$permission->is_only_shortcut && !in_array($permission->id, $this->Config->get('system-security.admin_permissions_id')))
 			{
 				array_push($menuPermissions, array('value'=>$permission->id, 'text'=>($this->Lang->has($permission->lang_key) ? $this->Lang->get($permission->lang_key) : $permission->name)));
