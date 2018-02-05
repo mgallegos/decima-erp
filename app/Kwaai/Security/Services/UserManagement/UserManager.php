@@ -1165,7 +1165,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
       {
         $permissionName = $this->Lang->has($Permission->lang_key) ? $this->Lang->get($Permission->lang_key) : $Permission->name;
 
-				$this->Cache->forget('userAppPermissions' . $loggedUserId . $Permission->menu_id . $organizationId);
+				$this->Cache->forget('userAppPermissions' . $post['userId'] . $Permission->menu_id . $organizationId);
 
         if($post['selected'] == true)
         {
