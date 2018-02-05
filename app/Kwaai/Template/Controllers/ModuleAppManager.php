@@ -8,11 +8,17 @@
  */
 namespace Vendor\DecimaModule\Module\Controllers;
 
+
+
 use Illuminate\Session\SessionManager;
 
 use Illuminate\Http\Request;
 
 use Vendor\DecimaModule\Module\Services\ModuleAppManagement\ModuleAppManagementInterface;
+
+use App\Kwaai\Security\Services\UserManagement\UserManagementInterface;
+
+use App\Kwaai\Security\Services\AppManagement\AppManagementInterface;
 
 use Illuminate\View\Factory;
 
@@ -27,6 +33,22 @@ class ModuleAppManager extends Controller {
 	 *
 	 */
 	protected $ModuleAppManagerService;
+
+	/**
+	* User Manager Service
+	*
+	* @var App\Kwaai\Security\Services\UserManagement\UserManagementInterface
+	*
+	*/
+	protected $UserManagerService;
+
+	/**
+	* App Manager Service
+	*
+	* @var App\Kwaai\Security\Services\AppManagement\AppManagementInterface;
+	*
+	*/
+	protected $AppManagerService;
 
 	/**
 	 * View
@@ -52,9 +74,20 @@ class ModuleAppManager extends Controller {
 	 */
 	protected $Session;
 
-	public function __construct(ModuleAppManagementInterface $ModuleAppManagerService, Factory $View, Request $Input, SessionManager $Session)
+	public function __construct(
+		ModuleAppManagementInterface $ModuleAppManagerService,
+		UserManagementInterface $UserManagerService,
+		AppManagementInterface $AppManagerService,
+		Factory $View,
+		Request $Input,
+		SessionManager $Session
+	)
 	{
 		$this->ModuleAppManagerService = $ModuleAppManagerService;
+
+		$this->UserManagerService = $UserManagerService;
+
+		$this->AppManagerService = $AppManagerService;
 
 		$this->View = $View;
 
@@ -70,7 +103,11 @@ class ModuleAppManager extends Controller {
 		return $this->View->make('decima-module::module-app-management')
 						->with('newModuleAppAction', $this->Session->get('newModuleAppAction', false))
 						->with('editModuleAppAction', $this->Session->get('editModuleAppAction', false))
-						->with('deleteModuleAppAction', $this->Session->get('deleteModuleAppAction', false));
+						->with('deleteModuleAppAction', $this->Session->get('deleteModuleAppAction', false))
+						->with('appInfo', $this->AppManagerService->getAppInfo())
+						->with('userOrganizations', $this->UserManagerService->getUserOrganizations())
+						->with('userAppPermissions', $this->UserManagerService->getUserAppPermissions())
+						->with('userActions', $this->UserManagerService->getUserActions());
 	}
 
 	public function postGridData()
