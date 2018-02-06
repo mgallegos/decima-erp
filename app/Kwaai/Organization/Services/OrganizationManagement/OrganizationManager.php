@@ -53,6 +53,10 @@ use Illuminate\Routing\UrlGenerator;
 
 use Illuminate\Translation\Translator;
 
+use Illuminate\Cache\CacheManager;
+
+use Illuminate\Session\SessionManager;
+
 class OrganizationManager implements OrganizationManagementInterface {
 
 	/**
@@ -175,7 +179,42 @@ class OrganizationManager implements OrganizationManagementInterface {
 	 */
 	protected $Event;
 
-	public function __construct(AuthenticationManagementInterface $AuthenticationManager, UserManagementInterface $UserManager, JournalManagementInterface $JournalManager, RequestedDataInterface $GridEncoder, EloquentOrganizationGridRepository $EloquentOrganizationGridRepository, CountryInterface $Country, CurrencyInterface $Currency, OrganizationInterface $Organization, UserInterface $User, RoleInterface $Role, JournalInterface $Journal, array $newOrganizationTrigger, DatabaseManager $DB, Translator $Lang, Writer $Log, Dispatcher $Event)
+	/**
+	 * Laravel Cache instance
+	 *
+	 * @var \Illuminate\Cache\CacheManager
+	 *
+	 */
+	protected $Cache;
+
+	/**
+	 * Laravel Session instance
+	 *
+	 * @var \Illuminate\Session\SessionManager
+	 *
+	 */
+	protected $Session;
+
+	public function __construct(
+		AuthenticationManagementInterface $AuthenticationManager,
+		UserManagementInterface $UserManager,
+		JournalManagementInterface $JournalManager,
+		RequestedDataInterface $GridEncoder,
+		EloquentOrganizationGridRepository $EloquentOrganizationGridRepository,
+		CountryInterface $Country,
+		CurrencyInterface $Currency,
+		OrganizationInterface $Organization,
+		UserInterface $User,
+		RoleInterface $Role,
+		JournalInterface $Journal,
+		array $newOrganizationTrigger,
+		DatabaseManager $DB,
+		Translator $Lang,
+		Writer $Log,
+		Dispatcher $Event,
+		CacheManager $Cache,
+		SessionManager $Session
+	)
 	{
 		$this->AuthenticationManager = $AuthenticationManager;
 
@@ -208,6 +247,10 @@ class OrganizationManager implements OrganizationManagementInterface {
 		$this->Log = $Log;
 
 		$this->Event = $Event;
+
+		$this->Cache = $Cache;
+
+		$this->Session = $Session;
 	}
 
 	/**
@@ -472,6 +515,9 @@ class OrganizationManager implements OrganizationManagementInterface {
 				$currentUserOrganization = $this->AuthenticationManager->getCurrentUserOrganization('id');
 			}
 		});
+
+		$this->Cache->forget('userOrganizations' . $this->AuthenticationManager->getLoggedUserId());
+		$this->Cache->forget('allOrganization');
 
 		$this->Event->fire(new OnNewInfoMessage(array('message' => '[ORGANIZATION EVENT] A new organization has been added to the system', 'context' => $input), $this->AuthenticationManager));
 
