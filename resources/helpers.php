@@ -154,6 +154,17 @@ if ( ! function_exists('eloquent_array_filter'))
 						$filter['op'] = 'not like';
 						$filter['data'] = '%' . $filter['data'] . '%';
 						break;
+          case 'nu': //is null
+            $filter['op'] = 'is null';
+            $filter['data'] = '';
+            break;
+      		case 'nn': //is not null
+            $filter['op'] = 'is not null';
+            $filter['data'] = '';
+           	break;
+        	case 'btw': //between
+						$filter['op'] = 'between';
+						break;
 				}
 			}
     }
