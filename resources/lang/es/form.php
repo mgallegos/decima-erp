@@ -179,6 +179,10 @@ return array(
 
 	'son' => 'Son',
 
+	'letter' => 'Tamaño carta',
+
+	'legal' => 'Tamaño oficio',
+
 	'in' => 'En',
 
   'A' => 'Anulado',
