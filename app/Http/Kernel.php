@@ -32,6 +32,7 @@ class Kernel extends HttpKernel
         'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
     		'check.browser' => \App\Http\Middleware\CheckBrowser::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'cors' => \App\Http\Middleware\Cors::class,
         'check.first.time.access' => \App\Http\Middleware\CheckFirstTimeAccess::class,
     		'check.access' => \App\Http\Middleware\CheckAccess::class,
     		'check.accounting.setup' => \Mgallegos\DecimaAccounting\Accounting\Middleware\CheckAccountingSetup::class

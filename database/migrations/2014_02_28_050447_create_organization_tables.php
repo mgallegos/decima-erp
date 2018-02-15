@@ -36,7 +36,9 @@ class CreateOrganizationTables extends Migration {
 			$table->string('company_registration')->nullable();
 			$table->string('commercial_trade')->nullable();
 			$table->text('logo_url')->nullable();
+			$table->tinyInteger('cost_price_precision');
 			$table->string('database_connection_name',60);
+			$table->string('api_token',60)->nullable();
 
 			//Contact information (clients)
 
