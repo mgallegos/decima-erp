@@ -885,6 +885,25 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	}
 
 	/**
+	* Get organization connection
+	*
+	* @param  int $value organization id
+	*
+	* @return string
+	*/
+	public function getOrganizationByApiToken($token)
+	{
+		$Organizations = $this->Organization->byApiToken($token);
+
+		if($Organizations->isEmpty())
+		{
+			return '';
+		}
+		
+		return $Organizations->first();
+	}
+
+	/**
 	* Get current user organization country
 	*
 	* @return string

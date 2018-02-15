@@ -59,6 +59,18 @@ class EloquentOrganization implements OrganizationInterface {
     	return $this->Organization->find($id);
     }
 
+    /**
+     * Retrieve ... by organization
+     *
+     * @param  int $id Organization id
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function byApiToken($token)
+    {
+      return $this->Organization->where('api_token', '=', $token)->get();
+    }
+
 
     /**
      * Create a new organization
