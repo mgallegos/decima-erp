@@ -706,7 +706,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 			$this->User->attachOrganizations($input['id'], array($organizationId), $loggedUserId);
 
-			$this->Cache->forget('userOrganizations' . $loggedUserId);
+			$this->Cache->forget('userOrganizations' . $input['id']);
 
       $Journal = $this->Journal->create(array('journalized_id' => $input['id'], 'journalized_type' => $this->User->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('security/user-management.userAddedJournal', array('email' => $User->email, 'organization' => $organizationName))), $Journal);
