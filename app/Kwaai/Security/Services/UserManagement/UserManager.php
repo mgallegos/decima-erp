@@ -1784,7 +1784,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 * @return array
 	 * 	An array of arrays as follows: array( $key0 => $name0, $key1 => $name1,…)
 	 */
-	public function getUserAppPermissions($userId = null, $menuId = null, $organizationId = null)
+	public function getUserAppPermissions($userId = null, $menuId = null, $organizationId = null, $url = null)
 	{
 		if(empty($organizationId))
 		{
@@ -1806,7 +1806,10 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 		if(empty($menuId))
 		{
-			$url = str_replace($this->Url->to('/'), '', $this->Url->current());
+			if(empty($url))
+			{
+				$url = str_replace($this->Url->to('/'), '', $this->Url->current());
+			}
 
 			if($this->Cache->has($url))
 			{
