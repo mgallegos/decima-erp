@@ -133,6 +133,8 @@ return array(
 
 	'typeHelperText' => 'Filtrar por uno o más tipos',
 
+	'price' => 'Precio',
+
 	'total' => 'Total',
 
 	'date' => 'Fecha',
