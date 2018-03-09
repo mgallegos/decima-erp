@@ -141,7 +141,7 @@ abstract class AbstractLaravelValidator implements ValidableInterface {
 	 *
 	 * @return array
 	 */
-	function beginTransaction($openTransaction, $databaseConnectionName)
+	function beginTransaction($openTransaction, $databaseConnectionName = null)
 	{
 		if(!$openTransaction)
 		{
