@@ -152,7 +152,7 @@ abstract class AbstractLaravelValidator implements ValidableInterface {
 	  // $this->commit($openTransaction);
 	  // $this->rollBack($openTransaction);
 
-		if(empty($databaseConnectionName))
+		if(!empty($databaseConnectionName))
     {
       $this->databaseConnectionName = $this->AuthenticationManager->getCurrentUserOrganizationConnection();
     }
