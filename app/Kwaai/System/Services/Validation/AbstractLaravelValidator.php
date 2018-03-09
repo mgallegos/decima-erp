@@ -203,10 +203,11 @@ abstract class AbstractLaravelValidator implements ValidableInterface {
 
 		$this->DB->rollBack();
 
+		var_dump($this->databaseConnectionName);die();
+
 		if(!$this->AuthenticationManager->isDefaultDatabaseConnectionName($this->databaseConnectionName))
     {
       $this->DB->connection($this->databaseConnectionName)->rollBack();
-			var_dump($this->databaseConnectionName);die();
     }
 	}
 
