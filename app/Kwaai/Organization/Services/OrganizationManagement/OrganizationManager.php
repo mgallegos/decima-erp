@@ -285,6 +285,24 @@ class OrganizationManager implements OrganizationManagementInterface {
 	}
 
 	/**
+	 * Get system countries
+	 *
+	 * @return array
+	 *  An array of arrays as follows: array( $name0, $name1,…)
+	 */
+	public function getSystemCountriesNames()
+	{
+		$countries = array();
+
+		$this->Country->all()->each(function($Country) use (&$countries)
+		{
+			array_push($countries, $Country->name);
+		});
+
+		return $countries;
+	}
+
+	/**
 	* Get system currencies
 	*
 	* @return array
