@@ -167,6 +167,8 @@ return array(
 
 	'custom' => 'Personalizado',
 
+	'correlativeShort' => 'Correlat.',
+
 	'correlative' => 'Correlativo',
 
 	'remark' => 'Observación',
