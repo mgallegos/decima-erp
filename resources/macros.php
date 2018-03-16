@@ -7,7 +7,7 @@
  * See COPYRIGHT and LICENSE.
  */
 
-Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null)
+Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null, $btnClass = 'btn-default', $bootstrapVersion = '3')
 {
 	$autocompleteEvent = $autocompleteFocusEvent = $prefix = '';
 	$autocompleteWidgetName = 'autocomplete';
@@ -82,14 +82,23 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 		}
 	';
 
+	if($bootstrapVersion == '3')
+	{
+		$inputGroupClass = 'input-group-btn';
+	}
+	else if($bootstrapVersion == '4')
+	{
+		$inputGroupClass = 'input-group-append';
+	}
+
 	FormJavascript::setCode('$("#'. $options['id'] .'").' . $autocompleteWidgetName . '({ minLength: 0, search: '. $searchEvent . ', source: '. $autocompleteSource . $autocompleteEvent . '}); $("#'.  $options['id'] . '-show-all-button").click(function(){ $("#' . $options['id'] .'").autocomplete( "search", "" ); $("#' . $options['id'] .'").focus(); });');
 	FormJavascript::setGlobalCode('var '. $inputTextAutocompleteName . 'ArrayData = ' . json_encode($source) . ';');
 
 	return '<div class="input-group ' . $inputGroupSizeClass . '">
 				' . $prefix . '
 				<input'.Html::attributes($options).'>
-				<span class="input-group-btn">
-					<button id="' . $options['id'] . '-show-all-button" class="btn btn-default" type="button">
+				<span class="' . $inputGroupClass . '">
+					<button id="' . $options['id'] . '-show-all-button" class="btn ' . $btnClass . '" type="button">
 						<i class="fa fa-caret-down"></i>
 					</button>
 				</span>
@@ -146,7 +155,7 @@ Form::macro('money', function($name, $options = array(), $value = null, $showCal
 			</div>';
 });
 
-Form::macro('date', function($name, $options = array(), $value = null)
+Form::macro('date', function($name, $options = array(), $value = null, $btnClass = 'btn-default', $bootstrapVersion = '3')
 {
 	if ( ! isset($options['name']))
   {
@@ -168,12 +177,21 @@ Form::macro('date', function($name, $options = array(), $value = null)
 	//$options['regex'] = Regex::getDate();
 	$options['maxlength'] = 10;
 
+	if($bootstrapVersion == '3')
+	{
+		$inputGroupClass = 'input-group-btn';
+	}
+	else if($bootstrapVersion == '4')
+	{
+		$inputGroupClass = 'input-group-append';
+	}
+
 	FormJavascript::setCode("$('#".$options['id']."').datepicker({changeMonth: true, changeYear: true,onClose: function(selectedDate) { $( '#".$options['id']."' ).focusout(); $( '#".$options['id']."-calendar-button' ).focus(); }});$('#".$options['id']."').unbind('focus');$('#".$options['id']."').unbind('keypress');$('#".$options['id']."').mask('99/99/9999');$('#".$options['id']."').unbind('blur');$('#".$options['id']."-calendar-button').click(function(){ $('#".$options['id']."').datepicker('show');});");
 
 	return '<div class="input-group">
 				<input'.Html::attributes($options).'>
-				<span class="input-group-btn">
-					<button id="'.$options['id'].'-calendar-button" class="btn btn-default" type="button">
+				<span class="' . $inputGroupClass . '">
+					<button id="'.$options['id'].'-calendar-button" class="btn ' . $btnClass . '" type="button">
 						<i class="fa fa-calendar-o"></i>
 					</button>
 				</span>
