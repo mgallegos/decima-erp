@@ -137,6 +137,8 @@ return array(
 
 	'total' => 'Total',
 
+	'totals' => 'Totales',
+
 	'date' => 'Fecha',
 
 	'madeBy' => 'Hecho por',
