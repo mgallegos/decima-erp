@@ -10,7 +10,7 @@
 
 <script type='text/javascript'>
 
-	// var moduleAppTablenames = {!! json_encode($tablenames) !!};
+	// var moduleAppTablenames = {!! json_encode(array()) !!};
 
 	function moduleAppLoadCompleteEvent()
 	{
@@ -118,53 +118,17 @@
 		  $('#module-app-gridCsvButton').click();
 		});
 
-		$('#module-app-journal-info').click(function()
-		{
-			if($(this).is(':checked'))
-			{
-				$('#module-app-grid').jqGrid('showCol', ['date', 'number', 'remark']).setGridWidth($('#module-app-grid-section').width());
-			}
-			else
-			{
-				$('#module-app-grid').jqGrid('hideCol', ['date', 'number', 'remark']).setGridWidth($('#module-app-grid-section').width());
-			}
-		});
-
-		$('#module-app-client-info').click(function()
-		{
-			if($(this).is(':checked'))
-			{
-				$('#module-app-grid').jqGrid('showCol', ['client_name', 'client_tax_id', 'client_single_identity_document_number', 'client_registration_number']).setGridWidth($('#module-app-grid-section').width());
-			}
-			else
-			{
-				$('#module-app-grid').jqGrid('hideCol', ['client_name', 'client_tax_id', 'client_single_identity_document_number', 'client_registration_number']).setGridWidth($('#module-app-grid-section').width());
-			}
-		});
-
-		$('#module-app-supplier-info').click(function()
-		{
-			if($(this).is(':checked'))
-			{
-				$('#module-app-grid').jqGrid('showCol', ['supplier_name', 'supplier_tax_id', 'supplier_single_identity_document_number', 'supplier_registration_number']).setGridWidth($('#module-app-grid-section').width());
-			}
-			else
-			{
-				$('#module-app-grid').jqGrid('hideCol', ['supplier_name', 'supplier_tax_id', 'supplier_single_identity_document_number', 'supplier_registration_number']).setGridWidth($('#module-app-grid-section').width());
-			}
-		});
-
-		$('#module-app-employee-info').click(function()
-		{
-			if($(this).is(':checked'))
-			{
-				$('#module-app-grid').jqGrid('showCol', ['employee_name', 'employee_tax_id', 'employee_single_identity_document_number']).setGridWidth($('#module-app-grid-section').width());
-			}
-			else
-			{
-				$('#module-app-grid').jqGrid('hideCol', ['employee_name', 'employee_tax_id', 'employee_single_identity_document_number']).setGridWidth($('#module-app-grid-section').width());
-			}
-		});
+		// $('#module-app-journal-info').click(function()
+		// {
+		// 	if($(this).is(':checked'))
+		// 	{
+		// 		$('#module-app-grid').jqGrid('showCol', ['date', 'number', 'remark']).setGridWidth($('#module-app-grid-section').width());
+		// 	}
+		// 	else
+		// 	{
+		// 		$('#module-app-grid').jqGrid('hideCol', ['date', 'number', 'remark']).setGridWidth($('#module-app-grid-section').width());
+		// 	}
+		// });
 
 		setTimeout(function ()
 		{
@@ -198,24 +162,17 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
-						<div class="col-lg-7 col-md-12">
+						<div class="col-lg-6 col-md-12">
 							<div class="form-group">
-								{!! Form::label('module-app-date-from', Lang::get('decima-accounting::tax-control.journalVoucherDateRange'), array('class' => 'col-sm-3 control-label')) !!}
-								<div class="col-sm-9 mg-hm">
+								{!! Form::label('module-app-date-from', Lang::get('decima-accounting::tax-control.journalVoucherDateRange'), array('class' => 'col-sm-2 control-label')) !!}
+								<div class="col-sm-10 mg-hm">
 									{!! Form::daterange('module-app-date-from', 'module-app-date-to' , array('class' => 'form-control', 'data-default-value-from' => $filterDates['userFormattedFrom'], 'data-default-value-to' => $filterDates['userFormattedTo']), $filterDates['userFormattedFrom'], $filterDates['userFormattedTo']) !!}
 									<p class="help-block">{{ Lang::get('decima-accounting::journal-management.dateRangeHelperText') }}</p>
 								</div>
 							</div>
 							<div class="form-group">
-								{!! Form::label('module-app-document-date-from', Lang::get('decima-accounting::tax-control.documentDateRange'), array('class' => 'col-sm-3 control-label')) !!}
-								<div class="col-sm-9 mg-hm">
-									{!! Form::daterange('module-app-document-date-from', 'module-app-document-date-to' , array('class' => 'form-control')) !!}
-									<p class="help-block">{{ Lang::get('decima-accounting::tax-control.documentDateRangeHelperText') }}</p>
-								</div>
-							</div>
-							<div class="form-group">
-								{!! Form::label('module-app-numbers-from', Lang::get('decima-accounting::tax-control.numbersRange'), array('class' => 'col-sm-3 control-label')) !!}
-								<div class="col-sm-9 mg-hm">
+								{!! Form::label('module-app-numbers-from', Lang::get('decima-accounting::tax-control.numbersRange'), array('class' => 'col-sm-2 control-label')) !!}
+								<div class="col-sm-10 mg-hm">
 									<div class="input-group">
 										<span class="input-group-addon">{{ Lang::get('form.dateRangeFrom') }}</span>
 										{!! Form::text('module-app-numbers-from', null , array('id' => 'module-app-numbers-from', 'class' => 'form-control')) !!}
@@ -233,21 +190,13 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-5 col-md-12">
+						<div class="col-lg-6 col-md-12">
 							<div class="form-group mg-hm">
 								{!! Form::label('module-app-employee-label', Lang::get('decima-accounting::journal-management.employeeId'), array('class' => 'control-label col-sm-3')) !!}
 								<div class="col-sm-9 mg-hm clearfix">
 									{!! Form::autocomplete('module-app-employee-label', array(), array('class' => 'form-control'), 'module-app-employee-label', 'module-app-employee-id', null, 'fa-files-o') !!}
 									{!! Form::hidden('module-app-employee-id', null, array('id'  =>  'module-app-employee-id')) !!}
 									<p class="help-block">{{ Lang::get('decima-accounting::tax-control.employeeFilterHelperText') }}</p>
-								</div>
-				  		</div>
-							<div class="form-group mg-hm">
-								{!! Form::label('module-app-supplier-label', Lang::get('decima-accounting::journal-management.supplierId'), array('class' => 'control-label col-sm-3')) !!}
-								<div class="col-sm-9 mg-hm clearfix">
-									{!! Form::autocomplete('module-app-supplier-label', array(), array('class' => 'form-control'), 'module-app-supplier-label', 'module-app-supplier-id', null, 'fa-files-o') !!}
-									{!! Form::hidden('module-app-supplier-id', null, array('id'  =>  'module-app-supplier-id')) !!}
-									<p class="help-block">{{ Lang::get('decima-accounting::tax-control.supplierFilterHelperText') }}</p>
 								</div>
 				  		</div>
 							<div class="form-group mg-hm clearfix">
@@ -268,6 +217,15 @@
 				  		</div>
 						</div>
 						<div class="col-lg-7 col-md-12">
+							<div class="row">
+					  		<div class="col-sm-offset-3 col-sm-9">
+									<div class="checkbox">
+								    <label>
+								      {!! Form::checkbox('module-app-journals-info', 'S', true, array('id' => 'module-app-journal-info')) !!} {{ Lang::get('decima-accounting::tax-control.journalInfo') }}
+										</label>
+									</div>
+								</div>
+							</div>
 							<div class="row">
 					  		<div class="col-md-offset-2 col-md-5">
 									<div class="checkbox">
@@ -340,7 +298,7 @@
 				->setGridEvent('loadComplete', 'moduleAppLoadCompleteEvent')
 				->addColumn(array('label' => Lang::get('form.name'), 'index' => 'name' ,'name' => 'module_app_name'))
 				->addColumn(array('label' => Lang::get('form.status'), 'index' => 'status', 'name' => 'module_app_status', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('form.statusGridText')), 'align' => 'center', 'hidden' => false))
-				->addColumn(array('label' => Lang::get('module::app.date'), 'index' => 'date', 'name' => 'date', 'width' => 90, 'formatter' => 'date', 'align' => 'center'))
+				->addColumn(array('label' => Lang::get('form.date'), 'index' => 'date', 'name' => 'date', 'width' => 90, 'formatter' => 'date', 'align' => 'center'))
 				->addColumn(array('label' => Lang::get('module::app.money'), 'index' => 'money', 'name' => 'money', 'formatter' => 'currency', 'align'=>'right', 'width' => 100, 'hidden' => false, 'formatoptions' => array('prefix' => OrganizationManager::getOrganizationCurrencySymbol() . ' ')))
 				->renderGrid();
 			!!}
