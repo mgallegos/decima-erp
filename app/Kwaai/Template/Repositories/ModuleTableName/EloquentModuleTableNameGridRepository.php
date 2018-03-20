@@ -25,14 +25,16 @@ class EloquentModuleTableNameGridRepository extends EloquentRepositoryAbstract {
 		// $this->DB->connection()->enableQueryLog();
 
 		$this->Database = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
-								->table('MODULE_Table1 AS t1')
-								->leftJoin('MODULE_Table1 AS t1p', 't1.id', '=', 't1p.parent_id')
-								->join('MODULE_Table2 AS t2', 't2.id', '=', 't1.table2_id')
-								->where('t.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
-								->whereNull('t.deleted_at');
+			->table('MODULE_Table1 AS t1')
+			->leftJoin('MODULE_Table1 AS t1p', 't1.id', '=', 't1p.parent_id')
+			->join('MODULE_Table2 AS t2', 't2.id', '=', 't1.table2_id')
+			->where('t.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId())
+			->whereNull('t.deleted_at');
 
-		$this->visibleColumns = array('t1.id AS module_app_id', $DB->raw('CASE t1.field0 WHEN 1 THEN 0 ELSE 1 END AS module_app_field0'),
-																);
+		$this->visibleColumns = array(
+			't1.id AS module_app_id',
+			$DB->raw('CASE t1.field0 WHEN 1 THEN 0 ELSE 1 END AS module_app_field0'),
+		);
 
 		$this->orderBy = array(array('module_app_id', 'asc'));
 
