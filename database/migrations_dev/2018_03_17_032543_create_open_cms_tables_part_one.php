@@ -82,12 +82,16 @@ class CreateOpenCmsTablesPartOne extends Migration
 
         Schema::create('OCMS_Transportation_Request', function (Blueprint $table) {
           $table->increments('id');
-          $table->char('type', 1);
+          // $table->char('type', 1); eliminar
           $table->dateTime('pickup_datetime');
-          $table->string('pickup_place', 100);
-          $table->string('transport_number', 60)->nullable();
+          // $table->string('pickup_place', 100); eliminar
+          $table->string('transport_number', 100)->nullable();
+          $table->string('origin', 100);//nuevo
+          $table->string('destination', 100);//nuevo
           $table->string('assigned_transport')->nullable();
+
           $table->text('remark')->nullable();
+
           $table->boolean('is_approved')->default(false);
 
           //foreign Keys
