@@ -234,7 +234,7 @@ Form::macro('datetime', function($name, $options = array(), $value = null, $btnC
 
 	return '<div class="input-group">
 				<input'.Html::attributes($options).'>
-				<span class="input-group-btn">
+				<span class="' . $inputGroupClass . '">
 					<button id="'.$options['id'].'-calendar-button" class="btn ' . $btnClass . '" type="button">
 						<i class="fa fa-calendar-o"></i>
 					</button>
