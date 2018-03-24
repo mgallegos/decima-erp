@@ -198,7 +198,7 @@ Form::macro('date', function($name, $options = array(), $value = null, $btnClass
 			</div>';
 });
 
-Form::macro('datetime', function($name, $options = array(), $value = null)
+Form::macro('datetime', function($name, $options = array(), $value = null, $btnClass = 'btn-default', $bootstrapVersion = '3')
 {
 	if ( ! isset($options['name']))
   {
@@ -214,13 +214,20 @@ Form::macro('datetime', function($name, $options = array(), $value = null)
 		$options['value'] = $value;
 	}
 
-
-
 	$options['id'] = $name;
 	$options['type'] = 'text';
 	$options['data-mg-validator'] = 'datetime';
 	//$options['regex'] = Regex::getDate();
 	$options['maxlength'] = 10;
+
+	if($bootstrapVersion == '3')
+	{
+		$inputGroupClass = 'input-group-btn';
+	}
+	else if($bootstrapVersion == '4')
+	{
+		$inputGroupClass = 'input-group-append';
+	}
 
 	// FormJavascript::setCode("$('#".$options['id']."').datetimepicker({timeFormat: 'hh:mm tt', changeMonth: true, changeYear: true, onClose: function(selectedDate) { $( '#".$options['id']."' ).focusout(); $( '#".$options['id']."-calendar-button' ).focus(); }});$('#".$options['id']."').unbind('focus');$('#".$options['id']."').unbind('keypress');$('#".$options['id']."').mask('99/99/9999');$('#".$options['id']."').unbind('blur');$('#".$options['id']."-calendar-button').click(function(){ $('#".$options['id']."').datetimepicker('show');});");
 	FormJavascript::setCode("$('#".$options['id']."').datetimepicker({timeFormat: $.timepicker._defaults.timeFormat, changeMonth: true, changeYear: true, onClose: function(selectedDate) { $( '#".$options['id']."' ).focusout(); $( '#".$options['id']."-calendar-button' ).focus(); }});  $('#".$options['id']."').unbind('focus'); $('#".$options['id']."').unbind('keypress');  $('#".$options['id']."').mask('99/99/9999 99:99 **');$('#".$options['id']."').unbind('blur');$('#".$options['id']."-calendar-button').click(function(){ $('#".$options['id']."').datetimepicker('show');});");
@@ -228,7 +235,7 @@ Form::macro('datetime', function($name, $options = array(), $value = null)
 	return '<div class="input-group">
 				<input'.Html::attributes($options).'>
 				<span class="input-group-btn">
-					<button id="'.$options['id'].'-calendar-button" class="btn btn-default" type="button">
+					<button id="'.$options['id'].'-calendar-button" class="btn ' . $btnClass . '" type="button">
 						<i class="fa fa-calendar-o"></i>
 					</button>
 				</span>
