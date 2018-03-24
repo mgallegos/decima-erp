@@ -75,6 +75,8 @@ return array(
 
 	'formatIdentifierValidation' => 'El formato personalizado: :id, no ha sido creado en el sistema!',
 
+	'filtersValidation' => 'Debe completar al menos un filtro.',
+
 	'databaseConnectionNameInfoMessage' => 'Una vez creada la organización, el nombre de la conexión a la base de datos puede ser modificado únicamente por el administrador de la aplicación.',
 
 	'booleanText' => ':;0:No;1:Sí',
