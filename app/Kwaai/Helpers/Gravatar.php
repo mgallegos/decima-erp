@@ -53,13 +53,13 @@ class Gravatar
 	/**
 	 * @var boolean - Should we use the secure (HTTPS) URL base?
 	 */
-	protected $use_secure_url = false;
+	protected $use_secure_url = true;
 
 	/**
 	 * @var string - A temporary internal cache of the URL parameters to use.
 	 */
 	protected $param_cache = NULL;
-	
+
 
 	/**#@+
 	 * @var string - URL constants for the avatar images
@@ -67,16 +67,16 @@ class Gravatar
 	const HTTP_URL = 'http://www.gravatar.com/avatar/';
 	const HTTPS_URL = 'https://secure.gravatar.com/avatar/';
 	/**#@-*/
-	
+
 	/**
 	 * Get the currently set avatar size.
 	 * @return integer - The current avatar size in use.
-	 */		
+	 */
 	public function getAvatarSize()
 	{
 		return $this->size;
 	}
-	
+
 
 	/**
 	 * Set the avatar size to use.
@@ -237,7 +237,7 @@ class Gravatar
 		{
 			$url = static::HTTP_URL;
 		}
-		
+
 		if($custom_size)
 		{
 			$size = $custom_size;
@@ -246,7 +246,7 @@ class Gravatar
 		{
 			$size = $this->getAvatarSize();
 		}
-			
+
 
 		// Tack the email hash onto the end.
 		if($hash_email == true && !empty($email))
