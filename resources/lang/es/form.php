@@ -143,6 +143,8 @@ return array(
 
 	'date' => 'Fecha',
 
+	'dateTime' => 'Fecha y hora',
+
 	'madeBy' => 'Hecho por',
 
 	'revisedBy' => 'Revisado por',
