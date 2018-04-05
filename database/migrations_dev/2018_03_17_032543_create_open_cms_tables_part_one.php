@@ -15,7 +15,6 @@ class CreateOpenCmsTablesPartOne extends Migration
       Schema::create('OCMS_Setting', function (Blueprint $table) {
           $table->increments('id');
 
-          $table->text('transport_type_values')->nullable();
           $table->text('presentation_type_values')->nullable();
           $table->text('assigned_transport_values')->nullable();
 
@@ -35,6 +34,9 @@ class CreateOpenCmsTablesPartOne extends Migration
     			$table->timestamp('activated_at')->nullable();
     			$table->timestamp('last_login')->nullable();
     			$table->rememberToken();
+
+          //foreign Keys
+          $table->unsignedInteger('organization_id')->index();
 
     			//Timestamps
     			$table->timestamps(); //Adds created_at and updated_at columns
@@ -99,7 +101,7 @@ class CreateOpenCmsTablesPartOne extends Migration
           $table->foreign('event_id')->references('id')->on('OCMS_Event');
           $table->unsignedInteger('request_user_id')->index();
           $table->foreign('request_user_id')->references('id')->on('OCMS_User');
-          $table->unsignedInteger('responsable_user_id')->index();
+          $table->unsignedInteger('responsable_user_id')->nullable()->index();
           $table->foreign('responsable_user_id')->references('id')->on('OCMS_User');
           $table->unsignedInteger('organization_id')->index();
 
@@ -119,7 +121,7 @@ class CreateOpenCmsTablesPartOne extends Migration
           //foreign Keys
           $table->unsignedInteger('event_id')->index();
           $table->foreign('event_id')->references('id')->on('OCMS_Event');
-          $table->unsignedInteger('responsable_user_id')->index();
+          $table->unsignedInteger('responsable_user_id')->nullable()->index();
           $table->foreign('responsable_user_id')->references('id')->on('OCMS_User');
           $table->unsignedInteger('organization_id')->index();
 
@@ -156,7 +158,7 @@ class CreateOpenCmsTablesPartOne extends Migration
           //foreign Keys
           $table->unsignedInteger('event_id')->index();
           $table->foreign('event_id')->references('id')->on('OCMS_Event');
-          $table->unsignedInteger('space_id')->index();
+          $table->unsignedInteger('space_id')->nullable()->index();
           $table->foreign('space_id')->references('id')->on('OCMS_Space');
           $table->unsignedInteger('user_id')->index();
           $table->foreign('user_id')->references('id')->on('OCMS_User');
