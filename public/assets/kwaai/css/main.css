@@ -452,6 +452,12 @@ body {
 	box-shadow: none;
 }
 
+/* calculator custom class */
+
+.calculator-popup {
+	z-index: 1500 !important;
+}
+
 /* jqueryui custom classes */
 
 .ui-widget {
