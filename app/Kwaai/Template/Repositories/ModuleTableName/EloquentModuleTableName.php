@@ -120,6 +120,11 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function update(array $data, $ModuleTableName = null, $databaseConnectionName = null)
   {
+    if(empty($databaseConnectionName))
+    {
+      $databaseConnectionName = $this->databaseConnectionName;
+    }
+
     if(empty($ModuleTableName))
     {
       $ModuleTableName = $this->byId($data['id'], $databaseConnectionName);
@@ -142,6 +147,11 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function delete(array $data, $databaseConnectionName = null)
   {
+    if(empty($databaseConnectionName))
+    {
+      $databaseConnectionName = $this->databaseConnectionName;
+    }
+    
     foreach ($data as $key => $id)
     {
       $ModuleTableName = $this->byId($id, $databaseConnectionName);
