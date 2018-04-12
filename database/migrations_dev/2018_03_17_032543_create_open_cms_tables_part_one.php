@@ -202,5 +202,6 @@ class CreateOpenCmsTablesPartOne extends Migration
         Schema::drop('OCMS_User_Event');
         Schema::drop('OCMS_Event');
         Schema::drop('OCMS_User');
+        Schema::drop('OCMS_Setting');
     }
 }
