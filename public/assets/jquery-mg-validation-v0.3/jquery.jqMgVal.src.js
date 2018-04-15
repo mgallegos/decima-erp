@@ -406,7 +406,7 @@
 
 	$.fn.jqMgValAddFormFieldsValidations = function()
 	{
-		this.find('input[type=text],input[type=password],input[type=file],textarea,select').each(function()
+		this.find('input[type=text],input[type=time],input[type=password],input[type=file],textarea,select').each(function()
 		{
 			if($(this).attr('data-mg-validator') != undefined && $(this).attr('data-mg-validator') != 'date' && $(this).attr('data-mg-validator') != 'datetime')
 			{
@@ -603,7 +603,7 @@
 
 	$.fn.jqMgValclearForm = function()
 	{
-		this.find('input[type=text],input[type=password],input[type=hidden],input[type=file],textarea').each(function()
+		this.find('input[type=text],input[type=time],input[type=password],input[type=hidden],input[type=file],textarea').each(function()
 		{
 			if($(this).attr('name') != '_token' && $(this).attr('name') != 'fc-kwaai-time' && $(this).attr('data-mg-clear-ignored') == undefined)
 			{
