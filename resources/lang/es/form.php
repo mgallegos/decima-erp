@@ -177,6 +177,8 @@ return array(
 
 	'correlative' => 'Correlativo',
 
+	'reference' => 'Referencia',
+
 	'remark' => 'Observación',
 
 	'concept' => 'Concepto',
