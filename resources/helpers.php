@@ -297,17 +297,20 @@ if ( ! function_exists('eloquent_array_filter'))
 
       if((($e - $e%1000) / 1000)==1)
       {
-        return Lang::get('numbers.un') . str_replace(Lang::get('numbers.es'), '', $threeFigures[$thousand + 1]) . numberToTextAux($e%1000,0);
+        // return Lang::get('numbers.un') . str_replace(Lang::get('numbers.es'), '', $threeFigures[$thousand + 1]) . numberToTextAux($e%1000,0);
+        return Lang::get('numbers.un') . str_replace(Lang::get('numbers.es'), '', $threeFigures[$thousand + 1]) . ($e%1000!=0?numberToTextAux($e%1000,0):'');
       }
       else
       {
         if(((($e - $e%1000)/1000)%1000)!=0 || $thousand%2!=0)
         {
-          return numberToTextAux(($e - $e%1000) / 1000, $thousand + 1) . $threeFigures[$thousand + 1] . numberToTextAux($e%1000,0);
+          // return numberToTextAux(($e - $e%1000) / 1000, $thousand + 1) . $threeFigures[$thousand + 1] . numberToTextAux($e%1000,0);
+          return numberToTextAux(($e - $e%1000) / 1000, $thousand + 1) . $threeFigures[$thousand + 1] . ($e%1000!=0?numberToTextAux($e%1000,0):'');
         }
         else
         {
-          return numberToTextAux(($e - $e%1000) / 1000, $thousand + 1) . numberToTextAux($e%1000,0);
+          // return numberToTextAux(($e - $e%1000) / 1000, $thousand + 1) . numberToTextAux($e%1000,0);
+          return numberToTextAux(($e - $e%1000) / 1000, $thousand + 1) . ($e%1000!=0?numberToTextAux($e%1000,0):'');
         }
       }
     }
