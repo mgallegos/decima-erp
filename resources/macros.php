@@ -117,9 +117,9 @@ Form::macro('textareacustom', function($name, $rows, $maxLength, $options = arra
 	$options['rows'] = $rows;
 	$options['maxlength'] = $maxLength;
 
-	FormJavascript::setCode("$('#".$options['id']."').keyup(function(){ $('#".$options['id']."-label').html('".Lang::get('form.charactersAvailable')."'+' '+($maxLength-$('#".$options['id']."').val().length));});");
+	FormJavascript::setCode("$('#".$options['id']."').keyup(function(){ $('#".$options['id']."-label').html('".Lang::get('form.charactersAvailable')."'+' '+($.fmatter.NumberFormat($maxLength-$('#".$options['id']."').val().length, $.fn.jqMgVal.defaults.validators.positiveInteger.formatter)));});");
 
-	return '<textarea'.Html::attributes($options).'>'. $value . '</textarea><div id="'.$options['id'].'-label-container" class="clearfix"><p id="'.$options['id'].'-label" class="help-block">'.Lang::get('form.charactersAvailable').' '.$maxLength.'</p></div>';
+	return '<textarea'.Html::attributes($options).'>'. $value . '</textarea><div id="'.$options['id'].'-label-container" class="clearfix"><p id="'.$options['id'].'-label" class="help-block">'.Lang::get('form.charactersAvailable').' '. number_format($maxLength, 0, Lang::get('form.decimalSeparator'), Lang::get('form.thousandsSeparator')) . '</p></div>';
 });
 
 Form::macro('money', function($name, $options = array(), $value = null, $showCalculator = true, $precision = 2)
