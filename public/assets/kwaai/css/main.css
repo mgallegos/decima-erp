@@ -52,6 +52,15 @@ body {
   margin-left: 15px;
 }
 
+.label-filter-padding {
+  padding-right: 5px !important;
+  padding-left: 5px !important;
+}
+
+.label-filter-double-line-padding-top {
+  padding-top: 0 !important;
+}
+
 /* Base Popovers*/
 
 .btn-popover-next {
