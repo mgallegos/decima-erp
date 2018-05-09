@@ -421,7 +421,7 @@
 				->hideXlsExporter()
   			->hideCsvExporter()
 	    	->setGridOption('url',URL::to('module/category/app/grid-data'))
-	    	->setGridOption('caption', Lang::get('module::app.gridTitle', array('user' => AuthManager::getLoggedUserFirstname())))
+	    	->setGridOption('caption', Lang::get('module::app.gridTitle'))
 	    	->setGridOption('postData',array('_token' => Session::token()))
 				->setGridEvent('onSelectRow', 'moduleAppOnSelectRowEvent')
 	    	->addColumn(array('index' => 'id', 'name' => 'module_app_id', 'hidden' => true))
