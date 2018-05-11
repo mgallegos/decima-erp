@@ -16,5 +16,5 @@
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.3.0/introjs-rtl.min.css" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.3.5/css/fileinput.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.0/quill.snow.min.css" />
-{!! Html::style('assets/kwaai/css/main.css') !!}
+{!! Html::style('assets/kwaai/css/main-v1.0.0.css') !!}
 {!! Html::style('assets/kwaai/css/button-custom-classes.css') !!}
