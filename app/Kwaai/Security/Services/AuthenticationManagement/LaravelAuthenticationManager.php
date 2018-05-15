@@ -284,6 +284,11 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function loginAttempt($email, $password, $rememberMe = false, $intendedUrl, array $input)
 	{
+		if(!isset($input['kwaai_name']))
+    {
+      die('Sorry robot!');
+    }
+
 		$data = array(
 			'kwaai_name' => $input['kwaai_name'],
 			'kwaai_time' => $input['kwaai_time'],
@@ -317,13 +322,13 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 				$this->setCurrentUserOrganization($this->Organization->byId($userDefaultOrganizationId));
 			}
 
-			$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] User logged in', 'context' => array('email' => $email)), $this));
+			$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] System User logged in', 'context' => array('email' => $email)), $this));
 
 			return json_encode(array('message' => 'success', 'url' => $intendedUrl));
 		}
 		else
 		{
-			$this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] Failed Login Attempt', 'context' => array('email' => $email)), $this));
+			$this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] System Failed Login Attempt', 'context' => array('email' => $email)), $this));
 
 			return json_encode(array('message' => $this->Lang->get('security/login.failAuthAttempt')));
 		}
@@ -899,7 +904,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		{
 			return '';
 		}
-		
+
 		return $Organizations->first();
 	}
 
@@ -1281,6 +1286,50 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		// return $this->Auth->user()->multiple_organization_popover_shown
 		return $user['multiple_organization_popover_shown'];
+	}
+
+	/**
+	 * Is CMS user guest
+	 *
+	 * @return int
+	 */
+	public function isCmsUserGuest($prefix = '')
+	{
+		if($this->Session->has($prefix . 'CmsLoggedUser'))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	/**
+	 * Get CMS logged user
+	 *
+	 * @return int
+	 */
+	public function getCmsSessionLoggedUser($prefix = '', $column = '')
+	{
+		$user = array();
+
+		if($this->Session->has($prefix . 'CmsLoggedUser'))
+		{
+			$user = json_decode($this->Session->get($prefix . 'CmsLoggedUser'), true);
+
+			if(empty($column))
+			{
+				return $user;
+			}
+		}
+
+		if(!empty($user) && isset($user[$column]))
+		{
+			return $user[$column];
+		}
+
+		return false;
 	}
 
 	/**
