@@ -114,7 +114,18 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    */
   protected $Config;
 
-	public function __construct(AuthenticationManagementInterface $AuthenticationManager, JournalManagementInterface $JournalManager, JournalInterface $Journal, RequestedDataInterface $GridEncoder, EloquentModuleTableNameGridRepository $EloquentModuleTableNameGridRepository, ModuleTableNameInterface $ModuleTableName, Carbon $Carbon, DatabaseManager $DB, Translator $Lang, Repository $Config)
+	public function __construct(
+    AuthenticationManagementInterface $AuthenticationManager,
+    JournalManagementInterface $JournalManager,
+    JournalInterface $Journal,
+    RequestedDataInterface $GridEncoder,
+    EloquentModuleTableNameGridRepository $EloquentModuleTableNameGridRepository,
+    ModuleTableNameInterface $ModuleTableName,
+    Carbon $Carbon,
+    DatabaseManager $DB,
+    Translator $Lang,
+    Repository $Config
+  )
 	{
     $this->AuthenticationManager = $AuthenticationManager;
 
@@ -148,6 +159,23 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
   public function getGridData(array $post)
   {
     $this->GridEncoder->encodeRequestedData($this->EloquentModuleTableNameGridRepository, $post);
+  }
+
+  /**
+   * Get ...
+   *
+   * @return mixed Illuminate\Database\Eloquent\Model if not empty, false if empty
+   */
+  public function getModuleTableName($id, $databaseConnectionName = null)
+  {
+    $ModuleTableName = $this->ModuleTableName->byId($id, $databaseConnectionName);
+
+    if(empty($ModuleTableName))
+    {
+      return false;
+    }
+
+    return $ModuleTableName;
   }
 
   /**
@@ -263,7 +291,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     {
       if(empty($ModuleTableName))
       {
-        $ModuleTableName = $this->ModuleTableName->byId($input['id']);
+        $ModuleTableName = $this->ModuleTableName->byId($input['id'], $databaseConnectionName);
       }
 
       $unchangedValues = $ModuleTableName->toArray();
@@ -301,13 +329,13 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
           }
           else if($key == 'table_name_id')//field required
           {
-            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $this->TableName->byId($unchangedValues[$key])->name, 'new_value' => $newValues[$key]), $Journal);
+            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $this->TableName->byId($unchangedValues[$key], $databaseConnectionName)->name, 'new_value' => $newValues[$key]), $Journal);
           }
           else if($key == 'table_name_id')//field not required
           {
             if(!empty($unchangedValues[$key]))
             {
-              $oldValue = $this->TableName->byId($unchangedValues[$key])->name;
+              $oldValue = $this->TableName->byId($unchangedValues[$key], $databaseConnectionName)->name;
             }
             else
             {
@@ -367,12 +395,12 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
 
     try
     {
-      $ModuleTableName = $this->ModuleTableName->byId($input['id']);
+      $ModuleTableName = $this->ModuleTableName->byId($input['id'], $databaseConnectionName);
 
       $Journal = $this->Journal->create(array('journalized_id' => $input['id'], 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.deletedJournal', array('number' => $ModuleTableName->number)), $Journal));
 
-      $this->ModuleTableName->delete(array($input['id']));
+      $this->ModuleTableName->delete(array($input['id']), $databaseConnectionName);
 
       $this->commit($openTransaction);
     }
@@ -424,12 +452,12 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
        {
          $count++;
 
-         $ModuleTableName = $this->ModuleTableName->byId($id);
+         $ModuleTableName = $this->ModuleTableName->byId($id, $databaseConnectionName);
 
          $Journal = $this->Journal->create(array('journalized_id' => $id, 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
          $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.deletedJournal', array('email' => $ModuleTableName->email, 'organization' => $organizationName))), $Journal);
 
-         $this->ModuleTableName->delete(array($id));
+         $this->ModuleTableName->delete(array($id), $databaseConnectionName);
        }
 
        $this->commit($openTransaction);

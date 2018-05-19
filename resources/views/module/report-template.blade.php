@@ -162,6 +162,16 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
+						<div class="col-lg-3 col-md-6">
+						</div>
+						<div class="col-lg-3 col-md-6">
+						</div>
+						<div class="col-lg-3 col-md-6">
+						</div>
+						<div class="col-lg-3 col-md-6">
+						</div>
+					</div>
+					<div class="row">
 						<div class="col-lg-6 col-md-12">
 							<div class="form-group">
 								{!! Form::label('module-app-date-from', Lang::get('decima-accounting::tax-control.journalVoucherDateRange'), array('class' => 'col-sm-2 control-label')) !!}
