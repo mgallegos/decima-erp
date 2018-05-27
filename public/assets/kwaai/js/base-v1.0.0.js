@@ -394,13 +394,15 @@ function cleanFiles(appPrefix)
  * @param string appPrefix
  * @param integer systemReferenceId
  * @param array systemReferences
+ * @param string customUrl
  * 	An array of array as follows: array(array(appId => $appId, systemReferenceId = $systemReferenceId), array(appId => $appId, systemReferenceId = $systemReferenceId));
  *
  *  @returns void
  */
-function getElementFiles(appPrefix, systemReferenceId, systemReferences)
+function getElementFiles(appPrefix, systemReferenceId, systemReferences, url)
 {
 	systemReferences = systemReferences || [];
+	url = url || '/files/file-manager';
 
 	$('#' + appPrefix + 'btn-file-modal-delete').attr('data-system-reference-id', systemReferenceId);
 	$('#' + appPrefix + 'btn-file-modal-delete').attr('data-system-references', JSON.stringify(systemReferences));
@@ -412,7 +414,7 @@ function getElementFiles(appPrefix, systemReferenceId, systemReferences)
 		type: 'POST',
 		data: JSON.stringify({'_token':$('#app-token').val(), 'systemReferences': systemReferences}),
 		dataType : 'json',
-		url: $('#app-url').val() + '/files/file-manager/element-files',
+		url: $('#app-url').val() + url + '/element-files',
 		error: function (jqXHR, textStatus, errorThrown)
 		{
 			handleServerExceptions(jqXHR, appPrefix + 'btn-toolbar', false);
@@ -450,8 +452,8 @@ function getElementFiles(appPrefix, systemReferenceId, systemReferences)
 
 				$('<button/>', {
 				    'class': 'kv-file-remove btn btn-xs btn-default pull-right',
-				    'onclick': 'deleteFile(\'' + appPrefix + '\', ' + file.id + ', \''+ file.name +'\')',
-						'html': '<i class="glyphicon glyphicon-trash text-danger"></i>'
+				    'onclick': 'deleteFile(\'' + appPrefix + '\', ' + file.id + ', \'' + file.name + '\', \'' + url + '\' )',
+						'html': '<i class="fa fa-trash text-danger"></i>'
 				}).appendTo(filePreviewFrame);
 
 				row.append($('<div/>', {class:'col-md-2'}).append(filePreviewFrame));
@@ -480,12 +482,13 @@ function getElementFiles(appPrefix, systemReferenceId, systemReferences)
  *
  *  @returns void
  */
-function deleteFile(appPrefix, fileId, fileName)
+function deleteFile(appPrefix, fileId, fileName, url)
 {
 	// alert(fileId);
 	$('#' + appPrefix + 'file-delete-message').html($('#' + appPrefix + 'file-delete-message').attr('data-default-label').replace(':name', fileName));
 	$('#' + appPrefix + 'btn-file-modal-delete').attr('data-file-id', fileId);
 	$('#' + appPrefix + 'btn-file-modal-delete').attr('data-prefix', appPrefix);
+	$('#' + appPrefix + 'btn-file-modal-delete').attr('data-url', url);
 	$('#' + appPrefix + 'file-modal-delete').modal('show');
 }
 
@@ -496,7 +499,7 @@ function deleteFileAux(button)
 		type: 'POST',
 		data: JSON.stringify({'_token':$('#app-token').val(), 'id': $(button).attr('data-file-id')}),
 		dataType : 'json',
-		url:  $('#app-url').val() + '/files/file-manager/delete',
+		url:  $('#app-url').val() + $(button).attr('data-url') + '/delete-file',
 		error: function (jqXHR, textStatus, errorThrown)
 		{
 			handleServerExceptions(jqXHR, $(button).attr('data-prefix') + 'btn-toolbar', false);
@@ -511,7 +514,7 @@ function deleteFileAux(button)
 		{
 			if(json.success)
 			{
-				getElementFiles($(button).attr('data-prefix'), $(button).attr('data-system-reference-id'), $.parseJSON($(button).attr('data-system-references')))
+				getElementFiles($(button).attr('data-prefix'), $(button).attr('data-system-reference-id'), $.parseJSON($(button).attr('data-system-references')), $(button).attr('data-url'));
 				$('#' + $(button).attr('data-prefix') + 'file-modal-delete').modal('hide');
 			}
 

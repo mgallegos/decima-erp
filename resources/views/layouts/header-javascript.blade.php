@@ -44,7 +44,7 @@
 <script src="{{ URL::asset('assets/kwaai/js/apps-engine.js') }}"></script>
 {{-- <script src="{{ URL::asset('assets/kwaai/js/validation-engine.js') }}"></script> --}}
 <script src="{{ URL::asset('assets/jquery-mg-validation-v0.3/jquery.jqMgVal.src.js') }}"></script>
-<script src="{{ URL::asset('assets/kwaai/js/base.js') }}"></script>
+<script src="{{ URL::asset('assets/kwaai/js/base-v1.0.0.js') }}"></script>
 
 <script type='text/javascript'>
   $.fn.jqMgVal.defaults.successIconClass = 'fa fa-check-circle';

@@ -151,7 +151,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
     {
       $databaseConnectionName = $this->databaseConnectionName;
     }
-    
+
     foreach ($data as $key => $id)
     {
       $ModuleTableName = $this->byId($id, $databaseConnectionName);
