@@ -155,7 +155,7 @@ Form::macro('money', function($name, $options = array(), $value = null, $showCal
 			</div>';
 });
 
-Form::macro('date', function($name, $options = array(), $value = null, $btnClass = 'btn-default', $bootstrapVersion = '3')
+Form::macro('date', function($name, $options = array(), $value = null, $btnClass = 'btn-default', $bootstrapVersion = '3', $yearRange = 'c-10:c+10')
 {
 	if ( ! isset($options['name']))
   {
@@ -186,7 +186,7 @@ Form::macro('date', function($name, $options = array(), $value = null, $btnClass
 		$inputGroupClass = 'input-group-append';
 	}
 
-	FormJavascript::setCode("$('#".$options['id']."').datepicker({changeMonth: true, changeYear: true,onClose: function(selectedDate) { $( '#".$options['id']."' ).focusout(); $( '#".$options['id']."-calendar-button' ).focus(); }});$('#".$options['id']."').unbind('focus');$('#".$options['id']."').unbind('keypress');$('#".$options['id']."').mask('99/99/9999');$('#".$options['id']."').unbind('blur');$('#".$options['id']."-calendar-button').click(function(){ $('#".$options['id']."').datepicker('show');});");
+	FormJavascript::setCode("$('#" . $options['id'] . "').datepicker({yearRange:'$yearRange', changeMonth: true, changeYear: true,onClose: function(selectedDate) { $( '#" . $options['id'] . "' ).focusout(); $( '#" . $options['id'] . "-calendar-button' ).focus(); }});$('#".$options['id']."').unbind('focus');$('#".$options['id']."').unbind('keypress');$('#".$options['id']."').mask('99/99/9999');$('#".$options['id']."').unbind('blur');$('#".$options['id']."-calendar-button').click(function(){ $('#".$options['id']."').datepicker('show');});");
 
 	return '<div class="input-group">
 				<input'.Html::attributes($options).'>
