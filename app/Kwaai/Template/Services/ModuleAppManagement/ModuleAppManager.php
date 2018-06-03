@@ -398,7 +398,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $ModuleTableName = $this->ModuleTableName->byId($input['id'], $databaseConnectionName);
 
       $Journal = $this->Journal->create(array('journalized_id' => $input['id'], 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
-      $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.deletedJournal', array('number' => $ModuleTableName->number)), $Journal));
+      $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.deletedJournal', array('name' => $ModuleTableName->name)), $Journal));
 
       $this->ModuleTableName->delete(array($input['id']), $databaseConnectionName);
 
@@ -455,7 +455,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
          $ModuleTableName = $this->ModuleTableName->byId($id, $databaseConnectionName);
 
          $Journal = $this->Journal->create(array('journalized_id' => $id, 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
-         $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.deletedJournal', array('email' => $ModuleTableName->email, 'organization' => $organizationName))), $Journal);
+         $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.deletedJournal', array('name' => $ModuleTableName->name))), $Journal);
 
          $this->ModuleTableName->delete(array($id), $databaseConnectionName);
        }
