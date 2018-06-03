@@ -34,6 +34,7 @@ class EloquentModuleTableNameGridRepository extends EloquentRepositoryAbstract {
 		$this->visibleColumns = array(
 			't1.id AS module_app_id',
 			$DB->raw('CASE t1.field0 WHEN 1 THEN 0 ELSE 1 END AS module_app_field0'),
+			$DB->raw('CONCAT(\'#\', LPAD(t1.field0, 6, 0), \' \', t1.field1) AS module_app_field1'),
 		);
 
 		$this->orderBy = array(array('module_app_id', 'asc'));
