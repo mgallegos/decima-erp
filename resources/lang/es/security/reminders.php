@@ -34,11 +34,11 @@ return array(
 
 	'emailSubject' => '[:systemName] Restablecimiento de contraseña :datetime',
 
-	'emailLine1' => 'Estimado :addressee,', //Dear :addressee
+	'emailLine1' => 'Estimado(a) :addressee,', //Dear :addressee
 
-	'emailLine2' => 'Usted ha solicitado restablecer la contraseña para su cuenta en :url', //You have requested to have your password reset for your account at DecimaERP.com
+	'emailLine2' => 'Ha solicitado restablecer la contraseña para su cuenta en :url', //You have requested to have your password reset for your account at DecimaERP.com
 
 	'emailLine3' => 'Por favor visite el siguiente enlace para restablecer su contraseña:', //Please visit this URL to reset your password:
 
-	'emailLine4' => 'Si ha recibido este correo por error, haga caso omiso de este mensaje.', //If you received this email in error, you can safely ignore this message.	
+	'emailLine4' => 'Si ha recibido este correo por error, haga caso omiso de este mensaje.', //If you received this email in error, you can safely ignore this message.
 );

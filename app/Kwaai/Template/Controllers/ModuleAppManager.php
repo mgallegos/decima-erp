@@ -27,7 +27,7 @@ use App\Http\Controllers\Controller;
 class ModuleAppManager extends Controller {
 
 	/**
-	 * Account Manager Service
+	 * ModuleApp Manager Service
 	 *
 	 * @var Vendor\DecimaModule\Module\Services\ModuleAppManagement\ModuleAppManagementInterface
 	 *

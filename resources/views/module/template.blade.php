@@ -9,7 +9,6 @@
 <style></style>
 
 <script type='text/javascript'>
-	//Falta agregar  codigo para quitar tooltip
 	//For grids with multiselect enabled
 	function moduleAppOnSelectRowEvent(id)
 	{
@@ -426,7 +425,7 @@
 				->setGridEvent('onSelectRow', 'moduleAppOnSelectRowEvent')
 	    	->addColumn(array('index' => 'id', 'name' => 'module_app_id', 'hidden' => true))
 	    	->addColumn(array('label' => Lang::get('form.name'), 'index' => 'name' ,'name' => 'module_app_name'))
-				//->addColumn(array('label' => Lang::get('form.status'), 'index' => 'status', 'name' => 'module_app_status', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('form.statusGridText')), 'align' => 'center', 'hidden' => false))
+				//->addColumn(array('label' => Lang::get('form.status'), 'index' => 'status', 'name' => 'module_app_status', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('form.statusGridText')), 'align' => 'center', 'hidden' => false, 'stype' => 'select', 'width' => 80))
 				->addColumn(array('label' => Lang::get('form.status'), 'index' => 'status', 'name' => 'module_app_status', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('module::app.statusGridText')), 'align' => 'center', 'hidden' => false, 'stype' => 'select'))
 				->addColumn(array('label' => Lang::get('module::app.money'), 'index' => 'money', 'name' => 'money', 'formatter' => 'currency', 'align'=>'right', 'width' => 100, 'hidden' => false, 'formatoptions' => array('prefix' => OrganizationManager::getOrganizationCurrencySymbol() . ' ')))
 	    	->renderGrid();
