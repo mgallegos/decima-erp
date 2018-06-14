@@ -27,6 +27,10 @@ return array(
 
 	'dateRangeTo' => 'Hasta:',
 
+	'from' => 'Del',
+
+	'to' => 'Al',
+
 	'dateRangeFromPlaceHolder' => 'Desde',
 
 	'dateRangeToPlaceHolder' => 'Hasta',
