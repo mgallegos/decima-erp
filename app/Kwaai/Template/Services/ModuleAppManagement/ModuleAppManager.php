@@ -267,7 +267,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    */
   public function update(array $input, $ModuleTableName = null, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
   {
-    // $newValues = $input['table_name_id'];
+    // $newValues['table_name_id'] = $input['table_name_label'];
 
     unset($input['_token']);
 
