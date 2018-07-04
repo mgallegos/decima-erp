@@ -745,7 +745,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		if(empty($organization))
 		{
-			return -1;
+			return 0;
 		}
 		else
 		{
