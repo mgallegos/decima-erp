@@ -205,6 +205,8 @@ return array(
 
 	'syncFem' => 'Sincronizada',
 
+	'active' => 'Activo',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
