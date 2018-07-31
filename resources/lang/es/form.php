@@ -201,6 +201,10 @@ return array(
 
 	'in' => 'En',
 
+	'syncMan' => 'Sincronizado',
+
+	'syncFem' => 'Sincronizada',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
