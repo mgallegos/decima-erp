@@ -427,6 +427,7 @@
 	    	->addColumn(array('label' => Lang::get('form.name'), 'index' => 'name' ,'name' => 'module_app_name'))
 				//->addColumn(array('label' => Lang::get('form.status'), 'index' => 'status', 'name' => 'module_app_status', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('form.statusGridText')), 'align' => 'center', 'hidden' => false, 'stype' => 'select', 'width' => 80))
 				->addColumn(array('label' => Lang::get('form.status'), 'index' => 'status', 'name' => 'module_app_status', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('module::app.statusGridText')), 'align' => 'center', 'hidden' => false, 'stype' => 'select'))
+				->addColumn(array('label' => Lang::get('form.active'), 'index' => 'is_active' ,'name' => 'module_app_is_active', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('form.booleanText')), 'align' => 'center' , 'stype' => 'select', 'width' => 70))
 				->addColumn(array('label' => Lang::get('module::app.money'), 'index' => 'money', 'name' => 'money', 'formatter' => 'currency', 'align'=>'right', 'width' => 100, 'hidden' => false, 'formatoptions' => array('prefix' => OrganizationManager::getOrganizationCurrencySymbol() . ' ')))
 	    	->renderGrid();
 			!!}

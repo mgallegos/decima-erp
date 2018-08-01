@@ -972,9 +972,19 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*
 	* @return string
 	*/
-	public function getCurrentUserOrganizationCurrencySymbol()
+	public function getCurrentUserOrganizationCurrencySymbol($organizationId = null)
 	{
 		$organization = $this->getSessionOrganization();
+
+		if(empty($organization) && !empty($organizationId))
+		{
+			$Organization = $this->Organization->byId($organizationId);
+
+			if(!empty($Organization))
+			{
+				$organization = $Organization->toArray();
+			}
+		}
 
 		if(empty($organization))
 		{
