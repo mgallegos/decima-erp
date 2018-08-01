@@ -207,6 +207,12 @@ return array(
 
 	'active' => 'Activo',
 
+	'dearmf' => 'Estimado/a',
+
+	'user' => 'Usuario',
+
+	'greeting' => 'Un saludo',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
