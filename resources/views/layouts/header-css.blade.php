@@ -7,6 +7,7 @@
   {!! Html::style('assets/bootstrap-v3.3.6/css/' . $theme . '.min.css') !!}
 @endif
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"> -->
+<!-- {!! Html::style('assets/font-awesome-v5.0.13/css/fontawesome-all.min.css') !!} -->
 {!! Html::style('assets/font-awesome-v4.7.0/css/font-awesome.min.css') !!}
 {!! Html::style('assets/jquery-ui-v1.12.1/jquery-ui.min.css') !!}
 {!! Html::style('assets/jquery-free-jqGrid-v4.13.5/css/ui.jqgrid.css') !!}
@@ -19,5 +20,5 @@
 {!! Html::style('assets/bootstrap-fileinput-v4.3.5/css/fileinput.min.css') !!}
 <!-- {!! Html::style('assets/intro-js-v2.3.0/minified/introjs-rtl.min.css') !!} -->
 {!! Html::style('assets/quill-v1.3.0/css/quill.snow.min.css') !!}
-{!! Html::style('assets/kwaai/css/main-v1.0.0.css') !!}
+{!! Html::style('assets/kwaai/css/main-v1.0.1.css') !!}
 {!! Html::style('assets/kwaai/css/button-custom-classes.css') !!}
