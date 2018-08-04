@@ -52,7 +52,7 @@
         <div id="search-action-container" class="col-lg-4 col-md-3 pull-right base-popover" data-position="bottom">
       @endif
 			{!! Form::open(array('role' => 'search', 'class' => 'navbar-form navbar-right', 'onsubmit' => 'return false;')) !!}
-  			<div class="form-group" data-step="3" data-intro="{{ Lang::get('base.searchActionPopoverContent') }}">
+  			<div class="form-group" data-step="3" data-intro="{{ Lang::get('base.searchActionPopoverContent') }}" style="margin-bottom:0 !important;">
   				{!! Form::autocomplete('search-action', $userActions, array('class' => 'form-control', 'placeholder' => Lang::get('base.search')), 'search-action', null, null, 'fa-pencil-square-o', 'input-group-sm') !!}
   			</div>
 			{!! Form::close() !!}
