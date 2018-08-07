@@ -140,6 +140,10 @@ body {
 
 /* Form classes */
 
+.form-group {
+  margin-bottom: 10px !important;
+}
+
 .form-container {
 	padding: 15px;
 	border: 1px solid #cccccc;
