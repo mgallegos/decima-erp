@@ -43,7 +43,8 @@
     </div>
   </div>
 	<div id='page-container' class="container" role="main" data-current-page-width="">
-	  <div class="row visible-lg visible-md">
+	  <!-- <div class="row visible-lg visible-md"> -->
+	  <div class="row">
 	    <div class="col-lg-12">
 	    	<fieldset id="main-panel-fieldset">
   				<ul id="apps-tabs" class="nav nav-tabs">
@@ -75,35 +76,35 @@
   						</div>
   					</div>
         	</div>
-				{!! Form::button('<i class="fa fa-spinner fa-spin fa-lg"></i> ' . Lang::get('form.loadButton'), array('id' => 'app-loader', 'class' => 'btn btn-warning btn-disable btn-lg app-loader hidden', 'disabled' => 'disabled')) !!}
-				{!! Form::hidden('app-url', URL::to('/'), array('id' => 'app-url')) !!}
-				{!! Form::hidden('app-token', csrf_token(), array('id' => 'app-token')) !!}
-        {!! Form::hidden('organization-currency-symbol', OrganizationManager::getOrganizationCurrencySymbol(), array('id' => 'organization-currency-symbol')) !!}
-        {!! Form::hidden('da-logged-user-popover-shown', AuthManager::getLoggedUserPopoversShown(), array('id' => 'da-logged-user-popover-shown')) !!}
-        {!! Form::hidden('da-logged-user-multiple-organization-popover-shown', AuthManager::getLoggedUserMultipleOrganizacionPopoversShown(), array('id' => 'da-logged-user-multiple-organization-popover-shown')) !!}
-			</fieldset>
-		</div>
-		<div class="col-lg-12">
-      <fieldset id="user-apps-panel-fieldset">
-  			<div id='user-apps-container' class="panel panel-default base-popover" data-position="top" data-step="2" data-intro="{{ Lang::get('base.userAppsPopoverContent') }}">
-  				<div class="panel-heading">
-  					<button type="button" class="btn btn-default btn-sm btn-dashboard-toggle pull-right" data-toggle="collapse" data-target="#user-apps-content"><i class="fa fa-chevron-up"></i></button>
-  		    	<h3 id="user-apps-title" class="panel-title"><i class="fa fa-tasks"></i> {{ Lang::get('base.userAppsTitle') }}</h3>
-  			  	</div>
-  				<div id="user-apps-content" class="panel-body collapse in clearfix">
-  					<div id="user-apps-content-alert" class="alert alert-block alert-info">
-  						<a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-  						 {{ Lang::get('base.noAppsException') }}
-  					</div>
-  				</div>
-  			</div>
-      </fieldset>
-    </div>
-  </div>
-  <div class="alert alert-warning hidden-lg hidden-md">
-	 {!! Lang::get('base.resolutionException') !!}
-   </div>
-   <a id="back-to-top" class="btn btn-primary" role="button"><i class="fa fa-chevron-circle-up fa-2x"></i></a>
-  </div>
+					{!! Form::button('<i class="fa fa-spinner fa-spin fa-lg"></i> ' . Lang::get('form.loadButton'), array('id' => 'app-loader', 'class' => 'btn btn-warning btn-disable btn-lg app-loader hidden', 'disabled' => 'disabled')) !!}
+					{!! Form::hidden('app-url', URL::to('/'), array('id' => 'app-url')) !!}
+					{!! Form::hidden('app-token', csrf_token(), array('id' => 'app-token')) !!}
+	        {!! Form::hidden('organization-currency-symbol', OrganizationManager::getOrganizationCurrencySymbol(), array('id' => 'organization-currency-symbol')) !!}
+	        {!! Form::hidden('da-logged-user-popover-shown', AuthManager::getLoggedUserPopoversShown(), array('id' => 'da-logged-user-popover-shown')) !!}
+	        {!! Form::hidden('da-logged-user-multiple-organization-popover-shown', AuthManager::getLoggedUserMultipleOrganizacionPopoversShown(), array('id' => 'da-logged-user-multiple-organization-popover-shown')) !!}
+				</fieldset>
+			</div>
+			<div class="col-lg-12">
+	      <fieldset id="user-apps-panel-fieldset">
+	  			<div id='user-apps-container' class="panel panel-default base-popover" data-position="top" data-step="2" data-intro="{{ Lang::get('base.userAppsPopoverContent') }}">
+	  				<div class="panel-heading">
+	  					<button type="button" class="btn btn-default btn-sm btn-dashboard-toggle pull-right" data-toggle="collapse" data-target="#user-apps-content"><i class="fa fa-chevron-up"></i></button>
+	  		    	<h3 id="user-apps-title" class="panel-title"><i class="fa fa-tasks"></i> {{ Lang::get('base.userAppsTitle') }}</h3>
+	  			  	</div>
+	  				<div id="user-apps-content" class="panel-body collapse in clearfix">
+	  					<div id="user-apps-content-alert" class="alert alert-block alert-info">
+	  						<a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+	  						 {{ Lang::get('base.noAppsException') }}
+	  					</div>
+	  				</div>
+	  			</div>
+	      </fieldset>
+	    </div>
+  	</div>
+  	<!-- <div class="alert alert-warning hidden-lg hidden-md">
+ 			{!! Lang::get('base.resolutionException') !!}
+   	</div> -->
+  	<a id="back-to-top" class="btn btn-primary" role="button"><i class="fa fa-chevron-circle-up fa-2x"></i></a>
+	</div>
 </body>
 </html>
