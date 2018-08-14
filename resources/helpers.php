@@ -349,6 +349,155 @@ if ( ! function_exists('eloquent_array_filter'))
     }
   }
 
+  if ( ! function_exists('buildUserApps'))
+  {
+    /**
+     * R....
+     *
+     * @param array userApps
+     * 	An array of objects as follows: [ { name: $moduleName, icon: $icon, childsMenus: [ { name: $menuName, url: $url, aliasUrl: $aliasUrl, actionButtonId: $actionButtonId, icon: $icon, hidden: $hidden, childsMenus: [ { … },… ] },… ] },…]
+     *
+     * @return void
+     */
+    function buildUserApps($userApps, $dashboardMenuIsVisible = false, $organizationMenuIsVisible = false, $userOrganizations = array(), $id = 'core-menu', $doNothing = false)
+    {
+      if(count($userApps) == 0)
+    	{
+    		return;
+    	}
+
+    	$modules = '';
+
+      if($dashboardMenuIsVisible)
+      {
+        $modules .= '<li><a href="#" onclick="$(\'#top-navbar-menu\').click();loadPage(\'/dashboard\');API.close();"><i class="fa fa-dashboard"></i> ' . Lang::get('dashboard.appName') . '</a></li>';
+      }
+
+      foreach ($userApps as $index => $value)
+      {
+        $modules .= '<li><span><i class="' . $value['icon'] . '"></i> ' . $value['name'] . '</span><ul>';
+        $subModules = '';
+
+    		if(!$value['childsMenus'][0]['url'])
+    		{
+    			$subModules .= buildSubModules($value['childsMenus'], $doNothing);
+    		}
+    		else
+    		{
+    			$subModules .= buildApps($value['childsMenus'], $doNothing);
+    		}
+
+        $modules .= ($subModules . '</ul></li>');
+      }
+
+      if($organizationMenuIsVisible && count($userOrganizations) > 1)
+      {
+        $modules .= '<li><span><i class="fa fa-sitemap"></i> ' . Lang::get('base.userOrganizations') . '</span><ul>';
+
+        foreach ($userOrganizations as $index => $value)
+        {
+          $modules .= '<li><a href="#" onclick="$(\'#top-navbar-menu\').click();API.close();changeLoggedUserOrganization(\'' . $value['id'] . '\');"><i class="fa fa-building-o"></i> ' . $value['name'] . '</a></li>';
+        }
+
+        $modules .= '</ul></li>';
+      }
+
+      // echo '
+      //   <nav id="' . $id . '">
+      //     <ul>
+      //       <li><a href="/"><i class="fa fa-code"></i> Home</a></li>
+      //       <li><span><i class="fa fa-code"></i> About us</span>
+      //         <ul>
+      //           <li><a href="/about/history"><i class="fa fa-code"></i> History</a></li>
+      //           <li><a href="/about/team">The team</a></li>
+      //           <li><a href="/about/address">Our address</a></li>
+      //         </ul>
+      //       </li>
+      //       <li><a href="/contact">Contact</a></li>
+      //    </ul>
+      //   </nav>
+      // ';
+
+      echo '
+        <nav id="' . $id . '">
+          <ul>
+            ' . $modules . '
+          </ul>
+        </nav>
+      ';
+    }
+  }
+
+  if ( ! function_exists('buildSubModules'))
+  {
+    /**
+     * Build HTML code of user submodules
+     *
+     * @param array subModules
+     * 	An array of objects as follows: [ { name: $menuName, url: $url, aliasUrl: $aliasUrl, actionButtonId: $actionButtonId, icon: $icon, hidden: $hidden, childsMenus: [ { … },… ] },… ]
+     *
+     *  @returns string
+     */
+    function buildSubModules($childs, $doNothing)
+    {
+    	$subModules = '';
+
+      foreach ($childs as $index => $value)
+      {
+        $subModules .= '<li><span><i class="' . $value['icon'] . '"></i> ' . $value['name'] . '</span><ul>';
+        $subSubModules = '';
+
+    		if(!$value['childsMenus'][0]['url'])
+    		{
+    			$subSubModules .= buildSubModules($value['childsMenus'], $doNothing);
+    		}
+    		else
+    		{
+    			$subSubModules .= buildApps($value['childsMenus'], $doNothing);
+    		}
+
+        $subModules .= ($subSubModules . '</ul></li>');
+      }
+
+      return $subModules;
+    }
+  }
+
+  if ( ! function_exists('buildApps'))
+  {
+    /**
+     * Build HTML code of user apps
+     *
+     * @param array apps
+     * 	An array of objects as follows: [ { name: $menuName, url: $url, icon: $icon},… ]
+     *
+     *  @returns string
+     */
+    function buildApps($apps, $doNothing)
+    {
+    	$html = '';
+
+      foreach ($apps as $index => $value)
+      {
+        if(!empty($value['hidden']))
+        {
+          continue;
+        }
+
+        if($doNothing)
+        {
+          $html .= '<li><a href="#"><i class="' . $value['icon'] . '"></i> ' . $value['name'] . '</a></li>';
+        }
+        else
+        {
+          $html .= '<li><a href="#" onclick="$(\'#top-navbar-menu\').click();loadPage(\'' . $value['url'] . '\', \'' . $value['aliasUrl'] . '\', \''. $value['actionButtonId'] .'\');API.close();"><i class="' . $value['icon'] . '"></i> ' . $value['name'] . '</a></li>';
+        }
+      }
+
+    	return $html;
+    }
+  }
+
   if ( ! function_exists('checkbox_journal_value'))
   {
     /**

@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.8/css/fileinput.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.0/quill.snow.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" />
-{!! Html::style('assets/kwaai/css/main-v1.0.1.css') !!}
+{!! Html::style('assets/kwaai/css/main-v1.0.2.css') !!}
 {!! Html::style('assets/kwaai/css/button-custom-classes.css') !!}
 
 <!-- B4 CSS Fixes-->

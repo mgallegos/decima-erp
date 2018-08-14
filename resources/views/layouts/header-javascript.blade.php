@@ -29,11 +29,10 @@
 {!! Html::script('assets/bootstrap-fileinput-v4.3.5/themes/fa/theme.js') !!}
 {!! Html::script('assets/bootstrap-fileinput-v4.3.5/js/locales/es.js') !!}
 {!! Html::script('assets/quill-v1.3.0/js/quill.min.js') !!}
-
+{!! Html::script('assets/keymaster-v1.6.1/keymaster.min.js') !!}
 
 <script type='text/javascript'>
 	var userApps, lang, History, State;
-
 	$(document).ready(function(){
 		lang = $.parseJSON('{!! json_encode( Translator::getFileArray('form')) !!}');
 		userApps = $.parseJSON('{!! UserManager::buildUserMenu() !!}');
@@ -44,7 +43,7 @@
 <script src="{{ URL::asset('assets/kwaai/js/apps-engine.js') }}"></script>
 {{-- <script src="{{ URL::asset('assets/kwaai/js/validation-engine.js') }}"></script> --}}
 <script src="{{ URL::asset('assets/jquery-mg-validation-v0.3/jquery.jqMgVal.src.js') }}"></script>
-<script src="{{ URL::asset('assets/kwaai/js/base-v1.0.0.js') }}"></script>
+<script src="{{ URL::asset('assets/kwaai/js/base-v1.0.1.js') }}"></script>
 
 <script type='text/javascript'>
   $.fn.jqMgVal.defaults.successIconClass = 'fa fa-check-circle';

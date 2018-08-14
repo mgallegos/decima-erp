@@ -2,6 +2,12 @@
 	<div class="container">
  		<div class="navbar-header">
        <!-- <a class="navbar-brand" href="{{ AppManager::getBrandUrl() }}" target="_blank"><i class="{{ AppManager::getSystemIcon() }}"></i> {{ AppManager::getSystemName() }}</a> -->
+			 <!-- <button type="button" class="navbar-toggle collapsed" onclick="$('#core-top-bar-menu').click()">
+	       <span class="icon-bar"></span>
+	       <span class="icon-bar"></span>
+	       <span class="icon-bar"></span>
+	     </button> -->
+			 <a id="core-mobile-top-bar-link" href="#core-menu" class="hidden-lg hidden-md"><i class="fa fa-bars fa-2x core-menu-top-bar-link-color"></i></a>
        <a class="navbar-brand" href="{{ AppManager::getBrandUrl() }}" target="_blank">
          <img src="{{URL::asset('assets/kwaai/images/logo.png')}}">
        </a>
@@ -14,7 +20,7 @@
 				<li><a id="top-navbar-menu" href="#body" style="display: none;" class="sr-only">Scroll to navbar</a></li>
 				<li id='user-organizations-dropdown-menu' class="dropdown base-popover" data-hint="{{ Lang::get('base.organizationsMenuPopoverContent', array('user' => AuthManager::getLoggedUserFirstname())) }}">
 					@if (count($userOrganizations) > 1 && count($userOrganizations) < 15)
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-sitemap"></i> {{ Lang::get('base.userOrganizations') }} <b class="caret"></b></a>
+            <a id='user-organizations-dropdown-menu-link' href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-sitemap"></i> {{ Lang::get('base.userOrganizations') }} <b class="caret"></b></a>
             <ul class="dropdown-menu">
             	@foreach ($userOrganizations as $index => $organization)
             		@if ($organization['id'] == AuthManager::getCurrentUserOrganization('id'))
@@ -31,7 +37,7 @@
           @endif
         </li>
         @if (count($userOrganizations) >= 15)
-          <li><a class="fake-link" data-toggle="modal" data-target="#user-organizations-modal"><i class="fa fa-sitemap"></i> {{ Lang::get('base.userOrganizations') }}</a></li>
+          <li><a id='user-organizations-dropdown-menu-link' class="fake-link" data-toggle="modal" data-target="#user-organizations-modal"><i class="fa fa-sitemap"></i> {{ Lang::get('base.userOrganizations') }}</a></li>
         @endif
 			</ul>
 		</div>
@@ -44,6 +50,7 @@
 					<li><a href="{{ URL::to('security/logout/logout-attempt') }}"><i class="fa fa-power-off"></i> {{ Lang::get('base.logout') }}</a></li>
 				</ul>
 			</li>
+			<li><a id="core-top-bar-menu" href="#core-menu" style="padding: 10px 0;"><i class="fa fa-bars fa-2x core-menu-top-bar-link-color"></i></a></li>
 		</ul>
 		<div class="row visible-md visible-lg">
       @if (count($userOrganizations) > 1)

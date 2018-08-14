@@ -6,6 +6,8 @@
  * See COPYRIGHT and LICENSE.
  */
 
+ var API = '';
+
  var quillToolbarOptions = {
 	 container: [
 		 [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -778,6 +780,83 @@ $.fn.closeDropdownMenuPopover = function()
 
 $(document).ready(function()
 {
+  if ($.isFunction($.fn.mmenu))
+  {
+    $("#core-menu").mmenu(
+    {
+      //options
+      counters: true,
+      keyboardNavigation:
+      {
+        enable: "default",
+        enhance: true
+      },
+      navbars:
+      [
+        {
+          position: "top",
+          content: [
+            "searchfield"
+          ]
+        }
+      ],
+      searchfield:
+      {
+        panel: true,
+        showSubPanels: false
+      },
+      extensions:
+      [
+        "pagedim-black",
+        "theme-white"
+      ],
+      setSelected:
+      {
+        hover: true,
+        parent: true
+      },
+      // sidebar:
+      // {
+      //   collapsed:
+      //   {
+      //     use:true,
+      //   },
+      //   expanded:
+      //   {
+      //     use:false
+      //   }
+      // },
+     //  iconbar:
+     //  {
+     //    add: true,
+     //    top: [
+     //       "<a onclick=\"$(\'#dashboard-top-bar-menu\').click();API.close();\" class=\"fake-link\"><i class='fa fa-dashboard'></i></a>",
+     //    ]
+     //    // ,
+     //    // bottom: [
+     //    //    "<a href='#/'><i class='fa fa-twitter'></i></a>",
+     //    //    "<a href='#/'><i class='fa fa-facebook'></i></a>",
+     //    //    "<a href='#/'><i class='fa fa-linkedin'></i></a>"
+     //    // ]
+     // }
+    },
+    {
+      //configuration
+      searchfield:
+      {
+        clear: true
+      },
+      offCanvas:
+      {
+        pageSelector: "#core-wrapper"
+      }
+    });
+
+    API = $('#core-menu').data('mmenu');
+
+    key('ctrl+m', function(){ API.open(); return false; });
+  }
+
 	$.ajaxSetup({
 	  headers: {
 	      'X-CSRF-TOKEN': $('#app-token').val()
