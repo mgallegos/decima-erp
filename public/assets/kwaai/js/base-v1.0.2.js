@@ -854,7 +854,10 @@ $(document).ready(function()
 
     API = $('#core-menu').data('mmenu');
 
-    key('ctrl+m', function(){ API.open(); return false; });
+    if ($.isFunction(key))
+    {
+      key('ctrl+m', function(){ API.open(); return false; });
+    }
   }
 
 	$.ajaxSetup({
