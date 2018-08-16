@@ -213,6 +213,8 @@ return array(
 
 	'greeting' => 'Un saludo',
 
+	'gender' => 'Género',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
