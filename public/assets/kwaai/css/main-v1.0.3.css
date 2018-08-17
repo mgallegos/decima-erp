@@ -677,6 +677,14 @@
   }
 }
 
+/*Media*/
+@media (min-width: 992px)
+{
+  .form-division-line {
+    border-right: 1px dashed #000;
+  }
+}
+
 @media (min-width: 992px) and (max-width: 1199px) {
 
   #user-apps-container button{
@@ -691,9 +699,9 @@
     margin-top: 10px;
   }
 
-	.app-grid > .ui-jqgrid {
+	/* .app-grid > .ui-jqgrid {
 		width: 906px !important;
-	}
+	} */
 
   .navbar-nav {
     font-size: 13px;
@@ -709,9 +717,9 @@
 }
 
 @media (min-width: 1200px) {
-	.app-grid > .ui-jqgrid {
+	/* .app-grid > .ui-jqgrid {
 		width: 1106px !important;
-	}
+	} */
 
   .no-margin-bottom-min-1200 {
     margin-bottom: 0px !important;

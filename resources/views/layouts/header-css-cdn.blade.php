@@ -26,5 +26,5 @@
 		<link rel="stylesheet" href="{{ trim(preg_replace('/\s+/', ' ', $css)) }}" />
 	@endforeach
 @endif
-{!! Html::style('assets/kwaai/css/main-v1.0.2.css') !!}
+{!! Html::style('assets/kwaai/css/main-v1.0.3.css') !!}
 {!! Html::style('assets/kwaai/css/button-custom-classes.css') !!}
