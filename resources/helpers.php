@@ -507,7 +507,7 @@ if ( ! function_exists('eloquent_array_filter'))
      *
      * @return array
      */
-    function array_only_sorted_by_key_position($array, $keys, $defaultValueIfKeyNotExist = '')
+    function array_only_sorted_by_key_position($array, $keys, $defaultValueIfKeyNotExist = null)
     {
       foreach ($keys as $index => $key)
       {
