@@ -511,7 +511,7 @@ if ( ! function_exists('eloquent_array_filter'))
     {
       foreach ($keys as $index => $key)
       {
-        if(isset($array[$key]))
+        if(array_key_exists($key, $array))
         {
           $newArray[$key] = $array[$key];
         }
