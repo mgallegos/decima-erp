@@ -498,6 +498,26 @@ if ( ! function_exists('eloquent_array_filter'))
     }
   }
 
+  if ( ! function_exists('array_only_sorted_by_key_position'))
+  {
+    /**
+     * Get a subset of the items from the given array in the same order as the given key array
+     *
+     * @param  string  $value
+     *
+     * @return array
+     */
+    function array_only_sorted_by_key_position($array, $keys)
+    {
+      foreach ($keys as $index => $key)
+      {
+        $newArray[$key] = $array[$key];
+      }
+
+      return $newArray;
+    }
+  }
+
   if ( ! function_exists('checkbox_journal_value'))
   {
     /**
