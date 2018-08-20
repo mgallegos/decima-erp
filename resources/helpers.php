@@ -507,11 +507,18 @@ if ( ! function_exists('eloquent_array_filter'))
      *
      * @return array
      */
-    function array_only_sorted_by_key_position($array, $keys)
+    function array_only_sorted_by_key_position($array, $keys, $defaultValueIfKeyNotExist = '')
     {
       foreach ($keys as $index => $key)
       {
-        $newArray[$key] = $array[$key];
+        if(isset($array[$key]))
+        {
+          $newArray[$key] = $array[$key];
+        }
+        else
+        {
+          $newArray[$key] = $defaultValueIfKeyNotExist;
+        }
       }
 
       return $newArray;
