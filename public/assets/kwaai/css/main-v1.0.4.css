@@ -659,7 +659,6 @@
   margin-right: auto !important;
 }
 
-
 /*Modal Fixes*/
 .ui-datepicker {
 	z-index: 2147483647 !important;
@@ -669,24 +668,184 @@
 	z-index: 2147483647 !important;
 }
 
-/*Media*/
-@media (max-width: 991px)
-{
+/*Iphone 5*/
+@media (min-width: 320px) {
+  .app-grid > .ui-jqgrid {
+		width: 258px !important;
+	}
+}
+
+/*
+Samsung Galaxy S9	1440 x 2960	360 x 740
+Samsung Galaxy S9+	1440 x 2960	360 x 740
+Samsung Galaxy S8	1440 x 2960	360 x 740
+Samsung Galaxy S8+	1440 x 2960	360 x 740
+Samsung Galaxy S7	1440 x 2560	360 x 640
+Samsung Galaxy S7 Edge	1440 x 2560	360 x 640
+*/
+@media (min-width: 360px) {
+  .app-grid > .ui-jqgrid {
+		width: 298px !important;
+	}
+}
+
+/*Iphone 6/7/8*/
+@media (min-width: 375px) {
+  .app-grid > .ui-jqgrid {
+		width: 313px !important;
+	}
+}
+
+/*
+Nexus 6P	1440 x 2560	411 x 731
+Nexus 5X	1080 x 1920	411 x 731
+Google Pixel	1080 x 1920	411 x 731
+Google Pixel XL	1440 x 2560	411 x 731
+Google Pixel 2	1080 x 1920	411 x 731
+Google Pixel 2 XL
+*/
+@media (min-width: 411px) {
+  .app-grid > .ui-jqgrid {
+		width: 359px !important;
+	}
+}
+
+/*Iphone 6/7/8 Plus*/
+@media (min-width: 414px) {
+  .app-grid > .ui-jqgrid {
+		width: 352px !important;
+	}
+}
+
+/*
+Samsung Galaxy Note 5	1440 x 2560	480 x 853
+LG G5	1440 x 2560	480 x 853
+One Plus 3	1080 x 1920	480 x 853
+*/
+@media (min-width: 480px) {
+  .app-grid > .ui-jqgrid {
+		width: 418px !important;
+	}
+}
+
+/*
+Nexus 7 (2013)	1200 x 1920	600 x 960
+*/
+@media (min-width: 538px) {
+  .app-grid > .ui-jqgrid {
+		width: 578px !important;
+	}
+}
+
+/*
+Samsung Galaxy S7	1440 x 2560	360 x 640
+Samsung Galaxy S7 Edge	1440 x 2560	360 x 640
+*/
+@media (min-width: 640px) {
+  .app-grid > .ui-jqgrid {
+		width: 578px !important;
+	}
+}
+
+/*Iphone 6/7/8 landscape*/
+@media (min-width: 667px) {
+  .app-grid > .ui-jqgrid {
+		width: 605px !important;
+	}
+}
+
+/*
+Nexus 6P	1440 x 2560	411 x 731
+Nexus 5X	1080 x 1920	411 x 731
+Google Pixel	1080 x 1920	411 x 731
+Google Pixel XL	1440 x 2560	411 x 731
+Google Pixel 2	1080 x 1920	411 x 731
+Google Pixel 2 XL
+*/
+@media (min-width: 731px) {
+  .app-grid > .ui-jqgrid {
+		width: 669px !important;
+	}
+}
+
+/*Iphone 6/7/8 Plus lanscape*/
+@media (min-width: 736px) {
+  .app-grid > .ui-jqgrid {
+		width: 674px !important;
+	}
+}
+
+/*
+Samsung Galaxy S9	1440 x 2960	360 x 740
+Samsung Galaxy S9+	1440 x 2960	360 x 740
+Samsung Galaxy S8	1440 x 2960	360 x 740
+Samsung Galaxy S8+	1440 x 2960	360 x 740
+*/
+@media (min-width: 740px) {
+  .app-grid > .ui-jqgrid {
+		width: 678px !important;
+	}
+}
+
+/*Extra small devices (portrait phones, less than 576px)*/
+@media (max-width: 575px) {
+
+}
+
+/*From Small devices to extra large*/
+@media (min-width: 576px) {
+
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) and (max-width: 767px) {
+
+}
+
+/*Extra small devices and Small devices*/
+@media (max-width: 767px) {
+
+
+}
+
+/*From Medium devices to extra large*/
+@media (min-width: 768px) {
+
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/*Small and medium devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) and (max-width: 991px) {
+
+}
+
+/*Medium devices and Large devices*/
+@media (min-width: 768px) and (max-width: 1199px) {
+  .app-grid > .ui-jqgrid {
+		width: 688px !important;
+	}
+}
+
+/*Extra small devices, Small devices and medium devices*/
+@media (max-width: 991px) {
   .navbar-header {
     float: none !important;
   }
 }
 
-/*Media*/
-@media (min-width: 992px)
-{
+/*Large and Extra large devices*/
+@media (min-width: 992px) {
   .form-division-line {
     border-right: 1px dashed #000;
   }
 }
 
+/*Large devices (desktops, 992px and up)*/
 @media (min-width: 992px) and (max-width: 1199px) {
-
   #user-apps-container button{
     font-size: 12px;
   }
@@ -699,9 +858,9 @@
     margin-top: 10px;
   }
 
-	/* .app-grid > .ui-jqgrid {
+	.app-grid > .ui-jqgrid {
 		width: 906px !important;
-	} */
+	}
 
   .navbar-nav {
     font-size: 13px;
@@ -716,10 +875,11 @@
   }
 }
 
+/*Extra large devices (large desktops, 1200px and up)*/
 @media (min-width: 1200px) {
-	/* .app-grid > .ui-jqgrid {
+	.app-grid > .ui-jqgrid {
 		width: 1106px !important;
-	} */
+	}
 
   .no-margin-bottom-min-1200 {
     margin-bottom: 0px !important;
