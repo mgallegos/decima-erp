@@ -535,7 +535,7 @@ if ( ! function_exists('eloquent_array_filter'))
     *
     * @return string
     */
-    public function nameFromTokenfield($tokens, $EloquentRepository)
+    function nameFromTokenfield($tokens, $EloquentRepository)
     {
       $result = '';
       $tokenList = explode(",", $tokens);
