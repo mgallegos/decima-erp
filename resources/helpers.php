@@ -170,6 +170,33 @@ if ( ! function_exists('eloquent_array_filter'))
     }
   }
 
+  if ( ! function_exists('array_only_sorted_by_key_position'))
+  {
+    /**
+     * Get a subset of the items from the given array in the same order as the given key array
+     *
+     * @param  string  $value
+     *
+     * @return array
+     */
+    function array_only_sorted_by_key_position($array, $keys, $defaultValueIfKeyNotExist = null)
+    {
+      foreach ($keys as $index => $key)
+      {
+        if(array_key_exists($key, $array))
+        {
+          $newArray[$key] = $array[$key];
+        }
+        else
+        {
+          $newArray[$key] = $defaultValueIfKeyNotExist;
+        }
+      }
+
+      return $newArray;
+    }
+  }
+
   if ( ! function_exists('getYears'))
   {
     /**
@@ -498,30 +525,36 @@ if ( ! function_exists('eloquent_array_filter'))
     }
   }
 
-  if ( ! function_exists('array_only_sorted_by_key_position'))
+  if ( ! function_exists('nameFromTokenfield'))
   {
     /**
-     * Get a subset of the items from the given array in the same order as the given key array
-     *
-     * @param  string  $value
-     *
-     * @return array
-     */
-    function array_only_sorted_by_key_position($array, $keys, $defaultValueIfKeyNotExist = null)
+    * Get label from journal
+    *
+    * @param string $tokens
+    * @param EloquentRepository
+    *
+    * @return string
+    */
+    public function nameFromTokenfield($tokens, $EloquentRepository)
     {
-      foreach ($keys as $index => $key)
+      $result = '';
+      $tokenList = explode(",", $tokens);
+
+      foreach($tokenList as $token)
       {
-        if(array_key_exists($key, $array))
+        $Repository = $EloquentRepository->byId((integer)$token);
+
+        if(empty($result))
         {
-          $newArray[$key] = $array[$key];
+          $result =  $Repository->name;
         }
         else
         {
-          $newArray[$key] = $defaultValueIfKeyNotExist;
+          $result = $result . ", " . $Repository->name;
         }
       }
 
-      return $newArray;
+      return $result;
     }
   }
 
