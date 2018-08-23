@@ -734,6 +734,8 @@ function resizeApplicationGrid()
     return;
   }
 
+  console.log('resizeApplicationGrid');
+  
   setTimeout(function ()
   {
     $('.tab-pane.fade.active.in').find('.app-grid').each(function(index, element)
@@ -1114,4 +1116,6 @@ $(document).ready(function()
 			}, 500);
 		}
 	}
+
+  resizeApplicationGrid();
 });

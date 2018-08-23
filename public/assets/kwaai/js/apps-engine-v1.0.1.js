@@ -329,6 +329,7 @@ function loadPage(url, aliasUrl, actionButtonId)
 			$('#app-loader').addClass('hidden');
 			changeWindowsUrl(aliasUrl);
 			enableAll();
+			resizeApplicationGrid();
 			$('.decima-erp-tooltip').tooltip('hide');
 		}
 	});
