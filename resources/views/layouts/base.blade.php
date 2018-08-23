@@ -65,6 +65,12 @@
 	  						<span class="label label-default breadcrumb-organization-name base-popover pull-right" data-position="left" data-step="1" data-intro="{{ Lang::get('base.currentOrganizationPopoverContent', array('user' => AuthManager::getLoggedUserFirstname())) }}">{{ AuthManager::getCurrentUserOrganizationName() }}</span>
 	  						<div class="panel panel-default panel-custom">
 	  							<div class="panel-body clearfix">
+										<div class="row">
+											<div class="col-xs-12">
+												<div class="core-app-container-width">
+												</div>
+											</div>
+										</div>
 	  								@section('container')
 	  									<script type='text/javascript'>
 	                      {!! FormJavascript::getGlobalCode() !!}

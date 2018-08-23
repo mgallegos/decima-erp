@@ -727,15 +727,43 @@ function changeLoggedUserOrganization(id)
  */
 function resizeApplicationGrid()
 {
+  width = $('.core-app-container-width:visible').width();
+
+  if(width == 1108)
+  {
+    return;
+  }
+
   setTimeout(function ()
   {
     $('.tab-pane.fade.active.in').find('.app-grid').each(function(index, element)
     {
-      $('#' + $(element).attr('data-app-grid-id')).setGridWidth($(element).width());
+      if($('#' + $(element).attr('data-app-grid-id')).is(':visible'))
+      {
+        $('#' + $(element).attr('data-app-grid-id')).setGridWidth(width);
+      }
     });
   }, 500);
 }
 
+/**
+ * Resize grid on event
+ *
+ * @param integer id
+ *
+ *  @returns void
+ */
+function resizeGridOnLoadCompleteEvent()
+{
+  width = $('.core-app-container-width:visible').width();
+
+  if(width == 1108)
+  {
+    return;
+  }
+
+  $(this).setGridWidth($('.core-app-container-width:visible').width());
+}
 
 /**
  * Close user apps popover
@@ -966,12 +994,15 @@ $(document).ready(function()
     getAppJournals('up-c-','firstPage');
     getAppJournals('up-a-','firstPage');
 
-    width = $('.tab-pane.fade.active.in').find('.app-grid').width();
+    width = $('.core-app-container-width:visible').width();
 
-    $.each($('.app-grid'), function( index, element )
+    if(width != 1108)
     {
-      $('#' + $(element).attr('data-app-grid-id')).setGridWidth(width);
-    });
+      $.each($('.app-grid'), function( index, element )
+      {
+        $('#' + $(element).attr('data-app-grid-id')).setGridWidth(width);
+      });
+    }
 
     $.each($('.custom-app-grid'), function( index, element )
     {
@@ -1083,6 +1114,4 @@ $(document).ready(function()
 			}, 500);
 		}
 	}
-
-  resizeApplicationGrid();
 });
