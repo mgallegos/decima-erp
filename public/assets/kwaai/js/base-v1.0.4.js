@@ -735,7 +735,7 @@ function resizeApplicationGrid()
   }
 
   console.log('resizeApplicationGrid');
-  
+
   setTimeout(function ()
   {
     $('.tab-pane.fade.active.in').find('.app-grid').each(function(index, element)
@@ -998,13 +998,10 @@ $(document).ready(function()
 
     width = $('.core-app-container-width:visible').width();
 
-    if(width != 1108)
+    $.each($('.app-grid'), function( index, element )
     {
-      $.each($('.app-grid'), function( index, element )
-      {
-        $('#' + $(element).attr('data-app-grid-id')).setGridWidth(width);
-      });
-    }
+      $('#' + $(element).attr('data-app-grid-id')).setGridWidth(width);
+    });
 
     $.each($('.custom-app-grid'), function( index, element )
     {
