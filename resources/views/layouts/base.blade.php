@@ -91,22 +91,30 @@
 		        {!! Form::hidden('da-logged-user-multiple-organization-popover-shown', AuthManager::getLoggedUserMultipleOrganizacionPopoversShown(), array('id' => 'da-logged-user-multiple-organization-popover-shown')) !!}
 					</fieldset>
 				</div>
+				@if(Agent::isMobile() && !empty(Config::get('system-security.custom_menu')))
+				<div id="user-apps-content" style="display:none;"></div>
+				@else
 				<div class="col-lg-12">
-		      <fieldset id="user-apps-panel-fieldset">
-		  			<div id='user-apps-container' class="panel panel-default base-popover" data-position="top" data-step="2" data-intro="{{ Lang::get('base.userAppsPopoverContent') }}">
-		  				<div class="panel-heading">
-		  					<button type="button" class="btn btn-default btn-sm btn-dashboard-toggle pull-right" data-toggle="collapse" data-target="#user-apps-content"><i class="fa fa-chevron-up"></i></button>
-		  		    	<h3 id="user-apps-title" class="panel-title"><i class="fa fa-tasks"></i> {{ Lang::get('base.userAppsTitle') }}</h3>
-		  			  	</div>
-		  				<div id="user-apps-content" class="panel-body collapse in clearfix">
-		  					<div id="user-apps-content-alert" class="alert alert-block alert-info">
-		  						<a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-		  						 {{ Lang::get('base.noAppsException') }}
-		  					</div>
-		  				</div>
-		  			</div>
-		      </fieldset>
-		    </div>
+					<fieldset id="user-apps-panel-fieldset">
+						@if(!empty(Config::get('system-security.custom_menu')))
+						<div id='user-apps-container' class="panel panel-default base-popover">
+						@else
+						<div id='user-apps-container' class="panel panel-default base-popover" data-position="top" data-step="2" data-intro="{{ Lang::get('base.userAppsPopoverContent') }}">
+						@endif
+							<div class="panel-heading">
+								<button type="button" class="btn btn-default btn-sm btn-dashboard-toggle pull-right" data-toggle="collapse" data-target="#user-apps-content"><i class="fa fa-chevron-up"></i></button>
+								<h3 id="user-apps-title" class="panel-title"><i class="fa fa-tasks"></i> {{ Lang::get('base.userAppsTitle') }}</h3>
+								</div>
+							<div id="user-apps-content" class="panel-body collapse in clearfix">
+								<div id="user-apps-content-alert" class="alert alert-block alert-info">
+									<a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+									 {{ Lang::get('base.noAppsException') }}
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+				@endif
 	  	</div>
 	  	<!-- <div class="alert alert-warning hidden-lg hidden-md">
 	 			{!! Lang::get('base.resolutionException') !!}

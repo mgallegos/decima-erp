@@ -41,8 +41,8 @@
         @endif
 			</ul>
 		</div>
-		<ul class="nav navbar-nav navbar-right visible-md visible-lg" data-position="bottom" data-step="5" data-intro="{{ Lang::get('base.dropdownMenuPopoverContent') }}">
-			<li id="main-user-dropdown-menu" class="dropdown">
+		<ul class="nav navbar-nav navbar-right visible-md visible-lg">
+			<li id="main-user-dropdown-menu" class="dropdown" data-position="bottom" data-step="5" data-intro="{{ Lang::get('base.dropdownMenuPopoverContent') }}">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img id='user-gravatar' class='img-circle navbar-gravatar navbar-left base-popover' onerror="this.src='{{URL::asset('assets/kwaai/images/anonymous.png')}}'" src='{{{ Gravatar::buildGravatarURL( AuthManager::getLoggedUserEmail(), 40 ) }}}' data-position="bottom" data-step="4" data-intro="{{ Lang::get('base.gravatarPopoverContent') }}">{{ substr(AuthManager::getLoggedUserFirstname(), 0, 10) }} <b class="caret"></b></a>
 				<ul id="user-dropdown-menu" class="dropdown-menu base-popover">
 					<li><a id='user-preferences-top-bar-menu' class="fake-link" data-preferences-url="{{ AppManager::getUserPreferencesPageUrl() }}"><i class="fa fa-cog"></i> {{ Lang::get('base.preferences') }}</a></li>
@@ -50,7 +50,9 @@
 					<li><a href="{{ URL::to('security/logout/logout-attempt') }}"><i class="fa fa-power-off"></i> {{ Lang::get('base.logout') }}</a></li>
 				</ul>
 			</li>
-			<li><a id="core-top-bar-menu" href="#core-menu" style="padding: 10px 0;"><i class="fa fa-bars fa-2x core-menu-top-bar-link-color"></i></a></li>
+			@if(!empty(Config::get('system-security.custom_menu')))
+			<li data-position="bottom" data-step="2" data-intro="{{ Lang::get('base.userAppsPopoverContent') }}"><a id="core-top-bar-menu" href="#core-menu" style="padding: 10px 0;"><i class="fa fa-bars fa-2x core-menu-top-bar-link-color"></i></a></li>
+			@endif
 		</ul>
 		<div class="row visible-md visible-lg">
       @if (count($userOrganizations) > 1)
