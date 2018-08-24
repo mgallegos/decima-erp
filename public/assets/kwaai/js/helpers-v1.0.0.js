@@ -761,6 +761,17 @@ function keyPressCrossBrowserCompatibility(event)
  */
 $.fn.enableButtonGroup = function()
 {
+	if(this.attr('data-class') != undefined)
+	{
+		$('.' + this.attr('data-class')).each(function()
+		{
+			$(this).enableButtonGroup();
+			$(this).removeAttr('disabled');
+		});
+
+		return;
+	}
+
 	this.find('button').each(function()
 	{
 		$(this).removeAttr('disabled');
@@ -774,6 +785,17 @@ $.fn.enableButtonGroup = function()
  */
 $.fn.disabledButtonGroup = function()
 {
+	if(this.attr('data-class') != undefined)
+	{
+		$('.' + this.attr('data-class')).each(function()
+		{
+			$(this).disabledButtonGroup();
+			$(this).attr('disabled','disabled');
+		});
+
+		return;
+	}
+
 	this.find('button').each(function()
 	{
 		$(this).attr('disabled','disabled');
