@@ -53,16 +53,18 @@
 	  				</ul>
 	  				<div id="apps-tabs-content" class="tab-content">
 	  					<div class="tab-pane fade" id="{{ $appInfo['id'] }}">
-	  						<ul class="breadcrumb breadcrumb-custom">
-	  							@foreach ($appInfo['breadcrumb'] as $index => $element)
-	  								@if ($index+1 == count($appInfo['breadcrumb']))
-	  								   <li class="active">{{ $element }}</li>
-	  								@else
-	  									<li><a onclick ="$('#user-apps-top-bar-menu').click();" class="user-apps-breadcrumb fake-link"> {{ $element }}</a></li>
-	  								@endif
-	  							@endforeach
-	  						</ul>
-	  						<span class="label label-default breadcrumb-organization-name base-popover pull-right" data-position="left" data-step="1" data-intro="{{ Lang::get('base.currentOrganizationPopoverContent', array('user' => AuthManager::getLoggedUserFirstname())) }}">{{ AuthManager::getCurrentUserOrganizationName() }}</span>
+								@if(!Agent::isMobile())
+								<ul class="breadcrumb breadcrumb-custom">
+									@foreach ($appInfo['breadcrumb'] as $index => $element)
+										@if ($index+1 == count($appInfo['breadcrumb']))
+											 <li class="active">{{ $element }}</li>
+										@else
+											<li><a onclick ="$('#user-apps-top-bar-menu').click();" class="user-apps-breadcrumb fake-link"> {{ $element }}</a></li>
+										@endif
+									@endforeach
+								</ul>
+								<span class="label label-default breadcrumb-organization-name base-popover pull-right" data-position="left" data-step="1" data-intro="{{ Lang::get('base.currentOrganizationPopoverContent', array('user' => AuthManager::getLoggedUserFirstname())) }}">{{ AuthManager::getCurrentUserOrganizationName() }}</span>
+								@endif
 	  						<div class="panel panel-default panel-custom">
 	  							<div class="panel-body clearfix">
 										<div class="row">
