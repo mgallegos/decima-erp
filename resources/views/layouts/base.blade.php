@@ -9,6 +9,7 @@
     @include('layouts.header-css')
     @include('layouts.header-javascript')
   @endif
+	@include('layouts.mobile-css')
 	@yield('javascript')
 	<title>{{ AppManager::getSystemName() }}</title>
 </head>

@@ -257,6 +257,21 @@
 
 /* Grid app classes */
 
+.app-grid .ui-jqgrid-titlebar-close {
+  display: none;
+}
+
+.app-grid-without-toolbar .ui-jqgrid-titlebar {
+  border-top: 1px solid #cccccc !important;
+}
+
+.app-grid .ui-jqdialog.ui-jqgrid-bootstrap .ui-jqdialog-titlebar, .app-grid .ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-caption {
+  background-color: #f5f5f5;
+  background-image: -webkit-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+  background-image: linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%);
+  background-repeat: repeat-x;
+}
+
 .app-responsive-grid > .ui-jqgrid, .app-grid > .ui-jqgrid {
   border: 1px solid #cccccc !important;
   border-radius: 0 !important;
@@ -692,7 +707,7 @@ Samsung Galaxy S7 Edge	1440 x 2560	360 x 640
 /*Iphone 6/7/8*/
 @media (min-width: 375px) {
   .app-grid > .ui-jqgrid {
-		width: 313px !important;
+		width: 311px !important;
 	}
 }
 

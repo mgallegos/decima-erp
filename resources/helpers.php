@@ -558,6 +558,64 @@ if ( ! function_exists('eloquent_array_filter'))
     }
   }
 
+  if ( ! function_exists('generateStatusSqlCaseWhen'))
+  {
+    /**
+    * Generate mobile grid HTML row
+    *
+    * @param string $tokens
+    * @param EloquentRepository
+    *
+    * @return string
+    */
+    function generateStatusSqlCaseWhen($columnName)
+    {
+      return '
+        CASE
+          ' . $columnName . '
+        WHEN \'A\' THEN
+          \'' . Lang::get('form.A') . '\'
+        WHEN \'P\' THEN
+          \'' . Lang::get('form.P') . '\'
+        WHEN \'U\' THEN
+          \'' . Lang::get('form.U') . '\'
+        WHEN \'X\' THEN
+          \'' . Lang::get('form.X') . '\'
+        WHEN \'Y\' THEN
+          \'' . Lang::get('form.Y') . '\'
+        END
+      ';
+    }
+  }
+
+  if ( ! function_exists('generateMobileGridHtmlRow'))
+  {
+    /**
+    * Generate mobile grid HTML row
+    *
+    * @param string $tokens
+    * @param EloquentRepository
+    *
+    * @return string
+    */
+    function generateMobileGridHtmlRow($cell1, $cell2, $cell3, $cell4)
+    {
+      return '
+        CONCAT(
+          \'<table class="mobile-grid"><tbody><tr class="mobile-grid-first-row"><td>\',
+          ' . $cell1 . ',
+          \'</td><td>\',
+          ' . $cell2 . ',
+          \'</td></tr><tr class="mobile-grid-second-row"><td>\',
+          ' . $cell3 . ',
+          \'</td><td>\',
+          ' . $cell4 . ',
+          \'</td></tr></tbody></table>\'
+        )
+      ';
+    }
+  }
+
   if ( ! function_exists('checkbox_journal_value'))
   {
     /**
