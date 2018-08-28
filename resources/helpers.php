@@ -538,6 +538,12 @@ if ( ! function_exists('eloquent_array_filter'))
     function nameFromTokenfield($tokens, $EloquentRepository)
     {
       $result = '';
+
+      if(empty($tokens))
+      {
+        return $result;
+      }
+
       $tokenList = explode(",", $tokens);
 
       foreach($tokenList as $token)
