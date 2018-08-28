@@ -23,7 +23,8 @@
         "google/cloud": "^0.20",
         "superbalist/laravel-google-cloud-storage": "^1.0",
         "barryvdh/laravel-dompdf": "^0.8.1",
-        "econea/nusoap": "^0.9.6"
+        "econea/nusoap": "^0.9.6",
+        "lesichkovm/laravel-advanced-route": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
