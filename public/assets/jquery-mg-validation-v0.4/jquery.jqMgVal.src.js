@@ -137,6 +137,72 @@
 				validationRegex: '^\\$?([1-9]{1}[0-9]{0,6}(\\,[0-9]{3})*(\\.[0-9]{0,6})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,6})?|0(\\.[0-9]{0,6})?|(\\.[0-9]{1,6})?)$',
 				allowedCharactersRegex: '^(\\d|,|\\.)$',
 				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			signedMoney:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 2,
+						defaultValue: '0.00'
+				},
+				validationRegex: '^(\\+|-)?([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\+|-,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			signedMoney2:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 2,
+						defaultValue: '0.00'
+				},
+				validationRegex: '^(\\+|-)?([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*(\\.[0-9]{0,2})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,2})?|0(\\.[0-9]{0,2})?|(\\.[0-9]{1,2})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\+|-,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			signedMoney3:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 3,
+						defaultValue: '0.00'
+				},
+				validationRegex: '^(\\+|-)?([1-9]{1}[0-9]{0,3}(\\,[0-9]{3})*(\\.[0-9]{0,3})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,3})?|0(\\.[0-9]{0,3})?|(\\.[0-9]{1,3})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\+|-,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			signedMoney4:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 4,
+						defaultValue: '0.00'
+				},
+				validationRegex: '^(\\+|-)?([1-9]{1}[0-9]{0,4}(\\,[0-9]{3})*(\\.[0-9]{0,4})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,4})?|0(\\.[0-9]{0,4})?|(\\.[0-9]{1,4})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\+|-,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			signedMoney5:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 2,
+						defaultValue: '0.00'
+				},
+				validationRegex: '^(\\+|-)?([1-9]{1}[0-9]{0,5}(\\,[0-9]{3})*(\\.[0-9]{0,5})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,5})?|0(\\.[0-9]{0,5})?|(\\.[0-9]{1,5})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\+|-,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			signedMoney6:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 2,
+						defaultValue: '0.00'
+				},
+				validationRegex: '^(\\+|-)?([1-9]{1}[0-9]{0,6}(\\,[0-9]{3})*(\\.[0-9]{0,6})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,6})?|0(\\.[0-9]{0,6})?|(\\.[0-9]{1,6})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\+|-,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
 			}
 		},
 		lang: {

@@ -122,7 +122,7 @@ Form::macro('textareacustom', function($name, $rows, $maxLength, $options = arra
 	return '<textarea'.Html::attributes($options).'>'. $value . '</textarea><div id="'.$options['id'].'-label-container" class="clearfix"><p id="'.$options['id'].'-label" class="help-block">'.Lang::get('form.charactersAvailable').' '. number_format($maxLength, 0, Lang::get('form.decimalSeparator'), Lang::get('form.thousandsSeparator')) . '</p></div>';
 });
 
-Form::macro('money', function($name, $options = array(), $value = null, $showCalculator = true, $precision = 2)
+Form::macro('money', function($name, $options = array(), $value = null, $showCalculator = true, $precision = 2, $validator = 'money')
 {
 	if ( ! isset($options['name']))
   {
@@ -132,7 +132,8 @@ Form::macro('money', function($name, $options = array(), $value = null, $showCal
 	$options['id'] = $name;
 	$options['type'] = 'text';
 	//$options['regex'] = Regex::getMoney();
-	$options['data-mg-validator'] = 'money' . $precision;
+	// $options['data-mg-validator'] = 'money' . $precision;
+	$options['data-mg-validator'] = $validator . $precision;
 	$options['value'] = $value;
 	$calcultorHtml = '';
 
