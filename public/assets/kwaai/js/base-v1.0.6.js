@@ -901,9 +901,18 @@ $(document).ready(function()
 
     API = $('#core-menu').data('mmenu');
 
+    API.bind('open:finish', function() {
+      $("input[placeholder='Search']").focus();
+    });
+
     if ($.isFunction(key))
     {
-      key('ctrl+m', function(){ API.open(); return false; });
+      key('shift+ctrl+m', function()
+      {
+        API.open();
+
+        return false;
+      });
     }
   }
 
