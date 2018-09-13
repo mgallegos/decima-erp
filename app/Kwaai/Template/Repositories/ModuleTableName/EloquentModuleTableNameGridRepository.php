@@ -44,5 +44,4 @@ class EloquentModuleTableNameGridRepository extends EloquentRepositoryAbstract {
 
 		// $this->leafColumn = 'is_leaf';
 	}
-
 }
