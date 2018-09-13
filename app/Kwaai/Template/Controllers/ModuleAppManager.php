@@ -92,8 +92,6 @@ class ModuleAppManager extends Controller {
 		$this->Input = $Input;
 
 		$this->Session = $Session;
-
-
 	}
 
 	public function getIndex()
@@ -110,21 +108,21 @@ class ModuleAppManager extends Controller {
 
 	public function postGridData()
 	{
-		return $this->ModuleAppManagerService->getGridData( $this->Input->all() );
+		return $this->ModuleAppManagerService->getGridData($this->Input->all());
 	}
 
 	public function postCreate()
 	{
-		return $this->ModuleAppManagerService->create( $this->Input->json()->all() );
+		return $this->ModuleAppManagerService->create($this->Input->json()->all());
 	}
 
 	public function postUpdate()
 	{
-		return $this->ModuleAppManagerService->update( $this->Input->json()->all() );
+		return $this->ModuleAppManagerService->update($this->Input->json()->all());
 	}
 
 	public function postDelete()
 	{
-		return $this->ModuleAppManagerService->delete( $this->Input->json()->all() );
+		return $this->ModuleAppManagerService->delete($this->Input->json()->all());
 	}
 }

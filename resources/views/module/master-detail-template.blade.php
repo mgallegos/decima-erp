@@ -1,0 +1,796 @@
+@extends('layouts.base')
+
+@section('container')
+{!! Form::hidden('module-app-new-action', null, array('id' => 'module-app-new-action')) !!}
+{!! Form::hidden('module-app-edit-action', null, array('id' => 'module-app-edit-action', 'data-content' => Lang::get('decima-inventory::requisition-management.editHelpText'))) !!}
+{!! Form::hidden('module-app-remove-action', null, array('id' => 'module-app-remove-action', 'data-content' => Lang::get('decima-inventory::requisition-management.editHelpText'))) !!}
+{!! Form::button('', array('id' => 'module-app-btn-edit-helper', 'class' => 'hidden')) !!}
+{!! Form::button('', array('id' => 'module-app-btn-delete-helper', 'class' => 'hidden')) !!}
+<style>
+	#gbox_module-app-grid .ui-th-column-header {
+		text-align: left;
+		padding-left: 20px;
+	}
+</style>
+<script type="text/javascript">
+
+		function moduleAppDisabledDetailForm()
+		{
+			$('#module-app-detail-form-fieldset').attr('disabled', 'disabled');
+		}
+
+		function moduleAppOnSelectRowEvent()
+		{
+			var id = $('#module-app-grid').getSelectedRowId('module_app_id');
+
+			if($('#module-app-journals').attr('data-journalized-id') != id)
+			{
+				getAppJournals('module-app-', 'firstPage', id);
+			}
+			$('#module-app-btn-group-2').enableButtonGroup();
+		}
+
+		function moduleAppDetailOnSelectRowEvent()
+		{
+			var selRowIds = $('#module-app-detail-grid').jqGrid('getGridParam', 'selarrrow');
+
+			if(selRowIds.length == 0)
+			{
+				$('#module-app-detail-btn-group-2').disabledButtonGroup();
+			}
+			else if(selRowIds.length == 1)
+			{
+				$('#module-app-detail-btn-group-2').enableButtonGroup();
+			}
+			else if(selRowIds.length > 1)
+			{
+				$('#module-app-detail-btn-group-2').disabledButtonGroup();
+				$('#module-app-detail-btn-delete').removeAttr('disabled');
+			}
+		}
+
+		$(document).ready(function()
+		{
+			moduleAppDisabledDetailForm();
+
+			$('.module-app-btn-tooltip').tooltip();
+
+			$('#module-app-form, #module-app-detail-form').jqMgVal('addFormFieldsValidations');
+
+			$('#module-app-journals-section').on('hidden.bs.collapse', function ()
+			{
+				$($(this).attr('data-target-id')).collapse('show');
+			});
+
+			$('#module-app-form-section').on('hidden.bs.collapse', function ()
+			{
+				$('#module-app-grid-section').collapse('show');
+
+				$('#module-app-journals-section').collapse('show');
+
+				$('#module-app-filters').show();
+			});
+
+			$('#module-app-btn-new').click(function()
+			{
+				if($(this).hasAttr('disabled'))
+				{
+					return;
+				}
+
+        $('#module-app-form, #module-app-detail-form').jqMgVal('clearForm');
+  			$('#module-app-detail-btn-toolbar, #module-app-ot-btn-toolbar, #module-app-btn-toolbar').disabledButtonGroup();
+  			$('#module-app-btn-new').removeAttr('disabled');
+  			$('#module-app-btn-group-3').enableButtonGroup();
+
+  			moduleAppDisabledDetailForm();
+
+  			if(!$('#module-app-form-section').is(":visible"))
+  			{
+  				$('#module-app-grid-section, #module-app-journals-section').collapse('hide');
+  				$('#module-app-journals-section').attr('data-target-id', '#module-app-form-section');
+  			}
+  			else
+  			{
+  				$('#module-app-detail-brand-id').val(-1);
+  				$('#module-app-detail-grid').jqGrid('clearGridData');
+  			}
+
+				$('#module-app-filters').hide();
+
+  			$('.decima-erp-tooltip').tooltip('hide');
+
+				$(this).removeAttr('disabled');
+
+				$('#module-app-form-new-title').removeClass('hidden');
+				$('#module-app-form-edit-title').addClass('hidden');
+			});
+
+			$('#module-app-btn-refresh').click(function()
+			{
+				$('.decima-erp-tooltip').tooltip('hide');
+				$('#module-app-btn-toolbar').disabledButtonGroup();
+				$('#module-app-btn-group-1').enableButtonGroup();
+
+				if($('#module-app-journals-section').attr('data-target-id') == '' || $('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+				{
+					$('#module-app-grid').trigger('reloadGrid');
+					cleanJournals('module-app-');
+				}
+				else
+				{
+
+				}
+			});
+
+			$('#module-app-detail-btn-refresh').click(function()
+			{
+				$('.decima-erp-tooltip').tooltip('hide');
+
+				$('#module-app-detail-grid').jqGrid('setGridParam', {'postData':{"filters":"{'brandOp':'AND','rules':[{'field':'m.brand_id','op':'eq','data':'" + $('#module-app-detail-brand-id').val() + "'}]}"}}).trigger('reloadGrid');
+			});
+
+			$('#module-app-detail-btn-export-xls').click(function()
+			{
+				$('#module-app-detail-gridXlsButton').click();
+			});
+
+			$('#module-app-detail-btn-export-csv').click(function()
+			{
+				$('#module-app-detail-gridCsvButton').click();
+			});
+
+			$('#module-app-btn-export-xls').click(function()
+			{
+				if($('#module-app-journals-section').attr('data-target-id') == '')
+				{
+					$('#module-app-gridXlsButton').click();
+				}
+			});
+
+			$('#module-app-btn-export-csv').click(function()
+			{
+				if($('#module-app-journals-section').attr('data-target-id') == '')
+				{
+					$('#module-app-gridCsvButton').click();
+				}
+			});
+
+			$('#module-app-btn-edit').click(function()
+			{
+				var rowData;
+
+				$('.decima-erp-tooltip').tooltip('hide');
+				$('#module-app-btn-toolbar').disabledButtonGroup();
+				$('#module-app-btn-group-3').enableButtonGroup();
+
+				if($('#module-app-journals-section').attr('data-target-id') == '')
+				{
+					if(!$('#module-app-grid').isRowSelected())
+					{
+						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+						return;
+					}
+
+					$('#module-app-form-edit-title').removeClass('hidden');
+
+					rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
+
+					populateFormFields(rowData);
+				}
+				else
+				{
+
+				}
+
+				$('#module-app-filters').hide();
+				$('#module-app-grid-section').collapse('hide');
+				$('#module-app-journals-section').attr('data-target-id', '#module-app-form-section');
+				$('#module-app-journals-section').collapse('hide');
+				$('#module-app-detail-form-fieldset').removeAttr('disabled');
+				$('#module-app-id').val(rowData.module_app_id);
+				$('#module-app-detail-brand-id').val(rowData.module_app_id);
+				$('#module-app-detail-btn-refresh').click();
+				$('#module-app-detail-btn-toolbar').disabledButtonGroup();
+				$('#module-app-detail-btn-group-1').enableButtonGroup();
+				$('#module-app-detail-btn-group-3').enableButtonGroup();
+			});
+
+
+			$('#module-app-detail-btn-edit').click(function()
+			{
+				var rowData;
+
+				$('.decima-erp-tooltip').tooltip('hide');
+
+				if(!$('#module-app-detail-grid').isRowSelected())
+				{
+					$('#module-app-detail-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+					return;
+				}
+
+				$('#module-app-detail-btn-toolbar').disabledButtonGroup();
+				$('#module-app-detail-btn-group-3').enableButtonGroup();
+
+				rowData = $('#module-app-detail-grid').getRowData($('#module-app-detail-grid').jqGrid('getGridParam', 'selrow'));
+				populateFormFields(rowData);
+			});
+
+			$('#module-app-btn-delete').click(function()
+			{
+				var rowData;
+
+				if($(this).hasAttr('disabled'))
+				{
+					return;
+				}
+
+				if($('#module-app-journals-section').attr('data-target-id') == '')
+				{
+					if(!$('#module-app-grid').isRowSelected())
+					{
+						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+						return;
+					}
+
+					rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
+
+					$('#module-app-delete-message').html($('#module-app-delete-message').attr('data-default-label').replace(':name', rowData.name));
+				}
+				else
+				{
+
+				}
+
+				$('.decima-erp-tooltip').tooltip('hide');
+				$('#module-app-modal-delete').modal('show');
+			});
+
+			$('#module-app-btn-modal-delete').click(function()
+			{
+				var id, url;
+
+				if($('#module-app-journals-section').attr('data-target-id') == '')
+				{
+				  url = $('#module-app-form').attr('action') + '/delete-brand';
+				  id = $('#module-app-grid').getSelectedRowId('module_app_id');
+				}
+				else
+				{
+
+				}
+
+				$.ajax(
+				{
+					type: 'POST',
+					data: JSON.stringify(
+						{
+							'_token':$('#app-token').val(),
+							'id': id
+						}
+					),
+					dataType : 'json',
+					url:  url,
+					error: function (jqXHR, textStatus, errorThrown)
+					{
+						handleServerExceptions(jqXHR, 'module-app-btn-toolbar', false);
+						$('#module-app-modal-delete').modal('hide');
+					},
+					beforeSend:function()
+					{
+						$('#app-loader').removeClass('hidden');
+						disabledAll();
+					},
+					success:function(json)
+					{
+						if(json.success)
+						{
+							$('#module-app-modal-delete').modal('hide');
+							$('#module-app-btn-refresh').click();
+							$("#module-app-btn-group-2").disabledButtonGroup();
+							$('#module-app-btn-toolbar').showAlertAfterElement('alert-success alert-custom',json.success, 5000);
+						}
+
+						if(json.info)
+						{
+							$('#module-app-modal-delete').modal('hide');
+							$('#module-app-btn-refresh').click();
+							$("#module-app-btn-group-2").disabledButtonGroup();
+							$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 5000);
+						}
+
+						$('#app-loader').addClass('hidden');
+						enableAll();
+						$('.decima-erp-tooltip').tooltip('hide');
+					}
+				});
+			});
+
+			$('#module-app-detail-btn-delete').click(function()
+			{
+				var id = $('#module-app-detail-grid').getSelectedRowsIdCell('module_app_detail_id');
+
+				if(!$('#module-app-detail-grid').isRowSelected())
+				{
+					$('#module-app-detail-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+					return;
+				}
+
+				$.ajax(
+				{
+					type: 'POST',
+					data: JSON.stringify(
+						{
+							'_token':$('#app-token').val(),
+							'id': id,
+							'brand_id': $('#module-app-detail-brand-id').val()
+						}
+					),
+					dataType : 'json',
+					url:  $('#module-app-detail-form').attr('action') + '/delete-model',
+					error: function (jqXHR, textStatus, errorThrown)
+					{
+						handleServerExceptions(jqXHR, 'module-app-detail-btn-toolbar', false);
+					},
+					beforeSend:function()
+					{
+						$('#app-loader').removeClass('hidden');
+						disabledAll();
+					},
+					success:function(json)
+					{
+						if(json.success)
+						{
+							$('#module-app-detail-btn-refresh').click();
+							$("#module-app-detail-btn-group-2").disabledButtonGroup();
+							$('#module-app-detail-btn-toolbar').showAlertAfterElement('alert-success alert-custom',json.success, 5000);
+						}
+
+						$('#app-loader').addClass('hidden');
+						enableAll();
+						$('.decima-erp-tooltip').tooltip('hide');
+					}
+				});
+			});
+
+			$('#module-app-btn-save').click(function()
+			{
+				var url = $('#module-app-form').attr('action'), action = 'new';
+
+				$('.decima-erp-tooltip').tooltip('hide');
+
+				if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+				{
+					if(!$('#module-app-form').jqMgVal('isFormValid'))
+					{
+						return;
+					}
+
+					if($('#module-app-id').isEmpty())
+					{
+						url = url + '/create-master';
+					}
+					else
+					{
+						url = url + '/update-master';
+						action = 'edit';
+					}
+
+					data = $('#module-app-form').formToObject('module-app-');
+				}
+
+				$.ajax(
+				{
+					type: 'POST',
+					data: JSON.stringify(data),
+					dataType : 'json',
+					url: url,
+					error: function (jqXHR, textStatus, errorThrown)
+					{
+						handleServerExceptions(jqXHR, 'module-app-form');
+					},
+					beforeSend:function()
+					{
+						$('#app-loader').removeClass('hidden');
+						disabledAll();
+					},
+					success:function(json)
+					{
+						if(json.success)
+						{
+							if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+							{
+								if(action == 'edit')
+								{
+									$('#module-app-btn-toolbar').showAlertAfterElement('alert-success alert-custom',json.success, 6000);
+								}
+
+								$('#module-app-btn-new').removeAttr('disabled');
+								$('#module-app-detail-form-fieldset').removeAttr('disabled');
+								$('#module-app-form-new-title').addClass('hidden');
+								$('#module-app-form-edit-title').removeClass('hidden');
+								$('#module-app-id').val(json.id);
+								$('#module-app-detail-brand-id').val(json.id);
+								$('#module-app-form').jqMgVal('clearContextualClasses');
+								$('#module-app-detail-btn-toolbar').disabledButtonGroup();
+								$('#module-app-detail-btn-group-1').enableButtonGroup();
+								$('#module-app-detail-btn-group-3').enableButtonGroup();
+							}
+							else
+							{
+								// $('#module-app-btn-toolbar').showAlertAfterElement('alert-success alert-custom',json.success, 6000);
+								// $('#module-app-form').showAlertAsFirstChild('alert-success', json.success, 6000)
+							}
+						}
+						else if(json.info)
+						{
+							if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+							{
+								$('#module-app-form').showAlertAsFirstChild('alert-info', json.info, 12000);
+							}
+							else
+							{
+								// $('#module-app-form').showAlertAsFirstChild('alert-info', json.info, 12000);
+							}
+						}
+
+						$('#app-loader').addClass('hidden');
+						enableAll();
+
+						$('.decima-erp-tooltip').tooltip('hide');
+						$('#module-app-detail-article-label').focus();
+					}
+				});
+			});
+
+			$('#module-app-detail-btn-save').click(function()
+			{
+				var url = $('#module-app-detail-form').attr('action'), action = 'new';
+
+				if(!$('#module-app-detail-form').jqMgVal('isFormValid'))
+				{
+					return;
+				}
+
+				if($('#module-app-detail-id').isEmpty())
+				{
+					url = url + '/create-detail';
+				}
+				else
+				{
+					url = url + '/update-detail';
+					action = 'edit';
+				}
+
+				$.ajax(
+				{
+					type: 'POST',
+					data: JSON.stringify($('#module-app-detail-form').formToObject('module-app-detail-')),
+					dataType : 'json',
+					url: url,
+					error: function (jqXHR, textStatus, errorThrown)
+					{
+						handleServerExceptions(jqXHR, 'module-app-detail-form');
+					},
+					beforeSend:function()
+					{
+						$('#app-loader').removeClass('hidden');
+						disabledAll();
+					},
+					success:function(json)
+					{
+						if(json.success)
+						{
+							$('#module-app-detail-form').jqMgVal('clearForm');
+							$('#module-app-detail-btn-toolbar').disabledButtonGroup();
+							$('#module-app-detail-btn-group-1').enableButtonGroup();
+							$('#module-app-detail-btn-group-3').enableButtonGroup();
+
+							$('#module-app-detail-btn-refresh').click();
+						}
+						else if(json.info)
+						{
+								$('#module-app-detail-form').showAlertAsFirstChild('alert-info', json.info);
+						}
+
+						$('#app-loader').addClass('hidden');
+						enableAll();
+
+						$('.decima-erp-tooltip').tooltip('hide');
+						$('#module-app-detail-article-label').focus();
+					}
+				});
+			});
+
+			$('#module-app-btn-close').click(function()
+			{
+				if($(this).hasAttr('disabled'))
+				{
+					return;
+				}
+
+				if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
+				{
+					$('#module-app-form-new-title').addClass('hidden');
+					$('#module-app-form-edit-title').addClass('hidden');
+					$('#module-app-btn-refresh').click();
+					$('#module-app-detail-brand-id').val(-1);
+
+					$('#module-app-detail-grid').jqGrid('clearGridData');
+
+					$('#module-app-form, #module-app-detail-form').jqMgVal('clearForm');
+					$('#module-app-form-section').collapse('hide');
+				}
+				else
+				{
+
+				}
+
+				$('#module-app-finished-goods-warehouse-ids').clearTags();
+
+				$('#module-app-btn-group-1').enableButtonGroup();
+				$('#module-app-btn-group-3').disabledButtonGroup();
+				$('.decima-erp-tooltip').tooltip('hide');
+				$('#module-app-journals-section').attr('data-target-id', '');
+				moduleAppDisabledDetailForm();
+			});
+
+			if(!$('#module-app-new-action').isEmpty())
+			{
+				$('#module-app-btn-new').click();
+			}
+
+			$('#module-app-btn-edit-helper').click(function()
+			{
+				showButtonHelper('module-app-btn-close', 'module-app-btn-group-2', $('#module-app-edit-action').attr('data-content'));
+			});
+			if(!$('#module-app-edit-action').isEmpty())
+			{
+				showButtonHelper('module-app-btn-close', 'module-app-btn-group-2', $('#module-app-edit-action').attr('data-content'));
+			}
+
+			$('#module-app-btn-delete-helper').click(function()
+		  {
+				showButtonHelper('module-app-btn-close', 'module-app-btn-group-2', $('#module-app-delete-action').attr('data-content'));
+		  });
+
+			if(!$('#module-app-delete-action').isEmpty())
+			{
+				showButtonHelper('module-app-btn-close', 'module-app-btn-group-2', $('#module-app-delete-action').attr('data-content'));
+			}
+
+			$('#module-app-btn-clear-filter').click(function()
+			{
+				$('#module-app-filters-form').find('.tokenfield').find('.close').click();
+
+				$('#module-app-filters-form').jqMgVal('clearForm');
+
+				$('#module-app-btn-filter').click();
+			});
+
+			$('#module-app-btn-filter').click(function()
+			{
+				var filters = [];
+
+				$(this).removeClass('btn-default').addClass('btn-warning');
+
+				if(!$('#module-app-filters-form').jqMgVal('isFormValid'))
+				{
+					return;
+				}
+
+				$('#module-app-filters-form').jqMgVal('clearContextualClasses');
+
+				if(!$('#module-app-name-filter').isEmpty())
+				{
+					filters.push({'field':'b.name', 'op':'in', 'data': $('#module-app-name-filter').val()});
+				}
+
+				if(!$('#inv-btm-m-name-filter').isEmpty())
+				{
+					filters.push({'field':'m.name', 'op':'in', 'data': $('#inv-btm-m-name-filter').val()});
+				}
+
+				if(filters.length == 0)
+				{
+				  $('#module-app-btn-filter').removeClass('btn-warning').addClass('btn-default');
+				}
+
+				$('#module-app-grid').jqGrid('setGridParam', {'postData':{"filters":"{'groupOp':'AND','rules':" + JSON.stringify(filters) + "}"}}).trigger('reloadGrid');
+
+			});
+
+		});
+</script>
+<div class="row">
+	<div class="col-lg-12 col-md-12">
+		{!! Form::open(array('id' => 'module-app-filters-form', 'url' => URL::to('/'), 'role' => 'form', 'onsubmit' => 'return false;', 'class' => 'form-horizontal')) !!}
+			<div id="module-app-filters" class="panel panel-default">
+				<div class="panel-heading custom-panel-heading clearfix">
+					<h3 class="panel-title custom-panel-title pull-left">
+						{{ Lang::get('form.filtersTitle') }}
+					</h3>
+					{!! Form::button('<i class="fa fa-filter"></i> ' . Lang::get('form.filterButton'), array('id' => 'module-app-btn-filter', 'class' => 'btn btn-default btn-sm pull-right btn-filter-left-margin')) !!}
+					{!! Form::button('<i class="fa fa-eraser"></i> ' . Lang::get('form.clearFilterButton'), array('id' => 'module-app-btn-clear-filter', 'class' => 'btn btn-default btn-sm pull-right')) !!}
+				</div>
+				<div id="module-app-filters-body" class="panel-body">
+					<div class="row">
+						<div class="col-lg-6 col-md-12">
+							<div class="form-group">
+								{!! Form::label('module-app-name-filter', Lang::get('decima-inventory::brand-management.brand'), array('class' => 'col-sm-2 control-label')) !!}
+								<div class="col-sm-10 mg-hm">
+									{!! Form::autocomplete('module-app-name-filter', $brands, array('class' => 'form-control'), 'module-app-name-filter', 'module-app-name-id-filter', null, 'fa-files-o', '', 20) !!}
+									{!! Form::hidden('module-app-name-id-filter', null, array('id'  =>  'module-app-name-id-filter')) !!}
+									<p class="help-block">{{ Lang::get('decima-inventory::brand-management.brandHelperText') }}</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-12">
+							<div class="form-group">
+								{!! Form::label('inv-btm-m-name-filter', Lang::get('decima-inventory::brand-management.model'), array('class' => 'col-sm-2 control-label')) !!}
+								<div class="col-sm-10 mg-hm">
+									{!! Form::autocomplete('inv-btm-m-name-filter', $models, array('class' => 'form-control'), 'inv-btm-m-name-filter', 'inv-btm-m-name-id-filter', null, 'fa-files-o', '', 20) !!}
+									{!! Form::hidden('inv-btm-m-name-id-filter', null, array('id'  =>  'inv-btm-m-name-id-filter')) !!}
+									<p class="help-block">{{ Lang::get('decima-inventory::brand-management.modelHelperText') }}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{!! Form::close() !!}
+		<div id="module-app-btn-toolbar" class="section-header btn-toolbar" role="toolbar">
+			<div id="module-app-btn-group-1" class="btn-group btn-group-app-toolbar">
+				{!! Form::button('<i class="fa fa-plus"></i> ' . Lang::get('toolbar.new'), array('id' => 'module-app-btn-new', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('decima-inventory::brand-management.newBrand'))) !!}
+				{!! Form::button('<i class="fa fa-refresh"></i> ' . Lang::get('toolbar.refresh'), array('id' => 'module-app-btn-refresh', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('toolbar.refreshLongText'))) !!}
+				<div class="btn-group">
+					{!! Form::button('<i class="fa fa-share-square-o"></i> ' . Lang::get('toolbar.export') . ' <span class="caret"></span>', array('class' => 'btn btn-default dropdown-toggle', 'data-container' => 'body', 'data-toggle' => 'dropdown')) !!}
+					<ul class="dropdown-menu">
+         		<li><a id='module-app-btn-export-xls' class="fake-link"><i class="fa fa-file-excel-o"></i> xls</a></li>
+         		<li><a id='module-app-btn-export-csv' class="fake-link"><i class="fa fa-file-text-o"></i> csv</a></li>
+       		</ul>
+				</div>
+			</div>
+			<div id="module-app-btn-group-2" class="btn-group btn-group-app-toolbar">
+				{!! Form::button('<i class="fa fa-edit"></i> ' . Lang::get('toolbar.edit'), array('id' => 'module-app-btn-edit', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('decima-inventory::brand-management.editBrand'))) !!}
+				{!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.delete'), array('id' => 'module-app-btn-delete', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('decima-inventory::brand-management.deleteBrand'))) !!}
+			</div>
+			<div id="module-app-btn-group-3" class="btn-group btn-group-app-toolbar">
+				{!! Form::button('<i class="fa fa-save"></i> ' . Lang::get('toolbar.save'), array('id' => 'module-app-btn-save', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('decima-inventory::brand-management.saveBrand'))) !!}
+				{!! Form::button('<i class="fa fa-undo"></i> ' . Lang::get('toolbar.close'), array('id' => 'module-app-btn-close', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
+			</div>
+		</div>
+		<div id='module-app-grid-section' class='app-grid collapse in' data-app-grid-id='module-app-grid'>
+			{!!
+			GridRender::setGridId("module-app-grid")
+				->hideXlsExporter()
+  			->hideCsvExporter()
+				->setGridOption('height', 'auto')
+				->setGridOption('multiselect', false)
+				->setGridOption('rowNum', 10)
+				->setGridOption('rowList', array(10, 50, 100, 250, 500))
+	    	->setGridOption('url',URL::to('module/category/app/grid-data-master'))
+	    	->setGridOption('caption', Lang::get('decima-inventory::brand-management.gridTitleBrand'))
+	    	->setGridOption('postData',array('_token' => Session::token()))
+				->setGridOption('grouping', true)
+				->setGridOption('groupingView', array('groupField' => array('module_app_header'), 'groupColumnShow' => array(false), 'groupSummary' => array(true), 'showSummaryOnHide' => true, 'groupOrder' => array('asc')))
+				->setGridEvent('onSelectRow', 'moduleAppOnSelectRowEvent')
+				//->addGroupHeader(array('startColumnName' => 'module_app_name', 'numberOfColumns' => 1, 'titleText' => Lang::get('module::app.gridHeader')))
+				->addColumn(array('index' => 'module_app_header'))
+				->addColumn(array('index' => 'id', 'name' => 'module_app_id', 'hidden' => true))
+	    	->addColumn(array('label' => Lang::get('form.name'), 'index' => 'name' ,'name' => 'module_app_name'))
+				//->addColumn(array('label' => Lang::get('form.status'), 'index' => 'status', 'name' => 'module_app_status', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('form.statusGridText')), 'align' => 'center', 'hidden' => false, 'stype' => 'select', 'width' => 80))
+				->addColumn(array('label' => Lang::get('form.status'), 'index' => 'status', 'name' => 'module_app_status', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('module::app.statusGridText')), 'align' => 'center', 'hidden' => false, 'stype' => 'select'))
+				->addColumn(array('label' => Lang::get('form.active'), 'index' => 'is_active' ,'name' => 'module_app_is_active', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('form.booleanText')), 'align' => 'center' , 'stype' => 'select', 'width' => 70))
+				->addColumn(array('label' => Lang::get('module::app.money'), 'index' => 'money', 'name' => 'money', 'formatter' => 'currency', 'align'=>'right', 'width' => 100, 'hidden' => false, 'formatoptions' => array('prefix' => OrganizationManager::getOrganizationCurrencySymbol() . ' ')))
+	    	->renderGrid();
+			!!}
+		</div>
+	</div>
+</div>
+<div id='module-app-form-section' class="row collapse">
+	<div class="col-lg-12 col-md-12">
+		<div class="form-container form-container-followed-by-grid-section">
+			{!! Form::open(array('id' => 'module-app-form', 'url' => URL::to('module/category/app'), 'role'  =>  'form', 'onsubmit' => 'return false;')) !!}
+				<legend id="module-app-form-new-title" class="hidden">{{ Lang::get('module::app.formNewTitle') }}</legend>
+				<legend id="module-app-form-edit-title" class="hidden">{{ Lang::get('module::app.formEditTitle') }}</legend>
+				<div class="row">
+					<div class="col-lg-6 col-md-6">
+						<div class="form-group mg-hm">
+							{!! Form::label('module-app-name', Lang::get('form.name'), array('class' => 'control-label')) !!}
+					    {!! Form::text('module-app-name', null , array('id' => 'module-app-name', 'class' => 'form-control', 'data-mg-required' => '')) !!}
+					    {!! Form::hidden('module-app-id', null, array('id' => 'module-app-id')) !!}
+			  		</div>
+					</div>
+					<div class="col-lg-6 col-md-6">
+						<div class="form-group mg-hm">
+							{!! Form::label('module-app-phone-number', Lang::get('module::app.phoneNumber'), array('class' => 'control-label')) !!}
+							<div class="input-group">
+								<span class="input-group-addon">
+									<i class="fa fa-phone"></i>
+								</span>
+					    	{!! Form::text('module-app-phone-number', null , array('id' => 'module-app-phone-number', 'class' => 'form-control')) !!}
+					    </div>
+			  		</div>
+					</div>
+				</div>
+			{!! Form::close() !!}
+			{!! Form::open(array('id' => 'module-app-detail-form', 'url' => URL::to('inventory/setup/brand-management'), 'role'  =>  'form', 'onsubmit' => 'return false;')) !!}
+			<fieldset id="module-app-detail-form-fieldset" disabled="disabled">
+				<legend id="module-app-detail-model-form-new-title" class="">{{ Lang::get('decima-inventory::brand-management.associateModel') }}</legend>
+				<div class="row">
+					<div class="col-lg-6 col-md-6">
+	          <div class="form-group mg-hm">
+							{!! Form::label('module-app-detail-name', Lang::get('form.name'), array('class' => 'control-label')) !!}
+							{!! Form::text('module-app-detail-name', null , array('id' => 'module-app-detail-name', 'class' => 'form-control', 'data-mg-required' => '')) !!}
+							{!! Form::hidden('module-app-detail-master-id', null, array('id' => 'module-app-detail-master-id', 'data-mg-clear-ignored' => '')) !!}
+							{!! Form::hidden('module-app-detail-id', null, array('id'  =>  'module-app-detail-id')) !!}
+	          </div>
+					</div>
+					<div class="col-lg-6 col-md-6">
+
+					</div>
+				</div>
+			</fieldset>
+		{!! Form::close() !!}
+		</div>
+		<div id="module-app-detail-btn-toolbar" class="section-header btn-toolbar toolbar-preceded-by-form-section" role="toolbar" disabled="disabled">
+			<div id="module-app-detail-btn-group-1" class="btn-group btn-group-app-toolbar">
+				{!! Form::button('<i class="fa fa-refresh"></i> ' . Lang::get('toolbar.refresh'), array('id' => 'module-app-detail-btn-refresh', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('toolbar.refreshLongText'))) !!}
+				<div class="btn-group">
+					{!! Form::button('<i class="fa fa-share-square-o"></i> ' . Lang::get('toolbar.export') . ' <span class="caret"></span>', array('class' => 'btn btn-default dropdown-toggle', 'data-container' => 'body', 'data-toggle' => 'dropdown')) !!}
+					<ul class="dropdown-menu">
+						<li><a id='module-app-detail-btn-export-xls' class="fake-link"><i class="fa fa-file-excel-o"></i> xls</a></li>
+						<li><a id='module-app-detail-btn-export-csv' class="fake-link"><i class="fa fa-file-text-o"></i> csv</a></li>
+					</ul>
+				</div>
+			</div>
+			<div id="module-app-detail-btn-group-2" class="btn-group btn-group-app-toolbar">
+				{!! Form::button('<i class="fa fa-edit"></i> ' . Lang::get('toolbar.edit'), array('id' => 'module-app-detail-btn-edit', 'class' => 'btn btn-default module-app-detail-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('decima-inventory::brand-management.editModel'))) !!}
+				{!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.delete'), array('id' => 'module-app-detail-btn-delete', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('decima-inventory::brand-management.deleteModel'))) !!}
+			</div>
+			<div id="module-app-detail-btn-group-3" class="btn-group btn-group-app-toolbar">
+				{!! Form::button('<i class="fa fa-save"></i> ' . Lang::get('toolbar.save'), array('id' => 'module-app-detail-btn-save', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => 'false', 'data-original-title' => Lang::get('decima-inventory::brand-management.saveModel'))) !!}
+			</div>
+		</div>
+		<div id='module-app-detail-grid-section' class='app-grid collapse in' data-app-grid-id='module-app-detail-journal-entries-grid'>
+			{!!
+			GridRender::setGridId("module-app-detail-grid")
+				->hideXlsExporter()
+				->hideCsvExporter()
+				->setGridOption('url',URL::to('module/category/app/grid-data-detail'))
+				->setGridOption('filename', Lang::get('decima-inventory::brand-management.orderModelGridTitle'))
+				->setGridOption('rowList', array())
+				->setGridOption('rowNum', 100000)
+				->setGridOption('footerrow',true)
+				->setGridOption('postData',array('_token' => Session::token()))
+				->setGridOption('postData', array('_token' => Session::token(), 'filters'=>"{'groupOp':'AND','rules':[{'field':'m.brand_id','op':'eq','data':'-1'}]}"))
+				->setGridEvent('onSelectRow', 'moduleAppDetailOnSelectRowEvent')
+				//->setGridEvent('loadComplete', 'moduleAppOnLoadCompleteEvent')
+				->addColumn(array('index' => 'id', 'name' => 'module_app_detail_id', 'hidden' => true))
+				->addColumn(array('index' => 'master_id', 'name' => 'module_app_master_id', 'hidden' => true))
+				->addColumn(array('label' => Lang::get('form.name'), 'index' => 'detail_name', 'name' => 'module_app_detail_name'))
+				->renderGrid();
+			!!}
+		</div>
+	</div>
+</div>
+<div id='module-app-journals-section' class="row collapse in section-block" data-target-id="">
+	{!! Form::journals('module-app-', $appInfo['id']) !!}
+</div>
+<div id='module-app-modal-delete' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm module-app-btn-delete">
+    <div class="modal-content">
+			<div class="modal-body" style="padding: 20px 20px 0px 20px;">
+				<p id="module-app-delete-message" data-default-label="{{ Lang::get('form.deleteMessageConfirmation') }}"></p>
+				 <!-- <p id="module-app-delete-message" data-default-label="{{ Lang::get('decima-inventory::requisition-management.deleteMessageConfirmation') }}"></p> -->
+      </div>
+			<div class="modal-footer" style="text-align:center;">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ Lang::get('form.no') }}</button>
+				<button id="module-app-btn-modal-delete" type="button" class="btn btn-primary">{{ Lang::get('form.yes') }}</button>
+			</div>
+    </div>
+  </div>
+</div>
+@parent
+@stop
