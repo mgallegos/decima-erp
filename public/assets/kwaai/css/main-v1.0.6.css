@@ -272,6 +272,19 @@
   background-repeat: repeat-x;
 }
 
+.app-grid th.ui-th-column div, .sale-som-od-grid-section th.ui-th-column div{
+  word-wrap: break-word; /* IE 5.5+ and CSS3 */
+  white-space: pre-wrap; /* CSS3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  overflow: hidden;
+  height: auto;
+  vertical-align: middle;
+  padding-top: 3px;
+  padding-bottom: 3px
+}
+
 .app-responsive-grid > .ui-jqgrid, .app-grid > .ui-jqgrid {
   border: 1px solid #cccccc !important;
   border-radius: 0 !important;
