@@ -63,13 +63,15 @@ return array(
 
 	'defaultSuccessOperationMessage' => 'La operación se realizó exitosamente.',
 
-	'defaultSuccessSaveMessage' => 'El registro se ha guardado exitosamente.',
+	'defaultSuccessSaveMessage' => 'El registro se guardó exitosamente.',
 
-	'defaultSuccessUpdateMessage' => 'El registro se ha actualizado exitosamente.',
+	'defaultSuccessUpdateMessage' => 'El registro se actualizó exitosamente.',
 
-	'defaultSuccessDeleteMessage' => 'El registro se ha eliminado exitosamente.',
+	'defaultSuccessDeleteMessage' => 'El registro se eliminó exitosamente.',
 
 	'defaultSuccessDeleteMessage1' => 'Los registros eliminaron exitosamente.',
+
+	'defaultVoidDeleteMessage' => 'El registro se anuló exitosamente.',
 
 	'defaultErrorMessage' => 'Su petición no ha podido ser procesada, por favor intente de nuevo más tarde.',
 
