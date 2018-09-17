@@ -71,7 +71,9 @@ return array(
 
 	'defaultSuccessDeleteMessage1' => 'Los registros eliminaron exitosamente.',
 
-	'defaultVoidDeleteMessage' => 'El registro se anuló exitosamente.',
+	'defaultAuthorizeMessage' => 'El registro se autorizó exitosamente.',
+
+	'defaultVoidMessage' => 'El registro se anuló exitosamente.',
 
 	'defaultErrorMessage' => 'Su petición no ha podido ser procesada, por favor intente de nuevo más tarde.',
 
