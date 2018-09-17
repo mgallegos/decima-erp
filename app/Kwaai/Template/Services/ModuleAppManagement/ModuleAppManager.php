@@ -25,12 +25,13 @@ use Vendor\DecimaModule\Module\Repositories\ModuleTableName\ModuleTableNameInter
 
 use Carbon\Carbon;
 
-use Illuminate\Config\Repository;
+use Illuminate\Database\DatabaseManager;
 
 use Illuminate\Translation\Translator;
 
-use Illuminate\Database\DatabaseManager;
+use Illuminate\Config\Repository;
 
+use Illuminate\Cache\CacheManager;
 
 class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppManagementInterface {
 
@@ -114,6 +115,14 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    */
   protected $Config;
 
+  /**
+  * Laravel Cache instance
+  *
+  * @var \Illuminate\Cache\CacheManager
+  *
+  */
+  protected $Cache;
+
 	public function __construct(
     AuthenticationManagementInterface $AuthenticationManager,
     JournalManagementInterface $JournalManager,
@@ -124,7 +133,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     Carbon $Carbon,
     DatabaseManager $DB,
     Translator $Lang,
-    Repository $Config
+    Repository $Config,
+    CacheManager $Cache
   )
 	{
     $this->AuthenticationManager = $AuthenticationManager;
@@ -272,8 +282,16 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     unset($input['_token']);
 
     $input = eloquent_array_filter_for_update($input);
-    // $input['date'] = $this->Carbon->createFromFormat($this->Lang->get('form.phpShortDateFormat'), $input['date'])->format('Y-m-d');
-    // $input['amount'] = remove_thousands_separator($input['amount']);
+    
+    // if(!empty($input['date']))
+    // {
+    //   $input['date'] = $this->Carbon->createFromFormat($this->Lang->get('form.phpShortDateFormat'), $input['date'])->format('Y-m-d');
+    // }
+
+    // if(!empty($input['amount']))
+    // {
+    //   $input['amount'] = remove_thousands_separator($input['amount']);
+    // }
 
     if(empty($organizationId))
     {
@@ -317,7 +335,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
           }
           else if ($key == 'field1')
           {
-            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.field1'), 'field_lang_key' => 'module::app.field1', 'old_value' => ' ', 'new_value' => ''), $Journal);
+            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.field1'), 'field_lang_key' => 'module::app.field1', 'old_value' => $unchangedValues[$key], 'new_value' => $value), $Journal);
           }
           else if ($key == 'name')
           {
@@ -326,6 +344,28 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
           else if ($key == 'chekbox0' || $key == 'chekbox1')
           {
             $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $this->Lang->get('journal.' . $unchangedValues[$key]), 'new_value' => $this->Lang->get('journal.' . $value)), $Journal);
+          }
+          else if($key == 'date')
+          {
+            if(!empty($unchangedValues[$key]))
+            {
+              $oldValue = $this->Carbon->createFromFormat('Y-m-d', $unchangedValues[$key], 'UTC')->format($this->Lang->get('form.phpShortDateFormat'));
+            }
+            else
+            {
+              $oldValue = '';
+            }
+
+            if(!empty($value))
+            {
+              $newValue = $this->Carbon->createFromFormat('Y-m-d', $value, 'UTC')->format($this->Lang->get('form.phpShortDateFormat'));
+            }
+            else
+            {
+              $newValue = '';
+            }
+
+            $this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('module::app.' . camel_case($key)), 'field_lang_key' => 'module::app.' . camel_case($key), 'old_value' => $oldValue, 'new_value' => $newValue), $Journal);
           }
           else if($key == 'table_name_id')//field required
           {

@@ -72,7 +72,12 @@
 
 		$('#module-app-form-section').on('shown.bs.collapse', function ()
 		{
-			$('#module-app-name').focus();
+			// $('#module-app-').focus();
+		});
+
+		$('#module-app-').focusout(function()
+		{
+			$('#module-app-btn-save').focus();
 		});
 
 		$('#module-app-form-section').on('hidden.bs.collapse', function ()
@@ -421,6 +426,7 @@
   			->hideCsvExporter()
 	    	->setGridOption('url',URL::to('module/category/app/grid-data'))
 	    	->setGridOption('caption', Lang::get('module::app.gridTitle'))
+				->setGridOption('filename', Lang::get('module::app.gridTitle'))
 	    	->setGridOption('postData',array('_token' => Session::token()))
 				->setGridEvent('onSelectRow', 'moduleAppOnSelectRowEvent')
 	    	->addColumn(array('index' => 'id', 'name' => 'module_app_id', 'hidden' => true))

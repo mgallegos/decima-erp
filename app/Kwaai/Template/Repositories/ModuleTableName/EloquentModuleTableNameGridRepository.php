@@ -25,15 +25,15 @@ class EloquentModuleTableNameGridRepository extends EloquentRepositoryAbstract {
 		// $this->DB->connection()->enableQueryLog();
 
 		$this->Database = $DB->connection($AuthenticationManager->getCurrentUserOrganizationConnection())
-			->table('MODULE_Table1 AS t1')
-			->leftJoin('MODULE_Table1 AS t1p', 't1.id', '=', 't1p.parent_id')
-			->join('MODULE_Table2 AS t2', 't2.id', '=', 't1.table2_id')
+			->table('PURCH_Transfer AS t1')
+			// ->leftJoin('MODULE_Table1 AS t1p', 't1.id', '=', 't1p.parent_id')
+			// ->join('MODULE_Table2 AS t2', 't2.id', '=', 't1.table2_id')
 			->where('t1.organization_id', '=', $AuthenticationManager->getCurrentUserOrganizationId());
 
 		$this->visibleColumns = array(
-			't1.id AS module_app_id',
-			$DB->raw('CASE t1.field0 WHEN 1 THEN 0 ELSE 1 END AS module_app_field0'),
-			$DB->raw('CONCAT(\'#\', LPAD(t1.field0, 6, 0), \' \', t1.field1) AS module_app_field1'),
+			// 't1.id AS module_app_id',
+			// $DB->raw('CASE t1.field0 WHEN 1 THEN 0 ELSE 1 END AS module_app_field0'),
+			// $DB->raw('CONCAT(\'#\', LPAD(t1.field0, 6, 0), \' \', t1.field1) AS module_app_field1'),
 		);
 
 		$this->orderBy = array(array('module_app_id', 'asc'));

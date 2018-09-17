@@ -85,6 +85,25 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
   }
 
   /**
+   * Get max number
+   *
+   * @param  int $id Organization id
+   *
+   * @return integer
+   */
+  public function getMaxNumber($id, $databaseConnectionName = null)
+  {
+    if(empty($databaseConnectionName))
+    {
+      $databaseConnectionName = $this->databaseConnectionName;
+    }
+
+    return $this->ModuleTableName->setConnection($databaseConnectionName)
+      ->where('organization_id', '=', $id)
+      ->max('number');
+  }
+
+  /**
    * Create a new ...
    *
    * @param array $data

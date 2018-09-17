@@ -19,13 +19,13 @@ return array(
 
   'save' => 'Guardar ...',
 
-  'addedJournal' => 'Se agregó el ... ":name"',
-
   'formNewTitle' => 'Creación de ...',
 
   'formEditTitle' => 'Edición de ... Existente',
 
   'deleteMessageConfirmation' => '¿Está seguro que desea eliminar el ... ":name"?',
+
+  'addedJournal' => 'Se agregó el ... ":name"',
 
   'deletedJournal' => 'Se eliminó el ... ":name"'
 );
