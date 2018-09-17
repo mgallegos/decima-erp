@@ -896,7 +896,7 @@
 			</div>
 			<div id="module-app-btn-group-2" class="btn-group btn-group-app-toolbar">
 				{!! Form::button('<i class="fa fa-edit"></i> ' . Lang::get('toolbar.edit'), array('id' => 'module-app-btn-edit', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.editMaster'))) !!}
-				{!! Form::button('<i class="fa fa-check"></i> ' . Lang::get('toolbar.authorize'), array('id' => 'module-app-btn-authorize', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('module::app.authorizeMaster'))) !!}
+				{!! Form::button('<i class="fa fa-check"></i> ' . Lang::get('toolbar.authorize'), array('id' => 'module-app-btn-authorize', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.authorizeMaster'))) !!}
 				{!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.nulify'), array('id' => 'module-app-btn-void', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.voidMaster'))) !!}
 				{!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.delete'), array('id' => 'module-app-btn-delete', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.deleteMaster'))) !!}
 			</div>
