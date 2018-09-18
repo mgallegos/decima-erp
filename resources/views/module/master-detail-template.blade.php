@@ -63,15 +63,24 @@
 			}
 		}
 
+		function moduleAppOnLoadCompleteEvent()
+		{
+			// $('#module-app-front-detail-grid').jqGrid('clearGridData');
+			//
+			// $('#module-app-front-detail-grid').jqGrid('footerData','set', {
+			// 	'module_app_detail_': 0,
+			// });
+		}
+
 		function moduleAppDetailOnLoadCompleteEvent()
 		{
-			var amount = $(this).jqGrid('getCol', 'module_app_detail_', false, 'sum');
-
-			$(this).jqGrid('footerData','set', {
-				'module_app_detail_name': '{{ Lang::get('form.total') }}',
-				'module_app_detail_': amount,
-			});
-
+			// var amount = $(this).jqGrid('getCol', 'module_app_detail_', false, 'sum');
+			//
+			// $(this).jqGrid('footerData','set', {
+			// 	'module_app_detail_name': '{{ Lang::get('form.total') }}',
+			// 	'module_app_detail_': amount,
+			// });
+			//
 			// $('#module-app-detail-').val($.fmatter.NumberFormat(amount, $.fn.jqMgVal.defaults.validators.money.formatter));
 		}
 
@@ -921,6 +930,7 @@
 		    	->setGridOption('postData',array('_token' => Session::token()))
 					->setGridOption('grouping', true)
 					->setGridOption('groupingView', array('groupField' => array('module_app_header'), 'groupColumnShow' => array(false), 'groupSummary' => array(true), 'showSummaryOnHide' => true, 'groupOrder' => array('asc')))
+					->setGridEvent('loadComplete', 'moduleAppOnLoadCompleteEvent')
 					->setGridEvent('onSelectRow', 'moduleAppOnSelectRowEvent')
 					//->addGroupHeader(array('startColumnName' => 'module_app_name', 'numberOfColumns' => 1, 'titleText' => Lang::get('module::app.gridHeader')))
 					->addColumn(array('index' => 'module_app_header'))
