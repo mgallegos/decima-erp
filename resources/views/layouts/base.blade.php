@@ -77,8 +77,10 @@
 	  								@section('container')
 	  									<script type='text/javascript'>
 	                      {!! FormJavascript::getGlobalCode() !!}
+												@yield('base-global-js')
 	  										$(document).ready(function(){
 	  											{!! FormJavascript::getCode() !!}
+													@yield('base-document-ready-js')
 	  										});
 	  									</script>
 	  								@show
