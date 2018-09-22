@@ -83,6 +83,7 @@
 													@yield('base-document-ready-js')
 	  										});
 	  									</script>
+											@yield('base-container-top')
 	  								@show
 	  							</div>
 	  						</div>

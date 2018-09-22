@@ -20,5 +20,5 @@
 {!! Html::style('assets/bootstrap-fileinput-v4.3.5/css/fileinput.min.css') !!}
 <!-- {!! Html::style('assets/intro-js-v2.3.0/minified/introjs-rtl.min.css') !!} -->
 {!! Html::style('assets/quill-v1.3.0/css/quill.snow.min.css') !!}
-{!! Html::style('assets/kwaai/css/main-v1.0.6.css') !!}
+{!! Html::style('assets/kwaai/css/main-v1.0.7.css') !!}
 {!! Html::style('assets/kwaai/css/button-custom-classes.css') !!}
