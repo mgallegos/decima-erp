@@ -32,6 +32,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.0/quill.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/keymaster/1.6.1/keymaster.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slideReveal/1.1.2/jquery.slidereveal.min.js"></script>
 @if (!empty(Config::get('system-security.additional_cdn_js')))
 	@foreach (Config::get('system-security.additional_cdn_js') as $index => $js)
 		<script src="{{ trim(preg_replace('/\s+/', ' ', $js)) }}"></script>

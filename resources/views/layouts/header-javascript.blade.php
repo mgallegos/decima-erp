@@ -14,7 +14,7 @@
 <script src="{{ URL::asset('assets/jquery-uix-multiselect-v2.0/js/jquery.uix.multiselect.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-highlight-v4.0/jquery.highlight.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-timepicker-addon-v1.6.3/dist/jquery-ui-timepicker-addon.min.js') }}"></script>
-<script src="{{ URL::asset('assets/bootstrap-tokenfield-dev-9c06df4/bootstrap-tokenfield.min.js') }}"></script>
+<script src="{{ URL::asset('assets/bootstrap-tokenfield-dev-9c06df4/bootstrap-tokenfield.min.js') }}"></script>>
 <!-- <script src="{{ URL::asset('assets/amcharts-v3.17.0/amcharts.js') }}"></script>
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/themes/light.js') }}"></script>
 <script src="{{ URL::asset('assets/amcharts-v3.17.0/serial.js') }}"></script>
@@ -30,6 +30,7 @@
 {!! Html::script('assets/bootstrap-fileinput-v4.3.5/js/locales/es.js') !!}
 {!! Html::script('assets/quill-v1.3.0/js/quill.min.js') !!}
 {!! Html::script('assets/keymaster-v1.6.1/keymaster.min.js') !!}
+<script src="{{ URL::asset('assets/jquery-slidereveal-v1.1.2/jquery.slidereveal.min.js') }}"></script>
 
 <script type='text/javascript'>
 	var userApps, lang, History, State;
