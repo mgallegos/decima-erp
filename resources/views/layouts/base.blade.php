@@ -15,6 +15,7 @@
 </head>
 <body id='body'>
 	<div id="core-wrapper">
+		<div id="core-blocker" data-slider-btn-close-id=""></div>
 		<a href="#page-container" class="sr-only">Skip to content</a>
 		@include('layouts.top-bar')
 	  <div id="user-organizations-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
