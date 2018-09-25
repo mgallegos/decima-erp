@@ -7,10 +7,20 @@
  * See COPYRIGHT and LICENSE.
  */
 
-Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null, $btnClass = 'btn-default', $bootstrapVersion = '3')
+Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null, $btnClass = 'btn-default', $bootstrapVersion = '3', $prefixButton = false)
 {
 	$autocompleteEvent = $autocompleteFocusEvent = $prefix = '';
 	$autocompleteWidgetName = 'autocomplete';
+
+	if(empty($btnClass))
+	{
+		$btnClass = 'btn-default';
+	}
+
+	if(empty($bootstrapVersion))
+	{
+		$bootstrapVersion = '3';
+	}
 
 	if (!isset($options['name']))
 	{
@@ -42,13 +52,6 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 	if (!empty($value))
 	{
 		$options['value'] = $value;
-	}
-
-	if(!is_null($prefixIcon))
-	{
-		$prefix = '<span class="input-group-addon">
-				      <i class="fa '. $prefixIcon . '"></i>
-				   </span>';
 	}
 
 	$options['id'] = $inputTextAutocompleteName;
@@ -85,10 +88,30 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 	if($bootstrapVersion == '3')
 	{
 		$inputGroupClass = 'input-group-btn';
+		$inputIconGroupClass = 'input-group-addon';
 	}
 	else if($bootstrapVersion == '4')
 	{
 		$inputGroupClass = 'input-group-append';
+		$inputIconGroupClass = 'input-group-append';
+	}
+
+	if(!empty($prefixIcon))
+	{
+		if(empty($prefixButton))
+		{
+			$prefix = '<span class="' . $inputIconGroupClass . '">
+			      			<i class="fa '. $prefixIcon . '"></i>
+					   		</span>';
+		}
+		else
+		{
+			$prefix = '<span class="' . $inputGroupClass . '">
+									<button id="'.$options['id'].'-custom-button" class="btn ' . $btnClass . '" type="button">
+										<i class="fa '. $prefixIcon . '"></i>
+									</button>
+					   		</span>';
+		}
 	}
 
 	FormJavascript::setCode('$("#'. $options['id'] .'").' . $autocompleteWidgetName . '({ minLength: 0, search: '. $searchEvent . ', source: '. $autocompleteSource . $autocompleteEvent . '}); $("#'.  $options['id'] . '-show-all-button").click(function(){ $("#' . $options['id'] .'").autocomplete( "search", "" ); $("#' . $options['id'] .'").focus(); });');
@@ -158,20 +181,6 @@ Form::macro('money', function($name, $options = array(), $value = null, $showCal
 
 Form::macro('date', function($name, $options = array(), $value = null, $btnClass = 'btn-default', $bootstrapVersion = '3', $yearRange = 'c-10:c+10', $prefixIcon = '', $prefixButton = false)
 {
-	if ( ! isset($options['name']))
-  {
-		$options['name'] = $name;
-	}
-	if ( !isset($options['placeholder']))
-  {
-		$options['placeholder'] = Lang::get('form.dateFormat');
-	}
-
-	if(!empty($value))
-	{
-		$options['value'] = $value;
-	}
-
 	if(empty($btnClass))
 	{
 		$btnClass = 'btn-default';
@@ -185,6 +194,21 @@ Form::macro('date', function($name, $options = array(), $value = null, $btnClass
 	if(empty($yearRange))
 	{
 		$yearRange = 'c-10:c+10';
+	}
+
+	if(!isset($options['name']))
+  {
+		$options['name'] = $name;
+	}
+
+	if(!isset($options['placeholder']))
+  {
+		$options['placeholder'] = Lang::get('form.dateFormat');
+	}
+
+	if(!empty($value))
+	{
+		$options['value'] = $value;
 	}
 
 	$options['id'] = $name;
