@@ -31,6 +31,7 @@
 {!! Html::script('assets/quill-v1.3.0/js/quill.min.js') !!}
 {!! Html::script('assets/keymaster-v1.6.1/keymaster.min.js') !!}
 <script src="{{ URL::asset('assets/jquery-slidereveal-v1.1.2/jquery.slidereveal.min.js') }}"></script>
+<script src="{{ URL::asset('assets/select2-v4.0.5/select2.js') }}"></script>
 
 <script type='text/javascript'>
 	var userApps, lang, History, State;
