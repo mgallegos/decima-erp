@@ -143,7 +143,7 @@
   			}
   			else
   			{
-  				$('#module-app-detail-id').val(-1);
+  				$('#module-app-detail-master-id').val(-1);
   				$('#module-app-back-detail-grid').jqGrid('clearGridData');
   			}
 
@@ -178,7 +178,7 @@
 			{
 				$('.decima-erp-tooltip').tooltip('hide');
 
-				$('#module-app-back-detail-grid').jqGrid('setGridParam', {'postData':{"filters":"{'groupOp':'AND','rules':[{'field':'master_id','op':'eq','data':'" + $('#module-app-detail-id').val() + "'}]}"}}).trigger('reloadGrid');
+				$('#module-app-back-detail-grid').jqGrid('setGridParam', {'postData':{"filters":"{'groupOp':'AND','rules':[{'field':'master_id','op':'eq','data':'" + $('#module-app-detail-master-id').val() + "'}]}"}}).trigger('reloadGrid');
 			});
 
 			$('#module-app-detail-btn-export-xls').click(function()
@@ -245,7 +245,7 @@
 				$('#module-app-detail-form-fieldset').removeAttr('disabled');
 
 				$('#module-app-id').val(rowData.module_app_id);
-				$('#module-app-detail-id').val(rowData.module_app_id);
+				$('#module-app-detail-master-id').val(rowData.module_app_id);
 
 				// $('.module-app-number').html(rowData.module_app_number);
 
@@ -571,7 +571,7 @@
 						{
 							'_token':$('#app-token').val(),
 							'id': id,
-							'master_id': $('#module-app-detail-id').val()
+							'detail_id': $('#module-app-detail-id').val()
 						}
 					),
 					dataType : 'json',
@@ -651,7 +651,7 @@
 								if(action == 'new')
 								{
 									$('#module-app-id').val(json.id);
-									$('#module-app-detail-id').val(json.id);
+									$('#module-app-detail-master-id').val(json.id);
 									// $('.module-app-number').html('#' + json.number);
 								}
 
@@ -767,7 +767,7 @@
 					$('#module-app-form-new-title').addClass('hidden');
 					$('#module-app-form-edit-title').addClass('hidden');
 					$('#module-app-btn-refresh').click();
-					$('#module-app-detail-id').val(-1);
+					$('#module-app-detail-master-id').val(-1);
 
 					$('#module-app-back-detail-grid').jqGrid('clearGridData');
 
