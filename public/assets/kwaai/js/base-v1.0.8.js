@@ -903,6 +903,11 @@ $(document).ready(function()
 
     if (API != undefined)
     {
+      API.bind('open:before', function() {
+        $(".core-slider").addClass('hidden');
+        console.log('entre');
+      });
+
       API.bind('open:finish', function() {
         $("input[placeholder='Search']").focus();
       });
