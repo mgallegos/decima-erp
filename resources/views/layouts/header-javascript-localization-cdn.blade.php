@@ -1,4 +1,4 @@
-<script src="{{ URL::asset('assets/jquery-mg-validation-v0.4/i18n/jquery.jqMgVal.locale-es.js') }}"></script>
+<script src="{{ URL::asset('assets/jquery-mg-validation-v0.5/i18n/jquery.jqMgVal.locale-es.js') }}"></script>
 <script src="{{ URL::asset('assets/kwaai/js/datepicker-es.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-ui-timepicker-addon-v1.6.3/dist/i18n/jquery-ui-timepicker-es.js') }}"></script> <!-- No cambiar, tiene diferente el am y pm-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.13.5/js/i18n/grid.locale-es.min.js"></script>

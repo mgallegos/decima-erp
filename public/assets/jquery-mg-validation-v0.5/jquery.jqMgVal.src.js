@@ -99,7 +99,7 @@
 						decimalSeparator: '.',
 						thousandsSeparator: ',',
 						decimalPlaces: 3,
-						defaultValue: '0.00'
+						defaultValue: '0.000'
 				},
 				validationRegex: '^\\$?([1-9]{1}[0-9]{0,3}(\\,[0-9]{3})*(\\.[0-9]{0,3})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,3})?|0(\\.[0-9]{0,3})?|(\\.[0-9]{1,3})?)$',
 				allowedCharactersRegex: '^(\\d|,|\\.)$',
@@ -110,7 +110,7 @@
 						decimalSeparator: '.',
 						thousandsSeparator: ',',
 						decimalPlaces: 4,
-						defaultValue: '0.00'
+						defaultValue: '0.0000'
 				},
 				validationRegex: '^\\$?([1-9]{1}[0-9]{0,4}(\\,[0-9]{3})*(\\.[0-9]{0,4})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,4})?|0(\\.[0-9]{0,4})?|(\\.[0-9]{1,4})?)$',
 				allowedCharactersRegex: '^(\\d|,|\\.)$',
@@ -120,8 +120,8 @@
 				formatter: {
 						decimalSeparator: '.',
 						thousandsSeparator: ',',
-						decimalPlaces: 2,
-						defaultValue: '0.00'
+						decimalPlaces: 5,
+						defaultValue: '0.00000'
 				},
 				validationRegex: '^\\$?([1-9]{1}[0-9]{0,5}(\\,[0-9]{3})*(\\.[0-9]{0,5})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,5})?|0(\\.[0-9]{0,5})?|(\\.[0-9]{1,5})?)$',
 				allowedCharactersRegex: '^(\\d|,|\\.)$',
@@ -131,10 +131,32 @@
 				formatter: {
 						decimalSeparator: '.',
 						thousandsSeparator: ',',
-						decimalPlaces: 2,
-						defaultValue: '0.00'
+						decimalPlaces: 6,
+						defaultValue: '0.000000'
 				},
 				validationRegex: '^\\$?([1-9]{1}[0-9]{0,6}(\\,[0-9]{3})*(\\.[0-9]{0,6})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,6})?|0(\\.[0-9]{0,6})?|(\\.[0-9]{1,6})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			money7:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 7,
+						defaultValue: '0.0000000'
+				},
+				validationRegex: '^\\$?([1-9]{1}[0-9]{0,7}(\\,[0-9]{3})*(\\.[0-9]{0,7})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,7})?|0(\\.[0-9]{0,7})?|(\\.[0-9]{1,7})?)$',
+				allowedCharactersRegex: '^(\\d|,|\\.)$',
+				regexHelpMessageLangId:'moneyRegexHelpMessage'
+			},
+			money8:{
+				formatter: {
+						decimalSeparator: '.',
+						thousandsSeparator: ',',
+						decimalPlaces: 8,
+						defaultValue: '0.00000000'
+				},
+				validationRegex: '^\\$?([1-9]{1}[0-9]{0,8}(\\,[0-9]{3})*(\\.[0-9]{0,8})?|[1-9]{1}[0-9]{0,}(\\.[0-9]{0,8})?|0(\\.[0-9]{0,8})?|(\\.[0-9]{1,8})?)$',
 				allowedCharactersRegex: '^(\\d|,|\\.)$',
 				regexHelpMessageLangId:'moneyRegexHelpMessage'
 			},
