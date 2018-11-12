@@ -241,6 +241,12 @@
   visibility: hidden;
 }
 
+/* Buttons classes */
+
+.custom-button-padding {
+  padding: 6px 6px !important;
+}
+
 /* Section classes */
 
 .section-header {

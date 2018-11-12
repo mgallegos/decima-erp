@@ -21,5 +21,5 @@
 <!-- {!! Html::style('assets/intro-js-v2.3.0/minified/introjs-rtl.min.css') !!} -->
 {!! Html::style('assets/quill-v1.3.0/css/quill.snow.min.css') !!}
 {!! Html::style('assets/select2-v4.0.5/select2.css') !!}
-{!! Html::style('assets/kwaai/css/main-v1.0.7.css') !!}
+{!! Html::style('assets/kwaai/css/main-v1.0.8.css') !!}
 {!! Html::style('assets/kwaai/css/button-custom-classes.css') !!}
