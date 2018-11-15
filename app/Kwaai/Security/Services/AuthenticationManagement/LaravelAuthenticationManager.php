@@ -1145,6 +1145,25 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	}
 
 	/**
+	* Get current user organization sale point quantity
+	*
+	* @return string
+	*/
+	public function getCurrentUserOrganizationSalePointQuantity()
+	{
+		$organization = $this->getSessionOrganization();
+
+		if(empty($organization))
+		{
+			return '';
+		}
+		else
+		{
+			return $organization['sale_point_quantity'];
+		}
+	}
+
+	/**
 	 * Get logged user ID
 	 *
 	 * @return int
