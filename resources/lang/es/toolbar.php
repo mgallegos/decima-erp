@@ -25,6 +25,8 @@ return array(
 
 	'authorize' => 'Autorizar',
 
+	'process' => 'Procesar',
+
 	'upload' => 'Adjuntar',
 
 	'add' => 'Agregar',
