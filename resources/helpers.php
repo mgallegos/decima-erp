@@ -622,6 +622,21 @@ if ( ! function_exists('eloquent_array_filter'))
     }
   }
 
+  if ( ! function_exists('letterToNumber'))
+  {
+    /**
+     * Convert letter to number
+     *
+     * @param  string  $value
+     *
+     * @return array
+     */
+    function letterToNumber($letter)
+    {
+      return ord(strtolower($letter)) - 97;
+    }
+  }
+
   if ( ! function_exists('checkbox_journal_value'))
   {
     /**
