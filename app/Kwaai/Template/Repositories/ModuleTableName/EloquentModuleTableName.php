@@ -33,11 +33,11 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
 
   public function __construct(Model $ModuleTableName, $databaseConnectionName)
   {
-      $this->ModuleTableName = $ModuleTableName;
+    $this->ModuleTableName = $ModuleTableName;
 
-      $this->databaseConnectionName = $databaseConnectionName;
+    $this->databaseConnectionName = $databaseConnectionName;
 
-      $this->ModuleTableName->setConnection($databaseConnectionName);
+    $this->ModuleTableName->setConnection($databaseConnectionName);
   }
 
   /**
