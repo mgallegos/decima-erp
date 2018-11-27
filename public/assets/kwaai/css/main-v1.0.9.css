@@ -741,6 +741,11 @@
 	z-index: 2147483647 !important;
 }
 
+/*Hidden elements*/
+.help-block-hidden .help-block, .control-label-hidden .fa-check-circle, .control-label-hidden .fa-times-circle {
+  display: none;
+}
+
 /*Iphone 5*/
 @media (min-width: 320px) {
   .app-grid > .ui-jqgrid {
