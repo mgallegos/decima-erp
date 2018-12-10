@@ -198,18 +198,18 @@ class EloquentUser implements UserInterface {
     public function permissionsByUserRolesByMenuAndByOrganization($userId, $menuId, $organizationId)
     {
     	$permissions =  $this->DB->table('SEC_Permission As p')
-						    	->join('SEC_Role_Permission AS rp', 'p.id', '=', 'rp.permission_id')
-						    	->where('menu_id', '=', $menuId)
-						    	->whereIn('rp.role_id', function($query) use ($userId, $organizationId)
-						    	{
-						    		$query->select('ur.role_id')
-  										->from('SEC_User_Role AS ur')
-  										// ->join('SEC_Role AS r', 'r.id', '=', 'ur.role_id')
-  										->where('ur.user_id', '=', $userId)
-  										->where('ur.organization_id', '=', $organizationId);
-						    	})
-						    	->distinct()
-						    	->get(array('p.id', 'p.name'));
+      	->join('SEC_Role_Permission AS rp', 'p.id', '=', 'rp.permission_id')
+      	->where('menu_id', '=', $menuId)
+      	->whereIn('rp.role_id', function($query) use ($userId, $organizationId)
+      	{
+      		$query->select('ur.role_id')
+  					->from('SEC_User_Role AS ur')
+  					// ->join('SEC_Role AS r', 'r.id', '=', 'ur.role_id')
+  					->where('ur.user_id', '=', $userId)
+  					->where('ur.organization_id', '=', $organizationId);
+      	})
+      	->distinct()
+      	->get(array('p.id', 'p.name', 'p.key'));
 
       return new Collection($permissions);
     }
