@@ -494,18 +494,18 @@ class OrganizationManager implements OrganizationManagementInterface {
 			$this->User->attachAllMenus($input['created_by'], $Organization->id, $input['created_by']);
 			$this->User->attachAllPermissions($input['created_by'], $Organization->id, $input['created_by']);
 
-			$this->Role->roles()->each(function($Role) use ($input, $Organization)
-			{
-				$menus = array();
-
-				$this->Role->menusByRole($Role->id)->each(function($Menu) use (&$menus)
-				{
-					array_push($menus, $Menu->id);
-				});
-
-				$OrganizationRole = $this->Role->create(array('name' => $Role->name, 'organization_id' => $Organization->id, 'created_by' => $input['created_by']));
-				$this->Role->attachMenus($OrganizationRole->id, $menus, $input['created_by'], $OrganizationRole);
-			});
+			// $this->Role->roles()->each(function($Role) use ($input, $Organization)
+			// {
+			// 	$menus = array();
+			//
+			// 	$this->Role->menusByRole($Role->id)->each(function($Menu) use (&$menus)
+			// 	{
+			// 		array_push($menus, $Menu->id);
+			// 	});
+			//
+			// 	$OrganizationRole = $this->Role->create(array('name' => $Role->name, 'organization_id' => $Organization->id, 'created_by' => $input['created_by']));
+			// 	$this->Role->attachMenus($OrganizationRole->id, $menus, $input['created_by'], $OrganizationRole);
+			// });
 
       $Journal = $this->Journal->create(array('journalized_id' => $Organization->id, 'journalized_type' => $this->Organization->getTable(), 'user_id' => $input['created_by']));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('organization/organization-management.organizationAddedJournal', array('organization' => $Organization->name))), $Journal);

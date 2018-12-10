@@ -1214,9 +1214,15 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 		$organizationRoles = array();
 
-		$this->Organization->rolesByOrganization($organizationId)->each(function($role) use (&$organizationRoles)
+		// $this->Organization->rolesByOrganization($organizationId)->each(function($role) use (&$organizationRoles)
+		// {
+		// 	array_push($organizationRoles, array('value'=>$role->id, 'text'=>($this->Lang->has($role->lang_key) ? $this->Lang->get($role->lang_key) : $role->name)));
+		// });
+
+		//roles() -> organizationId = null
+		$this->Role->roles()->each(function($Role) use (&$organizationRoles)
 		{
-			array_push($organizationRoles, array('value'=>$role->id, 'text'=>($this->Lang->has($role->lang_key) ? $this->Lang->get($role->lang_key) : $role->name)));
+			array_push($organizationRoles, array('value'=>$Role->id, 'text'=>($this->Lang->has($Role->lang_key) ? $this->Lang->get($Role->lang_key) : $Role->name)));
 		});
 
 		if($post["menuOptionModuleId"] == $post["permissionsModuleId"])
