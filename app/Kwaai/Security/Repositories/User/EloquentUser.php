@@ -102,9 +102,23 @@ class EloquentUser implements UserInterface {
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
+    public function rolesByUser($userId, $organizationId)
+    {
+    	return $this->User->find($userId)->roles()->get();
+    }
+
+    /**
+     * Retrieve user's roles
+     *
+     * @param  int $userId
+     * @param  int $organizationId
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
     public function rolesByUserAndByOrganization($userId, $organizationId)
     {
-    	return $this->User->find($userId)->roles()->where('organization_id', '=', $organizationId)->get();
+    	return $this->User->find($userId)->roles()->where('SEC_User_Role.organization_id', '=', $organizationId)->get();
+    	// return $this->User->find($userId)->roles()->where('pivot_organization_id', '=', $organizationId)->get();
     }
 
     /**
@@ -137,18 +151,18 @@ class EloquentUser implements UserInterface {
     public function menusByUserRolesByModuleAndByOrganization($userId, $moduleId, $organizationId)
     {
   		$menus = $this->DB->table('SEC_Menu As m')
-          			->join('SEC_Role_Menu AS rm', 'm.id', '=', 'rm.menu_id')
-          			->where('m.module_id', '=', $moduleId)
-          			->whereIn('rm.role_id', function($query) use ($userId, $organizationId)
-          			{
-              				$query->select('ur.role_id')
-          					->from('SEC_User_Role AS ur')
-          					->join('SEC_Role AS r', 'r.id', '=', 'ur.role_id')
-          					->where('ur.user_id', '=', $userId)
-          					->where('r.organization_id', '=', $organizationId);
-          			})
-          			->distinct()
-          			->get(array('m.*'));
+  			->join('SEC_Role_Menu AS rm', 'm.id', '=', 'rm.menu_id')
+  			->where('m.module_id', '=', $moduleId)
+  			->whereIn('rm.role_id', function($query) use ($userId, $organizationId)
+  			{
+          $query->select('ur.role_id')
+            ->from('SEC_User_Role AS ur')
+            ->join('SEC_Role AS r', 'r.id', '=', 'ur.role_id')
+            ->where('ur.user_id', '=', $userId)
+            ->where('ur.organization_id', '=', $organizationId);
+  			})
+  			->distinct()
+  			->get(array('m.*'));
 
   		return new Collection($menus);
 
@@ -352,7 +366,7 @@ class EloquentUser implements UserInterface {
      *
      * @return boolean
      */
-    public function attachRoles($userId, $rolesId, $createdBy, $User = null)
+    public function attachRoles($userId, $rolesId, $createdBy, $organizationId, $User = null)
     {
       if(empty($User))
       {
@@ -361,7 +375,7 @@ class EloquentUser implements UserInterface {
 
     	foreach($rolesId as $roleId)
     	{
-    		$User->roles()->attach($roleId, array('created_by' => $createdBy));
+    		$User->roles()->attach($roleId, array('created_by' => $createdBy, 'organization_id' => $organizationId));
     	}
 
     	return true;

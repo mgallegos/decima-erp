@@ -159,7 +159,7 @@ interface UserInterface {
      *
      * @return boolean
      */
-    public function attachRoles($userId, $rolesId, $createdBy, $User = null);
+    public function attachRoles($userId, $rolesId, $createdBy, $organizationId, $User = null);
 
     /**
      * Detach roles from a user

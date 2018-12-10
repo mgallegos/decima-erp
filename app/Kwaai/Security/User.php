@@ -51,7 +51,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	 */
 	public function roles()
 	{
-		return $this->belongsToMany('App\Kwaai\Security\Role', 'SEC_User_Role', 'user_id', 'role_id')->withTimestamps();
+		return $this->belongsToMany('App\Kwaai\Security\Role', 'SEC_User_Role', 'user_id', 'role_id')->withPivot('organization_id')->withTimestamps();
 	}
 
 	/**

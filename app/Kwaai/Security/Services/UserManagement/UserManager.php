@@ -937,13 +937,13 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 			if($post['selected'])
 			{
-				$this->User->attachRoles($post['userId'], $post['rolesId'], $loggedUserId, $User);
+				$this->User->attachRoles($post['userId'], $post['rolesId'], $loggedUserId, $organizationId, $User);
 
-		        $this->Role->rolesById($post['rolesId'])->each(function($Role) use($Journal, $User)
-		        {
-		          $roleName = $this->Lang->has($Role->lang_key) ? $this->Lang->get($Role->lang_key) : $Role->name;
-		          $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('security/user-management.rolAssignedJournal', array('rol' => $roleName, 'email' => $User->email))), $Journal);
-		        });
+        $this->Role->rolesById($post['rolesId'])->each(function($Role) use($Journal, $User)
+        {
+          $roleName = $this->Lang->has($Role->lang_key) ? $this->Lang->get($Role->lang_key) : $Role->name;
+          $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('security/user-management.rolAssignedJournal', array('rol' => $roleName, 'email' => $User->email))), $Journal);
+        });
 			}
 			else
 			{
