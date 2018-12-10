@@ -101,16 +101,21 @@ function umOnSelectRowEvent(id)
 	{
 		umEnableAdminArea();
 
-		if($('#um-grid-users-mode').parent().hasClass('active'))
-		{
-			umGetAccessControlList();
-		}
-		else
-		{
-			$('#um-btn-menu-preview').attr('disabled','disabled');
-			cleanJournals('um-');
-			getAppJournals('um-','firstPage', $('#users-grid').getSelectedRowId());
-		}
+		//test
+		umGetAccessControlList();
+		cleanJournals('um-');
+		getAppJournals('um-','firstPage', $('#users-grid').getSelectedRowId());
+
+		// if($('#um-grid-users-mode').parent().hasClass('active'))
+		// {
+		// 	umGetAccessControlList();
+		// }
+		// else
+		// {
+		// 	$('#um-btn-menu-preview').attr('disabled','disabled');
+		// 	cleanJournals('um-');
+		// 	getAppJournals('um-','firstPage', $('#users-grid').getSelectedRowId());
+		// }
 	}
 	else if(selRowIds.length > 1)
 	{
