@@ -159,6 +159,8 @@ class CreateSecurityTables extends Migration {
 			$table->foreign('user_id')->references('id')->on('SEC_User');
 			$table->unsignedInteger('role_id')->index();
 			$table->foreign('role_id')->references('id')->on('SEC_Role');
+			$table->unsignedInteger('organization_id')->index();
+			$table->foreign('organization_id')->references('id')->on('ORG_Organization');
 			$table->unsignedInteger('created_by');
 			$table->foreign('created_by')->references('id')->on('SEC_User');
 

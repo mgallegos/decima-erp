@@ -36,9 +36,12 @@ class CreateOrganizationTables extends Migration {
 			$table->string('company_registration')->nullable();
 			$table->string('commercial_trade')->nullable();
 			$table->text('logo_url')->nullable();
-			$table->tinyInteger('cost_price_precision');
+			$table->tinyInteger('cost_price_precision')->default(2)->index();
+			$table->tinyInteger('discount_precision')->default(2)->index();
 			$table->string('database_connection_name',60);
 			$table->string('api_token',60)->nullable();
+			$table->tinyInteger('sale_point_quantity')->default(1)->index();
+			// $table->boolean('has_multiple_point_of_sale')->default(false)->index();
 
 			//Contact information (clients)
 
