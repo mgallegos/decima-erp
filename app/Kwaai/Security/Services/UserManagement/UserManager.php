@@ -533,7 +533,15 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			unset($input['password']);
 		}
 
-		unset($input['_token'], $input['send_email'], $input['is_admin'], $input['confirm_password'], $input['organizacion_name']);
+		unset(
+			$input['_token'],
+			$input['send_email'],
+			$input['is_admin'],
+			$input['confirm_password'],
+			$input['organizacion_name']
+		);
+
+		$this->Session->forget('loggedUser');
 
     $this->DB->transaction(function() use ($User, $input, $loggedUserId)
     {
