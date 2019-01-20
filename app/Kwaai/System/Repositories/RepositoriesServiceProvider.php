@@ -13,6 +13,8 @@ use App\Kwaai\System\Country;
 
 use App\Kwaai\System\Currency;
 
+use App\Kwaai\System\SlvSetting;
+
 use Illuminate\Support\ServiceProvider;
 
 
@@ -28,9 +30,11 @@ class RepositoriesServiceProvider extends ServiceProvider {
 		$this->registerCountryInterface();
 
 		$this->registerCurrencyInterface();
+
+		$this->registerSlvSettingInterface();
 	}
 
-	
+
 	/**
 	* Register the country interface instance.
 	*
@@ -54,6 +58,19 @@ class RepositoriesServiceProvider extends ServiceProvider {
 		$this->app->bind('App\Kwaai\System\Repositories\Currency\CurrencyInterface', function()
 		{
 			return new \App\Kwaai\System\Repositories\Currency\EloquentCurrency( new Currency() );
+		});
+	}
+
+	/**
+	* Register the SlvSetting interface instance.
+	*
+	* @return void
+	*/
+	protected function registerSlvSettingInterface()
+	{
+		$this->app->bind('App\Kwaai\System\Repositories\SlvSetting\SlvSettingInterface', function()
+		{
+			return new \App\Kwaai\System\Repositories\SlvSetting\EloquentSlvSetting( new SlvSetting() );
 		});
 	}
 

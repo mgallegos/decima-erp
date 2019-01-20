@@ -150,34 +150,25 @@ class SettingManager extends AbstractLaravelValidator implements SettingManageme
    *
    * @return mixed Illuminate\Database\Eloquent\Model if not empty, false if empty
    */
-  public function getSlvSetting($id, $databaseConnectionName = null)
+  public function getSlvSetting($organizationId = null, $databaseConnectionName = null)
   {
-    $SlvSetting = $this->SlvSetting->byId($id, $databaseConnectionName);
-
-    if(empty($SlvSetting))
+    if(empty($organizationId))
     {
-      return false;
+      $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
+    }
+    
+    $SlvSetting = $this->SlvSetting->byOrganization($organizationId, $databaseConnectionName);
+
+    if($SlvSetting->isEmpty())
+    {
+      $SlvSetting = $this->createSlv(array());
+    }
+    else
+    {
+      $SlvSetting = $SlvSetting->first();
     }
 
     return $SlvSetting;
-  }
-
-  /**
-   * Get ...
-   *
-   * @return array
-   *  An array of arrays as follows: array( array('label'=>$name0, 'value'=>$id0), array('label'=>$name1, 'value'=>$id1),…)
-   */
-  public function getSlvSettings()
-  {
-    $SlvSettings = array();
-
-    $this->SlvSetting->byOrganization($this->AuthenticationManager->getCurrentUserOrganizationId())->each(function($SlvSetting) use (&$SlvSettings)
-    {
-      array_push($SlvSettings, array('label'=> $SlvSetting->name , 'value'=>$SlvSetting->id));
-    });
-
-    return $SlvSettings;
   }
 
   /**
@@ -218,8 +209,8 @@ class SettingManager extends AbstractLaravelValidator implements SettingManageme
 		{
       $SlvSetting = $this->SlvSetting->create($input, $databaseConnectionName);
 
-      $Journal = $this->Journal->create(array('journalized_id' => $SlvSetting->id, 'journalized_type' => $this->SlvSetting->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
-      $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.addedJournal', array('name' => $SlvSetting->name)), $Journal));
+      // $Journal = $this->Journal->create(array('journalized_id' => $SlvSetting->id, 'journalized_type' => $this->SlvSetting->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
+      // $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.addedJournal', array('name' => $SlvSetting->name)), $Journal));
 
       $this->commit($openTransaction);
     }
@@ -236,7 +227,9 @@ class SettingManager extends AbstractLaravelValidator implements SettingManageme
       throw $e;
     }
 
-    return json_encode(array('success' => $this->Lang->get('form.defaultSuccessSaveMessage')));
+    return $SlvSetting;
+
+    // return json_encode(array('success' => $this->Lang->get('form.defaultSuccessSaveMessage')));
   }
 
   /**
