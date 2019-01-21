@@ -156,7 +156,7 @@ class SettingManager extends AbstractLaravelValidator implements SettingManageme
     {
       $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
     }
-    
+
     $SlvSetting = $this->SlvSetting->byOrganization($organizationId, $databaseConnectionName);
 
     if($SlvSetting->isEmpty())
@@ -276,10 +276,9 @@ class SettingManager extends AbstractLaravelValidator implements SettingManageme
     {
       if(empty($SlvSetting))
       {
-        $SlvSetting = $this->SlvSetting->byId($input['id'], $databaseConnectionName);
+        $SlvSetting = $this->getSlvSetting();
+        $SlvSetting = $this->SlvSetting->byId($SlvSetting->id, $databaseConnectionName);
       }
-
-      $unchangedValues = $SlvSetting->toArray();
 
       $this->SlvSetting->update($input, $SlvSetting);
 
