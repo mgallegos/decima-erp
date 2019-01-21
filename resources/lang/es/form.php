@@ -219,6 +219,8 @@ return array(
 
 	'gender' => 'Género',
 
+	'code' => 'Código',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
