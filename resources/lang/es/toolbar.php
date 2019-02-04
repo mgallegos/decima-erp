@@ -41,6 +41,10 @@ return array(
 
 	'refreshLongText' => 'Actualizar la tabla de datos',
 
+	'showFilesLongText' => 'Ver archivos asociados',
+
+	'showHistoryLongText' => 'Ver historial',
+
 	'export' => 'Exportar',
 
 	'import' => 'Importar',

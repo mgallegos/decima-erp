@@ -872,7 +872,7 @@
 								{!! Form::label('module-app-name-filter', Lang::get('module::app.name'), array('class' => 'col-sm-2 control-label')) !!}
 								<div class="col-sm-10 mg-hm">
 									{!! Form::autocomplete('module-app-name-filter', array(), array('class' => 'form-control'), 'module-app-name-filter', 'module-app-name-id-filter', null, 'fa-files-o', '', 20) !!}
-									{!! Form::hidden('module-app-name-id-filter', null, array('id'  =>  'module-app-name-id-filter')) !!}
+									{!! Form::hidden('module-app-name-id-filter', null, array('id' => 'module-app-name-id-filter')) !!}
 									<p class="help-block">{{ Lang::get('module::app.nameHelperText') }}</p>
 								</div>
 							</div>
@@ -882,7 +882,7 @@
 								{!! Form::label('module-app-name-filter', Lang::get('module::app.model'), array('class' => 'col-sm-2 control-label')) !!}
 								<div class="col-sm-10 mg-hm">
 									{!! Form::autocomplete('module-app-name-filter', array(), array('class' => 'form-control'), 'module-app-name-filter', 'module-app-name-id-filter', null, 'fa-files-o', '', 20) !!}
-									{!! Form::hidden('module-app-name-id-filter', null, array('id'  =>  'module-app-name-id-filter')) !!}
+									{!! Form::hidden('module-app-name-id-filter', null, array('id' => 'module-app-name-id-filter')) !!}
 									<p class="help-block">{{ Lang::get('module::app.modelHelperText') }}</p>
 								</div>
 							</div>
@@ -968,7 +968,7 @@
 <div id='module-app-form-section' class="row collapse">
 	<div class="col-lg-12 col-md-12">
 		<div class="form-container form-container-followed-by-grid-section">
-			{!! Form::open(array('id' => 'module-app-form', 'url' => URL::to('module/category/app'), 'role'  =>  'form', 'onsubmit' => 'return false;')) !!}
+			{!! Form::open(array('id' => 'module-app-form', 'url' => URL::to('module/category/app'), 'role' => 'form', 'onsubmit' => 'return false;')) !!}
 				<legend id="module-app-form-new-title" class="hidden">{{ Lang::get('module::app.formNewTitle') }}</legend>
 				<legend id="module-app-form-edit-title" class="hidden">{{ Lang::get('module::app.formEditTitle') }}<label class="pull-right module-app-number"></label></legend>
 				<div class="row">
@@ -1013,7 +1013,7 @@
 					</div>
 				</div>
 			{!! Form::close() !!}
-			{!! Form::open(array('id' => 'module-app-detail-form', 'url' => URL::to('module/category/app'), 'role'  =>  'form', 'onsubmit' => 'return false;')) !!}
+			{!! Form::open(array('id' => 'module-app-detail-form', 'url' => URL::to('module/category/app'), 'role' => 'form', 'onsubmit' => 'return false;')) !!}
 			<fieldset id="module-app-detail-form-fieldset" disabled="disabled">
 				<legend id="module-app-detail-model-form-new-title" class="">{{ Lang::get('module::app.formDetailTitle') }}</legend>
 				<div class="row">
@@ -1022,7 +1022,7 @@
 							{!! Form::label('module-app-detail-name', Lang::get('form.name'), array('class' => 'control-label')) !!}
 							{!! Form::text('module-app-detail-name', null , array('id' => 'module-app-detail-name', 'class' => 'form-control', 'data-mg-required' => '')) !!}
 							{!! Form::hidden('module-app-detail-master-id', null, array('id' => 'module-app-detail-master-id', 'data-mg-clear-ignored' => '')) !!}
-							{!! Form::hidden('module-app-detail-id', null, array('id'  =>  'module-app-detail-id')) !!}
+							{!! Form::hidden('module-app-detail-id', null, array('id' => 'module-app-detail-id')) !!}
 	          </div>
 					</div>
 					<div class="col-md-6">
