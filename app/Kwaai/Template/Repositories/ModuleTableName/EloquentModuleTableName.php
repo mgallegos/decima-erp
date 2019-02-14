@@ -11,6 +11,10 @@ namespace Vendor\DecimaModule\Module\Repositories\ModuleTableName;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\DatabaseManager;
+
+use Illuminate\Database\Eloquent\Collection;
+
 use Vendor\DecimaModule\Module\ModuleTableName;
 
 class EloquentModuleTableName implements ModuleTableNameInterface {
@@ -24,6 +28,14 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
   protected $ModuleTableName;
 
   /**
+   * DB
+   *
+   * @var Illuminate\Database\DatabaseManager
+   *
+   */
+  protected $DB;
+
+  /**
    * Database Connection
    *
    * @var string
@@ -31,9 +43,11 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   protected $databaseConnectionName;
 
-  public function __construct(Model $ModuleTableName, $databaseConnectionName)
+  public function __construct(Model $ModuleTableName, DatabaseManager $DB, $databaseConnectionName)
   {
     $this->ModuleTableName = $ModuleTableName;
+
+    $this->DB = $DB;
 
     $this->databaseConnectionName = $databaseConnectionName;
 
@@ -65,6 +79,32 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
     }
 
   	return $this->ModuleTableName->on($databaseConnectionName)->find($id);
+  }
+
+  /**
+   * Get a ... by ID
+   *
+   * @param  int $id
+   *
+   * @return Illuminate\Database\Eloquent\Collection
+   */
+  public function byIds($ids, $databaseConnectionName = null)
+  {
+    if(empty($databaseConnectionName))
+    {
+      $databaseConnectionName = $this->databaseConnectionName;
+    }
+
+    return new Collection(
+      $this->DB->connection($databaseConnectionName)
+        ->table('Table_Name0 AS t0')
+        ->join('Table_Name1 AS t1', 't1.column_name', '=', 't0.column_name')
+        // ->where('p.id', '=', $ids)
+        ->whereIn('t1.id', $ids)
+        // ->orderBy('t1.column_name0', 'desc')
+        // ->orderBy('t1.column_name1', 'asc')
+        ->get(array('t0.*'))
+    );
   }
 
   /**
@@ -158,6 +198,30 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
   }
 
   /**
+   * Update by column name
+   *
+   * @param int $columnNameOldValue
+   * @param integer $organizationId
+   * @param string $databaseConnectionName
+   *
+   * @return boolean
+   */
+  public function updateByColumnName($columnNameOldValue, $organizationId, $databaseConnectionName = null)
+  {
+    if(empty($databaseConnectionName))
+    {
+      $databaseConnectionName = $this->databaseConnectionName;
+    }
+
+    $this->ModuleTableName->setConnection($databaseConnectionName)
+      ->where('column_name', '=', $columnNameOldValue)
+      ->where('organization_id', '=', $organizationId)
+      ->update(array('column_name_to_be_updated' => $newValue));
+
+    return true;
+  }
+
+  /**
    * Delete existing ... (soft delete)
    *
    * @param array $data
@@ -177,6 +241,29 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
       $ModuleTableName->delete();
     }
     // $this->Account->destroy($data);
+
+    return true;
+  }
+
+  /**
+   * Mass detele
+   *
+   * @param integer $fileId
+   *
+   *
+   * @return boolean
+   */
+  public function massDelete($fileId, $databaseConnectionName = null)
+  {
+    if(empty($databaseConnectionName))
+    {
+      $databaseConnectionName = $this->databaseConnectionName;
+    }
+
+    $this->DB->connection($databaseConnectionName)
+      ->table($this->getTable())
+      ->where('column_name', '=', $fileId)
+      ->delete();
 
     return true;
   }

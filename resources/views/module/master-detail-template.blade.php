@@ -917,7 +917,7 @@
 		<div id='module-app-grid-section' class='collapse in'>
 			<div class='app-grid' data-app-grid-id='module-app-grid'>
 				{!!
-				GridRender::setGridId("module-app-grid")
+				GridRender::setGridId('module-app-grid')
 					->hideXlsExporter()
 	  			->hideCsvExporter()
 					->setGridOption('height', 'auto')
@@ -945,7 +945,7 @@
 			</div>
 			<div class='app-grid app-grid-without-toolbar section-block' data-app-grid-id='module-app-front-detail-grid'>
 				{!!
-				GridRender::setGridId("module-app-front-detail-grid")
+				GridRender::setGridId('module-app-front-detail-grid')
 					->hideXlsExporter()
 					->hideCsvExporter()
 					->setGridOption('url',URL::to('module/category/app/grid-data-detail'))
@@ -1053,7 +1053,7 @@
 		</div>
 		<div id='module-app-back-detail-grid-section' class='app-grid collapse in' data-app-grid-id='module-app-back-detail-grid'>
 			{!!
-			GridRender::setGridId("module-app-back-detail-grid")
+			GridRender::setGridId('module-app-back-detail-grid')
 				->hideXlsExporter()
 				->hideCsvExporter()
 				->setGridOption('url',URL::to('module/category/app/grid-data-detail'))

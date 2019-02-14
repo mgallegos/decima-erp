@@ -288,7 +288,7 @@
 		</div>
 		<div id='module-app-grid-section' class='app-grid collapse in' data-app-grid-id='module-app-grid'>
 			{!!
-			GridRender::setGridId("module-app-grid")
+			GridRender::setGridId('module-app-grid')
 				->hideXlsExporter()
   			->hideCsvExporter()
 				->setGridOption('height', 'auto')
