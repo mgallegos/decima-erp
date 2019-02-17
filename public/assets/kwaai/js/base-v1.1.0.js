@@ -421,12 +421,12 @@ function getElementFiles(appPrefix, systemReferenceId, systemReferences, url)
 		error: function (jqXHR, textStatus, errorThrown)
 		{
 			handleServerExceptions(jqXHR, appPrefix + 'btn-toolbar', false);
-			enableAll();
+			// enableAll();
     },
 		beforeSend:function()
 		{
-			$('#app-loader').removeClass('hidden hidden-xs-up');
-			disabledAll();
+			// $('#app-loader').removeClass('hidden hidden-xs-up');
+			// disabledAll();
 		},
 		success:function(json)
 		{
@@ -472,8 +472,8 @@ function getElementFiles(appPrefix, systemReferenceId, systemReferences, url)
 
 			$('#' + appPrefix + 'file-body').append(row);
 
-			$('#app-loader').addClass('hidden hidden-xs-up');
-			enableAll();
+			// $('#app-loader').addClass('hidden hidden-xs-up');
+			// enableAll();
 		}
 	});
 }
@@ -633,8 +633,8 @@ function getAppJournals(appPrefix, action, journalizedId)
     },
 		beforeSend:function()
 		{
-			$('#app-loader').removeClass('hidden hidden-xs-up');
-			disabledAll();
+			// $('#app-loader').removeClass('hidden hidden-xs-up');
+			// disabledAll();
 		},
 		success:function(journals)
 		{
@@ -684,8 +684,8 @@ function getAppJournals(appPrefix, action, journalizedId)
 				});
 			}
 
-			$('#app-loader').addClass('hidden hidden-xs-up');
-			enableAll();
+			// $('#app-loader').addClass('hidden hidden-xs-up');
+			// enableAll();
 		}
 	});
 }
@@ -707,7 +707,7 @@ function changeLoggedUserOrganization(id)
 		error: function (jqXHR, textStatus, errorThrown)
 		{
 			handleServerExceptions(jqXHR, '', false);
-			enableAll();
+			// enableAll();
     },
 		beforeSend:function()
 		{
