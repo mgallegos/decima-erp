@@ -221,7 +221,9 @@ return array(
 
 	'code' => 'Código',
 
-	'customFormat' => 'Formato personalizado',
+	'userCustomFormat' => 'Formato de usuario',
+
+	'devCustomFormat' => 'Formato personalizado',
 
   'A' => 'Anulado',
 
