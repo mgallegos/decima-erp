@@ -221,6 +221,8 @@ return array(
 
 	'code' => 'Código',
 
+	'customFormat' => 'Formato personalizado',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
