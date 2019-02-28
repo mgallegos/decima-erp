@@ -31,6 +31,8 @@ return array(
 
 	'to' => 'Al',
 
+	'on' => 'sobre',
+
 	'dateRangeFromPlaceHolder' => 'Desde',
 
 	'dateRangeToPlaceHolder' => 'Hasta',
