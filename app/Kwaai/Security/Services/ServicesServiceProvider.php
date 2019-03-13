@@ -69,6 +69,7 @@ class ServicesServiceProvider extends ServiceProvider {
 					$app->make('App\Kwaai\Organization\Repositories\Organization\OrganizationInterface'),
 					$app->make('App\Kwaai\Security\Repositories\User\UserInterface'),
 					$app->make('App\Kwaai\System\Repositories\Currency\CurrencyInterface'),
+					$app->make('App\Kwaai\System\Repositories\Country\CountryInterface'),
 					$app['auth'],
 					$app['translator'],
 					$app['cache'],

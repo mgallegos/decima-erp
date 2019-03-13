@@ -45,6 +45,8 @@ use App\Kwaai\Security\Repositories\User\UserInterface;
 
 use App\Kwaai\System\Repositories\Currency\CurrencyInterface;
 
+use App\Kwaai\System\Repositories\Country\CountryInterface;
+
 use App\Kwaai\System\Services\Validation\AbstractLaravelValidator;
 
 use App\Kwaai\Organization\Repositories\Organization\OrganizationInterface;
@@ -82,6 +84,14 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*
 	*/
 	protected $Currency;
+
+	/**
+	* Country Interface
+	*
+	* @var App\Kwaai\System\Repositories\Country\CountryInterface
+	*
+	*/
+	protected $Country;
 
 	/**
 	 * Laravel Authenticator instance
@@ -206,6 +216,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		OrganizationInterface $Organization,
 		UserInterface $User,
 		CurrencyInterface $Currency,
+		CountryInterface $Country,
 		AuthManager $Auth,
 		Translator $Lang,
 		CacheManager $Cache,
@@ -227,6 +238,8 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		$this->User = $User;
 
 		$this->Currency = $Currency;
+
+		$this->Country = $Country;
 
 		$this->Auth = $Auth;
 
@@ -665,28 +678,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	}
 
 	/**
-	 * Set current user organization
-	 *
-	 * @return void
-	 */
-	public function setCurrentUserOrganization(Organization $Organization)
-	{
-		// $this->Cookie->queue($this->Cookie->forever($this->getCurrentOrganizationCookieName(), $Organization->id));
-		$this->Session->put('currentOrganization', json_encode($Organization->toArray()));
-	}
-
-	/**
-	 * Unset current user organization
-	 *
-	 * @return void
-	 */
-	public function unsetCurrentUserOrganization()
-	{
-		// $this->Cookie->queue($this->Cookie->forget($this->getCurrentOrganizationCookieName()));
-		$this->Session->forget('currentOrganization');
-	}
-
-	/**
 	 * Verify is the connection is the default connection
 	 *
 	 * @param string $databaseConnectionName
@@ -711,6 +702,101 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		}
 	}
 
+	/**
+	 * Set current user organization
+	 *
+	 * @return void
+	 */
+	public function setCurrentUserOrganization(Organization $Organization)
+	{
+		// $this->Cookie->queue($this->Cookie->forever($this->getCurrentOrganizationCookieName(), $Organization->id));
+		$this->Session->put('currentOrganization', json_encode($Organization->toArray()));
+		$this->unsetCurrentOrganizationCountry();
+	}
+
+	/**
+	 * Unset current user organization
+	 *
+	 * @return void
+	 */
+	public function unsetCurrentUserOrganization()
+	{
+		// $this->Cookie->queue($this->Cookie->forget($this->getCurrentOrganizationCookieName()));
+		$this->Session->forget('currentOrganization');
+		$this->unsetCurrentOrganizationCountry();
+	}
+
+	/**
+	 * Set current user organization
+	 *
+	 * @return void
+	 */
+	public function setCurrentOrganizationCountry($Country)
+	{
+		$this->Session->put('currentCountry', json_encode($Country->toArray()));
+	}
+
+	/**
+	 * Unset current user organization
+	 *
+	 * @return void
+	 */
+	public function unsetCurrentOrganizationCountry()
+	{
+		$this->Session->forget('currentCountry');
+	}
+
+	/**
+	 * Get session organization
+	 *
+	 * @return int
+	 */
+	public function getSessionOrganization()
+	{
+		return json_decode($this->Session->get('currentOrganization'), true);
+	}
+
+	/**
+	 * Get session organization
+	 *
+	 * @return int
+	 */
+	public function getSessionCountry()
+	{
+		if($this->Session->has('currentCountry'))
+		{
+			$country = json_decode($this->Session->get('currentCountry'), true);
+		}
+		else
+		{
+			$Country = $this->Country->byId($this->getCurrentUserOrganizationCountry());
+			$country = $Country->toArray();
+			$this->setCurrentOrganizationCountry($Country);
+		}
+
+		return $country;
+	}
+
+	/**
+	 * Get logged user ID
+	 *
+	 * @return int
+	 */
+	public function getSessionLoggedUser()
+	{
+		if($this->Session->has('loggedUser'))
+		{
+			$user = json_decode($this->Session->get('loggedUser'), true);
+		}
+		else
+		{
+			$User =  $this->Auth->user();
+			$user = $User->toArray();
+			$this->Session->put('loggedUser', json_encode($user));
+		}
+
+		return $user;
+	}
 
 	/**
 	 * Get default database connection name
@@ -722,16 +808,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	public function getDefaultDatabaseConnectionName()
 	{
 		return $this->defaultDatabaseConnectionName;
-	}
-
-	/**
-	 * Get logged user ID
-	 *
-	 * @return int
-	 */
-	public function getSessionOrganization()
-	{
-		return json_decode($this->Session->get('currentOrganization'), true);
 	}
 
 	/**
@@ -914,6 +990,36 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	* @return string
 	*/
 	public function getCurrentUserOrganizationCountry()
+	{
+		$organization = $this->getSessionOrganization();
+
+		if(empty($organization))
+		{
+			return -1;
+		}
+		else
+		{
+			return $organization['country_id'];
+		}
+
+		// $value = $this->getCurrentUserOrganizationId();
+    //
+		// $value = $this->Organization->byId($value);
+    //
+		// if(is_object($value))
+		// {
+		// 	$value = $value->country_id;
+		// }
+    //
+		// return $value;
+	}
+
+	/**
+	* Get current user organization country
+	*
+	* @return string
+	*/
+	public function getCurrentUserOrganizationCountryObject()
 	{
 		$organization = $this->getSessionOrganization();
 
@@ -1171,27 +1277,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		{
 			return $organization['sale_point_quantity'];
 		}
-	}
-
-	/**
-	 * Get logged user ID
-	 *
-	 * @return int
-	 */
-	public function getSessionLoggedUser()
-	{
-		if($this->Session->has('loggedUser'))
-		{
-			$user = json_decode($this->Session->get('loggedUser'), true);
-		}
-		else
-		{
-			$User =  $this->Auth->user();
-			$user = $User->toArray();
-			$this->Session->put('loggedUser', json_encode($user));
-		}
-
-		return $user;
 	}
 
 	/**

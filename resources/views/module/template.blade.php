@@ -49,8 +49,9 @@
 	{
 		var id = $('#module-app-grid').getSelectedRowId('module_app_id');
 
-		if($('#module-app-journals').attr('data-journalized-id') != id)
+		if($('#module-app-grid-section').attr('data-id') != id)
 		{
+			$('#module-app-grid-section').attr('data-id', id);
 			getAppJournals('module-app-', 'firstPage', id);
 			// getElementFiles('module-app-', id);
 		}
@@ -65,9 +66,9 @@
 
 		$('#module-app-form').jqMgVal('addFormFieldsValidations');
 
-		$('#module-app-journals-section').on('hidden.bs.collapse', function ()
+		$('#module-app-grid-section').on('hidden.bs.collapse', function ()
 		{
-			$($(this).attr('data-target-id')).collapse('show');
+			$($('#module-app-journals-section').attr('data-target-id')).collapse('show');
 		});
 
 		$('#module-app-form-section').on('shown.bs.collapse', function ()
@@ -83,8 +84,6 @@
 		$('#module-app-form-section').on('hidden.bs.collapse', function ()
 		{
 			$('#module-app-grid-section').collapse('show');
-
-			$('#module-app-journals-section').collapse('show');
 		});
 
 		$('#module-app-btn-new').click(function()
@@ -95,25 +94,34 @@
 			}
 
 			$('#module-app-btn-toolbar').disabledButtonGroup();
+
 			$('#module-app-btn-group-3').enableButtonGroup();
+
 			$('#module-app-form-new-title').removeClass('hidden');
-			$('#module-app-grid-section').collapse('hide');
+
 			$('#module-app-journals-section').attr('data-target-id', '#module-app-form-section');
-			$('#module-app-journals-section').collapse('hide');
+
+			$('#module-app-grid-section').collapse('hide');
+
 			$('.decima-erp-tooltip').tooltip('hide');
 		});
 
 		$('#module-app-btn-refresh').click(function()
 		{
 			$('.decima-erp-tooltip').tooltip('hide');
+
 			$('#module-app-btn-toolbar').disabledButtonGroup();
+
 			$('#module-app-btn-group-1').enableButtonGroup();
 
 			if($('#module-app-journals-section').attr('data-target-id') == '' || $('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
 			{
 				$('#module-app-grid').trigger('reloadGrid');
+
+				$('#module-app-grid-section').attr('data-id', '');
+
 				cleanJournals('module-app-');
-				// cleanFiles('module-app-')
+				// cleanFiles('module-app-');
 			}
 			else
 			{
@@ -160,6 +168,7 @@
 				}
 
 				$('#module-app-btn-toolbar').disabledButtonGroup();
+
 				$('#module-app-btn-group-3').enableButtonGroup();
 
 				$('#module-app-form-edit-title').removeClass('hidden');
@@ -169,9 +178,10 @@
 				populateFormFields(rowData);
 
 				$('#module-app-form-edit-title').removeClass('hidden');
-				$('#module-app-grid-section').collapse('hide');
+
 				$('#module-app-journals-section').attr('data-target-id', '#module-app-form-section');
-				$('#module-app-journals-section').collapse('hide');
+
+				$('#module-app-grid-section').collapse('hide');
 			}
 			else
 			{
@@ -418,7 +428,7 @@
 				{!! Form::button('<i class="fa fa-undo"></i> ' . Lang::get('toolbar.close'), array('id' => 'module-app-btn-close', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
 			</div>
 		</div>
-		<div id='module-app-grid-section' class='app-grid collapse in' data-app-grid-id='module-app-grid'>
+		<div id='module-app-grid-section' class='app-grid collapse in' data-id='' data-app-grid-id='module-app-grid'>
 			{!!
 			GridRender::setGridId('module-app-grid')
 				->enablefilterToolbar(false, false)
