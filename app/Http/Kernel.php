@@ -27,8 +27,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
-        // 'auth' => \App\Http\Middleware\CheckLoggedUser::class,
+        // 'auth' => \App\Http\Middleware\Authenticate::class,
+        'auth' => \App\Http\Middleware\CheckLoggedUser::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
     		'check.browser' => \App\Http\Middleware\CheckBrowser::class,

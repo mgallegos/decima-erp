@@ -328,6 +328,8 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 				$intendedUrl = $this->Url->to('/dashboard');
 			}
 
+			$this->Session->put('loggedUser', json_encode($this->Auth->user()->toArray()));
+
 			$userDefaultOrganizationId = $this->getLoggedUserDefaultOrganization();
 
 			if(!empty($userDefaultOrganizationId))
@@ -335,13 +337,13 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 				$this->setCurrentUserOrganization($this->Organization->byId($userDefaultOrganizationId));
 			}
 
-			$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] System User logged in', 'context' => array('email' => $email)), $this));
+			// $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] System User logged in', 'context' => array('email' => $email)), $this));
 
 			return json_encode(array('message' => 'success', 'url' => $intendedUrl));
 		}
 		else
 		{
-			$this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] System Failed Login Attempt', 'context' => array('email' => $email)), $this));
+			// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] System Failed Login Attempt', 'context' => array('email' => $email)), $this));
 
 			return json_encode(array('message' => $this->Lang->get('security/login.failAuthAttempt')));
 		}
@@ -556,14 +558,16 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function isUserGuest()
 	{
-		// if($this->Session->has('loggedUser'))
-		// {
-		// 	return false;
-		// }
-		//
-		// return true;
+		// return $this->Auth->guest();
+
+		if($this->Session->has('loggedUser'))
+		{
+			return false;
+		}
+
+		return true;
 		// // var_dump('isUserGuest');
-		return $this->Auth->guest();
+		// return $this->Auth->guest();
 	}
 
 
@@ -719,6 +723,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	public function setCurrentUserOrganization(Organization $Organization)
 	{
 		// $this->Cookie->queue($this->Cookie->forever($this->getCurrentOrganizationCookieName(), $Organization->id));
+		$this->Session->forget('currentOrganization');
 		$this->Session->put('currentOrganization', json_encode($Organization->toArray()));
 		$this->unsetCurrentOrganizationCountry();
 	}

@@ -23,7 +23,10 @@ class CheckLoggedUser {
 			}
 			else
 			{
-				return redirect()->guest('login');
+				if(str_replace(URL::to('/'), '', URL::current()) != '/login')
+				{
+					return redirect()->guest('login');
+				}
 			}
 		}
 
