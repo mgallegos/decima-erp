@@ -17,7 +17,7 @@ class CheckAccess {
 	 * @return mixed
 	 */
 	public function handle($request, Closure $next)
-	{
+	{	
 		if ($request->isMethod('get') && !AppManager::isUserClearToAccessApp())
 		{
 			if(AuthManager::isUserAdmin() && UserManager::getCountUserOrganizations() == 0)
