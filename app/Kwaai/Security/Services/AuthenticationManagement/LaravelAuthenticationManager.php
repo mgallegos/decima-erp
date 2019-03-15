@@ -556,14 +556,14 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function isUserGuest()
 	{
-		if($this->Session->has('loggedUser'))
-		{
-			return false;
-		}
-
-		return true;
+		// if($this->Session->has('loggedUser'))
+		// {
+		// 	return false;
+		// }
+		//
+		// return true;
 		// var_dump('isUserGuest');
-		// return $this->Auth->guest();
+		return $this->Auth->guest();
 	}
 
 
