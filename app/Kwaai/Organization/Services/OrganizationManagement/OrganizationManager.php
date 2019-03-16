@@ -276,10 +276,19 @@ class OrganizationManager implements OrganizationManagementInterface {
 	{
 		$countries = array();
 
-		$this->Country->all()->each(function($Country) use (&$countries)
+		if($this->Cache->has('systemCountries'))
 		{
-			array_push($countries, array('label'=> $Country->name, 'value'=>$Country->id));
-		});
+			$countries = json_decode($this->Cache->get('systemCountries'), true);
+		}
+		else
+		{
+			$this->Country->all()->each(function($Country) use (&$countries)
+			{
+				array_push($countries, array('label'=> $Country->name, 'value'=>$Country->id));
+			});
+
+			$this->Cache->put('systemCountries', json_encode($countries), 360);
+		}
 
 		return $countries;
 	}
@@ -312,10 +321,19 @@ class OrganizationManager implements OrganizationManagementInterface {
 	{
 		$currencies = array();
 
-		$this->Currency->all()->each(function($Currency) use (&$currencies)
+		if($this->Cache->has('systemCurrencies'))
 		{
-			array_push($currencies, array('label'=> $Currency->name . ' (' . $Currency->symbol . ')', 'value'=>$Currency->id));
-		});
+			$currencies = json_decode($this->Cache->get('systemCurrencies'), true);
+		}
+		else
+		{
+			$this->Currency->all()->each(function($Currency) use (&$currencies)
+			{
+				array_push($currencies, array('label'=> $Currency->name . ' (' . $Currency->symbol . ')', 'value'=>$Currency->id));
+			});
+
+			$this->Cache->put('systemCurrencies', json_encode($currencies), 360);
+		}
 
 		return $currencies;
 	}
