@@ -98,7 +98,7 @@
 		        {!! Form::hidden('da-logged-user-multiple-organization-popover-shown', AuthManager::getLoggedUserMultipleOrganizacionPopoversShown(), array('id' => 'da-logged-user-multiple-organization-popover-shown')) !!}
 					</fieldset>
 				</div>
-				@if(Agent::isMobile() && !empty(Config::get('system-security.custom_menu')))
+				@if(!empty(Config::get('system-security.custom_menu')))
 				<div id="user-apps-content" style="display:none;"></div>
 				@else
 				<div class="col-lg-12">
