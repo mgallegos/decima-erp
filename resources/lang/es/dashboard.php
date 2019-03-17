@@ -8,8 +8,10 @@
  */
 
 return array(
-		
+
 	'appName' => 'Espacio de trabajo',
 
 	'journalLegend' => 'Auditoría de la organización',
+
+	'shortcuts' => 'Accesos directos',
 );
