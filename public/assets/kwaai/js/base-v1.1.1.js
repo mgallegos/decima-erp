@@ -716,6 +716,7 @@ function changeLoggedUserOrganization(id)
 		},
 		success:function()
 		{
+      window.localStorage.clear();
 			window.location.replace($('#app-url').val() + '/dashboard');
 		}
 	});
@@ -752,8 +753,6 @@ function resizeApplicationGrid()
 /**
  * Resize grid on event
  *
- * @param integer id
- *
  *  @returns void
  */
 function resizeGridOnLoadCompleteEvent()
@@ -767,6 +766,244 @@ function resizeGridOnLoadCompleteEvent()
 
   $(this).setGridWidth($('.core-app-container-width:visible').width());
 }
+
+/**
+ * Update application client autocompletes
+ *
+ *  @returns object
+ */
+function updateApplicationClientAutocompletes()
+{
+  if(!empty(window.localStorage.getItem('applicationClientAutocompletes')))
+  {
+    organizationClients = JSON.parse(window.localStorage.getItem('organizationClients'));
+
+    $.each(JSON.parse(window.localStorage.getItem('applicationClientAutocompletes')), function(index, autocompleteId)
+    {
+      window.localStorage.setItem('organizationClients', JSON.stringify(organizationClients));
+      window[$('#' + autocompleteId).attr('data-autocomplete-source')] = organizationClients;
+
+      $('#' + autocompleteId).autocomplete('option', 'source', function(request, response)
+      {
+        var results = $.ui.autocomplete.filter(window[$('#' + autocompleteId).attr('data-autocomplete-source')], request.term);
+        response(results.slice(0, 10));
+      });
+    });
+  }
+}
+
+/**
+ * Load clients into localstorage
+ *
+ * @param objects clients
+ *
+ *  @returns object
+ */
+function loadClients(clients)
+{
+  clients = clients || '';
+
+  if(!empty(clients))
+  {
+    window.localStorage.setItem('organizationClients', JSON.stringify(clients));
+
+    updateApplicationClientAutocompletes();
+
+    return;
+  }
+
+  if(empty(window.localStorage.getItem('organizationClients')))
+  {
+    $.ajax(
+  	{
+  		type: 'POST',
+  		data: JSON.stringify({'_token':$('#app-token').val()}),
+      dataType : 'json',
+  		url: $('#app-url').val() + '/sales/setup/client-management/clients',
+  		error: function (jqXHR, textStatus, errorThrown)
+  		{
+  			handleServerExceptions(jqXHR, '', false);
+      },
+  		success:function(organizationClients)
+  		{
+  			window.localStorage.setItem('organizationClients', JSON.stringify(organizationClients));
+
+        updateApplicationClientAutocompletes();
+  		}
+  	});
+  }
+}
+
+/**
+ * Set client datasource autocomplete from localstorage
+ *
+ * @returns void
+ */
+$.fn.setClientAutocomplete = function()
+{
+  clientAutocomplete = this;
+  applicationClientAutocompletes = [];
+
+  if(!empty(window.localStorage.getItem('applicationClientAutocompletes')))
+  {
+    applicationClientAutocompletes = JSON.parse(window.localStorage.getItem('applicationClientAutocompletes'));
+  }
+
+  if($.inArray(clientAutocomplete.attr('id'), applicationClientAutocompletes) == -1)
+  {
+    applicationClientAutocompletes.push(clientAutocomplete.attr('id'));
+    window.localStorage.setItem('applicationClientAutocompletes', JSON.stringify(applicationClientAutocompletes));
+  }
+
+  if(empty(window.localStorage.getItem('organizationClients')))
+  {
+    $.ajax(
+  	{
+  		type: 'POST',
+  		data: JSON.stringify({'_token':$('#app-token').val()}),
+      dataType : 'json',
+  		url: $('#app-url').val() + '/sales/setup/client-management/clients',
+  		error: function (jqXHR, textStatus, errorThrown)
+  		{
+  			handleServerExceptions(jqXHR, '', false);
+      },
+  		success:function(organizationClients)
+  		{
+  			window.localStorage.setItem('organizationClients', JSON.stringify(organizationClients));
+        window[clientAutocomplete.attr('data-autocomplete-source')] = organizationClients;
+
+        clientAutocomplete.autocomplete('option', 'source', function(request, response)
+        {
+          var results = $.ui.autocomplete.filter(window[clientAutocomplete.attr('data-autocomplete-source')], request.term);
+          response(results.slice(0, 10));
+        });
+  		}
+  	});
+  }
+  else
+  {
+    organizationClients = JSON.parse(window.localStorage.getItem('organizationClients'));
+
+    window[clientAutocomplete.attr('data-autocomplete-source')] = organizationClients;
+
+    clientAutocomplete.autocomplete('option', 'source', function(request, response)
+    {
+      var results = $.ui.autocomplete.filter(window[clientAutocomplete.attr('data-autocomplete-source')], request.term);
+      response(results.slice(0, 10));
+    });
+  }
+};
+
+/**
+ * Update application suppplier autocompletes
+ *
+ *  @returns object
+ */
+function updateApplicationSupplierAutocompletes()
+{
+  if(!empty(window.localStorage.getItem('applicationSupplierAutocompletes')))
+  {
+    organizationSuppliers = JSON.parse(window.localStorage.getItem('organizationSuppliers'));
+
+    $.each(JSON.parse(window.localStorage.getItem('applicationSupplierAutocompletes')), function(index, autocompleteId)
+    {
+      window.localStorage.setItem('organizationSuppliers', JSON.stringify(organizationSuppliers));
+      window[$('#' + autocompleteId).attr('data-autocomplete-source')] = organizationSuppliers;
+
+      $('#' + autocompleteId).autocomplete('option', 'source', function(request, response)
+      {
+        var results = $.ui.autocomplete.filter(window[$('#' + autocompleteId).attr('data-autocomplete-source')], request.term);
+        response(results.slice(0, 10));
+      });
+    });
+  }
+}
+
+/**
+ * Load suppliers into localstorage
+ *
+ * @param objects suppliers
+ *
+ *  @returns object
+ */
+function loadSuppliers(suppliers)
+{
+  suppliers = suppliers || '';
+
+  if(!empty(suppliers))
+  {
+    window.localStorage.setItem('organizationSuppliers', JSON.stringify(suppliers));
+
+    return;
+  }
+
+  if(empty(window.localStorage.getItem('organizationSuppliers')))
+  {
+    $.ajax(
+  	{
+  		type: 'POST',
+  		data: JSON.stringify({'_token':$('#app-token').val()}),
+      dataType : 'json',
+  		url: $('#app-url').val() + '/purchases/setup/supplier-management/suppliers',
+  		error: function (jqXHR, textStatus, errorThrown)
+  		{
+  			handleServerExceptions(jqXHR, '', false);
+      },
+  		success:function(organizationSuppliers)
+  		{
+  			window.localStorage.setItem('organizationSuppliers', JSON.stringify(organizationSuppliers));
+  		}
+  	});
+  }
+}
+
+/**
+ * Set supplier datasource autocomplete from localstorage
+ *
+ * @returns void
+ */
+$.fn.setSupplierAutocomplete = function()
+{
+  supplierAutocomplete = this;
+
+  if(empty(window.localStorage.getItem('organizationSuppliers')))
+  {
+    $.ajax(
+  	{
+  		type: 'POST',
+  		data: JSON.stringify({'_token':$('#app-token').val()}),
+      dataType : 'json',
+  		url: $('#app-url').val() + '/purchases/setup/supplier-management/suppliers',
+  		error: function (jqXHR, textStatus, errorThrown)
+  		{
+  			handleServerExceptions(jqXHR, '', false);
+      },
+  		success:function(organizationSuppliers)
+  		{
+  			window.localStorage.setItem('organizationSuppliers', JSON.stringify(organizationSuppliers));
+        window[supplierAutocomplete.attr('data-autocomplete-source')] = organizationSuppliers;
+
+        supplierAutocomplete.autocomplete('option', 'source', function(request, response)
+        {
+          var results = $.ui.autocomplete.filter(window[supplierAutocomplete.attr('data-autocomplete-source')], request.term);
+          response(results.slice(0, 10));
+        });
+  		}
+  	});
+  }
+  else
+  {
+    organizationSuppliers = JSON.parse(window.localStorage.getItem('organizationSuppliers'));
+
+    window[supplierAutocomplete.attr('data-autocomplete-source')] = organizationSuppliers;
+
+    supplierAutocomplete.autocomplete('option', 'source', function(request, response)
+    {
+      var results = $.ui.autocomplete.filter(window[supplierAutocomplete.attr('data-autocomplete-source')], request.term);
+      response(results.slice(0, 10));
+    });
+  }
+};
 
 /**
  * Close user apps popover
@@ -908,7 +1145,7 @@ $(document).ready(function()
     {
       API.bind('open:before', function() {
         $(".core-slider").addClass('hidden');
-        console.log('entre');
+        // console.log('entre');
       });
 
       API.bind('open:finish', function() {

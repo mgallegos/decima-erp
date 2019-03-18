@@ -7,9 +7,9 @@
  * See COPYRIGHT and LICENSE.
  */
 
-Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null, $btnClass = 'btn-default', $bootstrapVersion = '3', $prefixButton = false)
+Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null, $btnClass = 'btn-default', $bootstrapVersion = '3', $prefixButton = false, $presetType = '')
 {
-	$autocompleteEvent = $autocompleteFocusEvent = $prefix = '';
+	$autocompleteEvent = $autocompleteFocusEvent = $prefix = $presetTypeCode = '';
 	$autocompleteWidgetName = 'autocomplete';
 
 	if(empty($btnClass))
@@ -114,7 +114,27 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 		}
 	}
 
-	FormJavascript::setCode('$("#'. $options['id'] .'").' . $autocompleteWidgetName . '({ minLength: 0, search: '. $searchEvent . ', source: '. $autocompleteSource . $autocompleteEvent . '}); $("#'.  $options['id'] . '-show-all-button").click(function(){ $("#' . $options['id'] .'").autocomplete( "search", "" ); $("#' . $options['id'] .'").focus(); });');
+	if($presetType == 'client')
+	{
+		$presetTypeCode = '
+			$("#'. $options['id'] .'").setClientAutocomplete();
+		';
+	}
+	else if($presetType == 'supplier')
+	{
+		$presetTypeCode = '
+			$("#'. $options['id'] .'").setSupplierAutocomplete();
+		';
+	}
+
+	FormJavascript::setCode('
+		$("#'. $options['id'] .'").' . $autocompleteWidgetName . '({ minLength: 0, search: '. $searchEvent . ', source: '. $autocompleteSource . $autocompleteEvent . '});
+		$("#'.  $options['id'] . '-show-all-button").click(function(){
+			$("#' . $options['id'] .'").autocomplete( "search", "" );
+			$("#' . $options['id'] .'").focus();
+		}); ' .
+		$presetTypeCode
+	);
 	FormJavascript::setGlobalCode('var '. $inputTextAutocompleteName . 'ArrayData = ' . json_encode($source) . ';');
 
 	return '<div class="input-group ' . $inputGroupSizeClass . '">
