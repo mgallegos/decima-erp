@@ -328,7 +328,10 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 				$intendedUrl = $this->Url->to('/dashboard');
 			}
 
+			$this->Session->forget('loggedUser');
 			$this->Session->put('loggedUser', json_encode($this->Auth->user()->toArray()));
+
+			// var_dump($this->Auth->user()->toArray(), $this->Session->has('loggedUser'));
 
 			$userDefaultOrganizationId = $this->getLoggedUserDefaultOrganization();
 

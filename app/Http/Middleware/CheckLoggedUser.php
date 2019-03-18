@@ -1,36 +1,83 @@
-<?php namespace App\Http\Middleware;
+<?php
+
+namespace App\Http\Middleware;
 
 use Closure;
-use Session;
-use URL;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Session\SessionManager;
+use Illuminate\Routing\UrlGenerator;
 
-class CheckLoggedUser {
+class CheckLoggedUser
+{
+    /**
+     * The Guard implementation.
+     *
+     * @var Guard
+     */
+    protected $auth;
 
-	/**
-	 * Handle an incoming request.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \Closure  $next
-	 * @return mixed
-	 */
-	public function handle($request, Closure $next)
-	{
-		if(!Session::has('loggedUser'))
-		{
-			if ($request->ajax())
-			{
-				return response('Unauthorized.', 401);
-			}
-			else
-			{
-				if(str_replace(URL::to('/'), '', URL::current()) != '/login')
-				{
-					return redirect()->guest('login');
-				}
-			}
-		}
+    /**
+  	 * Session
+  	 *
+  	 * @var Illuminate\Session\SessionManager
+  	 *
+  	 */
+  	protected $Session;
 
-		return $next($request);
-	}
+    /**
+  	 * The URL generator instance
+  	 *
+  	 * @var \Illuminate\Routing\UrlGenerator
+  	 *
+  	 */
+  	protected $Url;
 
+    /**
+     * Create a new filter instance.
+     *
+     * @param  Guard  $auth
+     * @return void
+     */
+    public function __construct(Guard $auth, SessionManager $Session, UrlGenerator $Url)
+    {
+      $this->auth = $auth;
+
+      $this->Session = $Session;
+
+      $this->Url = $Url;
+    }
+
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+      if(!$this->Session->has('loggedUser'))
+  		{
+  			if ($this->auth->check())
+        {
+          $this->Session->put('loggedUser', json_encode($this->auth->user()->toArray()));
+
+          return $next($request);
+        }
+
+  			if ($request->ajax())
+  			{
+  				return response('Unauthorized.', 401);
+  			}
+  			else
+  			{
+  				if(str_replace($this->Url->to('/'), '', $this->Url->current()) != '/login')
+  				{
+  					return redirect()->guest('login');
+  				}
+  			}
+  		}
+
+      return $next($request);
+    }
 }
