@@ -835,6 +835,16 @@ function loadClients(clients)
 }
 
 /**
+ * Get clients from localstorage
+ *
+ *  @returns object
+ */
+function getClients()
+{
+  return JSON.parse(window.localStorage.getItem('organizationClients'));
+}
+
+/**
  * Set client datasource autocomplete from localstorage
  *
  * @returns void
