@@ -41,6 +41,10 @@ return array(
 
 	'refreshLongText' => 'Actualizar la tabla de datos',
 
+	'changeStatus' => 'Cambiar estado',
+
+	'showFiles' => 'Ver archivos',
+
 	'showFilesLongText' => 'Ver archivos asociados',
 
 	'showHistoryLongText' => 'Ver historial',
