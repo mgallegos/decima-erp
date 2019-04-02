@@ -1,0 +1,108 @@
+/**
+ * @file
+ * Description of the script.
+ *
+ * All DecimaERP code is copyright by the original authors and released under the GNU Aferro General Public License version 3 (AGPLv3) or later.
+ * See COPYRIGHT and LICENSE.
+ */
+
+@CHARSET "UTF-8";
+
+table {
+  table-layout: fixed;
+}
+
+table td, table th {
+  padding: 0 !important;
+}
+
+table td {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
+}
+
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.font-size-7 {
+  font-size: 7pt;
+}
+
+.font-size-8 {
+  font-size: 8pt;
+}
+
+.font-size-9 {
+  font-size: 9pt;
+}
+
+.font-size-10 {
+  font-size: 10pt;
+}
+
+.font-size-11 {
+  font-size: 11pt;
+}
+
+.font-size-12 {
+  font-size: 12pt;
+}
+
+.font-size-13 {
+  font-size: 13pt;
+}
+
+.font-size-14 {
+  font-size: 14pt;
+}
+
+.font-size-15 {
+  font-size: 15pt;
+}
+
+.font-size-16 {
+  font-size: 16pt;
+}
+
+.padding-top-1 {
+  padding-top: 1px !important;
+}
+
+.padding-top-2 {
+  padding-top: 2px !important;
+}
+
+.padding-top-3 {
+  padding-top: 3px !important;
+}
+
+.padding-top-4 {
+  padding-top: 4px !important;
+}
+
+.padding-top-5 {
+  padding-top: 5px !important;
+}
+
+.padding-top-6 {
+  padding-top: 6px !important;
+}
+
+.padding-top-7 {
+  padding-top: 7px !important;
+}
+
+.padding-top-8 {
+  padding-top: 8px !important;
+}
+
+.padding-top-9 {
+  padding-top: 9px !important;
+}
+
+.padding-top-10 {
+  padding-top: 10px !important;
+}
