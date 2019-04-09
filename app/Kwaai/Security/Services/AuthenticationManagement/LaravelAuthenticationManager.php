@@ -844,25 +844,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		{
 			return $organization['id'];
 		}
-
-		// // var_dump('getCurrentUserOrganizationId');
-		// $value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
-    //
-		// if(!is_int($value))
-		// {
-		// 	$userDefaultOrganizationId = $this->getLoggedUserDefaultOrganization();
-    //
-		// 	if(!empty($userDefaultOrganizationId))
-		// 	{
-		// 		$this->setCurrentUserOrganization($this->Organization->byId($userDefaultOrganizationId));
-    //
-		// 		return $userDefaultOrganizationId;
-		// 	}
-    //
-		// 	return -1;
-		// }
-    //
-		// return $value;
 	}
 
 	/**
@@ -887,33 +868,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		}
 
 		return $Organization->$columnName;
-
-		// var_dump('getCurrentUserOrganization');
-		// $value = $this->getCurrentUserOrganizationId();
-    //
-		// if(!empty($value))
-		// {
-		// 	$value = $this->Organization->byId($value);
-		// }
-    //
-		// if(is_object($value))
-		// {
-		// 	if(empty($columnName))
-		// 	{
-		// 		return $value;
-		// 	}
-    //
-		// 	$value = $value->$columnName;
-		// }
-		// else
-		// {
-		// 	if($columnName == 'id')
-		// 	{
-		// 		return -1;
-		// 	}
-		// }
-    //
-		// return $value;
 	}
 
 	/**
@@ -938,26 +892,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		}
 
 		return $organization['database_connection_name'];
-
-		// var_dump('getCurrentUserOrganizationConnection');
-		// if(empty($value))
-		// {
-		// 	$value = $this->Input->cookie($this->getCurrentOrganizationCookieName(), '');
-		// }
-    //
-		// if(!is_int($value))
-		// {
-		// 	return $this->defaultDatabaseConnectionName;
-		// }
-    //
-		// $value = $this->Organization->byId($value);
-    //
-		// if(is_object($value))
-		// {
-		// 	$value = $value->database_connection_name;
-		// }
-    //
-		// return $value;
 	}
 
 	/**
@@ -1018,17 +952,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		{
 			return $organization['country_id'];
 		}
-
-		// $value = $this->getCurrentUserOrganizationId();
-    //
-		// $value = $this->Organization->byId($value);
-    //
-		// if(is_object($value))
-		// {
-		// 	$value = $value->country_id;
-		// }
-    //
-		// return $value;
 	}
 
 	/**
@@ -1048,17 +971,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		{
 			return $organization['country_id'];
 		}
-
-		// $value = $this->getCurrentUserOrganizationId();
-    //
-		// $value = $this->Organization->byId($value);
-    //
-		// if(is_object($value))
-		// {
-		// 	$value = $value->country_id;
-		// }
-    //
-		// return $value;
 	}
 
 	/**
@@ -1078,16 +990,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		{
 			return $organization['currency_id'];
 		}
-		// $value = $this->getCurrentUserOrganizationId();
-    //
-		// $value = $this->Organization->byId($value);
-    //
-		// if(is_object($value))
-		// {
-		// 	$value = $value->currency_id;
-		// }
-    //
-		// return $value;
 	}
 
 	/**
@@ -1127,17 +1029,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 			return $currency['symbol'];
 		}
-		// $value = $this->getCurrentUserOrganizationId();
-    //
-		// $value = $this->Organization->byId($value);
-    //
-		// if(is_object($value))
-		// {
-		// 	$Currency = $this->Currency->byId($value->currency_id);
-		// 	$value = $Currency->symbol;
-		// }
-    //
-		// return $value;
 	}
 
 	/**
@@ -1186,17 +1077,144 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		{
 			return $organization['name'];
 		}
-		// var_dump('getCurrentUserOrganizationName');
-		// $value = $this->getCurrentUserOrganizationId();
-    //
-		// $value = $this->Organization->byId($value);
-    //
-		// if(is_object($value))
-		// {
-		// 	$value = $value->name;
-		// }
-    //
-		// return $value;
+	}
+
+	/**
+	* Get current user organization commercial trade
+	*
+	* @return string
+	*/
+	public function getCurrentUserOrganizationCommercialTrade()
+	{
+		$organization = $this->getSessionOrganization();
+
+		if(empty($organization))
+		{
+			return '';
+		}
+		else
+		{
+			return $organization['commercial_trade'];
+		}
+	}
+
+	/**
+	* Get current user organization commercial trade
+	*
+	* @return string
+	*/
+	public function getCurrentUserOrganizationAddress()
+	{
+		$organization = $this->getSessionOrganization();
+
+		if(empty($organization))
+		{
+			return '';
+		}
+		else
+		{
+			return (!empty($organization['street1'])?$organization['street1'] . ', ':'') .
+				(!empty($organization['street2'])?$organization['street2'] . ', ':'') .
+				(!empty($organization['city_name'])?$organization['city_name'] . ', ':'') .
+				(!empty($organization['state_name'])?$organization['state_name']:'');
+		}
+	}
+
+
+	/**
+	* Get current user organization commercial trade
+	*
+	* @return string
+	*/
+	public function getCurrentUserOrganizationPhoneNumber()
+	{
+		$organization = $this->getSessionOrganization();
+
+		if(empty($organization))
+		{
+			return '';
+		}
+		else
+		{
+			return $organization['phone_number'];
+		}
+	}
+
+
+	/**
+	* Get current user organization commercial trade
+	*
+	* @return string
+	*/
+	public function getCurrentUserOrganizationEmail()
+	{
+		$organization = $this->getSessionOrganization();
+
+		if(empty($organization))
+		{
+			return '';
+		}
+		else
+		{
+			return $organization['email'];
+		}
+	}
+
+	/**
+	* Get current user organization commercial trade
+	*
+	* @return string
+	*/
+	public function getCurrentUserOrganizationWebSite()
+	{
+		$organization = $this->getSessionOrganization();
+
+		if(empty($organization))
+		{
+			return '';
+		}
+		else
+		{
+			return $organization['web_site'];
+		}
+	}
+
+	/**
+	* Get current user organization commercial trade
+	*
+	* @return string
+	*/
+	public function getCurrentUserOrganizationCompanyRegistration()
+	{
+		$organization = $this->getSessionOrganization();
+
+		if(empty($organization))
+		{
+			return '';
+		}
+		else
+		{
+			return $organization['company_registration'];
+		}
+	}
+
+	/**
+	* Get current user organization commercial trade
+	*
+	* @return string
+	*/
+	public function getCurrentUserOrganizationTaxId()
+	{
+		$organization = $this->getSessionOrganization();
+
+		if(empty($organization))
+		{
+			return '';
+		}
+		else
+		{
+			return $organization['tax_id'];
+		}
 	}
 
 	/**
@@ -1216,17 +1234,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		{
 			return $organization['logo_url'];
 		}
-
-		// $value = $this->getCurrentUserOrganizationId();
-    //
-		// $value = $this->Organization->byId($value);
-    //
-		// if(is_object($value))
-		// {
-		// 	$value = $value->logo_url;
-		// }
-    //
-		// return $value;
 	}
 
 	/**
