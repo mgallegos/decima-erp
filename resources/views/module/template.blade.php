@@ -457,14 +457,14 @@
 				<legend id="module-app-form-new-title" class="hidden">{{ Lang::get('module::app.formNewTitle') }}</legend>
 				<legend id="module-app-form-edit-title" class="hidden">{{ Lang::get('module::app.formEditTitle') }}</legend>
 				<div class="row">
-					<div class="col-lg-6 col-md-6">
+					<div class="col-md-6">
 						<div class="form-group mg-hm">
 							{!! Form::label('module-app-name', Lang::get('form.name'), array('class' => 'control-label')) !!}
 					    {!! Form::text('module-app-name', null , array('id' => 'module-app-name', 'class' => 'form-control', 'data-mg-required' => '')) !!}
 					    {!! Form::hidden('module-app-id', null, array('id' => 'module-app-id')) !!}
 			  		</div>
 					</div>
-					<div class="col-lg-6 col-md-6">
+					<div class="col-md-6">
 						<div class="form-group mg-hm">
 							{!! Form::label('module-app-phone-number', Lang::get('module::app.phoneNumber'), array('class' => 'control-label')) !!}
 							<div class="input-group">
