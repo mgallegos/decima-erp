@@ -7,9 +7,9 @@
  * See COPYRIGHT and LICENSE.
  */
 
-Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null, $btnClass = 'btn-default', $bootstrapVersion = '3', $prefixButton = false, $presetType = '')
+Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null, $btnClass = 'btn-default', $bootstrapVersion = '3', $prefixButton = false, $presetType = '', $showDeleteSuffixButton = false, $hideSuffixButton = false)
 {
-	$autocompleteEvent = $autocompleteFocusEvent = $prefix = $presetTypeCode = '';
+	$autocompleteEvent = $autocompleteFocusEvent = $prefix = $presetTypeCode = $deleteCode = '';
 	$autocompleteWidgetName = 'autocomplete';
 
 	if(empty($btnClass))
@@ -31,11 +31,13 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 	{
 		$autocompleteFocusEvent .= "$('#$inputTextLabelName').val( ui.item.label );";
 		$autocompleteEvent .=" $('#$inputTextLabelName').val( ui.item.label );";
+		$deleteCode .=" $('#$inputTextLabelName').val('');";
 	}
 
 	if (isset($inputTextValueName))
 	{
 		$autocompleteEvent .= "$('#$inputTextValueName').val( ui.item.value );";
+		$deleteCode .= "$('#$inputTextValueName').val('');";
 		$options['data-autocomplete-value-name'] = $inputTextValueName;
 	}
 
@@ -127,25 +129,53 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 		';
 	}
 
-	FormJavascript::setCode('
-		$("#'. $options['id'] .'").' . $autocompleteWidgetName . '({ minLength: 0, search: '. $searchEvent . ', source: '. $autocompleteSource . $autocompleteEvent . '});
-		$("#'.  $options['id'] . '-show-all-button").click(function(){
-			$("#' . $options['id'] .'").autocomplete( "search", "" );
-			$("#' . $options['id'] .'").focus();
-		}); ' .
-		$presetTypeCode
-	);
-	FormJavascript::setGlobalCode('var '. $inputTextAutocompleteName . 'ArrayData = ' . json_encode($source) . ';');
-
-	return '<div class="input-group ' . $inputGroupSizeClass . '">
-				' . $prefix . '
-				<input'.Html::attributes($options).'>
+	if(!$hideSuffixButton)
+	{
+		if(!$showDeleteSuffixButton)
+		{
+			$suffix = '
 				<span class="' . $inputGroupClass . '">
 					<button id="' . $options['id'] . '-show-all-button" class="btn ' . $btnClass . '" type="button">
 						<i class="fa fa-caret-down"></i>
 					</button>
 				</span>
-			</div>';
+			';
+		}
+		else
+		{
+			$suffix = '
+			<span class="' . $inputGroupClass . '">
+				<button id="' . $options['id'] . '-delete-button" class="btn ' . $btnClass . '" type="button">
+					<i class="fa fa-ban"></i>
+				</button>
+			</span>
+			';
+		}
+	}
+	else
+	{
+		$suffix = '';
+	}
+
+	FormJavascript::setCode('
+		$("#'. $options['id'] .'").' . $autocompleteWidgetName . '({ minLength: 0, search: '. $searchEvent . ', source: '. $autocompleteSource . $autocompleteEvent . '});
+		$("#'.  $options['id'] . '-show-all-button").click(function(){
+			$("#' . $options['id'] .'").autocomplete( "search", "" );
+			$("#' . $options['id'] .'").focus();
+		});
+		$("#'.  $options['id'] . '-delete-button").click(function(){
+			' . $deleteCode . '
+			$("#' . $options['id'] .'").focus();
+		});' .
+		$presetTypeCode
+	);
+	FormJavascript::setGlobalCode('var '. $inputTextAutocompleteName . 'ArrayData = ' . json_encode($source) . ';');
+
+	return '<div class="input-group ' . $inputGroupSizeClass . '">
+		' . $prefix . '
+		<input'.Html::attributes($options).'>
+		' . $suffix . '
+		</div>';
 
 });
 

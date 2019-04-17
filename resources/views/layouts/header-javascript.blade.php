@@ -41,7 +41,7 @@
 	});
 </script>
 
-<script src="{{ URL::asset('assets/kwaai/js/helpers-v1.0.0.js') }}"></script>
+<script src="{{ URL::asset('assets/kwaai/js/helpers-v1.0.1.js') }}"></script>
 <script src="{{ URL::asset('assets/kwaai/js/apps-engine-v1.0.2.js') }}"></script>
 {{-- <script src="{{ URL::asset('assets/kwaai/js/validation-engine.js') }}"></script> --}}
 <script src="{{ URL::asset('assets/jquery-mg-validation-v0.5/jquery.jqMgVal.src.js') }}"></script>

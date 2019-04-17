@@ -249,7 +249,15 @@ $.fn.isAutocompleteValid = function()
  */
 $.fn.setAutocompleteLabel = function(value)
 {
-	var value = value.toLowerCase(), autocomplete = this;
+	var autocomplete = this;
+
+	if(empty(value))
+	{
+		return '';
+	}
+
+	value = String(value);
+	value = value.toLowerCase();
 
 	if(this.attr('data-autocomplete-source') != undefined)
 	{
@@ -938,11 +946,11 @@ var jqMgValAutocompleteValidator = function($element)
 			else
 			{
 				$element.jqMgValDisplayMessage('has-success','');
+			}
 
-				if($element.attr('data-autocomplete-value-name') != undefined)
-				{
-					$('#' + $element.attr('data-autocomplete-value-name')).val('');
-				}
+			if($element.attr('data-autocomplete-value-name') != undefined)
+			{
+				$('#' + $element.attr('data-autocomplete-value-name')).val('');
 			}
 
 			return;

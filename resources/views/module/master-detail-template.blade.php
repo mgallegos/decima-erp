@@ -230,6 +230,8 @@
 
 				$('#module-app-btn-group-3').enableButtonGroup();
 
+				$('#module-app-btn-new, #module-app-btn-upload, #module-app-btn-show-files, #module-app-btn-show-history').removeAttr('disabled');
+
 				if($('#module-app-journals-section').attr('data-target-id') == '')
 				{
 					if(!$('#module-app-grid').isRowSelected())
@@ -748,9 +750,6 @@
 									$('#module-app-btn-toolbar').showAlertAfterElement('alert-success alert-custom',json.success, 6000);
 								}
 
-								$('#module-app-btn-new, #module-app-btn-upload, #module-app-btn-show-files, #module-app-btn-show-history').removeAttr('disabled');
-								$('#module-app-detail-form-fieldset').removeAttr('disabled');
-
 								$('#module-app-form-new-title').addClass('hidden');
 
 								$('#module-app-form-edit-title').removeClass('hidden');
@@ -763,6 +762,7 @@
 								$('#module-app-detail-btn-group-3').enableButtonGroup();
 
 								$('#module-app-btn-new, #module-app-btn-upload, #module-app-btn-show-files, #module-app-btn-show-history').removeAttr('disabled');
+								$('#module-app-detail-form-fieldset').removeAttr('disabled');
 							}
 							else
 							{
