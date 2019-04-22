@@ -799,9 +799,10 @@ function updateApplicationClientAutocompletes()
  *
  *  @returns object
  */
-function loadClients(clients)
+function loadClients(clients, forceAjaxRequest)
 {
   clients = clients || '';
+  forceAjaxRequest = forceAjaxRequest || false;
 
   if(!empty(clients))
   {
@@ -812,7 +813,7 @@ function loadClients(clients)
     return;
   }
 
-  if(empty(window.localStorage.getItem('organizationClients')))
+  if(forceAjaxRequest || empty(window.localStorage.getItem('organizationClients')))
   {
     $.ajax(
   	{
@@ -936,18 +937,21 @@ function updateApplicationSupplierAutocompletes()
  *
  *  @returns object
  */
-function loadSuppliers(suppliers)
+function loadSuppliers(suppliers, forceAjaxRequest)
 {
   suppliers = suppliers || '';
+  forceAjaxRequest = forceAjaxRequest || false;
 
   if(!empty(suppliers))
   {
     window.localStorage.setItem('organizationSuppliers', JSON.stringify(suppliers));
 
+    updateApplicationSupplierAutocompletes();
+
     return;
   }
 
-  if(empty(window.localStorage.getItem('organizationSuppliers')))
+  if(forceAjaxRequest || empty(window.localStorage.getItem('organizationSuppliers')))
   {
     $.ajax(
   	{
@@ -962,6 +966,8 @@ function loadSuppliers(suppliers)
   		success:function(organizationSuppliers)
   		{
   			window.localStorage.setItem('organizationSuppliers', JSON.stringify(organizationSuppliers));
+
+        updateApplicationSupplierAutocompletes();
   		}
   	});
   }
@@ -975,6 +981,18 @@ function loadSuppliers(suppliers)
 $.fn.setSupplierAutocomplete = function()
 {
   supplierAutocomplete = this;
+  applicationSupplierAutocompletes = [];
+
+  if(!empty(window.localStorage.getItem('applicationSupplierAutocompletes')))
+  {
+    applicationSupplierAutocompletes = JSON.parse(window.localStorage.getItem('applicationSupplierAutocompletes'));
+  }
+
+  if($.inArray(supplierAutocomplete.attr('id'), applicationSupplierAutocompletes) == -1)
+  {
+    applicationSupplierAutocompletes.push(supplierAutocomplete.attr('id'));
+    window.localStorage.setItem('applicationSupplierAutocompletes', JSON.stringify(applicationSupplierAutocompletes));
+  }
 
   if(empty(window.localStorage.getItem('organizationSuppliers')))
   {
