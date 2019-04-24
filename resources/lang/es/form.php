@@ -227,6 +227,8 @@ return array(
 
 	'devCustomFormat' => 'Formato personalizado',
 
+	'file' => 'Archivo',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
