@@ -46,10 +46,10 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 		$autocompleteEvent=",focus: function( event, ui ) { $autocompleteFocusEvent return false;},select: function( event, ui ) { $autocompleteEvent return false;}";
 	}
 
-	if(!empty($source) && is_array($source[0]) && array_key_exists('category',$source[0]))
-	{
-		$autocompleteWidgetName='categoryautocomplete';
-	}
+	// if(!empty($source) && is_array($source[0]) && array_key_exists('category',$source[0]))
+	// {
+	// 	$autocompleteWidgetName='categoryautocomplete';
+	// }
 
 	if (!empty($value))
 	{
