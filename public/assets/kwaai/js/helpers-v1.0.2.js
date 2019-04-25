@@ -540,11 +540,11 @@ $.fn.showAlertAfterElement = function (cssClass, textAlert, delay)
 
 	if(delay)
 	{
-		alert = this;
+		appAlert = this;
 		// $("#" + this.attr("id") + "-alert").delay( delay ).fadeOut();
 		setTimeout(function ()
 		{
-			$("#" + alert.attr("id") + "-alert").alert('close');
+			$("#" + appAlert.attr("id") + "-alert").alert('close');
 		}, delay);
 	}
 };
@@ -588,11 +588,11 @@ $.fn.showAlertAsFirstChild = function (cssClass, textAlert, delay)
 	if(delay)
 	{
 		// $("#" + this.attr("id") + "-alert").delay( delay ).fadeOut();
-		alert = this;
+		appAlert = this;
 		// $("#" + this.attr("id") + "-alert").delay( delay ).fadeOut();
 		setTimeout(function ()
 		{
-			$("#" + alert.attr("id") + "-alert").alert('close');
+			$("#" + appAlert.attr("id") + "-alert").alert('close');
 		}, delay);
 	}
 };
