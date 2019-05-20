@@ -63,6 +63,10 @@ return array(
 
 	'print' => 'Imprimir',
 
+	'select' => 'Seleccionar',
+
+	'search' => 'Buscar',
+
 	'exportLongText' => 'Exportar datos de la tabla',
 
 	'closeLongText' => 'Cerrar el registro actual y volver a la vista de tabla (se perderán los cambios que no hayan sido guardados)',//'Close the current record and return to grid view',

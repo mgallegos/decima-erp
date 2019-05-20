@@ -229,6 +229,8 @@ return array(
 
 	'file' => 'Archivo',
 
+	'searchModalTitle' => 'Seleccione el registro que desea editar',
+
   'A' => 'Anulado',
 
 	'B' => 'Abierta',
