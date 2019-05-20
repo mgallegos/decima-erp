@@ -13,6 +13,8 @@ return array(
 
 	'view' => 'Ver',
 
+	'viewLongText' => 'Ver detalles del registro',
+
 	'edit' => 'Editar',
 
 	'save' => 'Guardar',
