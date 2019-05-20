@@ -29,6 +29,8 @@ return array(
 
 	'upload' => 'Adjuntar',
 
+	'uploadLongText' => 'Adjuntar archivo',
+
 	'add' => 'Agregar',
 
 	'open' => 'Abrir',
