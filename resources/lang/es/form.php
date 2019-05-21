@@ -109,6 +109,8 @@ return array(
 
 	'dateFormat' => 'dd/mm/yy',
 
+	// 'dateTimeFormat' => 'dd/mm/yy hh:mm:ss',
+
 	'dateTimePlaceHolder' => 'dd/mm/yy 12:00 a.m.',
 
 	'phpShortDateFormat' => 'd/m/Y',

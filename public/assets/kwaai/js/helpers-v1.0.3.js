@@ -855,10 +855,11 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 
 	$.each(headers, function( name, header )
 	{
+		// console.log(header);
+		// console.log((!empty(header.width) ? header.width : ''));
 		$('<th/>', {
 				'scope': 'col',
-				'width': (!empty(header.width) ? header.width : ''),
-				'style': 'text-align: center',
+				'style': 'text-align: center;' + (!empty(header.width) ? 'width: ' + header.width + ';' : ''),
 				'html': header.label
 		}).appendTo(tr);
 	});
@@ -896,6 +897,9 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 					case 'date':
 						value = $.datepicker.formatDate(lang.dateFormat, new Date(row[name]));
 						break;
+					// case 'datetime':
+					// 	value = $.datetimepicker.formatDate(lang.phpDateTimeFormat, new Date(row[name]));
+					// 	break;
 				}
 			}
 
@@ -944,7 +948,7 @@ $.fn.getSelectedSmtRow = function()
 		return false;
 	}
 
-	return JSON.parse($('#inv-mm-smt-body').find('.bg-success').attr('data-row'));
+	return JSON.parse($(this).find('.bg-success').attr('data-row'));
 };
 
 /**
