@@ -299,6 +299,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $Journal = $this->Journal->create(array('journalized_id' => $ModuleTableName->id, 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.addedJournal', array('name' => $ModuleTableName->name)), $Journal));
 
+      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+
       $this->commit($openTransaction);
     }
     catch (\Exception $e)
@@ -314,7 +316,12 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       throw $e;
     }
 
-    return json_encode(array('success' => $this->Lang->get('form.defaultSuccessSaveMessage')));
+    return json_encode(
+      array(
+        'success' => $this->Lang->get('form.defaultSuccessSaveMessage'),
+        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+      )
+    );
   }
 
   /**
@@ -443,6 +450,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
         }
       }
 
+      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+
       $this->commit($openTransaction);
     }
     catch (\Exception $e)
@@ -458,7 +467,12 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       throw $e;
     }
 
-    return json_encode(array('success' => $this->Lang->get('form.defaultSuccessUpdateMessage')));
+    return json_encode(
+      array(
+        'success' => $this->Lang->get('form.defaultSuccessUpdateMessage'),
+        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+      )
+    );
   }
 
   /**
@@ -494,6 +508,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
 
       $this->ModuleTableName->delete(array($input['id']), $databaseConnectionName);
 
+      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+
       $this->commit($openTransaction);
     }
     catch (\Exception $e)
@@ -509,7 +525,12 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       throw $e;
     }
 
-    return json_encode(array('success' => $this->Lang->get('form.defaultSuccessDeleteMessage')));
+    return json_encode(
+      array(
+        'success' => $this->Lang->get('form.defaultSuccessDeleteMessage'),
+        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+      )
+    );
   }
 
   /**
@@ -552,6 +573,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
          $this->ModuleTableName->delete(array($id), $databaseConnectionName);
        }
 
+       $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+
        $this->commit($openTransaction);
      }
      catch (\Exception $e)
@@ -567,13 +590,24 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
        throw $e;
      }
 
+
      if($count == 1)
      {
-       return json_encode(array('success' => $this->Lang->get('form.defaultSuccessDeleteMessage')));
+       return json_encode(
+         array(
+           'success' => $this->Lang->get('form.defaultSuccessDeleteMessage'),
+           'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+         )
+       );
      }
      else
      {
-       return json_encode(array('success' => $this->Lang->get('form.defaultSuccessDeleteMessage1')));
+       return json_encode(
+         array(
+           'success' => $this->Lang->get('form.defaultSuccessDeleteMessage1'),
+           'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+         )
+       );
      }
    }
 }

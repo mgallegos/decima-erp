@@ -29,11 +29,13 @@ use Vendor\DecimaModule\Module\Repositories\ModuleAppDetail\ModuleAppDetailInter
 
 use Carbon\Carbon;
 
-use Illuminate\Config\Repository;
+use Illuminate\Database\DatabaseManager;
 
 use Illuminate\Translation\Translator;
 
-use Illuminate\Database\DatabaseManager;
+use Illuminate\Config\Repository;
+
+use Illuminate\Cache\CacheManager;
 
 class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppManagementInterface {
 
@@ -133,6 +135,14 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    */
   protected $Config;
 
+  /**
+  * Laravel Cache instance
+  *
+  * @var \Illuminate\Cache\CacheManager
+  *
+  */
+  protected $Cache;
+
 	public function __construct(
     AuthenticationManagementInterface $AuthenticationManager,
     JournalManagementInterface $JournalManager,
@@ -145,7 +155,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     Carbon $Carbon,
     DatabaseManager $DB,
     Translator $Lang,
-    Repository $Config
+    Repository $Config,
+    CacheManager $Cache
   )
 	{
     $this->AuthenticationManager = $AuthenticationManager;
@@ -171,6 +182,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
 		$this->Lang = $Lang;
 
 		$this->Config = $Config;
+
+    $this->Cache = $Cache;
 	}
 
   /**
@@ -197,6 +210,37 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
   public function getGridDataDetail(array $post)
   {
     $this->GridEncoder->encodeRequestedData($this->EloquentModuleAppDetailGridRepository, $post);
+  }
+
+  /**
+   * Get search modal table rows
+   *
+   * @return array
+   */
+  public function getSearchModalTableRows($organizationId = null, $databaseConnectionName = null, $returnJson = true)
+  {
+    if(empty($organizationId))
+    {
+      $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
+    }
+
+    if(!$this->Cache->has('moduleTableNamesSmt' . $organizationId))
+    {
+      $rows = $this->ModuleTableName->searchModalTableRows($organizationId, $databaseConnectionName)->toArray();
+
+      $this->Cache->put('moduleTableNamesSmt' . $organizationId, json_encode($rows), 360);
+    }
+    else
+    {
+      $rows = json_decode($this->Cache->get('moduleTableNamesSmt' . $organizationId), true);
+    }
+
+    if($returnJson)
+    {
+      return json_encode($rows);
+    }
+
+    return $rows;
   }
 
   /**
@@ -286,6 +330,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $Journal = $this->Journal->create(array('journalized_id' => $ModuleApp->id, 'journalized_type' => $this->ModuleApp->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.addedMasterJournal', array('name' => $ModuleApp->name)), $Journal));
 
+      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+
       $this->commit($openTransaction);
     }
     catch (\Exception $e)
@@ -301,8 +347,22 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       throw $e;
     }
 
-    return json_encode(array('success' => $this->Lang->get('form.defaultSuccessSaveMessage'), 'id' => $ModuleApp->id));
-    // return json_encode(array('success' => $this->Lang->get('form.defaultSuccessSaveMessage'), 'id' => $ModuleApp->id, 'number' => $ModuleApp->number));
+    return json_encode(
+      array(
+        'success' => $this->Lang->get('form.defaultSuccessSaveMessage'),
+        'id' => $ModuleApp->id,
+        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+      )
+    );
+
+    // return json_encode(
+    //   array(
+    //     'success' => $this->Lang->get('form.defaultSuccessSaveMessage'),
+    //     'id' => $ModuleApp->id,
+    //     'number' => $ModuleApp->number,
+    //     'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+    //   )
+    // );
   }
 
   /**
@@ -372,7 +432,11 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       throw $e;
     }
 
-    return json_encode(array('success' => $this->Lang->get('form.defaultSuccessSaveMessage')));
+    return json_encode(
+      array(
+        'success' => $this->Lang->get('form.defaultSuccessUpdateMessage')
+      )
+    );
   }
 
   /**
@@ -506,6 +570,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
         }
       }
 
+      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+
       $this->commit($openTransaction);
     }
     catch (\Exception $e)
@@ -521,7 +587,12 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       throw $e;
     }
 
-    return json_encode(array('success' => $this->Lang->get('form.defaultSuccessUpdateMessage')));
+    return json_encode(
+      array(
+        'success' => $this->Lang->get('form.defaultSuccessUpdateMessage'),
+        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+      )
+    );
   }
 
   /**
@@ -716,6 +787,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $Journal = $this->Journal->create(array('journalized_id' => $input['id'], 'journalized_type' => $this->ModuleApp->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.authorizedMasterJournal', array('number' => $ModuleApp->number)), $Journal));
 
+      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+
       $this->commit($openTransaction);
     }
     catch (\Exception $e)
@@ -731,7 +804,12 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       throw $e;
     }
 
-    return json_encode(array('success' => $this->Lang->get('form.defaultAuthorizeMessage')));
+    return json_encode(
+      array(
+        'success' => $this->Lang->get('form.defaultAuthorizeMessage'),
+        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+      )
+    );
   }
 
   /**
@@ -777,6 +855,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $Journal = $this->Journal->create(array('journalized_id' => $input['id'], 'journalized_type' => $this->ModuleApp->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.voidMasterJournal', array('number' => $ModuleApp->number)), $Journal));
 
+      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+
       $this->commit($openTransaction);
     }
     catch (\Exception $e)
@@ -792,7 +872,12 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       throw $e;
     }
 
-    return json_encode(array('success' => $this->Lang->get('form.defaultVoidMessage')));
+    return json_encode(
+      array(
+        'success' => $this->Lang->get('form.defaultVoidMessage'),
+        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+      )
+    );
   }
 
   /**
@@ -828,6 +913,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
 
       $this->ModuleApp->delete(array($input['id']), $databaseConnectionName);
 
+      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+
       $this->commit($openTransaction);
     }
     catch (\Exception $e)
@@ -843,7 +930,12 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       throw $e;
     }
 
-    return json_encode(array('success' => $this->Lang->get('form.defaultSuccessDeleteMessage')));
+    return json_encode(
+      array(
+        'success' => $this->Lang->get('form.defaultSuccessDeleteMessage'),
+        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+      )
+    );
   }
 
   /**

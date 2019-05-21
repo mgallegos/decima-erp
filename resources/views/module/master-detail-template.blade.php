@@ -465,6 +465,11 @@
 						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 5000);
 					}
 
+					if(!empty(json.smtRows))
+					{
+						loadSmtRows('moduleAppSmtRows', '', json.smtRows);
+					}
+
 					$('#module-app-modal-delete').modal('hide');
 
 					$('#app-loader').addClass('hidden');
@@ -558,6 +563,11 @@
 						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 5000);
 					}
 
+					if(!empty(json.smtRows))
+					{
+						loadSmtRows('moduleAppSmtRows', '', json.smtRows);
+					}
+
 					$('#module-app-ma').modal('hide');
 
 					$('#app-loader').addClass('hidden');
@@ -648,6 +658,11 @@
 						$('#module-app-btn-refresh').click();
 						$("#module-app-btn-group-2").disabledButtonGroup();
 						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 5000);
+					}
+
+					if(!empty(json.smtRows))
+					{
+						loadSmtRows('moduleAppSmtRows', '', json.smtRows);
 					}
 
 					$('#module-app-mv').modal('hide');
@@ -796,6 +811,11 @@
 						{
 							// $('#module-app-form').showAlertAsFirstChild('alert-info', json.info, 12000);
 						}
+					}
+
+					if(!empty(json.smtRows))
+					{
+						loadSmtRows('moduleAppSmtRows', '', json.smtRows);
 					}
 
 					$('#app-loader').addClass('hidden');
