@@ -97,6 +97,7 @@ class ModuleAppManager extends Controller {
 	public function getIndex()
 	{
 		return $this->View->make('decima-module::module-app-management')
+			->with('prefix', 'module-app-')
 			->with('newModuleAppAction', $this->Session->get('newModuleAppAction', false))
 			->with('editModuleAppAction', $this->Session->get('editModuleAppAction', false))
 			->with('deleteModuleAppAction', $this->Session->get('deleteModuleAppAction', false))
@@ -114,6 +115,11 @@ class ModuleAppManager extends Controller {
 	public function postGridDataDetail()
 	{
 		return $this->ModuleAppManagerService->getGridDataDetail($this->Input->all());
+	}
+
+	public function postSmtRows()
+	{
+		return $this->ModuleAppManagerService->getSearchModalTableRows();
 	}
 
 	public function postCreateMaster()

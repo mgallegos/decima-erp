@@ -156,6 +156,8 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
 		$this->Lang = $Lang;
 
 		$this->Config = $Config;
+
+    $this->Cache = $Cache;
 	}
 
   /**
@@ -169,6 +171,37 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
   public function getGridData(array $post)
   {
     $this->GridEncoder->encodeRequestedData($this->EloquentModuleTableNameGridRepository, $post);
+  }
+
+  /**
+   * Get search modal table rows
+   *
+   * @return array
+   */
+  public function getSearchModalTableRows($organizationId = null, $databaseConnectionName = null, $returnJson = true)
+  {
+    if(empty($organizationId))
+    {
+      $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
+    }
+
+    if(!$this->Cache->has('moduleTableNamesSmt' . $organizationId))
+    {
+      $rows = $this->ModuleTableName->searchModalTableRows($organizationId, $databaseConnectionName)->toArray();
+
+      $this->Cache->put('moduleTableNamesSmt' . $organizationId, json_encode($rows), 360);
+    }
+    else
+    {
+      $rows = json_decode($this->Cache->get('moduleTableNamesSmt' . $organizationId), true);
+    }
+
+    if($returnJson)
+    {
+      return json_encode($rows);
+    }
+
+    return $rows;
   }
 
   /**
@@ -194,14 +227,33 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    * @return array
    *  An array of arrays as follows: array( array('label'=>$name0, 'value'=>$id0), array('label'=>$name1, 'value'=>$id1),…)
    */
-  public function getModuleTableNames()
+  public function getModuleTableNames($organizationId = null, $databaseConnectionName = null, $returnJson = false)
   {
     $moduleTableNames = array();
 
-    $this->ModuleTableName->byOrganization($this->AuthenticationManager->getCurrentUserOrganizationId())->each(function($ModuleTableName) use (&$moduleTableNames)
+    if(empty($organizationId))
     {
-      array_push($moduleTableNames, array('label'=> $ModuleTableName->name , 'value'=>$ModuleTableName->id));
-    });
+      $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
+    }
+
+    if(!$this->Cache->has('moduleTableNames' . $organizationId))
+    {
+      $this->ModuleTableName->byOrganization($organizationId)->each(function($ModuleTableName) use (&$moduleTableNames)
+      {
+        array_push($moduleTableNames, array('label'=> $ModuleTableName->name , 'value'=>$ModuleTableName->id));
+      });
+
+      $this->Cache->put('moduleTableNames' . $organizationId, json_encode($moduleTableNames), 360);
+    }
+    else
+    {
+      $moduleTableNames = json_decode($this->Cache->get('moduleTableNames' . $organizationId), true);
+    }
+
+    if($returnJson)
+    {
+      return json_encode($moduleTableNames);
+    }
 
     return $moduleTableNames;
   }
@@ -282,7 +334,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     unset($input['_token']);
 
     $input = eloquent_array_filter_for_update($input);
-    
+
     // if(!empty($input['date']))
     // {
     //   $input['date'] = $this->Carbon->createFromFormat($this->Lang->get('form.phpShortDateFormat'), $input['date'])->format('Y-m-d');

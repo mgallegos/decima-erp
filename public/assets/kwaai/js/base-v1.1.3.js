@@ -1034,6 +1034,144 @@ $.fn.setSupplierAutocomplete = function()
 };
 
 /**
+ * Get suppliers from localstorage
+ *
+ *  @returns object
+ */
+function getSuppliers()
+{
+  return JSON.parse(window.localStorage.getItem('organizationSuppliers'));
+}
+
+/**
+ * Load search modal table rows
+ *
+ * @param jqueryObject tr
+ *
+ * @returns void
+ */
+function smtRowClick(tr)
+{
+	$(tr).parent().children().each(function()
+	{
+		$(this).removeClass('bg-success');
+	});
+
+	$(tr).addClass('bg-success');
+}
+
+/**
+ * Load search modal table rows
+ *
+ * @param jqueryObject tr
+ *
+ * @returns void
+ */
+function smtOnKeyup(event, prefix)
+{
+  if (event.keyCode == 13)
+  {
+    smtSearch(prefix);
+  }
+}
+/**
+ * Load search modal table rows
+ *
+ * @param jqueryObject tr
+ *
+ * @returns void
+ */
+function smtSearch(prefix)
+{
+  var found, filter;
+
+	if($('#' + prefix + 'smt-search-box').isEmpty())
+	{
+    $('#' + prefix + 'smt').createTable('', $('#' + prefix + 'smt').attr('data-rows-variable-name'), 10, '', JSON.parse($('#' + prefix + 'smt').attr('data-headers')));
+
+		return;
+	}
+
+  filter = $('#' + prefix + 'smt-search-box').val();
+
+  rows = $.grep(JSON.parse(window.localStorage.getItem($('#' + prefix + 'smt').attr('data-rows-variable-name'))), function (row, index)
+  {
+    found = false;
+
+    $.each(row, function( name, value )
+  	{
+      if(String(value).indexOf(filter) > -1)
+      {
+        found = true;
+
+        return false;
+      }
+    });
+
+    return found;
+  });
+
+	$('#' + prefix + 'smt').createTable('', '', 0, rows, JSON.parse($('#' + prefix + 'smt').attr('data-headers')));
+}
+
+/**
+ * Load search modal table rows
+ *
+ * @param string variableName
+ * @param string url
+ * @param object rows
+ * @param boolean forceAjaxRequest
+ *
+ * @returns void
+ */
+function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader)
+{
+	rows = rows || '';
+	forceAjaxRequest = forceAjaxRequest || false;
+	showLoader = showLoader || false;
+
+	if(!empty(rows))
+  {
+    window.localStorage.setItem(variableName, JSON.stringify(rows));
+
+    return;
+  }
+
+	if(forceAjaxRequest || empty(window.localStorage.getItem(variableName)))
+	{
+		$.ajax(
+		{
+			type: 'POST',
+			data: JSON.stringify({'_token': $('#app-token').val()}),
+			dataType : 'json',
+			url: url,
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+				handleServerExceptions(jqXHR, '', false);
+			},
+			beforeSend:function()
+			{
+				if(showLoader)
+				{
+					$('#app-loader').removeClass('hidden hidden-xs-up');
+					disabledAll();
+				}
+			},
+			success:function(smtRows)
+			{
+				window.localStorage.setItem(variableName, JSON.stringify(smtRows));
+
+				if(showLoader)
+				{
+					$('#app-loader').addClass('hidden hidden-xs-up');
+					enableAll();
+				}
+			}
+		});
+	}
+}
+
+/**
  * Close user apps popover
  *
  * @returns void

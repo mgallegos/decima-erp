@@ -249,9 +249,24 @@
 
 /* Section classes */
 
+.btn-modal-toolbar {
+	padding: 5px;
+	margin-left: 0px !important;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+  background-color: #f5f5f5;
+  background-image:-webkit-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+  background-image:linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%);
+  background-repeat:repeat-x;
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0)
+}
+
 .section-header {
-	/*padding: 10px;*/
-  padding: 10px 15px;
+	padding: 10px;
+  /* padding: 10px 15px; */
 	margin-left: 0px !important;
 	border: 1px solid #cccccc;
 	border-radius: 4px;
@@ -746,6 +761,11 @@
   display: none;
 }
 
+/*Search modal table*/
+.search-modal-table {
+  font-size:0.80em !important;
+}
+
 /*Iphone 5*/
 @media (min-width: 320px) {
   .app-grid > .ui-jqgrid {
@@ -960,7 +980,13 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
   }
 }
 
-/*Extra large devices (large desktops, 1200px and up)*/
+/* From small to  large devices (large desktops, 1200px and up)*/
+@media (max-width: 1199px) {
+  .search-modal {
+    width:95% !important;
+  }
+}
+
 @media (min-width: 1200px) {
 	.app-grid > .ui-jqgrid {
 		width: 1106px !important;
@@ -972,5 +998,9 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
 
   .checkbox-filter-margin-left {
     margin-left: 55px;
+  }
+
+  .search-modal {
+    width:1138px !important;
   }
 }

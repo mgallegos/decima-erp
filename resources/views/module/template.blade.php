@@ -9,6 +9,7 @@
 <style></style>
 
 <script type='text/javascript'>
+
 	//For grids with multiselect enabled
 	function moduleAppOnSelectRowEvent(id)
 	{
@@ -422,6 +423,9 @@
 			<div id="module-app-btn-group-2" class="btn-group btn-group-app-toolbar">
 				{!! Form::button('<i class="fa fa-edit"></i> ' . Lang::get('toolbar.edit'), array('id' => 'module-app-btn-edit', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.edit'))) !!}
 				{!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.delete'), array('id' => 'module-app-btn-delete', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.delete'))) !!}
+				{{-- Form::button('<i class="fa fa-upload"></i> ', array('id' => 'module-app-btn-upload', 'class' => 'btn btn-default module-app-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-folder' => Lang::get('module::app.folder'), 'data-original-title' => Lang::get('toolbar.uploadLongText'))) --}}
+				{{-- Form::button('<i class="fa fa-files-o"></i> ', array('id' => 'module-app-btn-show-files', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.showFilesLongText'))) --}}
+				{{-- Form::button('<i class="fa fa-history"></i> ', array('id' => 'module-app-btn-show-history', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.showHistoryLongText'))) --}}
 			</div>
 			<div id="module-app-btn-group-3" class="btn-group btn-group-app-toolbar">
 				{!! Form::button('<i class="fa fa-save"></i> ' . Lang::get('toolbar.save'), array('id' => 'module-app-btn-save', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.save'))) !!}
@@ -457,7 +461,7 @@
 				<legend id="module-app-form-new-title" class="hidden">{{ Lang::get('module::app.formNewTitle') }}</legend>
 				<legend id="module-app-form-edit-title" class="hidden">{{ Lang::get('module::app.formEditTitle') }}</legend>
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-6 form-division-line">
 						<div class="form-group mg-hm">
 							{!! Form::label('module-app-name', Lang::get('form.name'), array('class' => 'control-label')) !!}
 					    {!! Form::text('module-app-name', null , array('id' => 'module-app-name', 'class' => 'form-control', 'data-mg-required' => '')) !!}

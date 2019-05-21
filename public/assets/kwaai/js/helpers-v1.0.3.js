@@ -734,33 +734,6 @@ $.fn.hasAttr = function(name) {
    return this.attr(name) !== undefined;
 };
 
-/**
- * Key press cross browser compatibility
- * Firefox...
- *
- * @returns ...
- */
-function keyPressCrossBrowserCompatibility(event)
-{
-	//Fix firefox
-	switch (event.keyCode)
-	{
-		case 8://backspace
-		case 9://tab
-		case 33://Re pág.
-		case 34://Av Pág.
-		case 35://fin
-		case 36://inicio
-		case 45://insert
-		case 46://Supr
-			return true;
-			break;
-		default:
-			return false;
-	}
-	//console.log("entre");
-	//console.log("keycode: "+event.keyCode+" charcode: "+event.charCode);
-};
 
 /**
  * Enable a group of buttons within a container.
@@ -808,6 +781,198 @@ $.fn.disabledButtonGroup = function()
 	{
 		$(this).attr('disabled','disabled');
 	});
+};
+
+/**
+ * Bind the custom "on enter" event to an element.
+ *
+ *  @returns void
+ */
+$.fn.onEnter = function(func)
+{
+  this.bind('keypress', function(e)
+  {
+    if (e.keyCode == 13) func.apply(this, [e]);
+  });
+
+  return this;
+};
+
+/**
+ * Clear all tags.
+ * Use: $('#elementId').clearTags();
+ *
+ * @returns void
+ */
+$.fn.clearTags = function()
+{
+	this.val('');
+	this.parent().find('.token').remove();
+};
+
+/**
+ * Create table
+ *
+ * @param object headers
+ * @param object rows
+ * @param string tableClasses
+ *
+ * Use: $('#elementId').clearTags();
+ *
+ * @returns void
+ */
+$.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tableClasses)
+{
+	gridId = gridId || '';
+	slice = slice || 0;
+	rows = rows || '';
+	headers = headers || {'name': {'label':'label', 'width':'100%'}};
+
+	if(!empty(gridId))
+	{
+		headers = {};
+
+		$.each($('#' + gridId).getGridParam('colModel'), function( index, colModel)
+		{
+			if(empty(colModel.hidden))
+			{
+				headers[colModel.name] = {
+					'label': colModel.label,
+					'width':(!empty(colModel.modalwidth) ? colModel.modalwidth : ''),
+					'formatter':(!empty(colModel.formatter) ? colModel.formatter : ''),
+					'align':(!empty(colModel.align) ? colModel.align : '')
+				};
+			}
+		});
+	}
+
+	tableClasses = tableClasses || 'table table-bordered table-hover search-modal-table';
+
+	table = $('<table/>', {class:tableClasses});
+	thead = $('<thead/>');
+	tbody = $('<tbody/>');
+	tr = $('<tr/>');
+
+	$.each(headers, function( name, header )
+	{
+		$('<th/>', {
+				'scope': 'col',
+				'width': (!empty(header.width) ? header.width : ''),
+				'style': 'text-align: center',
+				'html': header.label
+		}).appendTo(tr);
+	});
+
+	thead.append(tr);
+	table.append(thead);
+
+	if(empty(rows))
+	{
+		if(!empty(slice))
+		{
+			rows = JSON.parse(window.localStorage.getItem(rowsVariableName)).slice(0, slice);
+		}
+		else
+		{
+			rows = JSON.parse(window.localStorage.getItem(rowsVariableName));
+		}
+	}
+
+	$.each(rows, function( index, row )
+	{
+		tr = $('<tr/>');
+
+		$.each(headers, function( name, header)
+		{
+			td = $('<td/>');
+			value = row[name];
+
+			if(!empty(header.formatter))
+			{
+				switch (header.formatter) {
+					case 'currency':
+						value = $.fmatter.NumberFormat(row[name], $.fn.jqMgVal.defaults.validators.money.formatter);
+						break;
+					case 'date':
+						value = $.datepicker.formatDate(lang.dateFormat, new Date(row[name]));
+						break;
+				}
+			}
+
+			if(!empty(header.class))
+			{
+				td.attr('class', header.class);
+			}
+
+			if(!empty(header.align))
+			{
+				td.attr('style', 'text-align: ' + header.align);
+			}
+
+			td.html(value);
+
+			tr.append(td);
+		});
+
+		tr.attr('data-row', JSON.stringify(row));
+		tr.attr('onclick', 'smtRowClick(this)');
+		tbody.append(tr);
+	});
+
+	table.append(tbody);
+
+	if(!empty(rowsVariableName))
+	{
+		$(this).attr('data-rows-variable-name', rowsVariableName);
+	}
+
+	$(this).attr('data-headers', JSON.stringify(headers));
+
+	$(this).find('.smt-body').html('');
+
+	$(this).find('.smt-body').append(table);
+};
+/**
+ * Get selected row
+ *
+ * @returns object
+ */
+$.fn.getSelectedSmtRow = function()
+{
+	if($(this).find('.bg-success').length == 0)
+	{
+		return false;
+	}
+
+	return JSON.parse($('#inv-mm-smt-body').find('.bg-success').attr('data-row'));
+};
+
+/**
+ * Key press cross browser compatibility
+ * Firefox...
+ *
+ * @returns boolean
+ */
+function keyPressCrossBrowserCompatibility(event)
+{
+	//Fix firefox
+	switch (event.keyCode)
+	{
+		case 8://backspace
+		case 9://tab
+		case 33://Re pág.
+		case 34://Av Pág.
+		case 35://fin
+		case 36://inicio
+		case 45://insert
+		case 46://Supr
+			return true;
+			break;
+		default:
+			return false;
+	}
+	//console.log("entre");
+	//console.log("keycode: "+event.keyCode+" charcode: "+event.charCode);
 };
 
 /**
@@ -873,21 +1038,6 @@ function showButtonHelper(btnCloseId, popoverId, popoverContent)
 		$('#' + popoverId).popover('destroy');
 	}, 8000);
 }
-
-/**
- * Bind the custom "on enter" event to an element.
- *
- *  @returns void
- */
-$.fn.onEnter = function(func)
-{
-    this.bind('keypress', function(e)
-    {
-        if (e.keyCode == 13) func.apply(this, [e]);
-    });
-
-    return this;
-};
 
 /**
  * Calculate percent
@@ -1014,17 +1164,6 @@ var jqMgValAutocompleteValidator = function($element)
 	});
 };
 
-/**
- * Clear all tags.
- * Use: $('#elementId').clearTags();
- *
- * @returns void
- */
-$.fn.clearTags = function()
-{
-	this.val('');
-	this.parent().find('.token').remove();
-};
 
 /**
  * Validate token
