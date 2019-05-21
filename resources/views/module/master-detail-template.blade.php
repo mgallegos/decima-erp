@@ -662,7 +662,7 @@
 
 		$('#module-app-detail-btn-delete').click(function()
 		{
-			var id = $('#module-app-back-detail-grid').getSelectedRowsIdCell('module_app_detail_id');
+			var id = $('#module-app-back-detail-grid').getSelectedRowId('module_app_detail_id');
 
 			if(!$('#module-app-back-detail-grid').isRowSelected())
 			{
@@ -899,7 +899,7 @@
 			$('#module-app-btn-group-3').disabledButtonGroup();
 
 			$('#module-app-journals-section').attr('data-target-id', '');
-			
+
 			moduleAppDisabledDetailForm();
 		});
 
