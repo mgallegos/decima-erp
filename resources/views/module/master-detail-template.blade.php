@@ -662,7 +662,7 @@
 
 		$('#module-app-detail-btn-delete').click(function()
 		{
-			var id = $('#module-app-back-detail-grid').getSelectedRowId('module_app_detail_id');
+			var id = $('#module-app-back-detail-grid').getSelectedRowsIdCell('module_app_detail_id');
 
 			if(!$('#module-app-back-detail-grid').isRowSelected())
 			{
@@ -1215,6 +1215,7 @@
 				->setGridOption('rowList', array())
 				->setGridOption('rowNum', 100000)
 				->setGridOption('footerrow',true)
+				->setGridOption('multiselect', true)
 				//->setGridOption('postData',array('_token' => Session::token()))
 				->setGridOption('postData', array('_token' => Session::token(), 'filters'=>"{'groupOp':'AND','rules':[{'field':'master_id','op':'eq','data':'-1'}]}"))
 				->setGridEvent('onSelectRow', 'moduleAppDetailOnSelectRowEvent')
