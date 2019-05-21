@@ -129,6 +129,8 @@
 				return;
 			}
 
+			$('.decima-erp-tooltip').tooltip('hide');
+
       $('#module-app-form, #module-app-detail-form').jqMgVal('clearForm');
 
 			$('#module-app-detail-btn-toolbar, #module-app-ot-btn-toolbar, #module-app-btn-toolbar').disabledButtonGroup();
@@ -156,8 +158,6 @@
 			}
 
 			$('#module-app-filters').hide();
-
-			$('.decima-erp-tooltip').tooltip('hide');
 
 			$(this).removeAttr('disabled');
 
@@ -315,6 +315,8 @@
 				return;
 			}
 
+			$('.decima-erp-tooltip').tooltip('hide');
+
 			if($('#module-app-journals-section').attr('data-target-id') == '')
 			{
 				if(!$('#module-app-grid').isRowSelected())
@@ -332,8 +334,6 @@
 
 			}
 
-			$('.decima-erp-tooltip').tooltip('hide');
-
 			$('#module-app-modal-delete').modal('show');
 		});
 
@@ -348,12 +348,12 @@
 		{
 			var rowData, id;
 
-			$('.decima-erp-tooltip').tooltip('hide');
-
 			if($(this).hasAttr('disabled'))
 			{
 				return;
 			}
+
+			$('.decima-erp-tooltip').tooltip('hide');
 
 			if($('#module-app-grid').is(":visible"))
 			{
@@ -383,12 +383,12 @@
 		{
 			var rowData, id;
 
-			$('.decima-erp-tooltip').tooltip('hide');
-
 			if($(this).hasAttr('disabled'))
 			{
 				return;
 			}
+
+			$('.decima-erp-tooltip').tooltip('hide');
 
 			if($('#module-app-grid').is(":visible"))
 			{
@@ -484,6 +484,8 @@
 				return;
 			}
 
+			$('.decima-erp-tooltip').tooltip('hide');
+
 			if($('#module-app-journals-section').attr('data-target-id') == '')
 			{
 				if(!$('#module-app-grid').isRowSelected())
@@ -501,8 +503,6 @@
 			{
 
 			}
-
-			$('.decima-erp-tooltip').tooltip('hide');
 
 			$('#module-app-ma').modal('show');
 		});
@@ -577,6 +577,8 @@
 				return;
 			}
 
+			$('.decima-erp-tooltip').tooltip('hide');
+
 			if($('#module-app-journals-section').attr('data-target-id') == '')
 			{
 				if(!$('#module-app-grid').isRowSelected())
@@ -594,7 +596,6 @@
 
 			}
 
-			$('.decima-erp-tooltip').tooltip('hide');
 			$('#module-app-mv').modal('show');
 		});
 
@@ -872,6 +873,8 @@
 				return;
 			}
 
+			$('.decima-erp-tooltip').tooltip('hide');
+
 			if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
 			{
 				$('#module-app-form-new-title').addClass('hidden');
@@ -892,9 +895,11 @@
 			$('#module-app-finished-goods-warehouse-ids').clearTags();
 
 			$('#module-app-btn-group-1').enableButtonGroup();
+
 			$('#module-app-btn-group-3').disabledButtonGroup();
-			$('.decima-erp-tooltip').tooltip('hide');
+
 			$('#module-app-journals-section').attr('data-target-id', '');
+			
 			moduleAppDisabledDetailForm();
 		});
 
