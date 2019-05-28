@@ -32,6 +32,8 @@
 {!! Html::script('assets/keymaster-v1.6.1/keymaster.min.js') !!}
 <script src="{{ URL::asset('assets/jquery-slidereveal-v1.1.2/jquery.slidereveal.min.js') }}"></script>
 <script src="{{ URL::asset('assets/select2-v4.0.5/select2.js') }}"></script>
+<!-- Pendiente -->
+<!-- https://cdn.jsdelivr.net/npm/chart.js@2.8.0 -->
 
 <script type='text/javascript'>
 	var userApps, lang, History, State;
