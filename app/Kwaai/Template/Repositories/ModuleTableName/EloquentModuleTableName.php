@@ -71,24 +71,32 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    *
    * @return Collection
    */
-  public function searchModalTableRows($organizationId, $databaseConnectionName = null)
+  public function searchModalTableRows($id = null, $organizationId, $databaseConnectionName = null)
   {
     if(empty($databaseConnectionName))
     {
       $databaseConnectionName = $this->databaseConnectionName;
     }
 
+    $query = $this->DB->connection($databaseConnectionName)
+      ->table('Table_Name0 AS t0')
+      ->join('Table_Name1 AS t1', 't1.column_name', '=', 't0.column_name')
+      // ->where('p.id', '=', $ids)
+      // ->orderBy('t1.column_name0', 'desc')
+      // ->orderBy('t1.column_name1', 'asc')
+      ->whereIn('t1.id', $ids);
+
+    if(!empty($id))
+    {
+      $query->where('t0.id', '=', $id)
+    }
+
     return new Collection(
-      $this->DB->connection($databaseConnectionName)
-        ->table('Table_Name0 AS t0')
-        ->join('Table_Name1 AS t1', 't1.column_name', '=', 't0.column_name')
-        // ->where('p.id', '=', $ids)
-        ->whereIn('t1.id', $ids)
-        // ->orderBy('t1.column_name0', 'desc')
-        // ->orderBy('t1.column_name1', 'asc')
-        ->get(
-          array('t0.*')
+      $query->get(
+        array(
+          't0.*'
         )
+      )
     );
   }
 

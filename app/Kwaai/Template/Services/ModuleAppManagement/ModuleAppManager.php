@@ -178,14 +178,19 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    *
    * @return array
    */
-  public function getSearchModalTableRows($organizationId = null, $databaseConnectionName = null, $returnJson = true)
+  public function getSearchModalTableRows($id = null, $organizationId = null, $databaseConnectionName = null, $returnJson = true)
   {
+    $rows = array();
+
     if(empty($organizationId))
     {
       $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
     }
 
-    $rows = $this->ModuleTableName->searchModalTableRows($organizationId, $databaseConnectionName)->toArray();
+    $this->ModuleTableName->searchModalTableRows($id, $organizationId, $databaseConnectionName)->each(function($ModuleTableName) use (&$rows)
+    {
+      $rows[$ModuleTableName->id] = (array)$ModuleTableName;
+    });
 
     if($returnJson)
     {
