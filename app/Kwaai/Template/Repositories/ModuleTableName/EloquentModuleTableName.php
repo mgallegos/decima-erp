@@ -88,7 +88,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
 
     if(!empty($id))
     {
-      $query->where('t0.id', '=', $id)
+      $query->where('t0.id', '=', $id);
     }
 
     return new Collection(
