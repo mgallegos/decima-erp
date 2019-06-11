@@ -185,16 +185,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
     }
 
-    if(!$this->Cache->has('moduleTableNamesSmt' . $organizationId))
-    {
-      $rows = $this->ModuleTableName->searchModalTableRows($organizationId, $databaseConnectionName)->toArray();
-
-      $this->Cache->put('moduleTableNamesSmt' . $organizationId, json_encode($rows), 360);
-    }
-    else
-    {
-      $rows = json_decode($this->Cache->get('moduleTableNamesSmt' . $organizationId), true);
-    }
+    $rows = $this->ModuleTableName->searchModalTableRows($organizationId, $databaseConnectionName)->toArray();
 
     if($returnJson)
     {
