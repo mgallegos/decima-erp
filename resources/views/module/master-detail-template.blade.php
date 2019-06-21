@@ -465,9 +465,9 @@
 						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 5000);
 					}
 
-					if(!empty(json.smtRows))
+					if(!empty(json.smtRowId))
 					{
-						loadSmtRows('moduleAppSmtRows', '', json.smtRows);
+						deleteSmtRow('moduleAppSmtRows', json.smtRowId);
 					}
 
 					$('#module-app-modal-delete').modal('hide');
@@ -563,9 +563,9 @@
 						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 5000);
 					}
 
-					if(!empty(json.smtRows))
+					if(!empty(json.smtRow))
 					{
-						loadSmtRows('moduleAppSmtRows', '', json.smtRows);
+						updateSmtRow('moduleAppSmtRows', Object.keys(json.smtRow)[0], Object.values(json.smtRow)[0]);
 					}
 
 					$('#module-app-ma').modal('hide');
@@ -660,9 +660,9 @@
 						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 5000);
 					}
 
-					if(!empty(json.smtRows))
+					if(!empty(json.smtRow))
 					{
-						loadSmtRows('moduleAppSmtRows', '', json.smtRows);
+						updateSmtRow('moduleAppSmtRows', Object.keys(json.smtRow)[0], Object.values(json.smtRow)[0]);
 					}
 
 					$('#module-app-mv').modal('hide');
@@ -813,15 +813,22 @@
 						}
 					}
 
-					if(!empty(json.smtRows))
+					if(action == 'new' && !empty(json.smtRow))
 					{
-						loadSmtRows('moduleAppSmtRows', '', json.smtRows);
+						addSmtRow('moduleAppSmtRows', Object.keys(json.smtRow)[0], Object.values(json.smtRow)[0]);
+					}
+
+					if(action == 'edit' && !empty(json.smtRow))
+					{
+						updateSmtRow('moduleAppSmtRows', Object.keys(json.smtRow)[0], Object.values(json.smtRow)[0]);
 					}
 
 					$('#app-loader').addClass('hidden');
+
 					enableAll();
 
 					$('.decima-erp-tooltip').tooltip('hide');
+
 					$('#module-app-detail-name').focus();
 				}
 			});

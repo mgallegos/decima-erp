@@ -265,6 +265,11 @@
 						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 12000);
 					}
 
+					if(!empty(json.smtRowId))
+					{
+						deleteSmtRow('moduleAppSmtRows', json.smtRowId);
+					}
+
 					$('#module-app-modal-delete').modal('hide');
 					$('#app-loader').addClass('hidden');
 					enableAll();
@@ -345,8 +350,20 @@
 						}
 					}
 
+					if(action == 'new' && !empty(json.smtRow))
+					{
+						addSmtRow('moduleAppSmtRows', Object.keys(json.smtRow)[0], Object.values(json.smtRow)[0]);
+					}
+
+					if(action == 'edit' && !empty(json.smtRow))
+					{
+						updateSmtRow('moduleAppSmtRows', Object.keys(json.smtRow)[0], Object.values(json.smtRow)[0]);
+					}
+
 					$('#app-loader').addClass('hidden');
+
 					enableAll();
+					
 					$('.decima-erp-tooltip').tooltip('hide');
 				}
 			});

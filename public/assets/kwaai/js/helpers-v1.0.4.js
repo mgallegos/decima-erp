@@ -840,6 +840,7 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 					'label': colModel.label,
 					'width':(!empty(colModel.modalwidth) ? colModel.modalwidth : ''),
 					'formatter':(!empty(colModel.formatter) ? colModel.formatter : ''),
+					'prefix':(!empty(colModel.prefix) ? colModel.prefix : ''),
 					'align':(!empty(colModel.align) ? colModel.align : '')
 				};
 			}
@@ -855,8 +856,6 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 
 	$.each(headers, function( name, header )
 	{
-		// console.log(header);
-		// console.log((!empty(header.width) ? header.width : ''));
 		$('<th/>', {
 				'scope': 'col',
 				'style': 'text-align: center;' + (!empty(header.width) ? 'width: ' + header.width + ';' : ''),
@@ -869,18 +868,20 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 
 	if(empty(rows))
 	{
-		if(!empty(slice))
-		{
-			rows = JSON.parse(window.localStorage.getItem(rowsVariableName)).slice(0, slice);
-		}
-		else
-		{
-			rows = JSON.parse(window.localStorage.getItem(rowsVariableName));
-		}
+    rows = JSON.parse(window.localStorage.getItem(rowsVariableName));
 	}
+
+  count = 0;
 
 	$.each(rows, function( index, row )
 	{
+    count++;
+
+    if(!empty(slice) && count == slice)
+    {
+      return false;
+    }
+
 		tr = $('<tr/>');
 
 		$.each(headers, function( name, header)
@@ -890,7 +891,8 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 
 			if(!empty(header.formatter))
 			{
-				switch (header.formatter) {
+				switch (header.formatter)
+				{
 					case 'currency':
 						value = $.fmatter.NumberFormat(row[name], $.fn.jqMgVal.defaults.validators.money.formatter);
 						break;
@@ -911,6 +913,11 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 			if(!empty(header.align))
 			{
 				td.attr('style', 'text-align: ' + header.align);
+			}
+
+			if(!empty(header.prefix))
+			{
+				value = header.prefix + '' + value;
 			}
 
 			td.html(value);
@@ -1202,7 +1209,8 @@ function validateToken(event, availableTokens)
  *
  * @returns boolean
  */
-function empty(mixed_var) {
+function empty(mixed_var)
+{
   //   example 1: empty(null);
   //   returns 1: true
   //   example 2: empty(undefined);
@@ -1217,14 +1225,18 @@ function empty(mixed_var) {
   var undef, key, i, len;
   var emptyValues = [undef, null, false, 0, '', '0'];
 
-  for (i = 0, len = emptyValues.length; i < len; i++) {
-    if (mixed_var === emptyValues[i]) {
+  for (i = 0, len = emptyValues.length; i < len; i++)
+	{
+    if (mixed_var === emptyValues[i])
+		{
       return true;
     }
   }
 
-  if (typeof mixed_var === 'object') {
-    for (key in mixed_var) {
+  if (typeof mixed_var === 'object')
+	{
+    for (key in mixed_var)
+		{
       // TODO: should we check for own properties only?
       //if (mixed_var.hasOwnProperty(key)) {
       return false;

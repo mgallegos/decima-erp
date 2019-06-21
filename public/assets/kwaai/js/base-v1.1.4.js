@@ -1083,7 +1083,7 @@ function smtOnKeyup(event, prefix)
  */
 function smtSearch(prefix)
 {
-  var found, filter;
+  var found, filter, rows;
 
 	if($('#' + prefix + 'smt-search-box').isEmpty())
 	{
@@ -1092,15 +1092,21 @@ function smtSearch(prefix)
 		return;
 	}
 
-  filter = $('#' + prefix + 'smt-search-box').val();
+  filter = $('#' + prefix + 'smt-search-box').val().toLowerCase();
+  rows = JSON.parse(window.localStorage.getItem($('#' + prefix + 'smt').attr('data-rows-variable-name')));
 
-  rows = $.grep(JSON.parse(window.localStorage.getItem($('#' + prefix + 'smt').attr('data-rows-variable-name'))), function (row, index)
+	if ($.type(rows) == 'object')
+	{
+		rows = Object.values(rows);
+	}
+
+  rows = $.grep(rows , function (row, index)
   {
     found = false;
 
-    $.each(row, function( name, value )
+    $.each(row, function( key, value )
   	{
-      if(String(value).indexOf(filter) > -1)
+      if(String(value).toLowerCase().indexOf(filter) > -1)
       {
         found = true;
 
@@ -1169,6 +1175,81 @@ function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader)
 			}
 		});
 	}
+}
+
+/**
+ * Update row of search modal table rows
+ *
+ * @param string variableName
+ * @param integer id
+ * @param object row
+ *
+ * @returns void
+ */
+function addSmtRow(variableName, id, row)
+{
+  rows = {};
+
+  rows[id] = row;
+
+  $.extend(rows, JSON.parse(window.localStorage.getItem(variableName)));
+
+  window.localStorage.setItem(variableName, JSON.stringify(rows));
+}
+
+/**
+ * Update row of search modal table rows
+ *
+ * @param string variableName
+ * @param integer id
+ * @param object row
+ *
+ * @returns void
+ */
+function updateSmtRow(variableName, id, row)
+{
+  smtRows = JSON.parse(window.localStorage.getItem(variableName));
+
+  smtRows[id] = row;
+
+  window.localStorage.setItem(variableName, JSON.stringify(smtRows));
+}
+
+/**
+ * Delete row of modal table rows
+ *
+ * @param string variableName
+ * @param integer id
+ *
+ * @returns void
+ */
+function deleteSmtRow(variableName, id)
+{
+  smtRows = JSON.parse(window.localStorage.getItem(variableName));
+
+  smtRows.remove(id);
+
+  window.localStorage.setItem(variableName, JSON.stringify(smtRows));
+}
+
+/**
+ * Delete row of modal table rows
+ *
+ * @param string variableName
+ * @param array ids
+ *
+ * @returns void
+ */
+function deleteSmtRows(variableName, ids)
+{
+  smtRows = JSON.parse(window.localStorage.getItem(variableName));
+
+  $.each(ids, function( index, id)
+  {
+    smtRows.remove(id);
+  });
+
+  window.localStorage.setItem(variableName, JSON.stringify(smtRows));
 }
 
 /**

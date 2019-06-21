@@ -228,7 +228,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
 
     $this->ModuleTableName->searchModalTableRows($id, $organizationId, $databaseConnectionName)->each(function($ModuleTableName) use (&$rows)
     {
-      $rows[$ModuleTableName->id] = (array)$ModuleTableName;
+      $rows['key' . $ModuleTableName->id] = (array)$ModuleTableName;
     });
 
     if($returnJson)
@@ -347,18 +347,9 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       array(
         'success' => $this->Lang->get('form.defaultSuccessSaveMessage'),
         'id' => $ModuleApp->id,
-        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+        'smtRow' => $this->getSearchModalTableRows($ModuleApp->id, $organizationId, $databaseConnectionName, false)
       )
     );
-
-    // return json_encode(
-    //   array(
-    //     'success' => $this->Lang->get('form.defaultSuccessSaveMessage'),
-    //     'id' => $ModuleApp->id,
-    //     'number' => $ModuleApp->number,
-    //     'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
-    //   )
-    // );
   }
 
   /**
@@ -586,7 +577,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     return json_encode(
       array(
         'success' => $this->Lang->get('form.defaultSuccessUpdateMessage'),
-        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+        'smtRow' => $this->getSearchModalTableRows($ModuleApp->id, $organizationId, $databaseConnectionName, false)
       )
     );
   }
@@ -803,7 +794,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     return json_encode(
       array(
         'success' => $this->Lang->get('form.defaultAuthorizeMessage'),
-        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+        'smtRow' => $this->getSearchModalTableRows($ModuleApp->id, $organizationId, $databaseConnectionName, false)
       )
     );
   }
@@ -871,7 +862,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     return json_encode(
       array(
         'success' => $this->Lang->get('form.defaultVoidMessage'),
-        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+        'smtRow' => $this->getSearchModalTableRows($ModuleApp->id, $organizationId, $databaseConnectionName, false)
       )
     );
   }
@@ -929,7 +920,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     return json_encode(
       array(
         'success' => $this->Lang->get('form.defaultSuccessDeleteMessage'),
-        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+        'smtRowId' => $input['id']
       )
     );
   }

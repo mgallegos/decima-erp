@@ -189,7 +189,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
 
     $this->ModuleTableName->searchModalTableRows($id, $organizationId, $databaseConnectionName)->each(function($ModuleTableName) use (&$rows)
     {
-      $rows[$ModuleTableName->id] = (array)$ModuleTableName;
+      $rows['key' . $ModuleTableName->id] = (array)$ModuleTableName;
     });
 
     if($returnJson)
@@ -315,7 +315,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     return json_encode(
       array(
         'success' => $this->Lang->get('form.defaultSuccessSaveMessage'),
-        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+        'smtRow' => $this->getSearchModalTableRows($ModuleTableName->id, $organizationId, $databaseConnectionName, false)
       )
     );
   }
@@ -466,7 +466,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     return json_encode(
       array(
         'success' => $this->Lang->get('form.defaultSuccessUpdateMessage'),
-        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+        'smtRow' => $this->getSearchModalTableRows($ModuleTableName->id, $organizationId, $databaseConnectionName, false)
       )
     );
   }
@@ -524,7 +524,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     return json_encode(
       array(
         'success' => $this->Lang->get('form.defaultSuccessDeleteMessage'),
-        'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+        'smtRowId' => $input['id']
       )
     );
   }
@@ -592,7 +592,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
        return json_encode(
          array(
            'success' => $this->Lang->get('form.defaultSuccessDeleteMessage'),
-           'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+           'smtRowIds' => $input['id']
          )
        );
      }
@@ -601,7 +601,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
        return json_encode(
          array(
            'success' => $this->Lang->get('form.defaultSuccessDeleteMessage1'),
-           'smtRows' => $this->getSearchModalTableRows($organizationId, $databaseConnectionName, false)
+           'smtRowIds' => $input['id']
          )
        );
      }
