@@ -899,9 +899,10 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 					case 'date':
 						value = $.datepicker.formatDate(lang.dateFormat, new Date(row[name]));
 						break;
-					// case 'datetime':
-					// 	value = $.datetimepicker.formatDate(lang.phpDateTimeFormat, new Date(row[name]));
-					// 	break;
+					case 'datetime':
+						// value = $.datetimepicker.formatDate(lang.phpDateTimeFormat, new Date(row[name]));
+						value = moment(row[name], 'YYYY-MM-DD HH:mm:ss').format(lang.jsDateTimeFormat);
+						break;
 				}
 			}
 
