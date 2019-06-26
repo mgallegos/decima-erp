@@ -1189,10 +1189,15 @@ function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader)
 function addSmtRow(variableName, id, row)
 {
   rows = {};
-
   rows[id] = row;
+  smtRows = JSON.parse(window.localStorage.getItem(variableName));
 
-  $.extend(rows, JSON.parse(window.localStorage.getItem(variableName)));
+  if(empty(smtRows))
+  {
+    return;
+  }
+
+  $.extend(rows, smtRows);
 
   window.localStorage.setItem(variableName, JSON.stringify(rows));
 }
@@ -1209,6 +1214,11 @@ function addSmtRow(variableName, id, row)
 function updateSmtRow(variableName, id, row)
 {
   smtRows = JSON.parse(window.localStorage.getItem(variableName));
+
+  if(empty(smtRows))
+  {
+    return;
+  }
 
   smtRows[id] = row;
 
@@ -1227,6 +1237,11 @@ function deleteSmtRow(variableName, id)
 {
   smtRows = JSON.parse(window.localStorage.getItem(variableName));
 
+  if(empty(smtRows))
+  {
+    return;
+  }
+
   smtRows.remove(id);
 
   window.localStorage.setItem(variableName, JSON.stringify(smtRows));
@@ -1243,6 +1258,11 @@ function deleteSmtRow(variableName, id)
 function deleteSmtRows(variableName, ids)
 {
   smtRows = JSON.parse(window.localStorage.getItem(variableName));
+
+  if(empty(smtRows))
+  {
+    return;
+  }
 
   $.each(ids, function( index, id)
   {

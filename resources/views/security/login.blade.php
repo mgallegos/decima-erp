@@ -41,6 +41,7 @@
 					}
 					else
 					{
+						window.localStorage.clear();
 						window.location.replace(json.url);
 					}
 				}
