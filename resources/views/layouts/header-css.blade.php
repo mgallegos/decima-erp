@@ -21,5 +21,10 @@
 <!-- {!! Html::style('assets/intro-js-v2.3.0/minified/introjs-rtl.min.css') !!} -->
 {!! Html::style('assets/quill-v1.3.0/css/quill.snow.min.css') !!}
 {!! Html::style('assets/select2-v4.0.5/select2.css') !!}
+@if (!empty(Config::get('system-security.additional_css')))
+	@foreach (Config::get('system-security.additional_css') as $index => $css)
+		<link rel="stylesheet" href="{{ URL::asset($css) }}"/>
+	@endforeach
+@endif
 {!! Html::style('assets/kwaai/css/main-v1.1.0.css') !!}
 {!! Html::style('assets/kwaai/css/button-custom-classes.css') !!}

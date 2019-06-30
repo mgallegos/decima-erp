@@ -28,6 +28,11 @@
 <script src="{{ URL::asset('assets/select2-v4.0.5/select2.js') }}"></script>
 <!-- Pendiente -->
 <!-- https://cdn.jsdelivr.net/npm/chart.js@2.8.0 -->
+@if (!empty(Config::get('system-security.additional_js')))
+	@foreach (Config::get('system-security.additional_js') as $index => $js)
+		<script src="{{ URL::asset($js) }}"></script>
+	@endforeach
+@endif
 
 <script type='text/javascript'>
 	var userApps, lang, History, State;
