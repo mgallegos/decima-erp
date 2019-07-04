@@ -1242,7 +1242,7 @@ function deleteSmtRow(variableName, id)
     return;
   }
 
-  smtRows.remove(id);
+  delete smtRows[id];
 
   window.localStorage.setItem(variableName, JSON.stringify(smtRows));
 }
@@ -1266,7 +1266,7 @@ function deleteSmtRows(variableName, ids)
 
   $.each(ids, function( index, id)
   {
-    smtRows.remove(id);
+    delete smtRows[id];
   });
 
   window.localStorage.setItem(variableName, JSON.stringify(smtRows));
