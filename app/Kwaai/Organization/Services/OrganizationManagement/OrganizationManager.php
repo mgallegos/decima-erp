@@ -37,13 +37,7 @@ use App\Kwaai\Security\Repositories\Menu\MenuInterface;
 
 use App\Kwaai\Security\Repositories\Role\RoleInterface;
 
-use App\Events\OnNewInfoMessage;
-
-use App\Events\OnNewWarningMessage;
-
 use Illuminate\Auth\AuthManager;
-
-use Illuminate\Events\Dispatcher;
 
 use Illuminate\Log\Writer;
 
@@ -172,14 +166,6 @@ class OrganizationManager implements OrganizationManagementInterface {
 	protected $Log;
 
 	/**
-	 * Laravel Dispatcher instance
-	 *
-	 * @var \Illuminate\Events\Dispatcher
-	 *
-	 */
-	protected $Event;
-
-	/**
 	 * Laravel Cache instance
 	 *
 	 * @var \Illuminate\Cache\CacheManager
@@ -211,7 +197,6 @@ class OrganizationManager implements OrganizationManagementInterface {
 		DatabaseManager $DB,
 		Translator $Lang,
 		Writer $Log,
-		Dispatcher $Event,
 		CacheManager $Cache,
 		SessionManager $Session
 	)
@@ -245,8 +230,6 @@ class OrganizationManager implements OrganizationManagementInterface {
 		$this->Lang = $Lang;
 
 		$this->Log = $Log;
-
-		$this->Event = $Event;
 
 		$this->Cache = $Cache;
 
@@ -555,7 +538,9 @@ class OrganizationManager implements OrganizationManagementInterface {
 		$this->Cache->forget('userOrganizations' . $this->AuthenticationManager->getLoggedUserId());
 		$this->Cache->forget('allOrganization');
 
-		$this->Event->fire(new OnNewInfoMessage(array('message' => '[ORGANIZATION EVENT] A new organization has been added to the system', 'context' => $input), $this->AuthenticationManager));
+		// $this->Event->fire(new OnNewInfoMessage(array('message' => '[ORGANIZATION EVENT] A new organization has been added to the system', 'context' => $input), $this->AuthenticationManager));
+
+		$this->Log->info('[ORGANIZATION EVENT] A new organization has been added to the system', $input);
 
 		$userOrganizations = $this->UserManager->getCountUserOrganizations();
 

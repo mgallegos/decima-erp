@@ -49,7 +49,6 @@ class ServicesServiceProvider extends ServiceProvider {
 					$app['db'],
 					$app['translator'],
 					$app['log'],
-					$app['events'],
 					$app['cache'],
 					$app['session']
 			);

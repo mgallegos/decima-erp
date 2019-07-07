@@ -29,7 +29,7 @@ use Illuminate\Session\SessionManager;
 
 use Illuminate\Routing\Redirector;
 
-use Illuminate\Events\Dispatcher;
+use Illuminate\Log\Writer;
 
 use Illuminate\Routing\UrlGenerator;
 
@@ -52,10 +52,6 @@ use App\Kwaai\System\Services\Validation\AbstractLaravelValidator;
 use App\Kwaai\Organization\Repositories\Organization\OrganizationInterface;
 
 use App\Kwaai\Security\Services\Authentication\AuthenticationInterface;
-
-use App\Events\OnNewInfoMessage;
-
-use App\Events\OnNewWarningMessage;
 
 use Xavrsl\Cas\CasManager;
 
@@ -126,12 +122,12 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	protected $Url;
 
 	/**
-	 * Laravel Dispatcher instance
-	 *
-	 * @var \Illuminate\Events\Dispatcher
-	 *
-	 */
-	protected $Event;
+   * Laravel Writer (Log)
+   *
+   * @var Illuminate\Log\Writer
+   *
+   */
+  protected $Log;
 
 	/**
 	 * Laravel Redirector instance
@@ -221,7 +217,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		Translator $Lang,
 		CacheManager $Cache,
 		UrlGenerator $Url,
-		Dispatcher $Event,
+		Writer $Log,
 		Redirector $Redirector,
 		CookieJar $Cookie,
 		Request $Input,
@@ -249,7 +245,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		$this->Url = $Url;
 
-		$this->Event = $Event;
+		$this->Log = $Log;
 
 		$this->Redirector = $Redirector;
 
@@ -392,7 +388,9 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function logoutAttempt()
 	{
-		$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] User logged out', 'context' => array('email' => $this->getLoggedUserEmail())), $this));
+		// $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] User logged out', 'context' => array('email' => $this->getLoggedUserEmail())), $this));
+
+		$this->Log->info('[SECURITY EVENT] User logged out', array('email' => $this->getLoggedUserEmail()));
 
 		$this->Auth->logout();
 
@@ -456,11 +454,17 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		switch ($response)
 		{
 			case PasswordBroker::INVALID_USER:
-				$this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User failed to request a password reminder email', 'context' => array('email' => $credentials['email'])), $this));
+				// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User failed to request a password reminder email', 'context' => array('email' => $credentials['email'])), $this));
+
+				$this->Log->warning('[SECURITY EVENT] User failed to request a password reminder email', array('email' => $credentials['email']));
+
 				return $this->Redirector->back()->with('error', $this->Lang->get('security/' . $response));
 
 			case PasswordBroker::RESET_LINK_SENT:
-				$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] User requested a password reminder email', 'context' => array('email' => $credentials['email'])), $this));
+				// $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] User requested a password reminder email', 'context' => array('email' => $credentials['email'])), $this));
+
+				$this->Log->info('[SECURITY EVENT] User requested a password reminder email', array('email' => $credentials['email']));
+
 				return $this->Redirector->back()->with('status', $this->Lang->get('security/' . $response));
 		}
 	}
@@ -498,10 +502,16 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		switch ($response)
 		{
 			case PasswordBroker::PASSWORD_RESET:
-				$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] User successfully reset his password', 'context' => array('email' => $credentials['email'])), $this));
+				// $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] User successfully reset his password', 'context' => array('email' => $credentials['email'])), $this));
+
+				$this->Log->warning('[SECURITY EVENT] User successfully reset his password', array('email' => $credentials['email']));
+
 				return $this->Redirector->to('login');
 			default:
-				$this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User failed to reset his password', 'context' => array('email' => $credentials['email'])), $this));
+				// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User failed to reset his password', 'context' => array('email' => $credentials['email'])), $this));
+
+				$this->Log->warning('[SECURITY EVENT] User failed to reset his password', array('email' => $credentials['email']));
+
 				return $this->Redirector->back()->with('error', $this->Lang->get('security/' . $response));
 		}
 	}
@@ -532,24 +542,36 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		if($User->isEmpty())
 		{
-			$this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User failed to activate his account', 'context' => array('email' => $credentials['email'], 'errorType' => 'Invalid User')), $this));
+			// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User failed to activate his account', 'context' => array('email' => $credentials['email'], 'errorType' => 'Invalid User')), $this));
+
+			$this->Log->warning('[SECURITY EVENT] User failed to activate his account', array('email' => $credentials['email']));
+
 			return $this->Redirector->back()->with('error', $this->Lang->get('security/' . PasswordBroker::INVALID_USER));
 		}
 
 		if($User[0]->activation_code != $credentials['token'])
 		{
-			$this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User failed to activate his account', 'context' => array('email' => $credentials['email'], 'errorType' => 'Invalid Token')), $this));
+			// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User failed to activate his account', 'context' => array('email' => $credentials['email'], 'errorType' => 'Invalid Token')), $this));
+
+			$this->Log->warning('[SECURITY EVENT] User failed to activate his account', array('email' => $credentials['email']));
+
 			return $this->Redirector->back()->with('error', $this->Lang->get('security/' . PasswordBroker::INVALID_TOKEN));
 		}
 
 		if($credentials['password'] != $credentials['password_confirmation'] || !$credentials['password'] || strlen($credentials['password']) < 6)
 		{
-			$this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User failed to activate his account', 'context' => array('email' => $credentials['email'], 'errorType' => 'Invalid Password')), $this));
+			// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User failed to activate his account', 'context' => array('email' => $credentials['email'], 'errorType' => 'Invalid Password')), $this));
+
+			$this->Log->warning('[SECURITY EVENT] User failed to activate his account', array('email' => $credentials['email']));
+
 			return $this->Redirector->back()->with('error', $this->Lang->get('security/' . PasswordBroker::INVALID_PASSWORD));
 		}
 
 		$this->User->update(array('id' => $User[0]->id, 'password' => $this->Hash->make($credentials['password']), 'is_active' => 1, 'activated_at' => Carbon::now(), 'activation_code' => null));
-		$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] User successfully activated his account', 'context' => array('email' => $credentials['email'])), $this));
+
+		// $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] User successfully activated his account', 'context' => array('email' => $credentials['email'])), $this));
+
+		$this->Log->info('[SECURITY EVENT] User successfully activated his account', array('email' => $credentials['email']));
 
 		return $this->Redirector->to('login');
 	}

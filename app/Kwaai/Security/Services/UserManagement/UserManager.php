@@ -11,8 +11,6 @@ namespace App\Kwaai\Security\Services\UserManagement;
 
 use Illuminate\Validation\Factory;
 
-use Illuminate\Events\Dispatcher;
-
 use Illuminate\Mail\Mailer;
 
 use Illuminate\Routing\UrlGenerator;
@@ -60,10 +58,6 @@ use App\Kwaai\Security\Repositories\User\UserInterface;
 use App\Kwaai\Security\Repositories\User\EloquentUserGridRepository;
 
 use App\Kwaai\Security\Services\UserManagement\UserManagementInterface;
-
-use App\Events\OnNewInfoMessage;
-
-use App\Events\OnNewWarningMessage;
 
 use Mgallegos\LaravelJqgrid\Encoders\RequestedDataInterface;
 
@@ -213,12 +207,12 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	protected $Mailer;
 
 	/**
-	 * Laravel Dispatcher instance
-	 *
-	 * @var Illuminate\Events\Dispatcher
-	 *
-	 */
-	protected $Event;
+   * Laravel Writer (Log)
+   *
+   * @var Illuminate\Log\Writer
+   *
+   */
+  protected $Log;
 
 	/**
 	 * Laravel Validator
@@ -285,7 +279,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 		Repository $Config,
 		UrlGenerator $Url,
 		Mailer $Mailer,
-		Dispatcher $Event,
+		Writer $Log,
 		Factory $Validator,
 		CacheManager $Cache,
 		SessionManager $Session,
@@ -330,7 +324,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 		$this->Mailer = $Mailer;
 
-		$this->Event = $Event;
+		$this->Log = $Log;
 
 		$this->Validator = $Validator;
 
@@ -386,7 +380,9 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 		if(!$this->AuthenticationManager->isUserAdmin() && $input['is_admin'] == '1')
 		{
-			$this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] A non-admin user tried to add an admin user', 'context' => $input), $this->AuthenticationManager));
+			// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] A non-admin user tried to add an admin user', 'context' => $input), $this->AuthenticationManager));
+
+			$this->Log->warning('[SECURITY EVENT] A non-admin user tried to add an admin user', $input);
 
 			return json_encode(array('info' => $this->Lang->get('security/user-management.nonAdminException')));
 		}
@@ -427,8 +423,12 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
         $Journal = $this->Journal->create(array('journalized_id' => $User->id, 'journalized_type' => $this->User->getTable(), 'user_id' => $input['created_by']));
         $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('security/user-management.adminUserAddedJournal', array('email' => $input['email'], 'organization' => $this->AuthenticationManager->getCurrentUserOrganization('name')))), $Journal);
 				$data = $input;
+
 				unset($data['password'], $data['activation_code']);
-				$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] A new admin user has been added to the system', 'context' => $data), $this->AuthenticationManager));
+
+				// $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] A new admin user has been added to the system', 'context' => $data), $this->AuthenticationManager));
+
+				$this->Log->info('[SECURITY EVENT] A new admin user has been added to the system', $data);
 			}
 			else
 			{
@@ -439,8 +439,12 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
         $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('security/user-management.userAddedJournal', array('email' => $input['email'], 'organization' => $this->AuthenticationManager->getCurrentUserOrganization('name')))), $Journal);
         $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('security/user-management.userAddedSystemJournal', array('email' => $input['email'], 'organization' => $this->AuthenticationManager->getCurrentUserOrganization('name')))), $Journal);
 				$data = $input;
+
 				unset($data['password'], $data['activation_code']);
-        $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] A new user has been added to the organization', 'context' => $data), $this->AuthenticationManager));
+
+				// $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] A new user has been added to the organization', 'context' => $data), $this->AuthenticationManager));
+
+				$this->Log->info('[SECURITY EVENT] A new user has been added to the organization', $data);
 			}
 
 		});
@@ -508,7 +512,9 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 		if(!$this->AuthenticationManager->isUserRoot() && $input['id'] != $loggedUserId)
 		{
-			$this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User tried to update a user that has not been created by him', 'context' => $input), $this->AuthenticationManager));
+			// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User tried to update a user that has not been created by him', 'context' => $input), $this->AuthenticationManager));
+
+			$this->Log->warning('[SECURITY EVENT] User tried to update a user that has not been created by him', $input);
 
 			return json_encode(array('info' => $this->Lang->get('security/user-management.userCreatedByInfoMessage')));
 		}
@@ -650,7 +656,10 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 				if($this->AuthenticationManager->isUserRoot($id))
 				{
 					$input['email'] = $User->email;
-					$this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User tried to delete a root user', 'context' => $input), $this->AuthenticationManager));
+
+					// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User tried to delete a root user', 'context' => $input), $this->AuthenticationManager));
+
+					$this->Log->warning('[SECURITY EVENT] User tried to delete a root user', $input);
 
 					throw new Exception($this->Lang->get('security/user-management.rootException'));
 				}
@@ -734,8 +743,12 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 		});
 
 		unset($input['id']);
+
 		$input['email'] = $User->email;
-		$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] A new user has been added to the organization', 'context' => $input), $this->AuthenticationManager));
+
+		// $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] A new user has been added to the organization', 'context' => $input), $this->AuthenticationManager));
+
+		$this->Log->info('[SECURITY EVENT] A new user has been added to the organization', $input);
 
 		if($this->Config->get('system-security.email_organization_user'))
 		{
@@ -791,7 +804,9 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			$input['email'] = $User->email;
 		});
 
-		$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] A new admin user has been added to the system', 'context' => $input), $this->AuthenticationManager));
+		// $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] A new admin user has been added to the system', 'context' => $input), $this->AuthenticationManager));
+
+		$this->Log->info('[SECURITY EVENT] A new admin user has been added to the system', $input);
 
 		return json_encode(array('success' => $this->Lang->get('form.defaultSuccessSaveMessage')));
 	}
@@ -823,7 +838,10 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 				if($this->AuthenticationManager->isUserRoot($id))
 				{
 					$input['email'] = $User->email;
-					$this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User tried to set a root user as non-admin', 'context' => $input), $this->AuthenticationManager));
+
+					// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User tried to set a root user as non-admin', 'context' => $input), $this->AuthenticationManager));
+
+					$this->Log->warning('[SECURITY EVENT] User tried to set a root user as non-admin', $input);
 
 					throw new Exception($this->Lang->get('security/user-management.rootException'));
 				}
@@ -839,7 +857,9 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	  		$Journal = $this->Journal->create(array('journalized_id' => $User->id, 'journalized_type' => $this->User->getTable(), 'user_id' => $loggedUserId));
 	  		$this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('security/user-management.nonAdminUserAddedJournal', array('email' => $User->email))), $Journal);
 
-				$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] An existing admin user has been set as non-admin.', 'context' => array('email' => $User->email)), $this->AuthenticationManager));
+				// $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] An existing admin user has been set as non-admin.', 'context' => array('email' => $User->email)), $this->AuthenticationManager));
+
+				$this->Log->info('[SECURITY EVENT] An existing admin user has been set as non-admin.', array('email' => $User->email));
 			}
 
 		});
@@ -1903,7 +1923,9 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	{
 		$Organization = $this->Organization->byId($input['id']);
 
-		$this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] User has changed his current organization', 'context' => array('organizationName' => $Organization->name)), $this->AuthenticationManager));
+		// $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] User has changed his current organization', 'context' => array('organizationName' => $Organization->name)), $this->AuthenticationManager));
+
+		$this->Log->info('[SECURITY EVENT] User has changed his current organization', array('organizationName' => $Organization->name));
 
 		$this->AuthenticationManager->setCurrentUserOrganization($Organization);
 	}
