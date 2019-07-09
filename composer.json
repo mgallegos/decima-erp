@@ -5,7 +5,7 @@
     "license": "GNU AGPL version 3 or any later version",
     "type": "project",
     "require": {
-        "php": "~5.6.1",
+        "php": ">=5.6.1",
         "laravel/framework": "5.2.*",
         "mgallegos/laravel-jqgrid": "dev-master",
     		"itsgoingd/clockwork": "dev-master",
@@ -22,10 +22,10 @@
         "superbalist/laravel-google-cloud-storage": "^1.0",
         "barryvdh/laravel-dompdf": "^0.8.1",
         "econea/nusoap": "^0.9.6",
-        "lesichkovm/laravel-advanced-route": "dev-master"
+        "lesichkovm/laravel-advanced-route": "dev-master",
+        "fzaninotto/faker": "^1.8"
     },
     "require-dev": {
-        "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
         "phpspec/phpspec": "~2.1",
