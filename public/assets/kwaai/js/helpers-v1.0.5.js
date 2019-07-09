@@ -1248,3 +1248,30 @@ function empty(mixed_var)
 
   return false;
 }
+
+/**
+ * Get and parse json from localstorage
+ *
+ *  @returns object
+ */
+function getFromLocalStorage(variableName)
+{
+  return JSON.parse(window.localStorage.getItem(variableName));
+}
+
+/**
+ * Get, parse json and convert to array from localstorage
+ *
+ *  @returns object
+ */
+function getArrayFromLocalStorage(variableName)
+{
+  var data = JSON.parse(window.localStorage.getItem(variableName));
+
+	if ($.type(data) == 'object')
+	{
+		data = Object.values(data);
+	}
+
+	return data;
+}
