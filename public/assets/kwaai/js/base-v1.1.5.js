@@ -1044,6 +1044,16 @@ function getSuppliers()
 }
 
 /**
+ * Get and parse json from localstorage
+ *
+ *  @returns object
+ */
+function getFromLocalStorage(variableName)
+{
+  return JSON.parse(window.localStorage.getItem(variableName));
+}
+
+/**
  * Load search modal table rows
  *
  * @param jqueryObject tr
