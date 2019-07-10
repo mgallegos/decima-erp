@@ -1646,7 +1646,17 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			}
 			else
 			{
-				$organizations = $this->Organization->all()->toArray();
+				$organizations = $this->Organization->all();
+
+				if(!empty($organizations))
+				{
+					$organizations = $organizations->toArray();
+				}
+				else
+				{
+					$organizations = array();
+				}
+
 				$this->Cache->put('allOrganization', json_encode($organizations), 360);
 			}
 
