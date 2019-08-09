@@ -111,6 +111,11 @@ class ModuleAppManager extends Controller {
 		return $this->ModuleAppManagerService->getGridData($this->Input->all());
 	}
 
+	public function postSmtRows()
+	{
+		return $this->ModuleAppManagerService->getSearchModalTableRows();
+	}
+
 	public function postCreate()
 	{
 		return $this->ModuleAppManagerService->create($this->Input->json()->all());

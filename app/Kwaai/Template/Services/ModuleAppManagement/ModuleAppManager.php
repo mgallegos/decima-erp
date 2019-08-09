@@ -190,6 +190,11 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     $this->ModuleTableName->searchModalTableRows($id, $organizationId, $databaseConnectionName)->each(function($ModuleTableName) use (&$rows)
     {
       $rows['key' . $ModuleTableName->id] = (array)$ModuleTableName;
+
+      // $rows['key' . $ModuleTableName->id] = array(
+      //   'label' => $ModuleTableName->code . ' - ' . $ModuleTableName->name,
+      //   'value' => $ModuleTableName->id,
+      // );
     });
 
     if($returnJson)

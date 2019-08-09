@@ -81,10 +81,10 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
     $query = $this->DB->connection($databaseConnectionName)
       ->table('Table_Name0 AS t0')
       ->join('Table_Name1 AS t1', 't1.column_name', '=', 't0.column_name')
-      // ->where('p.id', '=', $ids)
       // ->orderBy('t1.column_name0', 'desc')
       // ->orderBy('t1.column_name1', 'asc')
-      ->whereIn('t1.id', $ids);
+      // ->whereIn('t1.id', $ids)
+      ->where('t0.organization_id', '=', $organizationId);
 
     if(!empty($id))
     {

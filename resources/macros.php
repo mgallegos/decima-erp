@@ -7,7 +7,7 @@
  * See COPYRIGHT and LICENSE.
  */
 
-Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null, $btnClass = 'btn-default', $bootstrapVersion = '3', $prefixButton = false, $presetType = '', $showDeleteSuffixButton = false, $hideSuffixButton = false)
+Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null, $btnClass = 'btn-default', $bootstrapVersion = '3', $prefixButton = false, $presetType = '', $showDeleteSuffixButton = false, $hideSuffixButton = false, $variableName = '', $variableType = '' )
 {
 	$autocompleteEvent = $autocompleteFocusEvent = $prefix = $presetTypeCode = $deleteCode = '';
 	$autocompleteWidgetName = 'autocomplete';
@@ -46,11 +46,6 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 		$autocompleteEvent=",focus: function( event, ui ) { $autocompleteFocusEvent return false;},select: function( event, ui ) { $autocompleteEvent return false;}";
 	}
 
-	// if(!empty($source) && is_array($source[0]) && array_key_exists('category',$source[0]))
-	// {
-	// 	$autocompleteWidgetName='categoryautocomplete';
-	// }
-
 	if (!empty($value))
 	{
 		$options['value'] = $value;
@@ -63,21 +58,30 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 
 	$inputTextAutocompleteName = camel_case($inputTextAutocompleteName);
 
+	$dataAutocompleteSource = $inputTextAutocompleteName .'ArrayData';
+
 	if(!empty($limitResourceTo))
 	{
 		$autocompleteSource = '
 			function(request, response)
 			{
-  			var results = $.ui.autocomplete.filter(' . $inputTextAutocompleteName . 'ArrayData, request.term);
+  			var results = $.ui.autocomplete.filter(' . $dataAutocompleteSource . ', request.term);
 				response(results.slice(0, ' . $limitResourceTo . '));
     	}
 		';
 
-		$options['data-autocomplete-source'] = $inputTextAutocompleteName .'ArrayData';
+		$options['data-autocomplete-source'] = $dataAutocompleteSource;
 	}
 	else
 	{
-		$autocompleteSource = $inputTextAutocompleteName .'ArrayData';
+		// $autocompleteSource = $inputTextAutocompleteName .'ArrayData';
+		$autocompleteSource = $dataAutocompleteSource;
+	}
+
+	if(!empty($variableName) && !empty($variableType))
+	{
+		$options['data-autocomplete-source'] = $variableName;
+		$options['data-autocomplete-source-type'] = $variableType;
 	}
 
 	$searchEvent = '
