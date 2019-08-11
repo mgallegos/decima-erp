@@ -7,6 +7,8 @@
  */
 
  var API = '';
+ var breadcrumbLoader = [];
+ var mainAppLoader = [];
 
  var quillToolbarOptions = {
 	 container: [
@@ -27,6 +29,68 @@
 		 }
 	 }
  }
+
+/**
+ * Spin breadcrumb loader
+ *
+ *
+ *  @returns void
+ */
+function spinBreadcrumbLoader()
+{
+  breadcrumbLoader.push(1);
+
+  $('.fa-breadcrumb-loader').addClass('fa-spin');
+}
+
+/**
+ * Stop breadcrumb loader
+ *
+ *
+ *  @returns void
+ */
+function stopBreadcrumbLoader()
+{
+  breadcrumbLoader.pop();
+
+  if(empty(breadcrumbLoader))
+  {
+    $('.fa-breadcrumb-loader').removeClass('fa-spin');
+  }
+}
+
+/**
+ * Enable all elements on screen.
+ *
+ * @returns void
+ */
+function enableAll()
+{
+  mainAppLoader.push(1);
+
+  // $('#app-loader').addClass('hidden hidden-xs-up');
+
+	$('#main-panel-fieldset').removeAttr('disabled');
+	$('#user-apps-panel-fieldset').removeAttr('disabled');
+}
+
+/**
+ * Disabled all elements on screen.
+ *
+ * @returns void
+ */
+function disabledAll()
+{
+  mainAppLoader.pop();
+
+  if(empty(mainAppLoader))
+  {
+    // $('#app-loader').removeClass('hidden hidden-xs-up');
+  }
+
+	$('#main-panel-fieldset').attr('disabled','disabled');
+	$('#user-apps-panel-fieldset').attr('disabled','disabled');
+}
 
 /**
  * Close tab and destroy its content.
@@ -816,22 +880,22 @@ function loadClients(clients, forceAjaxRequest)
   if(forceAjaxRequest || empty(window.localStorage.getItem('organizationClients')))
   {
     $.ajax(
-  	{
-  		type: 'POST',
-  		data: JSON.stringify({'_token':$('#app-token').val()}),
+    {
+      type: 'POST',
+      data: JSON.stringify({'_token':$('#app-token').val()}),
       dataType : 'json',
-  		url: $('#app-url').val() + '/sales/setup/client-management/clients',
-  		error: function (jqXHR, textStatus, errorThrown)
-  		{
-  			handleServerExceptions(jqXHR, '', false);
+      url: $('#app-url').val() + '/sales/setup/client-management/clients',
+      error: function (jqXHR, textStatus, errorThrown)
+      {
+        handleServerExceptions(jqXHR, '', false);
       },
-  		success:function(organizationClients)
-  		{
-  			window.localStorage.setItem('organizationClients', JSON.stringify(organizationClients));
+      success:function(organizationClients)
+      {
+        window.localStorage.setItem('organizationClients', JSON.stringify(organizationClients));
 
         updateApplicationClientAutocompletes();
-  		}
-  	});
+      }
+    });
   }
 }
 
@@ -870,8 +934,8 @@ $.fn.setClientAutocomplete = function()
   {
     $.ajax(
   	{
-  		type: 'POST',
-  		data: JSON.stringify({'_token':$('#app-token').val()}),
+      type: 'POST',
+  	  data: JSON.stringify({'_token':$('#app-token').val()}),
       dataType : 'json',
   		url: $('#app-url').val() + '/sales/setup/client-management/clients',
   		error: function (jqXHR, textStatus, errorThrown)
@@ -880,7 +944,7 @@ $.fn.setClientAutocomplete = function()
       },
   		success:function(organizationClients)
   		{
-  			window.localStorage.setItem('organizationClients', JSON.stringify(organizationClients));
+	      window.localStorage.setItem('organizationClients', JSON.stringify(organizationClients));
         window[clientAutocomplete.attr('data-autocomplete-source')] = organizationClients;
 
         clientAutocomplete.autocomplete('option', 'source', function(request, response)
@@ -1093,7 +1157,27 @@ function smtSearch(prefix)
 	}
 
   filter = $('#' + prefix + 'smt-search-box').val().toLowerCase();
-  rows = JSON.parse(window.localStorage.getItem($('#' + prefix + 'smt').attr('data-rows-variable-name')));
+  rows = getDataSourceByNameAndType($('#' + prefix + 'smt').attr('data-rows-variable-name'), $('#' + prefix + 'smt').attr('data-rows-variable-type'));
+
+  if(empty(rows))
+  {
+    return;
+  }
+
+  // switch ($('#' + prefix + 'smt').attr('data-rows-variable-type'))
+  // {
+  //   rows = getDataSourceByNameAndType(rowsVariableName, dataType);
+  //
+  //   case 'localStorage':
+  //     rows = JSON.parse(window.localStorage.getItem($('#' + prefix + 'smt').attr('data-rows-variable-name')));
+  //     break;
+  //   case 'globalJs':
+  //     rows = window[$('#' + prefix + 'smt').attr('data-rows-variable-name')];
+  //     break;
+  //   default:
+  //     console.log('DataType invalid');
+  //     return;
+  // }
 
 	if ($.type(rows) == 'object')
 	{
@@ -1130,15 +1214,16 @@ function smtSearch(prefix)
  *
  * @returns void
  */
-function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader)
+function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader, dataType)
 {
 	rows = rows || '';
 	forceAjaxRequest = forceAjaxRequest || false;
 	showLoader = showLoader || false;
+  dataType = dataType || 'localStorage';
 
 	if(!empty(rows))
   {
-    window.localStorage.setItem(variableName, JSON.stringify(rows));
+    setDataSourceByNameAndType(rows, variableName, dataType);
 
     return;
   }
@@ -1157,6 +1242,8 @@ function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader)
 			},
 			beforeSend:function()
 			{
+        spinBreadcrumbLoader();
+
 				if(showLoader)
 				{
 					$('#app-loader').removeClass('hidden hidden-xs-up');
@@ -1165,7 +1252,8 @@ function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader)
 			},
 			success:function(smtRows)
 			{
-				window.localStorage.setItem(variableName, JSON.stringify(smtRows));
+        setDataSourceByNameAndType(smtRows, variableName, dataType);
+        stopBreadcrumbLoader();
 
 				if(showLoader)
 				{
@@ -1186,11 +1274,13 @@ function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader)
  *
  * @returns void
  */
-function addSmtRow(variableName, id, row)
+function addSmtRow(variableName, id, row, dataType)
 {
   rows = {};
   rows[id] = row;
-  smtRows = JSON.parse(window.localStorage.getItem(variableName));
+  dataType = dataType || 'localStorage';
+
+  smtRows = getDataSourceByNameAndType(variableName, dataType);
 
   if(empty(smtRows))
   {
@@ -1199,7 +1289,7 @@ function addSmtRow(variableName, id, row)
 
   $.extend(rows, smtRows);
 
-  window.localStorage.setItem(variableName, JSON.stringify(rows));
+  setDataSourceByNameAndType(rows, variableName, dataType);
 }
 
 /**
@@ -1211,9 +1301,10 @@ function addSmtRow(variableName, id, row)
  *
  * @returns void
  */
-function updateSmtRow(variableName, id, row)
+function updateSmtRow(variableName, id, row, dataType)
 {
-  smtRows = JSON.parse(window.localStorage.getItem(variableName));
+  dataType = dataType || 'localStorage';
+  smtRows = getDataSourceByNameAndType(variableName, dataType);
 
   if(empty(smtRows))
   {
@@ -1222,54 +1313,56 @@ function updateSmtRow(variableName, id, row)
 
   smtRows[id] = row;
 
-  window.localStorage.setItem(variableName, JSON.stringify(smtRows));
+  setDataSourceByNameAndType(smtRows, variableName, dataType);
 }
 
 /**
  * Delete row of modal table rows
  *
  * @param string variableName
- * @param integer id
+ * @param string key
  *
  * @returns void
  */
-function deleteSmtRow(variableName, id)
+function deleteSmtRow(variableName, key, dataType)
 {
-  smtRows = JSON.parse(window.localStorage.getItem(variableName));
+  dataType = dataType || 'localStorage';
+  smtRows = getDataSourceByNameAndType(variableName, dataType);
 
   if(empty(smtRows))
   {
     return;
   }
 
-  delete smtRows[id];
+  delete smtRows[key];
 
-  window.localStorage.setItem(variableName, JSON.stringify(smtRows));
+  setDataSourceByNameAndType(smtRows, variableName, dataType);
 }
 
 /**
  * Delete row of modal table rows
  *
  * @param string variableName
- * @param array ids
+ * @param array keys
  *
  * @returns void
  */
-function deleteSmtRows(variableName, ids)
+function deleteSmtRows(variableName, keys, dataType)
 {
-  smtRows = JSON.parse(window.localStorage.getItem(variableName));
+  dataType = dataType || 'localStorage';
+  smtRows = getDataSourceByNameAndType(variableName, dataType);
 
   if(empty(smtRows))
   {
     return;
   }
 
-  $.each(ids, function( index, id)
+  $.each(keys, function( index, id)
   {
     delete smtRows[id];
   });
 
-  window.localStorage.setItem(variableName, JSON.stringify(smtRows));
+  setDataSourceByNameAndType(smtRows, variableName, dataType);
 }
 
 /**

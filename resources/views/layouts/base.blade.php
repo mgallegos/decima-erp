@@ -66,6 +66,8 @@
 									@endforeach
 								</ul>
 								<span class="label label-default breadcrumb-organization-name base-popover pull-right" data-position="left" data-step="1" data-intro="{{ Lang::get('base.currentOrganizationPopoverContent', array('user' => AuthManager::getLoggedUserFirstname())) }}">{{ AuthManager::getCurrentUserOrganizationName() }}</span>
+								<span class="label breadcrumb-loader pull-right"><i class="fa fa-refresh fa-fw fa-breadcrumb-loader"></i></span>
+								<!-- fa-spin -->
 								@endif
 	  						<div class="panel panel-default panel-custom">
 	  							<div class="panel-body clearfix">

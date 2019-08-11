@@ -429,7 +429,16 @@
 	font-size: 14px !important;
 	/*color: #555 !important;*/
 	margin-top: -28px;
-	margin-right: 15px;
+	margin-right: 45px;
+}
+
+.breadcrumb-loader {
+	color: #777 !important;
+	margin-top: -32px;
+}
+
+.fa-breadcrumb-loader {
+	font-size: 2.3em !important;
 }
 
 /* Alerts custom classes */

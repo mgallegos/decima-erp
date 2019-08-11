@@ -6,7 +6,6 @@
  * See COPYRIGHT and LICENSE.
  */
 
-
 /**
  * After a new row is inserted, the grid will be reloaded and the first row will be selected.
  *
@@ -172,6 +171,60 @@ function getSelectedOptionsId(optionElements)
 }
 
 /**
+ * Get data source by name and type
+ *
+ * @param string name
+ * @param string type
+ *
+ * @returns void
+ */
+function getDataSourceByNameAndType(name, type)
+{
+	var dataSource = null;
+
+	switch (type)
+	{
+		case 'localStorage':
+			dataSource = JSON.parse(window.localStorage.getItem(name));
+			break;
+		case 'globalJs':
+			dataSource = window[name];
+			break;
+		default:
+			console.log('DataType invalid');
+	}
+
+	return dataSource;
+}
+
+/**
+ * Set data source by name and type
+ *
+ * @param mixed dataSource
+ * @param string name
+ * @param string type
+ *
+ * @returns boolean
+ */
+function setDataSourceByNameAndType(datasource, name, type)
+{
+	switch (type)
+	{
+		case 'localStorage':
+			window.localStorage.setItem(name, JSON.stringify(datasource));
+			break;
+		case 'globalJs':
+			window[name] = datasource;
+			break;
+		default:
+			console.log('DataType invalid');
+			return false;
+	}
+
+	return true;
+}
+
+/**
  * Select first item of an autocomplete element.
  *
  *  @returns void
@@ -206,13 +259,20 @@ $.fn.isAutocompleteValid = function()
 
 	var value = $(this).val().toLowerCase(), valid = false, autocomplete = this, source;
 
-	if(this.attr('data-autocomplete-source') != undefined)
+	if(this.attr('data-autocomplete-source-type') != undefined)
 	{
-		source = window[this.attr('data-autocomplete-source')];
+		source = getDataSourceByNameAndType(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'));
 	}
 	else
 	{
-		source = this.autocomplete( "option", "source" );
+		if(this.attr('data-autocomplete-source') != undefined)
+		{
+			source = window[this.attr('data-autocomplete-source')];
+		}
+		else
+		{
+			source = this.autocomplete('option', 'source');
+		}
 	}
 
 	$.each(source, function(index, element)
@@ -243,6 +303,30 @@ $.fn.isAutocompleteValid = function()
 };
 
 /**
+ * Set client datasource autocomplete from localstorage
+ *
+ * @returns void
+ */
+$.fn.setAutocompleteSource = function()
+{
+	this.autocomplete('option', 'source', function(request, response)
+	{
+		var data, results;
+
+		data = getDataSourceByNameAndType(this.element.attr('data-autocomplete-source'), this.element.attr('data-autocomplete-source-type'));
+
+		if ($.type(data) == 'object')
+		{
+			data = Object.values(data);
+		}
+
+		results = $.ui.autocomplete.filter(data, request.term);
+
+		response(results.slice(0, 10));
+	});
+};
+
+/**
  * Set the label of an autocomplete based on a given value.
  *
  *  @returns true if valid, false otherwise
@@ -259,13 +343,20 @@ $.fn.setAutocompleteLabel = function(value)
 	value = String(value);
 	value = value.toLowerCase();
 
-	if(this.attr('data-autocomplete-source') != undefined)
+	if(this.attr('data-autocomplete-source-type') != undefined)
 	{
-		source = window[this.attr('data-autocomplete-source')];
+		source = getDataSourceByNameAndType(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'));
 	}
 	else
 	{
-		source = this.autocomplete('option', 'source');
+		if(this.attr('data-autocomplete-source') != undefined)
+		{
+			source = window[this.attr('data-autocomplete-source')];
+		}
+		else
+		{
+			source = this.autocomplete('option', 'source');
+		}
 	}
 
 	$.each(source, function(index, element)
@@ -298,13 +389,20 @@ $.fn.getAutocompleteLabel = function(value)
 {
 	var value = value.toLowerCase(), autocomplete = this, label = '';
 
-	if(this.attr('data-autocomplete-source') != undefined)
+	if(this.attr('data-autocomplete-source-type') != undefined)
 	{
-		source = window[this.attr('data-autocomplete-source')];
+		source = getDataSourceByNameAndType(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'));
 	}
 	else
 	{
-		source = this.autocomplete('option', 'source');
+		if(this.attr('data-autocomplete-source') != undefined)
+		{
+			source = window[this.attr('data-autocomplete-source')];
+		}
+		else
+		{
+			source = this.autocomplete('option', 'source');
+		}
 	}
 
 	$.each(source, function(index, element)
@@ -339,13 +437,20 @@ $.fn.getAutocompleteValue = function()
 {
 	var label = $(this).val().toLowerCase(), value = false, autocomplete = this;
 
-	if(this.attr('data-autocomplete-source') != undefined)
+	if(this.attr('data-autocomplete-source-type') != undefined)
 	{
-		source = window[this.attr('data-autocomplete-source')];
+		source = getDataSourceByNameAndType(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'));
 	}
 	else
 	{
-		source = this.autocomplete('option', 'source');
+		if(this.attr('data-autocomplete-source') != undefined)
+		{
+			source = window[this.attr('data-autocomplete-source')];
+		}
+		else
+		{
+			source = this.autocomplete('option', 'source');
+		}
 	}
 
 	$.each(source, function(index, element)
@@ -661,19 +766,19 @@ $.fn.showServerErrorsByField = function(fieldValidationMessages, prefix)
 
 		if(count == 0)
 		{
-				// $.scrollTo($('#' + prefix + field).offset());
-				top = $("#" + prefix + field).offset();
+    	// $.scrollTo($('#' + prefix + field).offset());
+        top = $("#" + prefix + field).offset();
 
-				if(top == undefined)
-				{
-					top = 0;
-				}
-				else
-				{
-					top = top.top - 200;
-				}
+    	if(top == undefined)
+    	{
+    		top = 0;
+    	}
+    	else
+    	{
+    		top = top.top - 200;
+    	}
 
-				$.scrollTo({top: top, left:0});
+    	$.scrollTo({top: top, left:0});
 		}
 
 		count++;
@@ -698,9 +803,9 @@ $.fn.serializeObject = function()
 		var n = o.name,
 		v = o.value;
 
-        obj[n] = obj[n] === undefined ? v
-          : $.isArray( obj[n] ) ? obj[n].concat( v )
-          : [ obj[n], v ];
+    obj[n] = obj[n] === undefined ? v
+      : $.isArray( obj[n] ) ? obj[n].concat( v )
+      : [ obj[n], v ];
     });
 
     return obj;
@@ -813,22 +918,31 @@ $.fn.clearTags = function()
 /**
  * Create table
  *
+ * @param string gridId
  * @param object headers
+ * @param integer slice
  * @param object rows
  * @param string tableClasses
+ * @param string dataType 'localStorage' or 'globalJs'
  *
  * Use: $('#elementId').clearTags();
  *
  * @returns void
  */
-$.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tableClasses)
+$.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tableClasses, dataType)
 {
 	gridId = gridId || '';
 	slice = slice || 0;
 	rows = rows || '';
 	headers = headers || {'name': {'label':'label', 'width':'100%'}};
+	tableClasses = tableClasses || 'table table-bordered table-hover search-modal-table';
+  dataType = dataType || 'localStorage';
+	table = $('<table/>', {class:tableClasses});
+	thead = $('<thead/>');
+	tbody = $('<tbody/>');
+	tr = $('<tr/>');
 
-	if(!empty(gridId))
+  if(!empty(gridId))
 	{
 		headers = {};
 
@@ -847,13 +961,6 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 		});
 	}
 
-	tableClasses = tableClasses || 'table table-bordered table-hover search-modal-table';
-
-	table = $('<table/>', {class:tableClasses});
-	thead = $('<thead/>');
-	tbody = $('<tbody/>');
-	tr = $('<tr/>');
-
 	$.each(headers, function( name, header )
 	{
 		$('<th/>', {
@@ -868,7 +975,26 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 
 	if(empty(rows))
 	{
-    rows = JSON.parse(window.localStorage.getItem(rowsVariableName));
+		rows = getDataSourceByNameAndType(rowsVariableName, dataType);
+
+		// switch (dataType)
+    // {
+    //   case 'localStorage':
+    //     rows = JSON.parse(window.localStorage.getItem(rowsVariableName));
+    //     break;
+    //   case 'globalJs':
+    //     rows = window[rowsVariableName];
+    //     break;
+    //   default:
+    //     console.log('DataType invalid');
+    // }
+
+    if(empty(rows))
+    {
+      console.log('Rows is empty or could not be read');
+
+      return;
+    }
 	}
 
   count = 0;
@@ -928,6 +1054,7 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 
 		tr.attr('data-row', JSON.stringify(row));
 		tr.attr('onclick', 'smtRowClick(this)');
+
 		tbody.append(tr);
 	});
 
@@ -935,7 +1062,12 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 
 	if(!empty(rowsVariableName))
 	{
-		$(this).attr('data-rows-variable-name', rowsVariableName);
+	   $(this).attr('data-rows-variable-name', rowsVariableName);
+	}
+
+	if(!empty(dataType))
+	{
+	   $(this).attr('data-rows-variable-type', dataType);
 	}
 
 	$(this).attr('data-headers', JSON.stringify(headers));
@@ -986,28 +1118,6 @@ function keyPressCrossBrowserCompatibility(event)
 	//console.log("entre");
 	//console.log("keycode: "+event.keyCode+" charcode: "+event.charCode);
 };
-
-/**
- * Enable all elements on screen.
- *
- * @returns void
- */
-function enableAll()
-{
-	$('#main-panel-fieldset').removeAttr('disabled');
-	$('#user-apps-panel-fieldset').removeAttr('disabled');
-}
-
-/**
- * Disabled all elements on screen.
- *
- * @returns void
- */
-function disabledAll()
-{
-	$('#main-panel-fieldset').attr('disabled','disabled');
-	$('#user-apps-panel-fieldset').attr('disabled','disabled');
-}
 
 /**
  * Change windows URL.
@@ -1120,14 +1230,21 @@ var jqMgValAutocompleteValidator = function($element)
 
 		var value = $element.val().toLowerCase(), valid = false, autocomplete = this, source;
 
-		if($element.attr('data-autocomplete-source') != undefined)
-		{
-			source = window[$element.attr('data-autocomplete-source')];
-		}
-		else
-		{
-			source = $element.autocomplete( "option", "source" );
-		}
+    if($element.attr('data-autocomplete-source-type') != undefined)
+    {
+			source =  getDataSourceByNameAndType($element.attr('data-autocomplete-source'), $element.attr('data-autocomplete-source-type'));
+    }
+    else
+    {
+      if($element.attr('data-autocomplete-source') != undefined)
+      {
+        source = window[$element.attr('data-autocomplete-source')];
+      }
+      else
+      {
+        source = $element.autocomplete( "option", "source" );
+      }
+    }
 
 		$.each(source, function(index, element)
 		{
@@ -1260,6 +1377,23 @@ function getFromLocalStorage(variableName)
 }
 
 /**
+ * Check if varianle is in local storage
+ *
+ *  @returns boolean
+ */
+function isInLocalStorage(variableName)
+{
+  if(!empty(window.localStorage.getItem(variableName)))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+/**
  * Get, parse json and convert to array from localstorage
  *
  *  @returns object
@@ -1267,6 +1401,11 @@ function getFromLocalStorage(variableName)
 function getArrayFromLocalStorage(variableName)
 {
   var data = JSON.parse(window.localStorage.getItem(variableName));
+
+  if(empty(data))
+  {
+    return [];
+  }
 
 	if ($.type(data) == 'object')
 	{

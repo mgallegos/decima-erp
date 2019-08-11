@@ -26,5 +26,5 @@
 		<link rel="stylesheet" href="{{ URL::asset($css) }}"/>
 	@endforeach
 @endif
-{!! Html::style('assets/kwaai/css/main-v1.1.0.css') !!}
+{!! Html::style('assets/kwaai/css/main-v1.1.1.css') !!}
 {!! Html::style('assets/kwaai/css/button-custom-classes.css') !!}
