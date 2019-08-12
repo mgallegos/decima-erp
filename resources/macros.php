@@ -80,6 +80,29 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 
 	if(!empty($variableName) && !empty($variableType))
 	{
+		$autocompleteSource = '
+			function(request, response)
+			{
+				var data, results;
+
+				data = getDataSourceByNameAndType(this.element.attr(\'data-autocomplete-source\'), this.element.attr(\'data-autocomplete-source-type\'));
+
+				if ($.type(data) == \'object\')
+				{
+					data = Object.values(data);
+				}
+
+				if(data == undefined)
+				{
+					data = [];
+				}
+
+				results = $.ui.autocomplete.filter(data, request.term);
+
+				response(results.slice(0, ' . $limitResourceTo . '));
+    	}
+		';
+
 		$options['data-autocomplete-source'] = $variableName;
 		$options['data-autocomplete-source-type'] = $variableType;
 	}
