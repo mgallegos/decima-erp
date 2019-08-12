@@ -92,10 +92,10 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 					data = Object.values(data);
 				}
 
-				if(data == undefined)
-				{
-					data = [];
-				}
+				if(empty(data))
+			  {
+			    data = [];
+			  }
 
 				results = $.ui.autocomplete.filter(data, request.term);
 

@@ -198,6 +198,31 @@ function getDataSourceByNameAndType(name, type)
 }
 
 /**
+ * Get data source by name and type
+ *
+ * @param string name
+ * @param string type
+ *
+ * @returns void
+ */
+function getDataSourceArrayByNameAndType(name, type)
+{
+	var dataSource = getDataSourceByNameAndType(name, type);
+
+  if(empty(dataSource))
+  {
+    return [];
+  }
+
+	if ($.type(dataSource) == 'object')
+	{
+		return Object.values(dataSource);
+	}
+
+	return dataSource;
+}
+
+/**
  * Set data source by name and type
  *
  * @param mixed dataSource
@@ -222,6 +247,34 @@ function setDataSourceByNameAndType(datasource, name, type)
 	}
 
 	return true;
+}
+
+/**
+ * Set data source by name and type
+ *
+ * @param mixed dataSource
+ * @param string name
+ * @param string type
+ *
+ * @returns boolean
+ */
+function filterAutocompleteSource(request, name, type)
+{
+	var data;
+
+	data = getDataSourceByNameAndType(name, type);
+
+	if ($.type(data) == 'object')
+	{
+		data = Object.values(data);
+	}
+
+	if(data == undefined)
+	{
+		data = [];
+	}
+
+	return $.ui.autocomplete.filter(data, request.term);
 }
 
 /**
