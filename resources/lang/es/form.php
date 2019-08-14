@@ -157,7 +157,13 @@ return array(
 
 	'date' => 'Fecha',
 
+	'dates' => 'Fechas',
+
 	'dateTime' => 'Fecha y hora',
+
+	'numeric' => 'Númerico',
+
+	'numerics' => 'Númericos',
 
 	'madeBy' => 'Hecho por',
 
