@@ -1284,7 +1284,7 @@ function addSmtRow(variableName, id, row, dataType)
 
   if(empty(smtRows))
   {
-    return;
+    smtRows = {};
   }
 
   $.extend(rows, smtRows);
@@ -1308,7 +1308,7 @@ function updateSmtRow(variableName, id, row, dataType)
 
   if(empty(smtRows))
   {
-    return;
+    smtRows = {};
   }
 
   smtRows[id] = row;
