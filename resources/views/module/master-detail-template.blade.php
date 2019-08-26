@@ -1075,19 +1075,20 @@
 				<div class="btn-group">
 					{!! Form::button('<i class="fa fa-share-square-o"></i> ' . Lang::get('toolbar.export') . ' <span class="caret"></span>', array('class' => 'btn btn-default dropdown-toggle', 'data-container' => 'body', 'data-toggle' => 'dropdown')) !!}
 					<ul class="dropdown-menu">
-         		<li><a id='module-app-btn-export-xls' class="fake-link"><i class="fa fa-file-excel-o"></i> xls</a></li>
-         		<li><a id='module-app-btn-export-csv' class="fake-link"><i class="fa fa-file-text-o"></i> csv</a></li>
+     				<li><a id='module-app-btn-export-xls' class="fake-link"><i class="fa fa-file-excel-o"></i> {{ Lang::get('decima-accounting::journal-management.standardSpreadsheet') . ' (' . Lang::get('form.spreadsheet') . ')' }}</a></li>
        		</ul>
 				</div>
 			</div>
 			<div id="module-app-btn-group-2" class="btn-group btn-group-app-toolbar">
 				{!! Form::button('<i class="fa fa-edit"></i> ' . Lang::get('toolbar.edit'), array('id' => 'module-app-btn-edit', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.editMaster'))) !!}
 				{!! Form::button('<i class="fa fa-check"></i> ' . Lang::get('toolbar.authorize'), array('id' => 'module-app-btn-authorize', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.authorizeMaster'))) !!}
-				{!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.nulify'), array('id' => 'module-app-btn-void', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.voidMaster'))) !!}
-				{!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.delete'), array('id' => 'module-app-btn-delete', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.deleteMaster'))) !!}
+				{!! Form::button('<i class="fa fa-ban"></i> ' . Lang::get('toolbar.nulify'), array('id' => 'module-app-btn-void', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.voidMaster'))) !!}
+				<!-- {!! Form::button('<i class="fa fa-minus"></i> ' . Lang::get('toolbar.delete'), array('id' => 'module-app-btn-delete', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('module::app.deleteMaster'))) !!} -->
+			</div>
+			<div id="module-app-btn-group-4" class="btn-group btn-group-app-toolbar">
 				{!! Form::button('<i class="fa fa-eye"></i> ', array('id' => 'module-app-btn-view', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.viewLongText'))) !!}
-				{{-- Form::button('<i class="fa fa-upload"></i> ', array('id' => 'module-app-btn-upload', 'class' => 'btn btn-default module-app-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-folder' => Lang::get('module::app.folder'), 'data-original-title' => Lang::get('toolbar.uploadLongText'))) --}}
-				{{-- Form::button('<i class="fa fa-files-o"></i> ', array('id' => 'module-app-btn-show-files', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.showFilesLongText'))) --}}
+				<!-- {!! Form::button('<i class="fa fa-upload"></i> ', array('id' => 'module-app-btn-upload', 'class' => 'btn btn-default module-app-btn-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-folder' => Lang::get('module::app.folder'), 'data-original-title' => Lang::get('toolbar.uploadLongText'))) !!} -->
+				<!-- {!! Form::button('<i class="fa fa-files-o"></i> ', array('id' => 'module-app-btn-show-files', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.showFilesLongText'))) !!} -->
 				{!! Form::button('<i class="fa fa-history"></i> ', array('id' => 'module-app-btn-show-history', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.showHistoryLongText'))) !!}
 			</div>
 			<div id="module-app-btn-group-3" class="btn-group btn-group-app-toolbar">
