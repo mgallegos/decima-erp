@@ -27,6 +27,6 @@
 		<link rel="stylesheet" href="{{ trim(preg_replace('/\s+/', ' ', $css)) }}" />
 	@endforeach
 @endif
-<link rel="stylesheet" href="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/css/main-v1.1.1.css"/>
-<!-- {!! Html::style('assets/kwaai/css/main-v1.1.1.css') !!} -->
+<link rel="stylesheet" href="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/css/main-v1.1.2.css"/>
+<!-- {!! Html::style('assets/kwaai/css/main-v1.1.2.css') !!} -->
 <link rel="stylesheet" href="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/css/button-custom-classes.css"/>
