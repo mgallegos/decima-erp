@@ -242,7 +242,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    *
    * @return boolean
    */
-  public function updateByColumnName($columnNameOldValue, $organizationId, $databaseConnectionName = null)
+  public function updateByColumnNameEloquent($columnNameOldValue, $organizationId, $databaseConnectionName = null)
   {
     if(empty($databaseConnectionName))
     {
@@ -250,6 +250,31 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
     }
 
     $this->ModuleTableName->setConnection($databaseConnectionName)
+      ->where('column_name', '=', $columnNameOldValue)
+      ->where('organization_id', '=', $organizationId)
+      ->update(array('column_name_to_be_updated' => $newValue));
+
+    return true;
+  }
+
+  /**
+   * Update by column name
+   *
+   * @param int $columnNameOldValue
+   * @param integer $organizationId
+   * @param string $databaseConnectionName
+   *
+   * @return boolean
+   */
+  public function updateByColumnNameQueryBuilder($columnNameOldValue, $organizationId, $databaseConnectionName = null)
+  {
+    if(empty($databaseConnectionName))
+    {
+      $databaseConnectionName = $this->databaseConnectionName;
+    }
+
+    $this->DB->connection($databaseConnectionName)
+      ->table($this->getTable())
       ->where('column_name', '=', $columnNameOldValue)
       ->where('organization_id', '=', $organizationId)
       ->update(array('column_name_to_be_updated' => $newValue));
