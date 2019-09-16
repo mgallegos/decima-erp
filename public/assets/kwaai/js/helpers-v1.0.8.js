@@ -1076,7 +1076,8 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 						value = $.fmatter.NumberFormat(row[name], $.fn.jqMgVal.defaults.validators.money.formatter);
 						break;
 					case 'date':
-						value = $.datepicker.formatDate(lang.dateFormat, new Date(row[name]));
+						// value = $.datepicker.formatDate(lang.dateFormat, new Date(row[name]));
+						value = moment(row[name], 'YYYY-MM-DD').format(lang.jsDateFormat);
 						break;
 					case 'datetime':
 						// value = $.datetimepicker.formatDate(lang.phpDateTimeFormat, new Date(row[name]));
