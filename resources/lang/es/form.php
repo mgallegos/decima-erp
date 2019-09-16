@@ -119,6 +119,8 @@ return array(
 
 	'phpDateTimeFormat' => 'd/m/Y h:i a',
 
+	'jsDateFormat' => 'DD/MM/YYYY',
+
 	'jsDateTimeFormat' => 'DD/MM/YYYY hh:mm a',
 
 	'mysqlDateFormat' => '%d/%m/%Y',
