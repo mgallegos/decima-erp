@@ -30,7 +30,9 @@
 <!-- https://cdn.jsdelivr.net/npm/chart.js@2.8.0 -->
 @if (!empty(Config::get('system-security.additional_js')))
 	@foreach (Config::get('system-security.additional_js') as $index => $js)
-		<script src="{{ URL::asset($js) }}"></script>
+		@if (!empty($js))
+			<script src="{{ URL::asset($js) }}"></script>
+    @endif
 	@endforeach
 @endif
 
@@ -42,11 +44,11 @@
 	});
 </script>
 
-<script src="{{ URL::asset('assets/kwaai/js/helpers-v1.0.8.js') }}"></script>
+<script src="{{ URL::asset('assets/kwaai/js/helpers-v1.0.9.js') }}"></script>
 <script src="{{ URL::asset('assets/kwaai/js/apps-engine-v1.0.2.js') }}"></script>
 {{-- <script src="{{ URL::asset('assets/kwaai/js/validation-engine.js') }}"></script> --}}
 <script src="{{ URL::asset('assets/jquery-mg-validation-v0.5/jquery.jqMgVal.src.js') }}"></script>
-<script src="{{ URL::asset('assets/kwaai/js/base-v1.1.7.js') }}"></script>
+<script src="{{ URL::asset('assets/kwaai/js/base-v1.1.8.js') }}"></script>
 
 <script type='text/javascript'>
   $.fn.jqMgVal.defaults.successIconClass = 'fa fa-check-circle';

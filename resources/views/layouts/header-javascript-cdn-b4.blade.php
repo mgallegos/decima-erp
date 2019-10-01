@@ -34,7 +34,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.js"></script>
 @if (!empty(Config::get('system-security.additional_cdn_js')))
 	@foreach (Config::get('system-security.additional_cdn_js') as $index => $js)
-		<script src="{{ trim(preg_replace('/\s+/', ' ', $js)) }}"></script>
+		@if (!empty($js))
+			<script src="{{ trim(preg_replace('/\s+/', ' ', $js)) }}"></script>
+    @endif
 	@endforeach
 @endif
 
@@ -46,10 +48,10 @@
 	});
 </script>
 
-<script src="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/js/helpers-v1.0.8.js"></script>
+<script src="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/js/helpers-v1.0.9.js"></script>
 <script src="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/js/apps-engine-v1.0.2.js"></script>
 <script src="https://storage.googleapis.com/decimaerp-cdn-bucket/jquery-mg-validation-v0.5/jquery.jqMgVal.src.js"></script>
-<script src="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/js/base-v1.1.7.js"></script>
+<script src="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/js/base-v1.1.8.js"></script>
 
 <script type='text/javascript'>
   $.fn.jqMgVal.defaults.successIconClass = 'fa fa-check-circle';

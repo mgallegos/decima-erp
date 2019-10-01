@@ -24,7 +24,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.css"/>
 @if (!empty(Config::get('system-security.additional_cdn_css')))
 	@foreach (Config::get('system-security.additional_cdn_css') as $index => $css)
-		<link rel="stylesheet" href="{{ trim(preg_replace('/\s+/', ' ', $css)) }}" />
+    @if (!empty($css))
+    <link rel="stylesheet" href="{{ trim(preg_replace('/\s+/', ' ', $css)) }}" />
+    @endif
 	@endforeach
 @endif
 <link rel="stylesheet" href="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/css/main-v1.1.2.css"/>

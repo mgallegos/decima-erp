@@ -1151,7 +1151,7 @@ function smtSearch(prefix)
 
 	if($('#' + prefix + 'smt-search-box').isEmpty())
 	{
-    $('#' + prefix + 'smt').createTable('', $('#' + prefix + 'smt').attr('data-rows-variable-name'), 10, '', JSON.parse($('#' + prefix + 'smt').attr('data-headers')));
+    $('#' + prefix + 'smt').createTable('', $('#' + prefix + 'smt').attr('data-rows-variable-name'), 10, '', JSON.parse($('#' + prefix + 'smt').attr('data-headers')), $('#' + prefix + 'smt').attr('data-table-classes'), $('#' + prefix + 'smt').attr('data-rows-variable-type'));
 
 		return;
 	}
@@ -1163,21 +1163,6 @@ function smtSearch(prefix)
   {
     return;
   }
-
-  // switch ($('#' + prefix + 'smt').attr('data-rows-variable-type'))
-  // {
-  //   rows = getDataSourceByNameAndType(rowsVariableName, dataType);
-  //
-  //   case 'localStorage':
-  //     rows = JSON.parse(window.localStorage.getItem($('#' + prefix + 'smt').attr('data-rows-variable-name')));
-  //     break;
-  //   case 'globalJs':
-  //     rows = window[$('#' + prefix + 'smt').attr('data-rows-variable-name')];
-  //     break;
-  //   default:
-  //     console.log('DataType invalid');
-  //     return;
-  // }
 
 	if ($.type(rows) == 'object')
 	{
@@ -1201,7 +1186,7 @@ function smtSearch(prefix)
     return found;
   });
 
-	$('#' + prefix + 'smt').createTable('', '', 0, rows, JSON.parse($('#' + prefix + 'smt').attr('data-headers')));
+	$('#' + prefix + 'smt').createTable('', '', 0, rows, JSON.parse($('#' + prefix + 'smt').attr('data-headers')), $('#' + prefix + 'smt').attr('data-table-classes'), $('#' + prefix + 'smt').attr('data-rows-variable-type'));
 }
 
 /**

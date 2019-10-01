@@ -1030,21 +1030,12 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 	{
 		rows = getDataSourceByNameAndType(rowsVariableName, dataType);
 
-		// switch (dataType)
-    // {
-    //   case 'localStorage':
-    //     rows = JSON.parse(window.localStorage.getItem(rowsVariableName));
-    //     break;
-    //   case 'globalJs':
-    //     rows = window[rowsVariableName];
-    //     break;
-    //   default:
-    //     console.log('DataType invalid');
-    // }
-
     if(empty(rows))
     {
-      console.log('Rows is empty or could not be read');
+			$(this).find('.smt-body').html('');
+
+			$(this).find('.smt-body').append(table);
+			$(this).find('.smt-body').append('<div id="' + this.attr("id") + '-alert" class="alert alert-block alert-warning fade in show"><a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>' + lang.emptyRows + '</div>');
 
       return;
     }
@@ -1068,7 +1059,7 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 			td = $('<td/>');
 			value = row[name];
 
-			if(!empty(header.formatter))
+			if(!empty(value) && !empty(header.formatter))
 			{
 				switch (header.formatter)
 				{
@@ -1125,6 +1116,7 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 	}
 
 	$(this).attr('data-headers', JSON.stringify(headers));
+	$(this).attr('data-table-classes', tableClasses);
 
 	$(this).find('.smt-body').html('');
 

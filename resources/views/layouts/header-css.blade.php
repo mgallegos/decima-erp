@@ -23,7 +23,9 @@
 {!! Html::style('assets/select2-v4.0.5/select2.css') !!}
 @if (!empty(Config::get('system-security.additional_css')))
 	@foreach (Config::get('system-security.additional_css') as $index => $css)
+    @if (!empty($css))
 		<link rel="stylesheet" href="{{ URL::asset($css) }}"/>
+    @endif
 	@endforeach
 @endif
 {!! Html::style('assets/kwaai/css/main-v1.1.2.css') !!}

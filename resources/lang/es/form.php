@@ -129,6 +129,8 @@ return array(
 
 	'invalidSelection' => 'Debe seleccionar un registro antes de realizar esta operación.',
 
+	'emptyRows' => 'No se encontraron registros.',
+
 	'previous' => 'Anterior',
 
 	'next' => 'Siguiente',
