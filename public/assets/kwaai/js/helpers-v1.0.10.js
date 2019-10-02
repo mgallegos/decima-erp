@@ -178,9 +178,13 @@ function getSelectedOptionsId(optionElements)
  *
  * @returns void
  */
-function getDataSourceByNameAndType(name, type)
+function getDataSourceByNameAndType(name, type, filterName, filterValue, filterOperator)
 {
-	var dataSource = null;
+	var dataSource = null, filteredDataSource = [], flag = false;
+
+  filterName = filterName || '';
+	filterValue = filterValue || '';
+	filterOperator = filterOperator || '=';
 
 	switch (type)
 	{
@@ -194,6 +198,53 @@ function getDataSourceByNameAndType(name, type)
 			console.log('DataType invalid');
 	}
 
+  if(!empty(filterName) && !empty(filterValue))
+  {
+    $.each(dataSource, function(index, element)
+    {
+      flag = false;
+
+      switch (filterOperator)
+      {
+        case '=':
+          if(element[filterName] = filterValue)
+          {
+            flag = true;
+          }
+
+          break;
+        case '<':
+          if(element[filterName] < filterValue)
+          {
+            flag = true;
+          }
+
+          break;
+        case '>':
+          if(element[filterName] > filterValue)
+          {
+            flag = true;
+          }
+
+          break;
+        case 'in':
+          if($.inArray(element[filterName], filterValue) != -1)
+          {
+            flag = true;
+          }
+
+          break;
+      }
+
+      if(flag)
+      {
+        filteredDataSource.push(element);
+      }
+   	});
+
+    return filteredDataSource;
+  }
+
 	return dataSource;
 }
 
@@ -205,9 +256,9 @@ function getDataSourceByNameAndType(name, type)
  *
  * @returns void
  */
-function getDataSourceArrayByNameAndType(name, type)
+function getDataSourceArrayByNameAndType(name, type, filterName, filterValue, filterOperator)
 {
-	var dataSource = getDataSourceByNameAndType(name, type);
+	var dataSource = getDataSourceByNameAndType(name, type, filterName, filterValue, filterOperator);
 
   if(empty(dataSource))
   {
@@ -258,11 +309,15 @@ function setDataSourceByNameAndType(datasource, name, type)
  *
  * @returns boolean
  */
-function filterAutocompleteSource(request, name, type)
+function filterAutocompleteSource(request, name, type, filterName, filterValue, filterOperator)
 {
 	var data;
 
-	data = getDataSourceByNameAndType(name, type);
+	filterName = filterName || '';
+	filterValue = filterValue || '';
+	filterOperator = filterOperator || '=';
+
+	data = getDataSourceByNameAndType(name, type, filterName, filterValue, filterOperator);
 
 	if ($.type(data) == 'object')
 	{
@@ -982,7 +1037,7 @@ $.fn.clearTags = function()
  *
  * @returns void
  */
-$.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tableClasses, dataType)
+$.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tableClasses, dataType, filterName, filterValue, filterOperator)
 {
 	gridId = gridId || '';
 	slice = slice || 0;
@@ -990,6 +1045,9 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 	headers = headers || {'name': {'label':'label', 'width':'100%'}};
 	tableClasses = tableClasses || 'table table-bordered table-hover search-modal-table';
   dataType = dataType || 'localStorage';
+  filterName = filterName || '';
+	filterValue = filterValue || '';
+	filterOperator = filterOperator || '=';
 	table = $('<table/>', {class:tableClasses});
 	thead = $('<thead/>');
 	tbody = $('<tbody/>');
@@ -1028,7 +1086,7 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 
 	if(empty(rows))
 	{
-		rows = getDataSourceByNameAndType(rowsVariableName, dataType);
+		rows = getDataSourceByNameAndType(rowsVariableName, dataType, filterName, filterValue, filterOperator);
 
     if(empty(rows))
     {
@@ -1110,11 +1168,10 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 	   $(this).attr('data-rows-variable-name', rowsVariableName);
 	}
 
-	if(!empty(dataType))
-	{
-	   $(this).attr('data-rows-variable-type', dataType);
-	}
-
+  $(this).attr('data-rows-variable-type', dataType);
+  $(this).attr('data-filter-name', filterName);
+  $(this).attr('data-filter-value', JSON.stringify(filterValue));
+	$(this).attr('data-filter-operator', filterOperator);
 	$(this).attr('data-headers', JSON.stringify(headers));
 	$(this).attr('data-table-classes', tableClasses);
 

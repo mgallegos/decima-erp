@@ -7,7 +7,7 @@
  * See COPYRIGHT and LICENSE.
  */
 
-Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null, $btnClass = 'btn-default', $bootstrapVersion = '3', $prefixButton = false, $presetType = '', $showDeleteSuffixButton = false, $hideSuffixButton = false, $variableName = '', $variableType = '' )
+Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array(), $options = array(), $inputTextLabelName=null, $inputTextValueName=null, $value = null, $prefixIcon = null, $inputGroupSizeClass = '', $limitResourceTo = null, $btnClass = 'btn-default', $bootstrapVersion = '3', $prefixButton = false, $presetType = '', $showDeleteSuffixButton = false, $hideSuffixButton = false, $variableName = '', $variableType = '', $filterName = '', $filterValue = '\'\'', $filterOperator = '')
 {
 	$autocompleteEvent = $autocompleteFocusEvent = $prefix = $presetTypeCode = $deleteCode = '';
 	$autocompleteWidgetName = 'autocomplete';
@@ -85,7 +85,7 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 			{
 				var data, results;
 
-				data = getDataSourceByNameAndType(this.element.attr(\'data-autocomplete-source\'), this.element.attr(\'data-autocomplete-source-type\'));
+				data = getDataSourceByNameAndType(this.element.attr(\'data-autocomplete-source\'), this.element.attr(\'data-autocomplete-source-type\'), \'' . $filterName . '\', ' . $filterValue . ', \'' . $filterOperator . '\');
 
 				if ($.type(data) == \'object\')
 				{

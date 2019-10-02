@@ -1151,13 +1151,16 @@ function smtSearch(prefix)
 
 	if($('#' + prefix + 'smt-search-box').isEmpty())
 	{
-    $('#' + prefix + 'smt').createTable('', $('#' + prefix + 'smt').attr('data-rows-variable-name'), 10, '', JSON.parse($('#' + prefix + 'smt').attr('data-headers')), $('#' + prefix + 'smt').attr('data-table-classes'), $('#' + prefix + 'smt').attr('data-rows-variable-type'));
+    $('#' + prefix + 'smt').createTable('', $('#' + prefix + 'smt').attr('data-rows-variable-name'), 10, '', JSON.parse($('#' + prefix + 'smt').attr('data-headers')), $('#' + prefix + 'smt').attr('data-table-classes'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'));
 
 		return;
 	}
+  console.log($('#' + prefix + 'smt').attr('data-filter-name'));
+  console.log(JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')));
+  console.log($('#' + prefix + 'smt').attr('data-filter-operator'));
 
   filter = $('#' + prefix + 'smt-search-box').val().toLowerCase();
-  rows = getDataSourceByNameAndType($('#' + prefix + 'smt').attr('data-rows-variable-name'), $('#' + prefix + 'smt').attr('data-rows-variable-type'));
+  rows = getDataSourceByNameAndType($('#' + prefix + 'smt').attr('data-rows-variable-name'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'));
 
   if(empty(rows))
   {
@@ -1186,7 +1189,7 @@ function smtSearch(prefix)
     return found;
   });
 
-	$('#' + prefix + 'smt').createTable('', '', 0, rows, JSON.parse($('#' + prefix + 'smt').attr('data-headers')), $('#' + prefix + 'smt').attr('data-table-classes'), $('#' + prefix + 'smt').attr('data-rows-variable-type'));
+	$('#' + prefix + 'smt').createTable('', '', 0, rows, JSON.parse($('#' + prefix + 'smt').attr('data-headers')), $('#' + prefix + 'smt').attr('data-table-classes'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'));
 }
 
 /**
