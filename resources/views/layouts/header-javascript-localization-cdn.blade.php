@@ -8,6 +8,8 @@
 <script src="https://storage.googleapis.com/decimaerp-cdn-bucket/jquery-uix-multiselect-v2.0/js/locales/jquery.uix.multiselect_es.js"></script>
 <!-- <script src="{{ URL::asset('assets/amcharts-v3.17.0/lang/es.js') }}"></script> -->
 
+<script src="{{ URL::asset('assets/fullcalendar-v3.9.0/es-us.js') }}"></script>
+
 <script type='text/javascript'>
 	$.jgrid.locales["{{ Lang::locale() }}"].formatter.date.newformat = "{{ Lang::get('form.phpShortDateFormat')}}";
   $.jgrid.locales["{{ Lang::locale() }}"].formatter.integer.thousandsSeparator = "{{ Lang::get('form.thousandsSeparator')}}";

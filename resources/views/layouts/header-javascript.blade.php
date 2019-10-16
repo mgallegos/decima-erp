@@ -26,8 +26,16 @@
 {!! Html::script('assets/keymaster-v1.6.1/keymaster.min.js') !!}
 <script src="{{ URL::asset('assets/jquery-slidereveal-v1.1.2/jquery.slidereveal.min.js') }}"></script>
 <script src="{{ URL::asset('assets/select2-v4.0.5/select2.js') }}"></script>
-<!-- Pendiente -->
-<!-- https://cdn.jsdelivr.net/npm/chart.js@2.8.0 -->
+<script src="{{ URL::asset('assets/chart-js-v2.8.0/chart.js') }}"></script>
+<script src="{{ URL::asset('assets/moment-js-v2.23.0/moment.js') }}"></script>
+<script src="{{ URL::asset('assets/tinymce-v5.0.3/tinymce.min.js') }}"></script>
+<script src="{{ URL::asset('assets/tinymce-v5.0.3/jquery.tinymce.min.js') }}"></script>
+<script src="{{ URL::asset('assets/tinymce-v5.0.3/table.plugin.min.js') }}"></script>
+<script src="{{ URL::asset('assets/tinymce-v5.0.3/code.plugin.min.js') }}"></script>
+<script src="{{ URL::asset('assets/jsignature-v2.1.2/jSignature.min.js') }}"></script>
+<script src="{{ URL::asset('assets/fullcalendar-v3.9.0/fullcalendar.js') }}"></script>
+<script src="{{ URL::asset('assets/fullcalendar-scheduler-v1.9.4/scheduler.js') }}"></script>
+
 @if (!empty(Config::get('system-security.additional_js')))
 	@foreach (Config::get('system-security.additional_js') as $index => $js)
 		@if (!empty($js))
@@ -44,7 +52,7 @@
 	});
 </script>
 
-<script src="{{ URL::asset('assets/kwaai/js/helpers-v1.0.10.js') }}"></script>
+<script src="{{ URL::asset('assets/kwaai/js/helpers-v1.0.11.js') }}"></script>
 <script src="{{ URL::asset('assets/kwaai/js/apps-engine-v1.0.2.js') }}"></script>
 {{-- <script src="{{ URL::asset('assets/kwaai/js/validation-engine.js') }}"></script> --}}
 <script src="{{ URL::asset('assets/jquery-mg-validation-v0.5/jquery.jqMgVal.src.js') }}"></script>
