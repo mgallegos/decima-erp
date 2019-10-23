@@ -63,6 +63,8 @@
 
 	$(document).ready(function()
 	{
+		loadSmtRows('moduleAppSmtRows', $('#module-app-form').attr('action') + '/smt-rows');
+
 		$('.module-app-btn-tooltip').tooltip();
 
 		$('#module-app-form').jqMgVal('addFormFieldsValidations');
@@ -363,7 +365,7 @@
 					$('#app-loader').addClass('hidden');
 
 					enableAll();
-					
+
 					$('.decima-erp-tooltip').tooltip('hide');
 				}
 			});
@@ -381,8 +383,11 @@
 			{
 				$('#module-app-form-new-title').addClass('hidden');
 				$('#module-app-form-edit-title').addClass('hidden');
+
 				$('#module-app-btn-refresh').click();
+
 				$('#module-app-form').jqMgVal('clearForm');
+
 				$('#module-app-form-section').collapse('hide');
 			}
 			else
@@ -394,6 +399,33 @@
 			$('#module-app-btn-group-3').disabledButtonGroup();
 			$('.decima-erp-tooltip').tooltip('hide');
 			$('#module-app-journals-section').attr('data-target-id', '')
+		});
+
+		$('#module-app-smt-btn-select').click(function()
+		{
+			var rowData = $('#module-app-smt').getSelectedSmtRow();
+
+			if(empty(rowData))
+			{
+				return;
+			}
+
+			$('#module-app-btn-new').click();
+
+			populateFormFields(rowData);
+
+			$('#module-app-form-new-title').addClass('hidden');
+
+			$('#module-app-form-edit-title').removeClass('hidden');
+
+			$('#module-app-smt').modal('hide');
+
+			$('#module-app-id').val(rowData.module_app_id);
+		});
+
+		$('#module-app-smt-btn-refresh').click(function()
+		{
+			loadSmtRows('moduleAppSmtRows', $('#module-app-form').attr('action') + '/smt-rows', '', true, true);
 		});
 
 		$('#module-app-btn-edit-helper').click(function()
@@ -504,6 +536,7 @@
 <div id='module-app-journals-section' class="row collapse in section-block" data-target-id="">
 	{!! Form::journals('module-app-', $appInfo['id']) !!}
 </div>
+@include('layouts.search-modal-table')
 <div id='module-app-modal-delete' class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
   <div class="modal-dialog modal-sm module-app-btn-delete">
     <div class="modal-content">

@@ -1257,7 +1257,6 @@
 		</div>
 	</div>
 </div>
-@include('layouts.search-modal-table')
 @include('decima-file::file-viewer')
 <div id='module-app-journals-section' class="row collapse in section-block" data-target-id="">
 	{!! Form::journals($prefix, $appInfo['id']) !!}
