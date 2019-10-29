@@ -406,10 +406,7 @@
 				id = $('#module-app-id').val();
 			}
 
-			if($('#module-app-journals').attr('data-journalized-id') != id)
-			{
-				getAppJournals('module-app-', 'firstPage', id);
-			}
+			getAppJournals('module-app-', 'firstPage', id);
 
 			$.scrollTo({top: $('#module-app-journals').offset().top - 100, left:0});
 		});
