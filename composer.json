@@ -23,7 +23,8 @@
         "barryvdh/laravel-dompdf": "^0.8.1",
         "econea/nusoap": "^0.9.6",
         "lesichkovm/laravel-advanced-route": "dev-master",
-        "fzaninotto/faker": "^1.8"
+        "fzaninotto/faker": "^1.8",
+        "phpoffice/phpspreadsheet": "^1.8"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
