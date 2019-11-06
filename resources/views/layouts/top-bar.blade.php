@@ -6,8 +6,7 @@
          <img src="{{URL::asset('assets/kwaai/images/logo.png')}}">
        </a>
 		</div>
-
-		<div class="collapse navbar-collapse">
+		<div class="collapse navbar-collapse visible-lg visible-md">
 			<ul class="nav navbar-nav">
 				<li class="divider-vertical"></li>
 				<li><a id="dashboard-top-bar-menu" class="fake-link"><i class="fa fa-dashboard"></i> {{ Lang::get('dashboard.appName') }}</a></li>
