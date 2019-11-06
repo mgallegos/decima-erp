@@ -397,7 +397,7 @@ if ( ! function_exists('eloquent_array_filter'))
 
       if($dashboardMenuIsVisible)
       {
-        $modules .= '<li><a href="#" onclick="$(\'#top-navbar-menu\').click();loadPage(\'/dashboard\');API.close();"><i class="fa fa-dashboard"></i> ' . Lang::get('dashboard.appName') . '</a></li>';
+        $modules .= '<li><a href="#" onclick="$(\'#top-navbar-menu\').click();loadPage(\'/dashboard\');"><i class="fa fa-dashboard"></i> ' . Lang::get('dashboard.appName') . '</a></li>';
       }
 
       foreach ($userApps as $index => $value)
@@ -423,7 +423,7 @@ if ( ! function_exists('eloquent_array_filter'))
 
         foreach ($userOrganizations as $index => $value)
         {
-          $modules .= '<li><a href="#" onclick="$(\'#top-navbar-menu\').click();API.close();changeLoggedUserOrganization(\'' . $value['id'] . '\');"><i class="fa fa-building-o"></i> ' . $value['name'] . '</a></li>';
+          $modules .= '<li><a href="#" onclick="$(\'#top-navbar-menu\').click();changeLoggedUserOrganization(\'' . $value['id'] . '\');"><i class="fa fa-building-o"></i> ' . $value['name'] . '</a></li>';
         }
 
         $modules .= '</ul></li>';
@@ -517,7 +517,7 @@ if ( ! function_exists('eloquent_array_filter'))
         }
         else
         {
-          $html .= '<li><a href="#" onclick="$(\'#top-navbar-menu\').click();loadPage(\'' . $value['url'] . '\', \'' . $value['aliasUrl'] . '\', \''. $value['actionButtonId'] .'\');API.close();"><i class="' . $value['icon'] . '"></i> ' . $value['name'] . '</a></li>';
+          $html .= '<li><a href="#" onclick="$(\'#top-navbar-menu\').click();loadPage(\'' . $value['url'] . '\', \'' . $value['aliasUrl'] . '\', \''. $value['actionButtonId'] .'\');"><i class="' . $value['icon'] . '"></i> ' . $value['name'] . '</a></li>';
         }
       }
 
@@ -649,5 +649,20 @@ if ( ! function_exists('eloquent_array_filter'))
     function checkbox_journal_value($value)
     {
 
+    }
+  }
+
+  if ( ! function_exists('ab'))
+  {
+    /**
+     * R....
+     *
+     * @param  string  $value
+     *
+     * @return array
+     */
+    function ab($a, $b)
+    {
+      return $a + $b;
     }
   }
