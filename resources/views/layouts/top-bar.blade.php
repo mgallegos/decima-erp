@@ -1,22 +1,17 @@
 <nav id="page-navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<div class="container">
+	<div class="container-fluid">
  		<div class="navbar-header">
-       <!-- <a class="navbar-brand" href="{{ AppManager::getBrandUrl() }}" target="_blank"><i class="{{ AppManager::getSystemIcon() }}"></i> {{ AppManager::getSystemName() }}</a> -->
-			 <!-- <button type="button" class="navbar-toggle collapsed" onclick="$('#core-top-bar-menu').click()">
-	       <span class="icon-bar"></span>
-	       <span class="icon-bar"></span>
-	       <span class="icon-bar"></span>
-	     </button> -->
 			 <a id="core-mobile-top-bar-link" href="#core-menu" class="hidden-lg hidden-md"><i class="fa fa-bars fa-2x core-menu-top-bar-link-color"></i></a>
        <a class="navbar-brand" href="{{ AppManager::getBrandUrl() }}" target="_blank">
          <img src="{{URL::asset('assets/kwaai/images/logo.png')}}">
        </a>
 		</div>
-		<div class="navbar-left visible-md visible-lg">
-			<ul class="nav navbar-nav hidden-sm">
+
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
 				<li class="divider-vertical"></li>
 				<li><a id="dashboard-top-bar-menu" class="fake-link"><i class="fa fa-dashboard"></i> {{ Lang::get('dashboard.appName') }}</a></li>
-				<li><a id="user-apps-top-bar-menu" href="#user-apps-container"><i class="fa fa-tasks"></i> {{ Lang::get('base.userAppsTitle') }}</a></li>
+				<li><a id="user-apps-top-bar-menu" href="#user-apps-container" style="display: none;"><i class="fa fa-tasks"></i> {{ Lang::get('base.userAppsTitle') }}</a></li>
 				<li><a id="top-navbar-menu" href="#body" style="display: none;" class="sr-only">Scroll to navbar</a></li>
 				<li id='user-organizations-dropdown-menu' class="dropdown base-popover" data-hint="{{ Lang::get('base.organizationsMenuPopoverContent', array('user' => AuthManager::getLoggedUserFirstname())) }}">
 					@if (count($userOrganizations) > 1 && count($userOrganizations) < 15)
@@ -40,21 +35,30 @@
           <li><a id='user-organizations-dropdown-menu-link' class="fake-link" data-toggle="modal" data-target="#user-organizations-modal"><i class="fa fa-sitemap"></i> {{ Lang::get('base.userOrganizations') }}</a></li>
         @endif
 			</ul>
+
+			<ul class="nav navbar-nav navbar-right" style="margin-right: 5px;">
+				<li id="main-user-dropdown-menu" class="dropdown" data-position="bottom" data-step="5" data-intro="{{ Lang::get('base.dropdownMenuPopoverContent') }}">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img id='user-gravatar' class='img-circle navbar-gravatar navbar-left base-popover' onerror="this.src='{{URL::asset('assets/kwaai/images/anonymous.png')}}'" src='{{{ Gravatar::buildGravatarURL( AuthManager::getLoggedUserEmail(), 40 ) }}}' data-position="bottom" data-step="4" data-intro="{{ Lang::get('base.gravatarPopoverContent') }}">{{ substr(AuthManager::getLoggedUserFirstname(), 0, 10) }} <b class="caret"></b></a>
+					<ul id="user-dropdown-menu" class="dropdown-menu base-popover">
+						<li><a id='user-preferences-top-bar-menu' class="fake-link" data-preferences-url="{{ AppManager::getUserPreferencesPageUrl() }}"><i class="fa fa-cog"></i> {{ Lang::get('base.preferences') }}</a></li>
+						<li class="divider"></li>
+						<li><a href="{{ URL::to('security/logout/logout-attempt') }}"><i class="fa fa-power-off"></i> {{ Lang::get('base.logout') }}</a></li>
+					</ul>
+				</li>
+				@if(!empty(Config::get('system-security.custom_menu')))
+				<li data-position="bottom" data-step="2" data-intro="{{ Lang::get('base.userAppsPopoverContent') }}">
+					<a id="core-top-bar-menu" href="#core-menu" style="padding: 10px 0;"><i class="fa fa-bars fa-2x core-menu-top-bar-link-color"></i></a>
+				</li>
+				<li>
+					<a id="core-top-bar-close-menu" href="#core-menu" style="padding: 10px 0;display:none;"><i class="fa fa-times fa-2x core-menu-top-bar-link-color"></i></a>
+				</li>
+				<li>
+				</li>
+				@endif
+			</ul>
 		</div>
-		<ul class="nav navbar-nav navbar-right visible-md visible-lg">
-			<li id="main-user-dropdown-menu" class="dropdown" data-position="bottom" data-step="5" data-intro="{{ Lang::get('base.dropdownMenuPopoverContent') }}">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img id='user-gravatar' class='img-circle navbar-gravatar navbar-left base-popover' onerror="this.src='{{URL::asset('assets/kwaai/images/anonymous.png')}}'" src='{{{ Gravatar::buildGravatarURL( AuthManager::getLoggedUserEmail(), 40 ) }}}' data-position="bottom" data-step="4" data-intro="{{ Lang::get('base.gravatarPopoverContent') }}">{{ substr(AuthManager::getLoggedUserFirstname(), 0, 10) }} <b class="caret"></b></a>
-				<ul id="user-dropdown-menu" class="dropdown-menu base-popover">
-					<li><a id='user-preferences-top-bar-menu' class="fake-link" data-preferences-url="{{ AppManager::getUserPreferencesPageUrl() }}"><i class="fa fa-cog"></i> {{ Lang::get('base.preferences') }}</a></li>
-					<li class="divider"></li>
-					<li><a href="{{ URL::to('security/logout/logout-attempt') }}"><i class="fa fa-power-off"></i> {{ Lang::get('base.logout') }}</a></li>
-				</ul>
-			</li>
-			@if(!empty(Config::get('system-security.custom_menu')))
-			<li data-position="bottom" data-step="2" data-intro="{{ Lang::get('base.userAppsPopoverContent') }}"><a id="core-top-bar-menu" href="#core-menu" style="padding: 10px 0;"><i class="fa fa-bars fa-2x core-menu-top-bar-link-color"></i></a></li>
-			@endif
-		</ul>
-		<div class="row visible-md visible-lg">
+
+		<!-- <div class="row visible-md visible-lg">
       @if (count($userOrganizations) > 1)
         <div id="search-action-container" class="col-lg-3 col-md-2 pull-right base-popover" data-position="bottom">
       @else
@@ -67,5 +71,5 @@
 			{!! Form::close() !!}
 		  </div>
 		</div>
-	</div>
+	</div> -->
 </nav>

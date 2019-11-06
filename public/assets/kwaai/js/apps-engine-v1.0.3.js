@@ -283,6 +283,11 @@ function loadPage(url, aliasUrl, actionButtonId)
 		$('#' + actionButtonId).click();
 	}
 
+  if(windowWidth < minWidthExpandedMenu)
+  {
+    $('#core-top-bar-close-menu').click();
+  }
+
 	if(loadedApp)
 	{
 		changeWindowsUrl(aliasUrl);
@@ -308,8 +313,6 @@ function loadPage(url, aliasUrl, actionButtonId)
 		{
 			duplicate = false;
 
-			// console.log($(html).find('#apps-tabs').find('a').first().attr('appurl'));
-
 			$.each($('#apps-tabs').find('a'), function( index, a )
 			{
 				if($(a).attr('appurl') == $(html).find('#apps-tabs').find('a').first().attr('appurl'))
@@ -326,9 +329,18 @@ function loadPage(url, aliasUrl, actionButtonId)
 			}
 
 			$('#apps-tabs a:last').tab('show');
+
 			$('#app-loader').addClass('hidden');
+
 			changeWindowsUrl(aliasUrl);
 			enableAll();
+      resizeApplicationGrids();
+
+			if(!duplicate)
+			{
+				bindModalMenuEvent();
+			}
+
 			$('.decima-erp-tooltip').tooltip('hide');
 		}
 	});
