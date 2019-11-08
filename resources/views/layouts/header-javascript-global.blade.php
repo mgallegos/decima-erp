@@ -1,5 +1,5 @@
 <script type='text/javascript'>
-	var userApps, lang, History, State, deviceIsMobile, deviceIsSafari;
+	var userApps, lang, History, State, deviceIsMobile, deviceIsSafari, deviceIsChrome;
 
 	$(document).ready(function()
 	{
@@ -16,6 +16,13 @@
 			deviceIsSafari = false;
 		@else
 			deviceIsSafari = true;
+		@endif
+
+		@if(!Agent::isChrome())
+			deviceIsChrome = false;
+		@else
+			deviceIsChrome = true;
+			deviceIsSafari = false;
 		@endif
 	});
 

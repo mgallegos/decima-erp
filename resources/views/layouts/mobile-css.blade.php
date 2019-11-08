@@ -1,5 +1,5 @@
 <style>
-@if(Agent::isMobile() || Agent::isSafari())
+@if(Agent::isMobile() || (Agent::isSafari() && !Agent::isChrome()))
   #apps-tabs > li {
     display: none;
   }
