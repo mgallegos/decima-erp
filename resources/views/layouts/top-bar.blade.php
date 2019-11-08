@@ -53,7 +53,7 @@
           <li><a id='user-organizations-dropdown-menu-link' class="fake-link" data-toggle="modal" data-target="#user-organizations-modal"><i class="fa fa-sitemap"></i> {{ Lang::get('base.userOrganizations') }}</a></li>
         @endif
 			</ul>
-			<ul class="nav navbar-nav navbar-right" style="margin-right: 5px;">
+			<ul class="nav navbar-nav navbar-right" style="margin-right: -6px;">
 				<li id="main-user-dropdown-menu" class="dropdown" data-position="bottom" data-step="5" data-intro="{{ Lang::get('base.dropdownMenuPopoverContent') }}">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						<img id='user-gravatar' class='img-circle navbar-gravatar navbar-left base-popover' onerror="this.src='{{URL::asset('assets/kwaai/images/anonymous.png')}}'" src='{{{ Gravatar::buildGravatarURL( AuthManager::getLoggedUserEmail(), 40 ) }}}' data-position="bottom" data-step="4" data-intro="{{ Lang::get('base.gravatarPopoverContent') }}">
