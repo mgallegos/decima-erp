@@ -24,47 +24,54 @@
 			  <div class="row">
 			    <div class="col-lg-12">
 			    	<fieldset id="main-panel-fieldset">
-		  				<ul id="apps-tabs" class="nav nav-tabs">
-		  					<li class="clearfix"><a href="#{{ $appInfo['id'] }}" appurl="{{ $appInfo['url'] }}" onclick="onClickTabEvent('{{ $appInfo['url'] }}')" data-toggle="tab">{{ $appInfo['name'] }}</a><button type="button" class="close" aria-hidden="true" onclick="closeTab('{{ $appInfo['id'] }}')">&times;</button></li>
+							<ul id="apps-tabs" class="nav nav-tabs">
+		  					<li class="clearfix">
+									<a href="#{{ $appInfo['id'] }}" appurl="{{ $appInfo['url'] }}" onclick="onClickTabEvent('{{ $appInfo['url'] }}')" data-toggle="tab">{{ $appInfo['name'] }}</a>
+									<button type="button" class="close" aria-hidden="true" onclick="closeTab('{{ $appInfo['id'] }}')">&times;</button>
+								</li>
 		  				</ul>
-		  				<div id="apps-tabs-content" class="tab-content">
-		  					<div class="tab-pane fade" id="{{ $appInfo['id'] }}">
-									@if(!Agent::isMobile())
-									<ul class="breadcrumb breadcrumb-custom">
+							<div id="apps-tabs-content" class="tab-content">
+								<div class="tab-pane fade" id="{{ $appInfo['id'] }}">
+									<ul class="breadcrumb breadcrumb-custom mobile-breadcrumb">
 										@foreach ($appInfo['breadcrumb'] as $index => $element)
 											@if ($index+1 == count($appInfo['breadcrumb']))
-												 <li class="active">{{ $element }}</li>
+												 <li class="active">
+													 {{ $element }}
+												 </li>
 											@else
-												<li><a onclick ="$('#user-apps-top-bar-menu').click();" class="user-apps-breadcrumb fake-link"> {{ $element }}</a></li>
+												<li>
+													<a onclick ="$('#user-apps-top-bar-menu').click();" class="user-apps-breadcrumb fake-link"> {{ $element }}</a>
+												</li>
 											@endif
 										@endforeach
 									</ul>
 									<span class="label label-default breadcrumb-organization-name base-popover pull-right" data-position="left" data-step="1" data-intro="{{ Lang::get('base.currentOrganizationPopoverContent', array('user' => AuthManager::getLoggedUserFirstname())) }}">{{ AuthManager::getCurrentUserOrganizationName() }}</span>
 									<span class="label breadcrumb-loader pull-right"><i class="fa fa-refresh fa-fw fa-breadcrumb-loader"></i></span>
-									@endif
-		  						<div class="panel panel-default panel-custom">
-		  							<div class="panel-body clearfix">
-											<div class="row">
-												<div class="col-xs-12">
-													<div class="core-app-container-width">
-													</div>
-												</div>
+									<div class="row">
+										<div class="col-xs-12">
+											<div class="core-app-container-width">
 											</div>
-		  								@section('container')
-		  									<script type='text/javascript'>
-		                      {!! FormJavascript::getGlobalCode() !!}
-													@yield('base-global-js')
-		  										$(document).ready(function(){
-		  											{!! FormJavascript::getCode() !!}
-														@yield('base-document-ready-js')
-		  										});
-		  									</script>
-												@yield('base-container-top')
-		  								@show
-		  							</div>
-		  						</div>
-		  					</div>
-		        	</div>
+										</div>
+									</div>
+									@section('container')
+										<script type='text/javascript'>
+											{!! FormJavascript::getGlobalCode() !!}
+											@yield('base-global-js')
+											$(document).ready(function(){
+												{!! FormJavascript::getCode() !!}
+												@yield('base-document-ready-js')
+											});
+										</script>
+										@yield('base-container-top')
+									@show
+									<!-- <div class="panel panel-default panel-custom">
+										<div class="panel-body clearfix">
+											...
+										</div>
+									</div> -->
+								</div>
+							</div>
+
 							{!! Form::button('<i class="fa fa-spinner fa-spin fa-lg"></i> ' . Lang::get('form.loadButton'), array('id' => 'app-loader', 'class' => 'btn btn-warning btn-disable btn-lg app-loader hidden', 'disabled' => 'disabled')) !!}
 							{!! Form::hidden('app-url', URL::to('/'), array('id' => 'app-url')) !!}
 							{!! Form::hidden('app-token', csrf_token(), array('id' => 'app-token')) !!}

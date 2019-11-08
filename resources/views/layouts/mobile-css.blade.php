@@ -1,6 +1,17 @@
 <style>
 @if(Agent::isMobile())
-.app-grid .ui-jqgrid-titlebar > span{
+  #apps-tabs > li {
+    display: none;
+  }
+@endif
+
+@if(Agent::isPhone())
+
+.mobile-breadcrumb {
+  display: none !important;
+}
+
+.app-grid .ui-jqgrid-titlebar > span {
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -61,7 +72,6 @@
 
 /*Extra small devices and Small devices*/
 @media (max-width: 767px) {
-
   .app-grid div.panel-footer > div.ui-pager-control > table.ui-pg-table > tbody > tr > td:first-child {
     display: none;
   }

@@ -420,9 +420,12 @@
 }
 
 .breadcrumb-custom {
-	border-bottom:none;
+	/* border-bottom:none;
 	margin: 0;
-	border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0; */
+
+  margin-bottom: 10px;
+  border-radius: 4px 4px 0 0;
 }
 
 .breadcrumb-custom >.active {
@@ -432,13 +435,13 @@
 .breadcrumb-organization-name {
 	font-size: 14px !important;
 	/*color: #555 !important;*/
-	margin-top: -28px;
+	margin-top: -39px;
 	margin-right: 45px;
 }
 
 .breadcrumb-loader {
 	color: #777 !important;
-	margin-top: -32px;
+	margin-top: -43px;
 }
 
 .fa-breadcrumb-loader {
@@ -479,6 +482,15 @@
 }
 
 /* Navbar custom classes */
+
+.core-navbar-header {
+  float: left;
+}
+
+.core-top-bar-button {
+  padding: 3px 8px !important;
+  margin: 6px  !important;
+}
 
 .navbar-company-logo {
 	margin: -10px 5px 0px 0px;
@@ -801,7 +813,7 @@
 /*Iphone 5*/
 @media (min-width: 320px) {
   .app-grid > .ui-jqgrid {
-		width: 258px !important;
+		width: 290px !important;
 	}
 }
 
@@ -815,14 +827,14 @@ Samsung Galaxy S7 Edge	1440 x 2560	360 x 640
 */
 @media (min-width: 360px) {
   .app-grid > .ui-jqgrid {
-		width: 298px !important;
+		width: 330px !important;
 	}
 }
 
 /*Iphone 6/7/8*/
 @media (min-width: 375px) {
   .app-grid > .ui-jqgrid {
-		width: 311px !important;
+		width: 345px !important;
 	}
 }
 
@@ -836,14 +848,14 @@ Google Pixel 2 XL
 */
 @media (min-width: 411px) {
   .app-grid > .ui-jqgrid {
-		width: 359px !important;
+		width: 381px !important;
 	}
 }
 
 /*Iphone 6/7/8 Plus*/
 @media (min-width: 414px) {
   .app-grid > .ui-jqgrid {
-		width: 352px !important;
+		width: 384px !important;
 	}
 }
 
@@ -854,7 +866,7 @@ One Plus 3	1080 x 1920	480 x 853
 */
 @media (min-width: 480px) {
   .app-grid > .ui-jqgrid {
-		width: 418px !important;
+		width: 450px !important;
 	}
 }
 
@@ -863,7 +875,7 @@ Nexus 7 (2013)	1200 x 1920	600 x 960
 */
 @media (min-width: 538px) {
   .app-grid > .ui-jqgrid {
-		width: 578px !important;
+		width: 508px !important;
 	}
 }
 
@@ -873,14 +885,14 @@ Samsung Galaxy S7 Edge	1440 x 2560	360 x 640
 */
 @media (min-width: 640px) {
   .app-grid > .ui-jqgrid {
-		width: 578px !important;
+		width: 610px !important;
 	}
 }
 
 /*Iphone 6/7/8 landscape*/
 @media (min-width: 667px) {
   .app-grid > .ui-jqgrid {
-		width: 605px !important;
+		width: 637px !important;
 	}
 }
 
@@ -894,14 +906,14 @@ Google Pixel 2 XL
 */
 @media (min-width: 731px) {
   .app-grid > .ui-jqgrid {
-		width: 669px !important;
+		width: 701px !important;
 	}
 }
 
 /*Iphone 6/7/8 Plus lanscape*/
 @media (min-width: 736px) {
   .app-grid > .ui-jqgrid {
-		width: 674px !important;
+		width: 706px !important;
 	}
 }
 
@@ -913,7 +925,7 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
 */
 @media (min-width: 740px) {
   .app-grid > .ui-jqgrid {
-		width: 678px !important;
+		width: 710px !important;
 	}
 }
 
@@ -943,8 +955,18 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
 }
 
 /*Medium devices (tablets, 768px and up)*/
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 768px) and (max-width: 833px) {
+  .app-grid > .ui-jqgrid {
+		width: 738px !important;
+	}
+}
 
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 834px) and (max-width: 991px) {
+  .app-grid > .ui-jqgrid {
+		width: 804px !important;
+	}
 }
 
 /*Small and medium devices (landscape phones, 576px and up)*/
@@ -954,19 +976,22 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
 
 /*Medium devices and Large devices*/
 @media (min-width: 768px) and (max-width: 1199px) {
-  .app-grid > .ui-jqgrid {
-		width: 688px !important;
-	}
+
 }
 
 /*Extra small devices, Small devices and medium devices*/
 @media (max-width: 991px) {
-  .navbar-header {
-    float: none !important;
-  }
 
   .core-slider {
     width: 50% !important;
+  }
+
+  .core-small-devices-menu {
+    float: right;
+  }
+
+  .core-large-devices-menu {
+    display: none !important;
   }
 }
 
@@ -979,6 +1004,17 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
   .core-slider {
     width: 40% !important;
   }
+
+  .core-small-devices-menu {
+    display: none !important;
+  }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) and (max-width: 1023px) {
+  .app-grid > .ui-jqgrid {
+		width: 962px !important;
+	}
 }
 
 /*Large devices (desktops, 992px and up)*/
@@ -995,10 +1031,6 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
     margin-top: 10px;
   }
 
-	.app-grid > .ui-jqgrid {
-		width: 906px !important;
-	}
-
   .navbar-nav {
     font-size: 13px;
   }
@@ -1010,6 +1042,20 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
   .checkbox-filter-margin-bottom {
     margin-bottom: 25px !important;
   }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 1024px) and (max-width: 1193px) {
+  .app-grid > .ui-jqgrid {
+		width: 994px !important;
+	}
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 1194px) and (max-width: 1199px) {
+  .app-grid > .ui-jqgrid {
+		width: 1164px !important;
+	}
 }
 
 /* From small to  large devices (large desktops, 1200px and up)*/
@@ -1035,7 +1081,7 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
 
 @media (min-width: 1200px) and (max-width: 1365px) {
   .app-grid > .ui-jqgrid {
-    width: 1138px !important;
+    width: 1170px !important;
   }
 }
 
@@ -1051,7 +1097,7 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
   }
 
   .app-grid > .ui-jqgrid {
-    width: 1079px !important;
+    width: 1111px !important;
   }
 }
 
@@ -1069,12 +1115,12 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
 
 @media (min-width: 1440px) and (max-width: 1919px) {
   .app-grid > .ui-jqgrid {
-    width: 1078px !important;
+    width: 1110px !important;
   }
 }
 
 @media (min-width: 1920px) {
   .app-grid > .ui-jqgrid {
-		width: 1558px !important;
+		width: 1590px !important;
 	}
 }

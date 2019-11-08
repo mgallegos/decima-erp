@@ -268,6 +268,15 @@ function loadPage(url, aliasUrl, actionButtonId)
 		aliasUrl = url;
 	}
 
+	if(deviceIsMobile)
+	{
+		disabledAll();
+
+		$('#app-loader').removeClass('hidden');
+
+		window.location.replace(url);
+	}
+
 	$.each($('#apps-tabs').find('a'), function( index, a )
 	{
 		if($(a).attr('appurl') == url || $(a).attr('appurl') == aliasUrl)
@@ -285,7 +294,7 @@ function loadPage(url, aliasUrl, actionButtonId)
 
   if(windowWidth < minWidthExpandedMenu)
   {
-    $('#core-top-bar-close-menu').click();
+    $('.core-top-bar-close-menu').click();
   }
 
 	if(loadedApp)
@@ -306,7 +315,9 @@ function loadPage(url, aliasUrl, actionButtonId)
 		beforeSend:function(msg)
 		{
 			$('.decima-erp-tooltip').tooltip('hide');
+
 			disabledAll();
+
 			$('#app-loader').removeClass('hidden');
 		},
 		success:function(html)
