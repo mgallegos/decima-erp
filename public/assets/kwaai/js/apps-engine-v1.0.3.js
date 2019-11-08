@@ -268,7 +268,7 @@ function loadPage(url, aliasUrl, actionButtonId)
 		aliasUrl = url;
 	}
 
-	if(deviceIsMobile)
+	if(deviceIsMobile || deviceIsSafari)
 	{
 		disabledAll();
 
