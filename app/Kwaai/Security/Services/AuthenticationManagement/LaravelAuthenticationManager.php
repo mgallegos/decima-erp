@@ -1368,7 +1368,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		$user = $this->getSessionLoggedUser();
 
-		// return $this->Auth->user()->firstname;
 		return $user['firstname'];
 	}
 
@@ -1386,7 +1385,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		$user = $this->getSessionLoggedUser();
 
-		// return $this->Auth->user()->lastname;
 		return $user['lastname'];
 	}
 
@@ -1404,7 +1402,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		$user = $this->getSessionLoggedUser();
 
-		// return $this->Auth->user()->email;
 		return $user['email'];
 	}
 
@@ -1427,8 +1424,24 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			return $this->Config->get('app.timezone');
 		}
 
-		// return $this->Auth->user()->timezone;
 		return $user['timezone'];
+	}
+
+	/**
+	 * Get logged user dashboard custom view
+	 *
+	 * @return string
+	 */
+	public function getLoggedUserDashboardCustomView()
+	{
+		if ($this->isUserGuest())
+		{
+			return '';
+		}
+
+		$user = $this->getSessionLoggedUser();
+
+		return $user['dashboard_custom_view'];
 	}
 
 	/**
