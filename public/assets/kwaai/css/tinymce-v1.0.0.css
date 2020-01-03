@@ -146,3 +146,19 @@ p {
 .padding-top-20 {
   padding-top: 20px !important;
 }
+
+.border-top {
+  border-top: 1px solid black !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid black !important;
+}
+
+.border-left {
+  border-left: 1px solid black !important;
+}
+
+.border-right {
+  border-right: 1px solid black !important;
+}
