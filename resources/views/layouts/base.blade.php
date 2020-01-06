@@ -105,7 +105,7 @@
 					</div>
 					@endif
 		  	</div>
-		  	<a id="back-to-top-temp" class="btn btn-primary" role="button"><i class="fa fa-chevron-circle-up fa-2x"></i></a>
+		  	<!-- <a id="back-to-top" class="btn btn-primary" role="button"><i class="fa fa-chevron-circle-up fa-2x"></i></a> -->
 			</div>
 		</div> <!-- core-wrapper -->
 		<div style="display:none;">
