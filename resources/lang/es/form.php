@@ -83,7 +83,7 @@ return array(
 
 	'authenticationException' => 'Su sesión ha expirado, por seguridad se procederá a refrescar la ventana de su navegador para que pueda iniciar sesión nuevamente.',
 
-	'formatIdentifierValidation' => 'El formato personalizado: :id, no ha sido creado en el sistema!',
+	'formatIdentifierValidation' => 'El elemento no tiene asociado un formato de impresión',
 
 	'filtersValidation' => 'Debe completar al menos un filtro.',
 
