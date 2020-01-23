@@ -53,6 +53,10 @@ return array(
 
 	'year' => 'Año',
 
+	'gridFooterPageNumber' => ':page de :totalPages',
+
+	'gridFooterPagingInfo' => 'Mostrando :from - :to de :records',
+
 	'positiveIntegerRegexHelpMessage' => 'El valor ingresado debe ser un entero positivo, ejemplo: 1,000 o 1000',
 
 	'positiveIntegerNoZeroRegexHelpMessage' => 'El valor ingresado debe ser un entero positivo (no esta permitido cero), example: 1,000 o 1000',

@@ -637,6 +637,73 @@ if ( ! function_exists('eloquent_array_filter'))
     }
   }
 
+  if ( ! function_exists('encode_requested_data'))
+  {
+    /**
+     * Enconde requested data
+     *
+     * @param  array $input
+     * @param  integer $count total number of records
+     * @param  integer $limit number of rows to be shown into the grid
+     * @param  integer $offset start position
+     *
+     * @return array
+     */
+    function encode_requested_data($input, $count, &$limit, &$offset)
+    {
+      if(!empty($input['page']))
+      {
+        $page = $input['page'];
+      }
+      else
+      {
+        $page = 1;
+      }
+
+      if(!empty($input['rows']))
+      {
+        $limit = $input['rows'];
+      }
+      else
+      {
+        $limit = 10;
+      }
+
+      if($page == 0)
+  		{
+  			$page = 1;
+  		}
+
+      if($count > 0)
+  		{
+  			$totalPages = ceil($count/$limit);
+  		}
+  		else
+  		{
+  			$totalPages = 0;
+  		}
+
+      if($page > $totalPages)
+  		{
+  			$page = $totalPages;
+  		}
+
+  		if ($limit < 0 )
+  		{
+  			$limit = 0;
+  		}
+
+      $offset = $limit * $page - $limit;
+
+  		if ($offset < 0)
+  		{
+  			$offset = 0;
+  		}
+
+  		$limit = $limit * $page;
+    }
+  }
+
   if ( ! function_exists('checkbox_journal_value'))
   {
     /**

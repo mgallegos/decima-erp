@@ -789,6 +789,38 @@
 /*Search modal table*/
 .search-modal-table {
   font-size:0.80em !important;
+  margin-bottom: 0 !important;
+}
+
+.search-modal-table-footer-row {
+  background-color: #f5f5f5;
+}
+
+.search-modal-table-footer {
+  width: 100%;
+  max-width: 100%;
+  background-color: transparent;
+}
+
+.search-modal-table-pagination {
+  margin: 0 !important;
+}
+
+.search-modal-table-footer-paging-info {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.search-modal-table-footer-page-number {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857143;
+  color: #000;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
 }
 
 /* mmenu */

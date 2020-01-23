@@ -150,189 +150,6 @@ $.fn.getMultiselectSelectedOptionsId = function()
 };
 
 /**
- * Get selected options id from a multiselect object.
- *
- * @param array options
- * 	An array of objects as follows: [{"value":"value  0", "text":"text 0"}, {"value":"value 1", "text":"text 1"},…]
- *
- * @returns array
- *  An array as follows: ["value 0", "value 1",…]
- */
-function getSelectedOptionsId(optionElements)
-{
-	var idArray = [];
-
-	$.each(optionElements, function( index, option )
-	{
-		idArray.push(option.value);
-	});
-
-	return idArray;
-}
-
-/**
- * Get data source by name and type
- *
- * @param string name
- * @param string type
- *
- * @returns void
- */
-function getDataSourceByNameAndType(name, type, filterName, filterValue, filterOperator)
-{
-	var dataSource = null, filteredDataSource = [], flag = false;
-
-  filterName = filterName || '';
-	filterValue = filterValue || '';
-	filterOperator = filterOperator || '=';
-
-	switch (type)
-	{
-		case 'localStorage':
-			dataSource = JSON.parse(window.localStorage.getItem(name));
-			break;
-		case 'globalJs':
-			dataSource = window[name];
-			break;
-		default:
-			console.log('DataType invalid');
-	}
-
-  if(!empty(filterName) && !empty(filterValue))
-  {
-    $.each(dataSource, function(index, element)
-    {
-      flag = false;
-
-      switch (filterOperator)
-      {
-        case '=':
-          if(element[filterName] = filterValue)
-          {
-            flag = true;
-          }
-
-          break;
-        case '<':
-          if(element[filterName] < filterValue)
-          {
-            flag = true;
-          }
-
-          break;
-        case '>':
-          if(element[filterName] > filterValue)
-          {
-            flag = true;
-          }
-
-          break;
-        case 'in':
-          if($.inArray(element[filterName], filterValue) != -1)
-          {
-            flag = true;
-          }
-
-          break;
-      }
-
-      if(flag)
-      {
-        filteredDataSource.push(element);
-      }
-   	});
-
-    return filteredDataSource;
-  }
-
-	return dataSource;
-}
-
-/**
- * Get data source by name and type
- *
- * @param string name
- * @param string type
- *
- * @returns void
- */
-function getDataSourceArrayByNameAndType(name, type, filterName, filterValue, filterOperator)
-{
-	var dataSource = getDataSourceByNameAndType(name, type, filterName, filterValue, filterOperator);
-
-  if(empty(dataSource))
-  {
-    return [];
-  }
-
-	if ($.type(dataSource) == 'object')
-	{
-		return Object.values(dataSource);
-	}
-
-	return dataSource;
-}
-
-/**
- * Set data source by name and type
- *
- * @param mixed dataSource
- * @param string name
- * @param string type
- *
- * @returns boolean
- */
-function setDataSourceByNameAndType(datasource, name, type)
-{
-	switch (type)
-	{
-		case 'localStorage':
-			window.localStorage.setItem(name, JSON.stringify(datasource));
-			break;
-		case 'globalJs':
-			window[name] = datasource;
-			break;
-		default:
-			console.log('DataType invalid');
-			return false;
-	}
-
-	return true;
-}
-
-/**
- * Set data source by name and type
- *
- * @param mixed dataSource
- * @param string name
- * @param string type
- *
- * @returns boolean
- */
-function filterAutocompleteSource(request, name, type, filterName, filterValue, filterOperator)
-{
-	var data;
-
-	filterName = filterName || '';
-	filterValue = filterValue || '';
-	filterOperator = filterOperator || '=';
-
-	data = getDataSourceByNameAndType(name, type, filterName, filterValue, filterOperator);
-
-	if ($.type(data) == 'object')
-	{
-		data = Object.values(data);
-	}
-
-	if(data == undefined)
-	{
-		data = [];
-	}
-
-	return $.ui.autocomplete.filter(data, request.term);
-}
-
-/**
  * Select first item of an autocomplete element.
  *
  *  @returns void
@@ -1037,8 +854,10 @@ $.fn.clearTags = function()
  *
  * @returns void
  */
-$.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tableClasses, dataType, filterName, filterValue, filterOperator)
+$.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tableClasses, dataType, filterName, filterValue, filterOperator, url, page, filter, from, to, records)
 {
+  var element = this, pagination = '', colsCount = 0, count = 0;
+
 	gridId = gridId || '';
 	slice = slice || 0;
 	rows = rows || '';
@@ -1048,10 +867,19 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
   filterName = filterName || '';
 	filterValue = filterValue || '';
 	filterOperator = filterOperator || '=';
+  url = url || '';
+	page = page || 1;
+	filter = filter || '';
+	from = from || '';
+	to = to || '';
+	records = records || '';
 	table = $('<table/>', {class:tableClasses});
 	thead = $('<thead/>');
 	tbody = $('<tbody/>');
 	tr = $('<tr/>');
+
+  slice = parseInt(slice);
+  page = parseInt(page);
 
   if(!empty(gridId))
 	{
@@ -1074,6 +902,8 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 
 	$.each(headers, function( name, header )
 	{
+    colsCount++;
+
 		$('<th/>', {
 				'scope': 'col',
 				'style': 'text-align: center;' + (!empty(header.width) ? 'width: ' + header.width + ';' : ''),
@@ -1086,16 +916,67 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 
 	if(empty(rows))
 	{
-		rows = getDataSourceByNameAndType(rowsVariableName, dataType, filterName, filterValue, filterOperator);
-
-    if(empty(rows))
+    if(dataType == 'post')
     {
-			$(this).find('.smt-body').html('');
+      $.ajax(
+			{
+				type: 'POST',
+				data: JSON.stringify({rows:slice, page:page, filter:filter}),
+				dataType : 'json',
+				url:  url,
+				error: function (jqXHR, textStatus, errorThrown)
+				{
+					handleServerExceptions(jqXHR, element.attr('id'), false);
+				},
+				beforeSend:function()
+				{
+          $(this).find('.smt-body').html('');
 
-			$(this).find('.smt-body').append(table);
-			$(this).find('.smt-body').append('<div id="' + this.attr("id") + '-alert" class="alert alert-block alert-warning fade in show"><a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>' + lang.emptyRows + '</div>');
+					$('#app-loader').removeClass('hidden');
+
+					disabledAll();
+				},
+				success:function(json)
+				{
+          if(!empty(json.rows) && json.records > 0)
+          {
+            $(element).createTable(gridId, rowsVariableName, slice, json.rows, headers, tableClasses, dataType, filterName, filterValue, filterOperator, url, page, filter, json.from, json.to, json.records);
+          }
+          else
+          {
+            showEmptyTable(element, table);
+            // $(element).find('.smt-body').html('');
+            //
+      			// $(element).find('.smt-body').append(table);
+      			// $(element).find('.smt-body').append('<div id="' + element.attr("id") + '-alert" class="alert alert-block alert-warning fade in show"><a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>' + lang.emptyRows + '</div>');
+          }
+
+					$('#app-loader').addClass('hidden');
+
+					enableAll();
+
+					$('.decima-erp-tooltip').tooltip('hide');
+				}
+			});
 
       return;
+    }
+    else
+    {
+      rows = getDataSourceByNameAndType(rowsVariableName, dataType, filterName, filterValue, filterOperator);
+
+      if(empty(rows))
+      {
+
+        showEmptyTable(element, table);
+
+  			// $(this).find('.smt-body').html('');
+        //
+  			// $(this).find('.smt-body').append(table);
+  			// $(this).find('.smt-body').append('<div id="' + this.attr("id") + '-alert" class="alert alert-block alert-warning fade in show"><a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>' + lang.emptyRows + '</div>');
+
+        return;
+      }
     }
 	}
 
@@ -1105,7 +986,7 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 	{
     count++;
 
-    if(!empty(slice) && count == slice)
+    if(!empty(slice) && count > slice)
     {
       return false;
     }
@@ -1161,6 +1042,49 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 		tbody.append(tr);
 	});
 
+  if(!empty(url))
+  {
+    tr = $('<tr/>');
+    td = $('<td/>');
+
+    td.attr('colspan', colsCount);
+    td.attr('class', 'search-modal-table-footer-row');
+
+    pagination = '<nav>';
+    pagination += '<ul class="pagination search-modal-table-pagination">';
+    pagination += '<li><a href="#" onclick="smtPager(\'' + element.attr("id") + '\', 1)"><span aria-hidden="true"><i class="fa fa-step-backward" aria-hidden="true"></i></span></a></li>';
+    pagination += '<li><a href="#" onclick="smtPager(\'' + element.attr("id") + '\', ' + (page - 1) + ')"><span aria-hidden="true"><i class="fa fa-backward" aria-hidden="true"></i></span></a></li>';
+    pagination += '<li class="search-modal-table-footer-page-number">' + lang.gridFooterPageNumber.replace(':page', page).replace(':totalPages', Math.ceil(records/slice)) + '</li>';
+    pagination += '<li><a href="#" onclick="smtPager(\'' + element.attr("id") + '\', ' + (page + 1) + ')"><span aria-hidden="true"><i class="fa fa-forward" aria-hidden="true"></i></span></a></li>';
+    pagination += '<li><a href="#" onclick="smtPager(\'' + element.attr("id") + '\', ' + Math.ceil(records/slice) + ')"><span aria-hidden="true"><i class="fa fa-step-forward" aria-hidden="true"></i></span></a></li>';
+    pagination += '</ul>';
+    pagination += '</nav>';
+
+    footerTable = $('<table/>', {class:'search-modal-table-footer'});
+  	footerTableTbody = $('<tbody/>');
+    footerTr = $('<tr/>');
+
+    $('<td/>', {
+        'style': 'text-align: center;width: 20%;',
+        'html': '&nbsp;'
+    }).appendTo(footerTr);
+    $('<td/>', {
+        'style': 'text-align: center;width: 60%;',
+        'html': pagination
+    }).appendTo(footerTr);
+    $('<td/>', {
+        'style': 'text-align: right;width: 20%;',
+        'class': 'search-modal-table-footer-paging-info',
+        'html': lang.gridFooterPagingInfo.replace(':from', empty(from)?1:from).replace(':to', to).replace(':records', records)
+    }).appendTo(footerTr);
+
+    footerTableTbody.append(footerTr);
+    footerTable.append(footerTableTbody);
+    td.append(footerTable);
+    tr.append(td);
+    tbody.append(tr);
+  }
+
 	table.append(tbody);
 
 	if(!empty(rowsVariableName))
@@ -1169,15 +1093,21 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 	}
 
   $(this).attr('data-rows-variable-type', dataType);
+  $(this).attr('data-slice', slice);
   $(this).attr('data-filter-name', filterName);
   $(this).attr('data-filter-value', JSON.stringify(filterValue));
 	$(this).attr('data-filter-operator', filterOperator);
+	$(this).attr('data-url', url);
+	$(this).attr('data-page', page);
+	$(this).attr('data-filter', filter);
 	$(this).attr('data-headers', JSON.stringify(headers));
 	$(this).attr('data-table-classes', tableClasses);
 
 	$(this).find('.smt-body').html('');
 
 	$(this).find('.smt-body').append(table);
+
+  $(this).find('.smt-body').append();
 };
 /**
  * Get selected row
@@ -1193,6 +1123,206 @@ $.fn.getSelectedSmtRow = function()
 
 	return JSON.parse($(this).find('.bg-success').attr('data-row'));
 };
+
+/**
+ * Get selected options id from a multiselect object.
+ *
+ * @param array options
+ * 	An array of objects as follows: [{"value":"value  0", "text":"text 0"}, {"value":"value 1", "text":"text 1"},…]
+ *
+ * @returns array
+ *  An array as follows: ["value 0", "value 1",…]
+ */
+function showEmptyTable(element, table)
+{
+  $(element).find('.smt-body').html('');
+
+  $(element).find('.smt-body').append(table);
+  $(element).find('.smt-body').append('<div id="' + element.attr("id") + '-alert" class="alert alert-block alert-warning fade in show"><a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>' + lang.emptyRows + '</div>');
+}
+
+/**
+ * Get selected options id from a multiselect object.
+ *
+ * @param array options
+ * 	An array of objects as follows: [{"value":"value  0", "text":"text 0"}, {"value":"value 1", "text":"text 1"},…]
+ *
+ * @returns array
+ *  An array as follows: ["value 0", "value 1",…]
+ */
+function getSelectedOptionsId(optionElements)
+{
+	var idArray = [];
+
+	$.each(optionElements, function( index, option )
+	{
+		idArray.push(option.value);
+	});
+
+	return idArray;
+}
+
+/**
+ * Get data source by name and type
+ *
+ * @param string name
+ * @param string type
+ *
+ * @returns void
+ */
+function getDataSourceByNameAndType(name, type, filterName, filterValue, filterOperator)
+{
+	var dataSource = null, filteredDataSource = [], flag = false;
+
+  filterName = filterName || '';
+	filterValue = filterValue || '';
+	filterOperator = filterOperator || '=';
+
+	switch (type)
+	{
+		case 'localStorage':
+			dataSource = JSON.parse(window.localStorage.getItem(name));
+			break;
+		case 'globalJs':
+			dataSource = window[name];
+			break;
+		default:
+			console.log('DataType invalid');
+	}
+
+  if(!empty(filterName) && !empty(filterValue))
+  {
+    $.each(dataSource, function(index, element)
+    {
+      flag = false;
+
+      switch (filterOperator)
+      {
+        case '=':
+          if(element[filterName] == filterValue)
+          {
+            flag = true;
+          }
+
+          break;
+        case '<':
+          if(element[filterName] < filterValue)
+          {
+            flag = true;
+          }
+
+          break;
+        case '>':
+          if(element[filterName] > filterValue)
+          {
+            flag = true;
+          }
+
+          break;
+        case 'in':
+          if($.inArray(element[filterName], filterValue) != -1)
+          {
+            flag = true;
+          }
+
+          break;
+      }
+
+      if(flag)
+      {
+        filteredDataSource.push(element);
+      }
+   	});
+
+    return filteredDataSource;
+  }
+
+	return dataSource;
+}
+
+/**
+ * Get data source by name and type
+ *
+ * @param string name
+ * @param string type
+ *
+ * @returns void
+ */
+function getDataSourceArrayByNameAndType(name, type, filterName, filterValue, filterOperator)
+{
+	var dataSource = getDataSourceByNameAndType(name, type, filterName, filterValue, filterOperator);
+
+  if(empty(dataSource))
+  {
+    return [];
+  }
+
+	if ($.type(dataSource) == 'object')
+	{
+		return Object.values(dataSource);
+	}
+
+	return dataSource;
+}
+
+/**
+ * Set data source by name and type
+ *
+ * @param mixed dataSource
+ * @param string name
+ * @param string type
+ *
+ * @returns boolean
+ */
+function setDataSourceByNameAndType(datasource, name, type)
+{
+	switch (type)
+	{
+		case 'localStorage':
+			window.localStorage.setItem(name, JSON.stringify(datasource));
+			break;
+		case 'globalJs':
+			window[name] = datasource;
+			break;
+		default:
+			console.log('DataType invalid');
+			return false;
+	}
+
+	return true;
+}
+
+/**
+ * Set data source by name and type
+ *
+ * @param mixed dataSource
+ * @param string name
+ * @param string type
+ *
+ * @returns boolean
+ */
+function filterAutocompleteSource(request, name, type, filterName, filterValue, filterOperator)
+{
+	var data;
+
+	filterName = filterName || '';
+	filterValue = filterValue || '';
+	filterOperator = filterOperator || '=';
+
+	data = getDataSourceByNameAndType(name, type, filterName, filterValue, filterOperator);
+
+	if ($.type(data) == 'object')
+	{
+		data = Object.values(data);
+	}
+
+	if(data == undefined)
+	{
+		data = [];
+	}
+
+	return $.ui.autocomplete.filter(data, request.term);
+}
 
 /**
  * Key press cross browser compatibility

@@ -1205,61 +1205,132 @@ function smtOnKeyup(event, prefix)
 {
   if (event.keyCode == 13)
   {
-    smtSearch(prefix);
+    smtSearch(prefix, true);
   }
 }
+
 /**
  * Load search modal table rows
  *
- * @param jqueryObject tr
+ * @param string smtrow id
+ * @param integer page
  *
  * @returns void
  */
-function smtSearch(prefix)
+function smtPager(id, page, records)
+{
+  if(page < 1)
+  {
+    page = 0;
+  }
+
+  $('#' + id).attr('data-page', page);
+  $('#' + id).attr('data-called-from-pager', '1');
+
+  $('#' + id + '-btn-search').attr('data-flag', '1');
+  $('#' + id + '-btn-search').click();
+}
+
+/**
+ * Load search modal table rows
+ *
+ * @param string smtrow id
+ * @param integer page
+ *
+ * @returns void
+ */
+function smtBtnSearch(element, prefix)
+{
+  var calledByUser;
+
+  console.log(element.attr('data-flag'));
+
+  if(element.attr('data-flag') == 1)
+  {
+    element.attr('data-flag', '0');
+
+    smtSearch(prefix, false);
+  }
+  else
+  {
+    smtSearch(prefix, true);
+  }
+}
+
+/**
+ * Load search modal table rows
+ *
+ * @param string prefix
+ *
+ * @returns void
+ */
+function smtSearch(prefix, calledByUser)
 {
   var found, filter, rows;
 
+  calledByUser = calledByUser || false;
+
+  if(calledByUser)
+  {
+    page = 1;
+  }
+  else
+  {
+    page = $('#' + prefix + 'smt').attr('data-page');
+  }
+
 	if($('#' + prefix + 'smt-search-box').isEmpty())
 	{
-    $('#' + prefix + 'smt').createTable('', $('#' + prefix + 'smt').attr('data-rows-variable-name'), 10, '', JSON.parse($('#' + prefix + 'smt').attr('data-headers')), $('#' + prefix + 'smt').attr('data-table-classes'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'));
+    $('#' + prefix + 'smt').createTable('', $('#' + prefix + 'smt').attr('data-rows-variable-name'), $('#' + prefix + 'smt').attr('data-slice'), '', JSON.parse($('#' + prefix + 'smt').attr('data-headers')), $('#' + prefix + 'smt').attr('data-table-classes'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'), $('#' + prefix + 'smt').attr('data-url'), page);
 
 		return;
 	}
-  console.log($('#' + prefix + 'smt').attr('data-filter-name'));
-  console.log(JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')));
-  console.log($('#' + prefix + 'smt').attr('data-filter-operator'));
+
+  // console.log($('#' + prefix + 'smt').attr('data-filter-name'));
+  // console.log(JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')));
+  // console.log($('#' + prefix + 'smt').attr('data-filter-operator'));
 
   filter = $('#' + prefix + 'smt-search-box').val().toLowerCase();
-  rows = getDataSourceByNameAndType($('#' + prefix + 'smt').attr('data-rows-variable-name'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'));
+  slice = 0;
 
-  if(empty(rows))
+  if($('#' + prefix + 'smt').attr('data-rows-variable-type') != 'post')
   {
-    return;
+    rows = getDataSourceByNameAndType($('#' + prefix + 'smt').attr('data-rows-variable-name'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'));
+
+    if(empty(rows))
+    {
+      return;
+    }
+
+  	if ($.type(rows) == 'object')
+  	{
+  		rows = Object.values(rows);
+  	}
+
+    rows = $.grep(rows , function (row, index)
+    {
+      found = false;
+
+      $.each(row, function( key, value )
+    	{
+        if(String(value).toLowerCase().indexOf(filter) > -1)
+        {
+          found = true;
+
+          return false;
+        }
+      });
+
+      return found;
+    });
+  }
+  else
+  {
+    rows = '';
+    slice = $('#' + prefix + 'smt').attr('data-slice');
   }
 
-	if ($.type(rows) == 'object')
-	{
-		rows = Object.values(rows);
-	}
-
-  rows = $.grep(rows , function (row, index)
-  {
-    found = false;
-
-    $.each(row, function( key, value )
-  	{
-      if(String(value).toLowerCase().indexOf(filter) > -1)
-      {
-        found = true;
-
-        return false;
-      }
-    });
-
-    return found;
-  });
-
-	$('#' + prefix + 'smt').createTable('', '', 0, rows, JSON.parse($('#' + prefix + 'smt').attr('data-headers')), $('#' + prefix + 'smt').attr('data-table-classes'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'));
+	$('#' + prefix + 'smt').createTable('', '', slice, rows, JSON.parse($('#' + prefix + 'smt').attr('data-headers')), $('#' + prefix + 'smt').attr('data-table-classes'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'), $('#' + prefix + 'smt').attr('data-url'), page, filter);
 }
 
 /**

@@ -29,5 +29,5 @@
     @endif
 	@endforeach
 @endif
-{!! Html::style('assets/kwaai/css/main-v1.1.3.css') !!}
+{!! Html::style('assets/kwaai/css/main-v1.1.4.css') !!}
 {!! Html::style('assets/kwaai/css/button-custom-classes.css') !!}

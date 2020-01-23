@@ -46,10 +46,10 @@
 
 @include('layouts.header-javascript-global')
 
-<script src="{{ URL::asset('assets/kwaai/js/helpers-v1.0.11.js') }}"></script>
+<script src="{{ URL::asset('assets/kwaai/js/helpers-v1.0.12.js') }}"></script>
 <script src="{{ URL::asset('assets/kwaai/js/apps-engine-v1.0.3.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-mg-validation-v0.5/jquery.jqMgVal.src.js') }}"></script>
-<script src="{{ URL::asset('assets/kwaai/js/base-v1.2.0.js') }}"></script>
+<script src="{{ URL::asset('assets/kwaai/js/base-v1.3.0.js') }}"></script>
 
 <script type='text/javascript'>
   $.fn.jqMgVal.defaults.successIconClass = 'fa fa-check-circle';
