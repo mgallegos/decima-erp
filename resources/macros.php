@@ -83,9 +83,18 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 		$autocompleteSource = '
 			function(request, response)
 			{
-				var data, results;
+				var data, results, parseFromJsonString;
 
-				data = getDecimaDataSource(this.element.attr(\'data-autocomplete-source\'), this.element.attr(\'data-autocomplete-source-type\'), \'' . $filterName . '\', ' . $filterValue . ', \'' . $filterOperator . '\', true);
+				if(this.element.attr(\'data-autocomplete-source-type\') == \'globalJs\')
+	      {
+	        parseFromJsonString = false;
+	      }
+	      else
+	      {
+	        parseFromJsonString = true;
+	      }
+
+				data = getDecimaDataSource(this.element.attr(\'data-autocomplete-source\'), this.element.attr(\'data-autocomplete-source-type\'), \'' . $filterName . '\', ' . $filterValue . ', \'' . $filterOperator . '\', parseFromJsonString);
 
 				if ($.type(data) == \'object\')
 				{
