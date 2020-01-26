@@ -1479,6 +1479,8 @@ var jqMgValAutocompleteValidator = function($element)
 {
 	$element.on( "autocompletechange", function( event, ui )
 	{
+    var parseFromJsonString;
+
 		if ( ui.item )
 		{
 			$element.jqMgValDisplayMessage('has-success','');
@@ -1507,7 +1509,16 @@ var jqMgValAutocompleteValidator = function($element)
 
     if($element.attr('data-autocomplete-source-type') != undefined)
     {
-			source =  getDecimaDataSource($element.attr('data-autocomplete-source'), $element.attr('data-autocomplete-source-type'), null, null, null, true);
+      if($element.attr('data-autocomplete-source-type') == 'globalJs')
+      {
+        parseFromJsonString = false;
+      }
+      else
+      {
+        parseFromJsonString = true;
+      }
+
+			source =  getDecimaDataSource($element.attr('data-autocomplete-source'), $element.attr('data-autocomplete-source-type'), null, null, null, parseFromJsonString);
     }
     else
     {
