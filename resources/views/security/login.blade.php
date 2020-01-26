@@ -41,7 +41,8 @@
 					}
 					else
 					{
-						window.localStorage.clear();
+						// window.localStorage.clear();
+						clearDecimaStorage();
 						window.location.replace(json.url);
 					}
 				}
