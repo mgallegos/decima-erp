@@ -908,7 +908,7 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
 	rows = rows || '';
 	headers = headers || {'name': {'label':'label', 'width':'100%'}};
 	tableClasses = tableClasses || 'table table-bordered table-hover search-modal-table';
-  dataType = dataType || 'localStorage';
+  dataType = dataType || 'default';
   filterName = filterName || '';
 	filterValue = filterValue || '';
 	filterOperator = filterOperator || '=';
@@ -1232,11 +1232,16 @@ function getDecimaDataSource(name, type, filterName, filterValue, filterOperator
 {
 	var dataSource = null, filteredDataSource = [], flag = false;
 
-  type = type || 'localStorage';
+  type = type || 'default';
   filterName = filterName || '';
 	filterValue = filterValue || '';
 	filterOperator = filterOperator || '=';
 	parseFromJsonString = parseFromJsonString || false;
+
+  if(type == 'default')
+  {
+    type = defaultDecimaDataSourceType;
+  }
 
 	switch (type)
 	{
@@ -1313,7 +1318,7 @@ function getDecimaDataSource(name, type, filterName, filterValue, filterOperator
  *
  * @returns void
  */
-function getDataSourceArrayByNameAndType(name, type, filterName, filterValue, filterOperator)
+function getDecimaDataSourceArray(name, type, filterName, filterValue, filterOperator)
 {
 	var dataSource = getDecimaDataSource(name, type, filterName, filterValue, filterOperator, true);
 
@@ -1331,6 +1336,19 @@ function getDataSourceArrayByNameAndType(name, type, filterName, filterValue, fi
 }
 
 /**
+ * Get data source by name and type
+ *
+ * @param string name
+ * @param string type
+ *
+ * @returns void
+ */
+function getDataSourceArrayByNameAndType(name, type, filterName, filterValue, filterOperator)
+{
+  return getDecimaDataSourceArray(name, type, filterName, filterValue, filterOperator);
+}
+
+/**
  * Set data source by name and type
  *
  * @param mixed dataSource
@@ -1342,8 +1360,13 @@ function getDataSourceArrayByNameAndType(name, type, filterName, filterValue, fi
  */
 function setDecimaDataSource(name, datasource, type, convertToJsonString)
 {
-  type = type || 'localStorage';
+  type = type || 'default';
   convertToJsonString = convertToJsonString || false;
+
+  if(type == 'default')
+  {
+    type = defaultDecimaDataSourceType;
+  }
 
   if(convertToJsonString)
   {
@@ -1378,6 +1401,16 @@ function setDecimaDataSource(name, datasource, type, convertToJsonString)
 function setDataSourceByNameAndType(datasource, name, type)
 {
   return setDataSourceTypeAndByName(datasource, type, name);
+}
+
+/**
+ * Clear decima storage
+ *
+ * @returns boolean
+ */
+function clearDecimaStorage()
+{
+  window.localStorage.clear();
 }
 
 /**
@@ -1717,7 +1750,12 @@ function empty(mixed_var)
  */
 function isInDecimaStorage(name, type)
 {
-  type = type || 'localStorage';
+  type = type || 'default';
+
+  if(type == 'default')
+  {
+    type = defaultDecimaDataSourceType;
+  }
 
 	switch (type)
 	{

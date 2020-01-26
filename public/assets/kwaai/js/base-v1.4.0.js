@@ -6,37 +6,6 @@
  * See COPYRIGHT and LICENSE.
  */
 
- var API = '';
- var breadcrumbLoader = [];
- var mainAppLoader = [];
- var windowWidth;
- var windowHeight;
- var ajaxHeight = 45;
- var ajaxWidth = 154;
- var minWidthExpandedMenu = 1366;
- var bsModalshowMenu = false;
- var defaultDecimaDataSource = 'localStorage';
-
- var quillToolbarOptions = {
-	 container: [
-		 [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-		 [ 'bold', 'italic', 'underline', 'strike' ],
-		 [{ 'color': [] }, { 'background': [] }],
-		 [{ 'script': 'super' }, { 'script': 'sub' }],
-		 ['blockquote', 'code-block' ],
-		 [{ 'list': 'ordered' }, { 'list': 'bullet'}, { 'align': [] }, { 'indent': '-1' }, { 'indent': '+1' }],
-		 [{ 'direction': 'rtl' }],
-		 [ 'link', 'image', 'video'],
-		 [ 'clean' ]
-	 ],
-	 handlers: {
-		 image: function image() {
-			 $('#' + this.quill.options.prefix + 'file-uploader-modal').attr('data-flag', 'Quill');
-			 openUploader(this.quill.options.prefix, '', this.quill.options.folder, ['image'], '', '', [], 1, true);
-		 }
-	 }
- }
-
 /**
  * Spin breadcrumb loader
  *
@@ -804,7 +773,9 @@ function changeLoggedUserOrganization(id)
 		},
 		success:function()
 		{
-      window.localStorage.clear();
+      // window.localStorage.clear();
+      clearDecimaStorage();
+      
 			window.location.replace($('#app-url').val() + '/dashboard');
 		}
 	});
@@ -1349,7 +1320,7 @@ function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader, data
 	rows = rows || '';
 	forceAjaxRequest = forceAjaxRequest || false;
 	showLoader = showLoader || false;
-  dataType = dataType || 'localStorage';
+  dataType = dataType || 'default';
 
 	if(!empty(rows))
   {
@@ -1358,7 +1329,7 @@ function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader, data
     return;
   }
 
-	if(forceAjaxRequest || empty(window.localStorage.getItem(variableName)))
+	if(forceAjaxRequest || empty(isInDecimaStorage(variableName, dataType)))
 	{
 		$.ajax(
 		{
@@ -1408,7 +1379,7 @@ function addSmtRow(variableName, id, row, dataType)
 {
   rows = {};
   rows[id] = row;
-  dataType = dataType || 'localStorage';
+  dataType = dataType || 'default';
 
   smtRows = getDecimaDataSource(variableName, dataType, null, null, null, true);
 
@@ -1433,7 +1404,7 @@ function addSmtRow(variableName, id, row, dataType)
  */
 function updateSmtRow(variableName, id, row, dataType)
 {
-  dataType = dataType || 'localStorage';
+  dataType = dataType || 'default';
   smtRows = getDecimaDataSource(variableName, dataType, null, null, null, true);
 
   if(empty(smtRows))
@@ -1456,7 +1427,7 @@ function updateSmtRow(variableName, id, row, dataType)
  */
 function deleteSmtRow(variableName, key, dataType)
 {
-  dataType = dataType || 'localStorage';
+  dataType = dataType || 'default';
   smtRows = getDecimaDataSource(variableName, dataType, null, null, null, true);
 
   if(empty(smtRows))
@@ -1479,7 +1450,7 @@ function deleteSmtRow(variableName, key, dataType)
  */
 function deleteSmtRows(variableName, keys, dataType)
 {
-  dataType = dataType || 'localStorage';
+  dataType = dataType || 'default';
   smtRows = getDecimaDataSource(variableName, dataType, null, null, null, true);
 
   if(empty(smtRows))
