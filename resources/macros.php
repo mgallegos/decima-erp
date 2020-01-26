@@ -85,7 +85,7 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 			{
 				var data, results;
 
-				data = getDataSourceByNameAndType(this.element.attr(\'data-autocomplete-source\'), this.element.attr(\'data-autocomplete-source-type\'), \'' . $filterName . '\', ' . $filterValue . ', \'' . $filterOperator . '\');
+				data = getDecimaDataSource(this.element.attr(\'data-autocomplete-source\'), this.element.attr(\'data-autocomplete-source-type\'), \'' . $filterName . '\', ' . $filterValue . ', \'' . $filterOperator . '\', true);
 
 				if ($.type(data) == \'object\')
 				{

@@ -1295,7 +1295,7 @@ function smtSearch(prefix, calledByUser)
 
   if($('#' + prefix + 'smt').attr('data-rows-variable-type') != 'post')
   {
-    rows = getDataSourceByNameAndType($('#' + prefix + 'smt').attr('data-rows-variable-name'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'));
+    rows = getDecimaDataSource($('#' + prefix + 'smt').attr('data-rows-variable-name'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'), true);
 
     if(empty(rows))
     {
@@ -1352,7 +1352,7 @@ function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader, data
 
 	if(!empty(rows))
   {
-    setDataSourceByNameAndType(rows, variableName, dataType);
+    setDecimaDataSource(variableName, rows, dataType, true);
 
     return;
   }
@@ -1381,7 +1381,7 @@ function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader, data
 			},
 			success:function(smtRows)
 			{
-        setDataSourceByNameAndType(smtRows, variableName, dataType);
+        setDecimaDataSource(variableName, smtRows, dataType, true);
         stopBreadcrumbLoader();
 
 				if(showLoader)
@@ -1409,7 +1409,7 @@ function addSmtRow(variableName, id, row, dataType)
   rows[id] = row;
   dataType = dataType || 'localStorage';
 
-  smtRows = getDataSourceByNameAndType(variableName, dataType);
+  smtRows = getDecimaDataSource(variableName, dataType, null, null, null, true);
 
   if(empty(smtRows))
   {
@@ -1418,7 +1418,7 @@ function addSmtRow(variableName, id, row, dataType)
 
   $.extend(rows, smtRows);
 
-  setDataSourceByNameAndType(rows, variableName, dataType);
+  setDecimaDataSource(variableName, rows, dataType, true);
 }
 
 /**
@@ -1433,7 +1433,7 @@ function addSmtRow(variableName, id, row, dataType)
 function updateSmtRow(variableName, id, row, dataType)
 {
   dataType = dataType || 'localStorage';
-  smtRows = getDataSourceByNameAndType(variableName, dataType);
+  smtRows = getDecimaDataSource(variableName, dataType, null, null, null, true);
 
   if(empty(smtRows))
   {
@@ -1442,7 +1442,7 @@ function updateSmtRow(variableName, id, row, dataType)
 
   smtRows[id] = row;
 
-  setDataSourceByNameAndType(smtRows, variableName, dataType);
+  setDecimaDataSource(variableName, smtRows, dataType, true);
 }
 
 /**
@@ -1456,7 +1456,7 @@ function updateSmtRow(variableName, id, row, dataType)
 function deleteSmtRow(variableName, key, dataType)
 {
   dataType = dataType || 'localStorage';
-  smtRows = getDataSourceByNameAndType(variableName, dataType);
+  smtRows = getDecimaDataSource(variableName, dataType, null, null, null, true);
 
   if(empty(smtRows))
   {
@@ -1465,7 +1465,7 @@ function deleteSmtRow(variableName, key, dataType)
 
   delete smtRows[key];
 
-  setDataSourceByNameAndType(smtRows, variableName, dataType);
+  setDecimaDataSource(variableName, smtRows, dataType, true);
 }
 
 /**
@@ -1479,7 +1479,7 @@ function deleteSmtRow(variableName, key, dataType)
 function deleteSmtRows(variableName, keys, dataType)
 {
   dataType = dataType || 'localStorage';
-  smtRows = getDataSourceByNameAndType(variableName, dataType);
+  smtRows = getDecimaDataSource(variableName, dataType, null, null, null, true);
 
   if(empty(smtRows))
   {
@@ -1491,7 +1491,7 @@ function deleteSmtRows(variableName, keys, dataType)
     delete smtRows[id];
   });
 
-  setDataSourceByNameAndType(smtRows, variableName, dataType);
+  setDecimaDataSource(variableName, smtRows, dataType, true);
 }
 
 /**

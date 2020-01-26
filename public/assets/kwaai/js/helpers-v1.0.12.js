@@ -186,7 +186,7 @@ $.fn.isAutocompleteValid = function()
 
 	if(this.attr('data-autocomplete-source-type') != undefined)
 	{
-		source = getDataSourceByNameAndType(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'));
+		source = getDecimaDataSource(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'), null, null, null, true);
 	}
 	else
 	{
@@ -238,7 +238,7 @@ $.fn.setAutocompleteSource = function()
 	{
 		var data, results;
 
-		data = getDataSourceByNameAndType(this.element.attr('data-autocomplete-source'), this.element.attr('data-autocomplete-source-type'));
+		data = getDecimaDataSource(this.element.attr('data-autocomplete-source'), this.element.attr('data-autocomplete-source-type'), null, null, null, true);
 
 		if ($.type(data) == 'object')
 		{
@@ -270,7 +270,7 @@ $.fn.setAutocompleteLabel = function(value)
 
 	if(this.attr('data-autocomplete-source-type') != undefined)
 	{
-		source = getDataSourceByNameAndType(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'));
+		source = getDecimaDataSource(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'), null, null, null, true);
 	}
 	else
 	{
@@ -316,7 +316,7 @@ $.fn.getAutocompleteLabel = function(value)
 
 	if(this.attr('data-autocomplete-source-type') != undefined)
 	{
-		source = getDataSourceByNameAndType(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'));
+		source = getDecimaDataSource(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'), null, null, null, true);
 	}
 	else
 	{
@@ -364,7 +364,7 @@ $.fn.getAutocompleteValue = function()
 
 	if(this.attr('data-autocomplete-source-type') != undefined)
 	{
-		source = getDataSourceByNameAndType(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'));
+		source = getDecimaDataSource(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'), null, null, null, true);
 	}
 	else
 	{
@@ -963,7 +963,7 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
     }
     else
     {
-      rows = getDataSourceByNameAndType(rowsVariableName, dataType, filterName, filterValue, filterOperator);
+      rows = getDecimaDataSource(rowsVariableName, dataType, filterName, filterValue, filterOperator, true);
 
       if(empty(rows))
       {
@@ -1163,25 +1163,39 @@ function getSelectedOptionsId(optionElements)
 }
 
 /**
- * Get data source by name and type
- *
- * @param string name
- * @param string type
+ * Get data source
  *
  * @returns void
  */
 function getDataSourceByNameAndType(name, type, filterName, filterValue, filterOperator)
+{
+  return getDecimaDataSource(name, type, filterName, filterValue, filterOperator, true);
+}
+
+/**
+ * Get data source
+ *
+ * @param string name
+ * @param string type
+ * @param string filterName
+ * @param mixed filterValue
+ * @param string filterOperator
+ *
+ * @returns void
+ */
+function getDecimaDataSource(name, type, filterName, filterValue, filterOperator, parseFromJsonString)
 {
 	var dataSource = null, filteredDataSource = [], flag = false;
 
   filterName = filterName || '';
 	filterValue = filterValue || '';
 	filterOperator = filterOperator || '=';
+	parseFromJsonString = parseFromJsonString || false;
 
 	switch (type)
 	{
 		case 'localStorage':
-			dataSource = JSON.parse(window.localStorage.getItem(name));
+      dataSource = window.localStorage.getItem(name);
 			break;
 		case 'globalJs':
 			dataSource = window[name];
@@ -1189,6 +1203,11 @@ function getDataSourceByNameAndType(name, type, filterName, filterValue, filterO
 		default:
 			console.log('DataType invalid');
 	}
+
+  if(parseFromJsonString)
+  {
+    dataSource = JSON.parse(dataSource);
+  }
 
   if(!empty(filterName) && !empty(filterValue))
   {
@@ -1250,7 +1269,7 @@ function getDataSourceByNameAndType(name, type, filterName, filterValue, filterO
  */
 function getDataSourceArrayByNameAndType(name, type, filterName, filterValue, filterOperator)
 {
-	var dataSource = getDataSourceByNameAndType(name, type, filterName, filterValue, filterOperator);
+	var dataSource = getDecimaDataSource(name, type, filterName, filterValue, filterOperator, true);
 
   if(empty(dataSource))
   {
@@ -1269,17 +1288,26 @@ function getDataSourceArrayByNameAndType(name, type, filterName, filterValue, fi
  * Set data source by name and type
  *
  * @param mixed dataSource
- * @param string name
  * @param string type
+ * @param string name
+ * @param boolean convertToJsonString
  *
  * @returns boolean
  */
-function setDataSourceByNameAndType(datasource, name, type)
+function setDecimaDataSource(name, datasource, type, convertToJsonString)
 {
+  type = type || 'localStorage';
+  convertToJsonString = convertToJsonString || false;
+
+  if(convertToJsonString)
+  {
+    datasource = JSON.stringify(datasource);
+  }
+
 	switch (type)
 	{
 		case 'localStorage':
-			window.localStorage.setItem(name, JSON.stringify(datasource));
+			window.localStorage.setItem(name, datasource);
 			break;
 		case 'globalJs':
 			window[name] = datasource;
@@ -1301,6 +1329,20 @@ function setDataSourceByNameAndType(datasource, name, type)
  *
  * @returns boolean
  */
+function setDataSourceByNameAndType(datasource, name, type)
+{
+  return setDataSourceTypeAndByName(datasource, type, name);
+}
+
+/**
+ * Set data source by name and type
+ *
+ * @param mixed dataSource
+ * @param string name
+ * @param string type
+ *
+ * @returns boolean
+ */
 function filterAutocompleteSource(request, name, type, filterName, filterValue, filterOperator)
 {
 	var data;
@@ -1309,7 +1351,7 @@ function filterAutocompleteSource(request, name, type, filterName, filterValue, 
 	filterValue = filterValue || '';
 	filterOperator = filterOperator || '=';
 
-	data = getDataSourceByNameAndType(name, type, filterName, filterValue, filterOperator);
+	data = getDecimaDataSource(name, type, filterName, filterValue, filterOperator, true);
 
 	if ($.type(data) == 'object')
 	{
@@ -1465,7 +1507,7 @@ var jqMgValAutocompleteValidator = function($element)
 
     if($element.attr('data-autocomplete-source-type') != undefined)
     {
-			source =  getDataSourceByNameAndType($element.attr('data-autocomplete-source'), $element.attr('data-autocomplete-source-type'));
+			source =  getDecimaDataSource($element.attr('data-autocomplete-source'), $element.attr('data-autocomplete-source-type'), null, null, null, true);
     }
     else
     {
@@ -1597,6 +1639,40 @@ function empty(mixed_var)
   }
 
   return false;
+}
+
+/**
+ * Check if varianle is in storage
+ *
+ * @param string name
+ * @param string type
+ *
+ * @returns boolean
+ */
+function isInDecimaStorage(name, type)
+{
+  type = type || 'localStorage';
+
+	switch (type)
+	{
+		case 'localStorage':
+      if(empty(window.localStorage.getItem(name)))
+      {
+        return false;
+      }
+			break;
+		case 'globalJs':
+      if(window[name] == undefined)
+      {
+        return false;
+      }
+			break;
+		default:
+			console.log('DataType invalid');
+			return false;
+	}
+
+	return true;
 }
 
 /**
