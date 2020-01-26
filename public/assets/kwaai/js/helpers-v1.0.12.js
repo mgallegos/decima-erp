@@ -182,11 +182,20 @@ $.fn.isAutocompleteValid = function()
 		return false;
 	}
 
-	var value = $(this).val().toLowerCase(), valid = false, autocomplete = this, source;
+	var value = $(this).val().toLowerCase(), valid = false, autocomplete = this, source, parseFromJsonString;
 
 	if(this.attr('data-autocomplete-source-type') != undefined)
 	{
-		source = getDecimaDataSource(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'), null, null, null, true);
+    if(this.attr('data-autocomplete-source-type') == 'globalJs')
+    {
+      parseFromJsonString = false;
+    }
+    else
+    {
+      parseFromJsonString = true;
+    }
+
+		source = getDecimaDataSource(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'), null, null, null, parseFromJsonString);
 	}
 	else
 	{
@@ -236,9 +245,18 @@ $.fn.setAutocompleteSource = function()
 {
 	this.autocomplete('option', 'source', function(request, response)
 	{
-		var data, results;
+		var data, results, parseFromJsonString;
 
-		data = getDecimaDataSource(this.element.attr('data-autocomplete-source'), this.element.attr('data-autocomplete-source-type'), null, null, null, true);
+    if(this.element.attr('data-autocomplete-source-type') == 'globalJs')
+    {
+      parseFromJsonString = false;
+    }
+    else
+    {
+      parseFromJsonString = true;
+    }
+
+		data = getDecimaDataSource(this.element.attr('data-autocomplete-source'), this.element.attr('data-autocomplete-source-type'), null, null, null, parseFromJsonString);
 
 		if ($.type(data) == 'object')
 		{
@@ -258,7 +276,7 @@ $.fn.setAutocompleteSource = function()
  */
 $.fn.setAutocompleteLabel = function(value)
 {
-	var autocomplete = this;
+	var autocomplete = this, parseFromJsonString;
 
 	if(empty(value))
 	{
@@ -270,7 +288,16 @@ $.fn.setAutocompleteLabel = function(value)
 
 	if(this.attr('data-autocomplete-source-type') != undefined)
 	{
-		source = getDecimaDataSource(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'), null, null, null, true);
+    if(this.attr('data-autocomplete-source-type') == 'globalJs')
+    {
+      parseFromJsonString = false;
+    }
+    else
+    {
+      parseFromJsonString = true;
+    }
+
+		source = getDecimaDataSource(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'), null, null, null, parseFromJsonString);
 	}
 	else
 	{
@@ -312,11 +339,20 @@ $.fn.setAutocompleteLabel = function(value)
  */
 $.fn.getAutocompleteLabel = function(value)
 {
-	var value = value.toLowerCase(), autocomplete = this, label = '';
+	var value = value.toLowerCase(), autocomplete = this, label = '', parseFromJsonString;
 
 	if(this.attr('data-autocomplete-source-type') != undefined)
 	{
-		source = getDecimaDataSource(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'), null, null, null, true);
+    if(this.attr('data-autocomplete-source-type') == 'globalJs')
+    {
+      parseFromJsonString = false;
+    }
+    else
+    {
+      parseFromJsonString = true;
+    }
+
+		source = getDecimaDataSource(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'), null, null, null, parseFromJsonString);
 	}
 	else
 	{
@@ -360,11 +396,20 @@ $.fn.getAutocompleteLabel = function(value)
  */
 $.fn.getAutocompleteValue = function()
 {
-	var label = $(this).val().toLowerCase(), value = false, autocomplete = this;
+	var label = $(this).val().toLowerCase(), value = false, autocomplete = this, parseFromJsonString;
 
 	if(this.attr('data-autocomplete-source-type') != undefined)
 	{
-		source = getDecimaDataSource(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'), null, null, null, true);
+    if(this.attr('data-autocomplete-source-type') == 'globalJs')
+    {
+      parseFromJsonString = false;
+    }
+    else
+    {
+      parseFromJsonString = true;
+    }
+
+		source = getDecimaDataSource(this.attr('data-autocomplete-source'), this.attr('data-autocomplete-source-type'), null, null, null, parseFromJsonString);
 	}
 	else
 	{
@@ -1346,13 +1391,22 @@ function setDataSourceByNameAndType(datasource, name, type)
  */
 function filterAutocompleteSource(request, name, type, filterName, filterValue, filterOperator)
 {
-	var data;
+	var data, parseFromJsonString;
 
 	filterName = filterName || '';
 	filterValue = filterValue || '';
 	filterOperator = filterOperator || '=';
 
-	data = getDecimaDataSource(name, type, filterName, filterValue, filterOperator, true);
+  if(type == 'globalJs')
+  {
+    parseFromJsonString = false;
+  }
+  else
+  {
+    parseFromJsonString = true;
+  }
+
+	data = getDecimaDataSource(name, type, filterName, filterValue, filterOperator, parseFromJsonString);
 
 	if ($.type(data) == 'object')
 	{
