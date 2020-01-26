@@ -78,7 +78,7 @@ Form::macro('autocomplete', function($inputTextAutocompleteName, $source = array
 		$autocompleteSource = $dataAutocompleteSource;
 	}
 
-	if(empty($variableType))
+	if(empty($variableType) || $variableType == 'default')
 	{
 		//Default decima storage
 		$variableType = 'localStorage';
