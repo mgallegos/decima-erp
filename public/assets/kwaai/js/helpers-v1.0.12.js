@@ -1187,6 +1187,7 @@ function getDecimaDataSource(name, type, filterName, filterValue, filterOperator
 {
 	var dataSource = null, filteredDataSource = [], flag = false;
 
+  type = type || 'localStorage';
   filterName = filterName || '';
 	filterValue = filterValue || '';
 	filterOperator = filterOperator || '=';
