@@ -15,6 +15,7 @@
  var ajaxWidth = 154;
  var minWidthExpandedMenu = 1366;
  var bsModalshowMenu = false;
+ var defaultDecimaDataSource = 'localStorage';
 
  var quillToolbarOptions = {
 	 container: [
