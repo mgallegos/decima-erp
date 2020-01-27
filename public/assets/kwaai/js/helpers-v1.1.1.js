@@ -901,7 +901,7 @@ $.fn.clearTags = function()
  */
 $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tableClasses, dataType, filterName, filterValue, filterOperator, url, page, filter, from, to, records)
 {
-  var element = this, pagination = '', colsCount = 0, count = 0;
+  var element = this, pagination = '', colsCount = 0, count = 0, parseFromJsonString;
 
 	gridId = gridId || '';
 	slice = slice || 0;
@@ -1008,7 +1008,16 @@ $.fn.createTable = function(gridId, rowsVariableName, slice, rows, headers, tabl
     }
     else
     {
-      rows = getDecimaDataSource(rowsVariableName, dataType, filterName, filterValue, filterOperator, true);
+      if(dataType == 'globalJs')
+      {
+        parseFromJsonString = false;
+      }
+      else
+      {
+        parseFromJsonString = true;
+      }
+
+      rows = getDecimaDataSource(rowsVariableName, dataType, filterName, filterValue, filterOperator, parseFromJsonString);
 
       if(empty(rows))
       {
@@ -1225,6 +1234,7 @@ function getDataSourceByNameAndType(name, type, filterName, filterValue, filterO
  * @param string filterName
  * @param mixed filterValue
  * @param string filterOperator
+ * @param boolean parseFromJsonString (false by default)
  *
  * @returns void
  */
@@ -1255,7 +1265,7 @@ function getDecimaDataSource(name, type, filterName, filterValue, filterOperator
 			console.log('DataType invalid');
 	}
 
-  if(parseFromJsonString)
+  if(parseFromJsonString && type)
   {
     dataSource = JSON.parse(dataSource);
   }
@@ -1315,12 +1325,20 @@ function getDecimaDataSource(name, type, filterName, filterValue, filterOperator
  *
  * @param string name
  * @param string type
+ * @param boolean parseFromJsonString (true by default)
  *
  * @returns void
  */
-function getDecimaDataSourceArray(name, type, filterName, filterValue, filterOperator)
+function getDecimaDataSourceArray(name, type, filterName, filterValue, filterOperator, parseFromJsonString)
 {
-	var dataSource = getDecimaDataSource(name, type, filterName, filterValue, filterOperator, true);
+  var dataSource;
+
+  if(parseFromJsonString == undefined)
+  {
+    parseFromJsonString = true
+  }
+
+	dataSource = getDecimaDataSource(name, type, filterName, filterValue, filterOperator, parseFromJsonString);
 
   if(empty(dataSource))
   {
@@ -1354,7 +1372,7 @@ function getDataSourceArrayByNameAndType(name, type, filterName, filterValue, fi
  * @param mixed dataSource
  * @param string type
  * @param string name
- * @param boolean convertToJsonString
+ * @param boolean convertToJsonString (false by default)
  *
  * @returns boolean
  */
@@ -1606,7 +1624,7 @@ var jqMgValAutocompleteValidator = function($element)
         parseFromJsonString = true;
       }
 
-			source =  getDecimaDataSource($element.attr('data-autocomplete-source'), $element.attr('data-autocomplete-source-type'), null, null, null, parseFromJsonString);
+			source = getDecimaDataSource($element.attr('data-autocomplete-source'), $element.attr('data-autocomplete-source-type'), null, null, null, parseFromJsonString);
     }
     else
     {

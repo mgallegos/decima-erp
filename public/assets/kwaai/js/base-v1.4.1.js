@@ -775,7 +775,7 @@ function changeLoggedUserOrganization(id)
 		{
       // window.localStorage.clear();
       clearDecimaStorage();
-      
+
 			window.location.replace($('#app-url').val() + '/dashboard');
 		}
 	});
@@ -1238,7 +1238,7 @@ function smtBtnSearch(element, prefix)
  */
 function smtSearch(prefix, calledByUser)
 {
-  var found, filter, rows;
+  var found, filter, rows, parseFromJsonString;
 
   calledByUser = calledByUser || false;
 
@@ -1267,7 +1267,16 @@ function smtSearch(prefix, calledByUser)
 
   if($('#' + prefix + 'smt').attr('data-rows-variable-type') != 'post')
   {
-    rows = getDecimaDataSource($('#' + prefix + 'smt').attr('data-rows-variable-name'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'), true);
+    if($('#' + prefix + 'smt').attr('data-rows-variable-type') == 'globalJs')
+    {
+      parseFromJsonString = false;
+    }
+    else
+    {
+      parseFromJsonString = true;
+    }
+
+    rows = getDecimaDataSource($('#' + prefix + 'smt').attr('data-rows-variable-name'), $('#' + prefix + 'smt').attr('data-rows-variable-type'), $('#' + prefix + 'smt').attr('data-filter-name'), JSON.parse($('#' + prefix + 'smt').attr('data-filter-value')), $('#' + prefix + 'smt').attr('data-filter-operator'), parseFromJsonString);
 
     if(empty(rows))
     {
@@ -1312,19 +1321,25 @@ function smtSearch(prefix, calledByUser)
  * @param string url
  * @param object rows
  * @param boolean forceAjaxRequest
+ * @param boolean convertToJsonString (true by default)
  *
  * @returns void
  */
-function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader, dataType)
+function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader, dataType, convertToJsonString)
 {
 	rows = rows || '';
 	forceAjaxRequest = forceAjaxRequest || false;
 	showLoader = showLoader || false;
   dataType = dataType || 'default';
 
+  if(convertToJsonString == undefined)
+  {
+    convertToJsonString = true
+  }
+
 	if(!empty(rows))
   {
-    setDecimaDataSource(variableName, rows, dataType, true);
+    setDecimaDataSource(variableName, rows, dataType, convertToJsonString);
 
     return;
   }
@@ -1353,7 +1368,7 @@ function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader, data
 			},
 			success:function(smtRows)
 			{
-        setDecimaDataSource(variableName, smtRows, dataType, true);
+        setDecimaDataSource(variableName, smtRows, dataType, convertToJsonString);
         stopBreadcrumbLoader();
 
 				if(showLoader)
@@ -1372,16 +1387,23 @@ function loadSmtRows(variableName, url, rows, forceAjaxRequest, showLoader, data
  * @param string variableName
  * @param integer id
  * @param object row
+ * @param string dataType
+ * @param boolean parseFromAndConvertToJsonString (true by default)
  *
  * @returns void
  */
-function addSmtRow(variableName, id, row, dataType)
+function addSmtRow(variableName, id, row, dataType, parseFromAndConvertToJsonString)
 {
   rows = {};
   rows[id] = row;
   dataType = dataType || 'default';
 
-  smtRows = getDecimaDataSource(variableName, dataType, null, null, null, true);
+  if(parseFromAndConvertToJsonString == undefined)
+  {
+    parseFromAndConvertToJsonString = true
+  }
+
+  smtRows = getDecimaDataSource(variableName, dataType, null, null, null, parseFromAndConvertToJsonString);
 
   if(empty(smtRows))
   {
@@ -1390,7 +1412,7 @@ function addSmtRow(variableName, id, row, dataType)
 
   $.extend(rows, smtRows);
 
-  setDecimaDataSource(variableName, rows, dataType, true);
+  setDecimaDataSource(variableName, rows, dataType, parseFromAndConvertToJsonString);
 }
 
 /**
@@ -1399,13 +1421,21 @@ function addSmtRow(variableName, id, row, dataType)
  * @param string variableName
  * @param integer id
  * @param object row
+ * @param string dataType
+ * @param boolean parseFromAndConvertToJsonString (true by default)
  *
  * @returns void
  */
-function updateSmtRow(variableName, id, row, dataType)
+function updateSmtRow(variableName, id, row, dataType, parseFromAndConvertToJsonString)
 {
   dataType = dataType || 'default';
-  smtRows = getDecimaDataSource(variableName, dataType, null, null, null, true);
+
+  if(parseFromAndConvertToJsonString == undefined)
+  {
+    parseFromAndConvertToJsonString = true
+  }
+
+  smtRows = getDecimaDataSource(variableName, dataType, null, null, null, parseFromAndConvertToJsonString);
 
   if(empty(smtRows))
   {
@@ -1414,7 +1444,7 @@ function updateSmtRow(variableName, id, row, dataType)
 
   smtRows[id] = row;
 
-  setDecimaDataSource(variableName, smtRows, dataType, true);
+  setDecimaDataSource(variableName, smtRows, dataType, parseFromAndConvertToJsonString);
 }
 
 /**
@@ -1422,13 +1452,21 @@ function updateSmtRow(variableName, id, row, dataType)
  *
  * @param string variableName
  * @param string key
+ * @param string dataType
+ * @param boolean parseFromAndConvertToJsonString (true by default)
  *
  * @returns void
  */
-function deleteSmtRow(variableName, key, dataType)
+function deleteSmtRow(variableName, key, dataType, parseFromAndConvertToJsonString)
 {
   dataType = dataType || 'default';
-  smtRows = getDecimaDataSource(variableName, dataType, null, null, null, true);
+
+  if(parseFromAndConvertToJsonString == undefined)
+  {
+    parseFromAndConvertToJsonString = true
+  }
+
+  smtRows = getDecimaDataSource(variableName, dataType, null, null, null, parseFromAndConvertToJsonString);
 
   if(empty(smtRows))
   {
@@ -1437,7 +1475,7 @@ function deleteSmtRow(variableName, key, dataType)
 
   delete smtRows[key];
 
-  setDecimaDataSource(variableName, smtRows, dataType, true);
+  setDecimaDataSource(variableName, smtRows, dataType, parseFromAndConvertToJsonString);
 }
 
 /**
@@ -1445,13 +1483,21 @@ function deleteSmtRow(variableName, key, dataType)
  *
  * @param string variableName
  * @param array keys
+ * @param string dataType
+ * @param boolean parseFromAndConvertToJsonString (true by default)
  *
  * @returns void
  */
-function deleteSmtRows(variableName, keys, dataType)
+function deleteSmtRows(variableName, keys, dataType, parseFromAndConvertToJsonString)
 {
   dataType = dataType || 'default';
-  smtRows = getDecimaDataSource(variableName, dataType, null, null, null, true);
+
+  if(parseFromAndConvertToJsonString == undefined)
+  {
+    parseFromAndConvertToJsonString = true
+  }
+
+  smtRows = getDecimaDataSource(variableName, dataType, null, null, null, parseFromAndConvertToJsonString);
 
   if(empty(smtRows))
   {
@@ -1463,7 +1509,7 @@ function deleteSmtRows(variableName, keys, dataType)
     delete smtRows[id];
   });
 
-  setDecimaDataSource(variableName, smtRows, dataType, true);
+  setDecimaDataSource(variableName, smtRows, dataType, parseFromAndConvertToJsonString);
 }
 
 /**

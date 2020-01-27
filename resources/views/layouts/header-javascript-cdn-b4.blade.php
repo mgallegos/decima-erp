@@ -48,10 +48,10 @@
 	});
 </script>
 
-<script src="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/js/helpers-v1.1.0.js"></script>
+<script src="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/js/helpers-v1.1.1.js"></script>
 <script src="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/js/apps-engine-v1.0.3.js"></script>
 <script src="https://storage.googleapis.com/decimaerp-cdn-bucket/jquery-mg-validation-v0.5/jquery.jqMgVal.src.js"></script>
-<script src="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/js/base-v1.4.0.js"></script>
+<script src="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/js/base-v1.4.1.js"></script>
 
 <script type='text/javascript'>
   $.fn.jqMgVal.defaults.successIconClass = 'fa fa-check-circle';
