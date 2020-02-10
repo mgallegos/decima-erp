@@ -40,13 +40,7 @@
 	@endforeach
 @endif
 
-<script type='text/javascript'>
-	var userApps, lang, History, State;
-	$(document).ready(function(){
-		lang = $.parseJSON('{!! json_encode( Translator::getFileArray('form')) !!}');
-		userApps = $.parseJSON('{!! UserManager::buildUserMenu() !!}');
-	});
-</script>
+@include('layouts.header-javascript-global')
 
 <script src="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/js/helpers-v1.1.1.js"></script>
 <script src="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/js/apps-engine-v1.0.3.js"></script>
