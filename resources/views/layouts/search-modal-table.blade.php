@@ -15,7 +15,7 @@
   			    <div class="input-group">
   						<input id="{{ $prefix }}smt-search-box" class="form-control" placeholder="{{ Lang::get('toolbar.search') }}" type="text" onkeyup="smtOnKeyup(event, '{{ $prefix }}')">
   						<div class="input-group-btn">
-  						  <button id="{{ $prefix }}smt-btn-search" class="btn btn-default" data-flag="0" onclick="smtBtnSearch('this, {{ $prefix }}')"><i class="glyphicon glyphicon-search"></i></button>
+  						  <button id="{{ $prefix }}smt-btn-search" class="btn btn-default" data-flag="0" onclick="smtBtnSearch(this, '{{ $prefix }}')"><i class="glyphicon glyphicon-search"></i></button>
   						</div>
   					</div>
   			  </div>
