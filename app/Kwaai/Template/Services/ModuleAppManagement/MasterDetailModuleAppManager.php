@@ -326,7 +326,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $Journal = $this->Journal->create(array('journalized_id' => $ModuleApp->id, 'journalized_type' => $this->ModuleApp->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.addedMasterJournal', array('name' => $ModuleApp->name)), $Journal));
 
-      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+      // $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
 
       $this->commit($openTransaction);
     }
@@ -557,7 +557,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
         }
       }
 
-      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+      // $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
 
       $this->commit($openTransaction);
     }
@@ -774,7 +774,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $Journal = $this->Journal->create(array('journalized_id' => $input['id'], 'journalized_type' => $this->ModuleApp->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.authorizedMasterJournal', array('number' => $ModuleApp->number)), $Journal));
 
-      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+      // $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
 
       $this->commit($openTransaction);
     }
@@ -842,7 +842,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $Journal = $this->Journal->create(array('journalized_id' => $input['id'], 'journalized_type' => $this->ModuleApp->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.voidMasterJournal', array('number' => $ModuleApp->number)), $Journal));
 
-      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+      // $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
 
       $this->commit($openTransaction);
     }
@@ -900,7 +900,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
 
       $this->ModuleApp->delete(array($input['id']), $databaseConnectionName);
 
-      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+      // $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
 
       $this->commit($openTransaction);
     }

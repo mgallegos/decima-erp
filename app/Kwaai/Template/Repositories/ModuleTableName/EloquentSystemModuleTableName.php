@@ -22,7 +22,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
   /**
    * ModuleTableName
    *
-   * @var Vendor\DecimaModule\Module\ModuleTableName;
+   * @var Mgallegos\DecimaDashboard\Dashboard\ModuleTableName;
    *
    */
   protected $ModuleTableName;
@@ -43,15 +43,11 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   protected $databaseConnectionName;
 
-  public function __construct(Model $ModuleTableName, DatabaseManager $DB, $databaseConnectionName)
+  public function __construct(Model $ModuleTableName, DatabaseManager $DB)
   {
     $this->ModuleTableName = $ModuleTableName;
 
     $this->DB = $DB;
-
-    $this->databaseConnectionName = $databaseConnectionName;
-
-    $this->ModuleTableName->setConnection($databaseConnectionName);
   }
 
   /**
@@ -73,13 +69,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function searchModalTableRows($id = null, $organizationId, $databaseConnectionName = null)
   {
-    if(empty($databaseConnectionName))
-    {
-      $databaseConnectionName = $this->databaseConnectionName;
-    }
-
-    $query = $this->DB->connection($databaseConnectionName)
-      ->table('Table_Name0 AS t0')
+    $query = $this->DB->table('Table_Name0 AS t0')
       ->join('Table_Name1 AS t1', 't1.column_name', '=', 't0.column_name')
       // ->orderBy('t1.column_name0', 'desc')
       // ->orderBy('t1.column_name1', 'asc')
@@ -105,16 +95,11 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    *
    * @param  int $id
    *
-   * @return Vendor\DecimaModule\Module\ModuleTableName
+   * @return Mgallegos\DecimaDashboard\Dashboard\ModuleTableName
    */
   public function byId($id, $databaseConnectionName = null)
   {
-    if(empty($databaseConnectionName))
-    {
-      $databaseConnectionName = $this->databaseConnectionName;
-    }
-
-  	return $this->ModuleTableName->on($databaseConnectionName)->find($id);
+  	return $this->ModuleTableName->find($id);
   }
 
   /**
@@ -126,14 +111,8 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function byIds($ids, $databaseConnectionName = null)
   {
-    if(empty($databaseConnectionName))
-    {
-      $databaseConnectionName = $this->databaseConnectionName;
-    }
-
     return new Collection(
-      $this->DB->connection($databaseConnectionName)
-        ->table('Table_Name0 AS t0')
+      $this->DB->table('Table_Name0 AS t0')
         ->join('Table_Name1 AS t1', 't1.column_name', '=', 't0.column_name')
         // ->where('p.id', '=', $ids)
         ->whereIn('t1.id', $ids)
@@ -152,12 +131,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function byOrganization($id, $databaseConnectionName = null)
   {
-    if(empty($databaseConnectionName))
-    {
-      $databaseConnectionName = $this->databaseConnectionName;
-    }
-
-    return $this->ModuleTableName->setConnection($databaseConnectionName)->where('organization_id', '=', $id)->get();
+    return $this->ModuleTableName->where('organization_id', '=', $id)->get();
   }
 
   /**
@@ -169,13 +143,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function getMaxNumber($id, $databaseConnectionName = null)
   {
-    if(empty($databaseConnectionName))
-    {
-      $databaseConnectionName = $this->databaseConnectionName;
-    }
-
-    return $this->ModuleTableName->setConnection($databaseConnectionName)
-      ->where('organization_id', '=', $id)
+    return $this->ModuleTableName->where('organization_id', '=', $id)
       ->max('number');
   }
 
@@ -190,13 +158,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function create(array $data, $databaseConnectionName = null)
   {
-    if(empty($databaseConnectionName))
-    {
-      $databaseConnectionName = $this->databaseConnectionName;
-    }
-
     $ModuleTableName = new ModuleTableName();
-    $ModuleTableName->setConnection($databaseConnectionName);
     $ModuleTableName->fill($data)->save();
 
     return $ModuleTableName;
@@ -209,17 +171,12 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    * 	An array as follows: array('field0'=>$field0, 'field1'=>$field1
    *                            );
    *
-   * @param Vendor\DecimaModule\Module\ModuleTableName $ModuleTableName
+   * @param Mgallegos\DecimaDashboard\Dashboard\ModuleTableName $ModuleTableName
    *
    * @return boolean
    */
   public function update(array $data, $ModuleTableName = null, $databaseConnectionName = null)
   {
-    if(empty($databaseConnectionName))
-    {
-      $databaseConnectionName = $this->databaseConnectionName;
-    }
-
     if(empty($ModuleTableName))
     {
       $ModuleTableName = $this->byId($data['id'], $databaseConnectionName);
@@ -244,13 +201,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function updateByColumnNameEloquent($columnNameOldValue, $organizationId, $databaseConnectionName = null)
   {
-    if(empty($databaseConnectionName))
-    {
-      $databaseConnectionName = $this->databaseConnectionName;
-    }
-
-    $this->ModuleTableName->setConnection($databaseConnectionName)
-      ->where('column_name', '=', $columnNameOldValue)
+    $this->ModuleTableName->where('column_name', '=', $columnNameOldValue)
       ->where('organization_id', '=', $organizationId)
       ->update(array('column_name_to_be_updated' => $newValue));
 
@@ -268,13 +219,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function updateByColumnNameQueryBuilder($columnNameOldValue, $organizationId, $databaseConnectionName = null)
   {
-    if(empty($databaseConnectionName))
-    {
-      $databaseConnectionName = $this->databaseConnectionName;
-    }
-
-    $this->DB->connection($databaseConnectionName)
-      ->table($this->getTable())
+    $this->DB->table($this->getTable())
       ->where('column_name', '=', $columnNameOldValue)
       ->where('organization_id', '=', $organizationId)
       ->update(array('column_name_to_be_updated' => $newValue));
@@ -291,17 +236,12 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function delete(array $data, $databaseConnectionName = null)
   {
-    if(empty($databaseConnectionName))
-    {
-      $databaseConnectionName = $this->databaseConnectionName;
-    }
-
     foreach ($data as $key => $id)
     {
       $ModuleTableName = $this->byId($id, $databaseConnectionName);
       $ModuleTableName->delete();
     }
-
+    
     return true;
   }
 
@@ -315,13 +255,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    */
   public function massDelete($id, $databaseConnectionName = null)
   {
-    if(empty($databaseConnectionName))
-    {
-      $databaseConnectionName = $this->databaseConnectionName;
-    }
-
-    $this->DB->connection($databaseConnectionName)
-      ->table($this->getTable())
+    $this->DB->table($this->getTable())
       ->where('column_name', '=', $id)
       ->delete();
 

@@ -1215,11 +1215,11 @@ function smtBtnSearch(element, prefix)
 {
   var calledByUser;
 
-  console.log(element.attr('data-flag'));
+  console.log($(element).attr('data-flag'));
 
-  if(element.attr('data-flag') == 1)
+  if($(element).attr('data-flag') == 1)
   {
-    element.attr('data-flag', '0');
+    $(element).attr('data-flag', '0');
 
     smtSearch(prefix, false);
   }

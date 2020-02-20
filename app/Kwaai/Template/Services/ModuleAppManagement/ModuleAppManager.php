@@ -138,25 +138,15 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
   )
 	{
     $this->AuthenticationManager = $AuthenticationManager;
-
     $this->JournalManager = $JournalManager;
-
     $this->Journal = $Journal;
-
     $this->GridEncoder = $GridEncoder;
-
     $this->EloquentModuleTableNameGridRepository = $EloquentModuleTableNameGridRepository;
-
     $this->ModuleTableName = $ModuleTableName;
-
     $this->Carbon = $Carbon;
-
     $this->DB = $DB;
-
 		$this->Lang = $Lang;
-
 		$this->Config = $Config;
-
     $this->Cache = $Cache;
 	}
 
@@ -237,19 +227,30 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
     }
 
-    if(!$this->Cache->has('moduleTableNames' . $organizationId))
-    {
-      $this->ModuleTableName->byOrganization($organizationId)->each(function($ModuleTableName) use (&$moduleTableNames)
-      {
-        array_push($moduleTableNames, array('label'=> $ModuleTableName->name , 'value'=>$ModuleTableName->id));
-      });
+    // if(!$this->Cache->has('moduleTableNames' . $organizationId))
+    // {
+    //   $this->ModuleTableName->byOrganization($organizationId)->each(function($ModuleTableName) use (&$moduleTableNames)
+    //   {
+    //     array_push($moduleTableNames, array('label'=> $ModuleTableName->name , 'value'=>$ModuleTableName->id));
+    //   });
+    //
+    //   $this->Cache->put('moduleTableNames' . $organizationId, json_encode($moduleTableNames), 360);
+    // }
+    // else
+    // {
+    //   $moduleTableNames = json_decode($this->Cache->get('moduleTableNames' . $organizationId), true);
+    // }
 
-      $this->Cache->put('moduleTableNames' . $organizationId, json_encode($moduleTableNames), 360);
-    }
-    else
+    $this->ModuleTableName->byOrganization($organizationId)->each(function($ModuleTableName) use (&$moduleTableNames)
     {
-      $moduleTableNames = json_decode($this->Cache->get('moduleTableNames' . $organizationId), true);
-    }
+      array_push(
+        $moduleTableNames,
+        array(
+          'label'=> $ModuleTableName->name ,
+          'value'=>$ModuleTableName->id
+        )
+      );
+    });
 
     if($returnJson)
     {
@@ -300,7 +301,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $Journal = $this->Journal->create(array('journalized_id' => $ModuleTableName->id, 'journalized_type' => $this->ModuleTableName->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
       $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.addedJournal', array('name' => $ModuleTableName->name)), $Journal));
 
-      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+      // $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
 
       $this->commit($openTransaction);
     }
@@ -451,7 +452,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
         }
       }
 
-      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+      // $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
 
       $this->commit($openTransaction);
     }
@@ -509,7 +510,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
 
       $this->ModuleTableName->delete(array($input['id']), $databaseConnectionName);
 
-      $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+      // $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
 
       $this->commit($openTransaction);
     }
@@ -574,7 +575,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
          $this->ModuleTableName->delete(array($id), $databaseConnectionName);
        }
 
-       $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
+       // $this->Cache->forget('moduleTableNamesSmt' . $organizationId);
 
        $this->commit($openTransaction);
      }

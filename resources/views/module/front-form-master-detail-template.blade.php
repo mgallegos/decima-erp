@@ -1030,41 +1030,6 @@
 </script>
 <div class="row">
 	<div class="col-lg-12 col-md-12">
-		{!! Form::open(array('id' => 'module-app-filters-form', 'url' => URL::to('/'), 'role' => 'form', 'onsubmit' => 'return false;', 'class' => 'form-horizontal')) !!}
-			<div id="module-app-filters" class="panel panel-default">
-				<div class="panel-heading custom-panel-heading clearfix">
-					<h3 class="panel-title custom-panel-title pull-left">
-						{{ Lang::get('form.filtersTitle') }}
-					</h3>
-					{!! Form::button('<i class="fa fa-filter"></i> ' . Lang::get('form.filterButton'), array('id' => 'module-app-btn-filter', 'class' => 'btn btn-default btn-sm pull-right btn-filter-left-margin')) !!}
-					{!! Form::button('<i class="fa fa-eraser"></i> ' . Lang::get('form.clearFilterButton'), array('id' => 'module-app-btn-clear-filter', 'class' => 'btn btn-default btn-sm pull-right')) !!}
-				</div>
-				<div id="module-app-filters-body" class="panel-body">
-					<div class="row">
-						<div class="col-lg-6 col-md-12">
-							<div class="form-group">
-								{!! Form::label('module-app-name-filter', Lang::get('module::app.name'), array('class' => 'col-sm-2 control-label')) !!}
-								<div class="col-sm-10 mg-hm">
-									{!! Form::autocomplete('module-app-name-filter', array(), array('class' => 'form-control'), 'module-app-name-filter', 'module-app-name-id-filter', null, 'fa-files-o', '', 20) !!}
-									{!! Form::hidden('module-app-name-id-filter', null, array('id' => 'module-app-name-id-filter')) !!}
-									<p class="help-block">{{ Lang::get('module::app.nameHelperText') }}</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6 col-md-12">
-							<div class="form-group">
-								{!! Form::label('module-app-name-filter', Lang::get('module::app.model'), array('class' => 'col-sm-2 control-label')) !!}
-								<div class="col-sm-10 mg-hm">
-									{!! Form::autocomplete('module-app-name-filter', array(), array('class' => 'form-control'), 'module-app-name-filter', 'module-app-name-id-filter', null, 'fa-files-o', '', 20) !!}
-									{!! Form::hidden('module-app-name-id-filter', null, array('id' => 'module-app-name-id-filter')) !!}
-									<p class="help-block">{{ Lang::get('module::app.modelHelperText') }}</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		{!! Form::close() !!}
 		<div id="module-app-btn-toolbar" class="section-header btn-toolbar" role="toolbar">
 			<div id="module-app-btn-group-1" class="btn-group btn-group-app-toolbar">
 				{!! Form::button('<i class="fa fa-plus"></i> ' . Lang::get('toolbar.new'), array('id' => 'module-app-btn-new', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-original-title' => Lang::get('module::app.newMaster'))) !!}
@@ -1093,62 +1058,47 @@
 				{!! Form::button('<i class="fa fa-undo"></i> ' . Lang::get('toolbar.close'), array('id' => 'module-app-btn-close', 'class' => 'btn btn-default module-app-btn-tooltip decima-erp-tooltip', 'data-container' => 'body', 'data-toggle' => 'tooltip', 'disabled' => '', 'data-original-title' => Lang::get('toolbar.closeLongText'))) !!}
 			</div>
 		</div>
-		<div id='module-app-grid-section' class='collapse in' data-id=''>
-			<div class='app-grid' data-app-grid-id='module-app-grid'>
-				{!!
-				GridRender::setGridId('module-app-grid')
-					->hideXlsExporter()
-	  			->hideCsvExporter()
-					->setGridOption('height', 'auto')
-					->setGridOption('multiselect', false)
-					->setGridOption('rowNum', 5)
-					->setGridOption('rowList', array(5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 100, 250, 500, 750, 1000, 2500, 5000))
-		    	->setGridOption('url', URL::to('module/category/app/grid-data-master'))
-		    	->setGridOption('caption', Lang::get('module::app.gridMasterTitle'))
-					->setGridOption('filename', Lang::get('module::app.gridMasterTitle'))
-		    	->setGridOption('postData', array('_token' => Session::token()))
-					->setGridOption('grouping', true)
-					->setGridOption('groupingView', array('groupField' => array('module_app_header'), 'groupColumnShow' => array(false), 'groupSummary' => array(true), 'showSummaryOnHide' => true, 'groupOrder' => array('asc')))
-					->setGridEvent('loadComplete', 'moduleAppOnLoadCompleteEvent')
-					->setGridEvent('onSelectRow', 'moduleAppOnSelectRowEvent')
-					//->addGroupHeader(array('startColumnName' => 'module_app_name', 'numberOfColumns' => 1, 'titleText' => Lang::get('module::app.gridHeader')))
-					->addColumn(array('index' => 'module_app_header'))
-					->addColumn(array('index' => 'id', 'name' => 'module_app_id', 'hidden' => true))
-		    	->addColumn(array('label' => Lang::get('form.name'), 'index' => 'name' ,'name' => 'module_app_name', 'modalwidth' => '10%'))
-					//->addColumn(array('label' => Lang::get('form.status'), 'index' => 'status', 'name' => 'module_app_status', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('form.statusGridText')), 'align' => 'center', 'hidden' => false, 'stype' => 'select', 'width' => 80, 'modalwidth' => '15%'))
-					->addColumn(array('label' => Lang::get('form.status'), 'index' => 'status', 'name' => 'module_app_status', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('module::app.statusGridText')), 'align' => 'center', 'hidden' => false, 'stype' => 'select', 'modalwidth' => '15%'))
-					->addColumn(array('label' => Lang::get('form.active'), 'index' => 'is_active' ,'name' => 'module_app_is_active', 'formatter' => 'select', 'editoptions' => array('value' => Lang::get('form.booleanText')), 'align' => 'center' , 'stype' => 'select', 'width' => 70, 'modalwidth' => '15%'))
-					->addColumn(array('label' => Lang::get('module::app.money'), 'index' => 'money', 'name' => 'money', 'formatter' => 'currency', 'formatoptions' => array('prefix' => OrganizationManager::getOrganizationCurrencySymbol() . ' '), 'align'=>'right', 'hidden' => false, 'width' => 100, 'modalwidth' => '15%'))
-		    	->renderGrid();
-				!!}
-			</div>
-			<div class='app-grid app-grid-without-toolbar section-block' data-app-grid-id='module-app-front-detail-grid'>
-				{!!
-				GridRender::setGridId('module-app-front-detail-grid')
-					->hideXlsExporter()
-					->hideCsvExporter()
-					->setGridOption('url',URL::to('module/category/app/grid-data-detail'))
-					->setGridOption('datatype', 'local')
-					->setGridOption('filename', Lang::get('module::app.gridDetailTitle'))
-					->setGridOption('rowList', array())
-					->setGridOption('rowNum', 100000)
-					->setGridOption('footerrow', true)
-					->setGridOption('multiselect', false)
-					//->setGridOption('postData',array('_token' => Session::token()))
-					->setGridOption('postData', array('_token' => Session::token(), 'filters'=>"{'groupOp':'AND','rules':[{'field':'master_id','op':'eq','data':'-1'}]}"))
-					//->setGridEvent('loadComplete', 'moduleAppDetailOnLoadCompleteEvent')
-					->addColumn(array('index' => 'id', 'name' => 'module_app_detail_id', 'hidden' => true))
-					->addColumn(array('label' => Lang::get('form.name'), 'index' => 'detail_name', 'name' => 'module_app_detail_name'))
-					->renderGrid();
-				!!}
-			</div>
+		<div id='module-app-grid-section' class='collapse' data-id=''>
+
 		</div>
 	</div>
 </div>
-<div id='module-app-form-section' class="row collapse">
+<div id='module-app-form-section' class="row collapse in">
 	<div class="col-lg-12 col-md-12">
 		<div class="form-container form-container-followed-by-grid-section">
-			{!! Form::open(array('id' => 'module-app-form', 'url' => URL::to('module/category/app'), 'role' => 'form', 'onsubmit' => 'return false;')) !!}
+			{!! Form::open(array('id' => 'module-app-filters-form', 'url' => URL::to('/'), 'role' => 'form', 'onsubmit' => 'return false;', 'class' => 'form-horizontal')) !!}
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<!-- {!! Form::label('module-app-name-filter', Lang::get('module::app.name'), array('class' => 'col-sm-2 control-label')) !!} -->
+						<label for="exampleInputName2"  class="col-sm-2 control-label">Fecha y hora de solicitud:</label>
+						<div class="col-sm-10 mg-hm">
+							<input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<!-- {!! Form::label('module-app-name-filter', Lang::get('module::app.name'), array('class' => 'col-sm-2 control-label')) !!} -->
+						<label for="exampleInputEmail2" class="col-sm-2 control-label">Nombre</label>
+						<div class="col-sm-10 mg-hm">
+							{!! Form::text('module-app-name', null , array('id' => 'module-app-name', 'class' => 'form-control', 'data-mg-required' => '')) !!}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<!-- {!! Form::label('module-app-name-filter', Lang::get('module::app.model'), array('class' => 'col-sm-2 control-label')) !!} -->
+						<label for="exampleInputEmail2" class="col-sm-2 control-label">Cliente</label>
+						<div class="col-sm-10 mg-hm">
+							{!! Form::autocomplete('module-app-name-filter', array(), array('class' => 'form-control'), 'module-app-name-filter', 'module-app-name-id-filter', null, '', '', 20) !!}
+							{!! Form::hidden('module-app-name-id-filter', null, array('id' => 'module-app-name-id-filter')) !!}
+						</div>
+					</div>
+				</div>
+			</div>
+			{!! Form::close() !!}
+			<!-- {!! Form::open(array('id' => 'module-app-form', 'url' => URL::to('module/category/app'), 'role' => 'form', 'onsubmit' => 'return false;')) !!}
 				<legend id="module-app-form-new-title" class="hidden">{{ Lang::get('module::app.formNewTitle') }}</legend>
 				<legend id="module-app-form-edit-title" class="hidden">{{ Lang::get('module::app.formEditTitle') }}<label class="pull-right module-app-number"></label></legend>
 				<div class="row">
@@ -1192,7 +1142,7 @@
 						</div>
 					</div>
 				</div>
-			{!! Form::close() !!}
+			{!! Form::close() !!} -->
 			{!! Form::open(array('id' => 'module-app-detail-form', 'url' => URL::to('module/category/app'), 'role' => 'form', 'onsubmit' => 'return false;')) !!}
 			<fieldset id="module-app-detail-form-fieldset" disabled="disabled">
 				<legend id="module-app-detail-model-form-new-title" class="">{{ Lang::get('module::app.formDetailTitle') }}</legend>
