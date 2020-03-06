@@ -324,10 +324,12 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 				$intendedUrl = $this->Url->to('/dashboard');
 			}
 
-			$this->Session->forget('loggedUser');
-			$this->Session->put('loggedUser', json_encode($this->Auth->user()->toArray()));
+			$authUser = $this->Auth->user()->toArray();
 
-			// var_dump($this->Auth->user()->toArray(), $this->Session->has('loggedUser'));
+			$this->Session->forget('loggedUser');
+			$this->Session->put('loggedUser', json_encode($authUser));
+
+			$this->setLastLoggedUser($authUser);
 
 			$userDefaultOrganizationId = $this->getLoggedUserDefaultOrganization();
 
@@ -763,6 +765,92 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		// $this->Cookie->queue($this->Cookie->forget($this->getCurrentOrganizationCookieName()));
 		$this->Session->forget('currentOrganization');
 		$this->unsetCurrentOrganizationCountry();
+	}
+
+	/**
+	 * Set current user organization
+	 *
+	 * @return void
+	 */
+	public function setLastLoggedUser(array $authUser)
+	{
+		$this->Cookie->queue(
+			$this->Cookie->forever(
+				$this->getLastLoggedUserCookieName(),
+				json_encode(
+					array(
+						'name' => $authUser['firstname'],
+						'email' => $authUser['email']
+					)
+				)
+			)
+		);
+	}
+
+	/**
+	 * Unset current user organization
+	 *
+	 * @return void
+	 */
+	public function unsetLastLoggedUser()
+	{
+		$this->Cookie->queue(
+			$this->Cookie->forget($this->getLastLoggedUserCookieName())
+		);
+	}
+
+	/**
+	 * Set current user organization
+	 *
+	 * @return void
+	 */
+	public function getLastLoggedUser()
+	{
+		$lastLoggedUser = $this->Input->cookie($this->getLastLoggedUserCookieName());
+
+		if(empty($lastLoggedUser))
+		{
+			return '';
+		}
+
+		return json_decode(
+			$lastLoggedUser,
+			true
+		);
+	}
+
+	/**
+	 * Set current user organization
+	 *
+	 * @return void
+	 */
+	public function getLastLoggedUserName()
+	{
+		$lastLoggedUser = $this->getLastLoggedUser();
+
+		if(!empty($lastLoggedUser))
+		{
+			return $lastLoggedUser['name'];
+		}
+
+		return '';
+	}
+
+	/**
+	 * Set current user organization
+	 *
+	 * @return void
+	 */
+	public function getLastLoggedUserEmail()
+	{
+		$lastLoggedUser = $this->getLastLoggedUser();
+
+		if(!empty($lastLoggedUser))
+		{
+			return $lastLoggedUser['email'];
+		}
+
+		return '';
 	}
 
 	/**
@@ -1552,6 +1640,16 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	public function getCurrentOrganizationCookieName()
 	{
 		return 'current_organization_'.md5(get_class($this));
+	}
+
+	/**
+	 * Get the name of the cookie used to store the current organization id.
+	 *
+	 * @return string
+	 */
+	public function getLastLoggedUserCookieName()
+	{
+		return 'last_logged_user_'.md5(get_class($this));
 	}
 
 	/**
