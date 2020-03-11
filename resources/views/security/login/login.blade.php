@@ -82,7 +82,6 @@
       <small>{!! empty(Config::get('system-security.powered_by'))?Lang::get('security/login.poweredBy'):Config::get('system-security.powered_by') !!}</small>
     </div>
   </div>
-  <button type="button" class="btn btn-outline-dark">Dark</button>
   @if (Config::get('system-security.cdnjs'))
 
   @else
