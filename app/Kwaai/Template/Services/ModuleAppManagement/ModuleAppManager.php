@@ -10,27 +10,16 @@
 namespace Vendor\DecimaModule\Module\Services\ModuleAppManagement;
 
 use App\Kwaai\System\Services\Validation\AbstractLaravelValidator;
-
 use App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface;
-
 use App\Kwaai\Security\Services\JournalManagement\JournalManagementInterface;
-
 use App\Kwaai\Security\Repositories\Journal\JournalInterface;
-
 use Mgallegos\LaravelJqgrid\Encoders\RequestedDataInterface;
-
 use Vendor\DecimaModule\Module\Repositories\ModuleTableName\EloquentModuleTableNameGridRepository;
-
 use Vendor\DecimaModule\Module\Repositories\ModuleTableName\ModuleTableNameInterface;
-
 use Carbon\Carbon;
-
 use Illuminate\Database\DatabaseManager;
-
 use Illuminate\Translation\Translator;
-
 use Illuminate\Config\Repository;
-
 use Illuminate\Cache\CacheManager;
 
 class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppManagementInterface {
@@ -338,7 +327,11 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    */
   public function update(array $input, $ModuleTableName = null, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
   {
-    // $newValues['table_name_id'] = $input['table_name_label'];
+    // if(isset($input['table_name_label']))
+    // {
+    //   $newValues['table_name_id'] = $input['table_name_label'];
+    // }
+
 
     unset($input['_token']);
 

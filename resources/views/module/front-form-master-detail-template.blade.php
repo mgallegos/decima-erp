@@ -1066,83 +1066,56 @@
 <div id='module-app-form-section' class="row collapse in">
 	<div class="col-lg-12 col-md-12">
 		<div class="form-container form-container-followed-by-grid-section">
-			{!! Form::open(array('id' => 'module-app-filters-form', 'url' => URL::to('/'), 'role' => 'form', 'onsubmit' => 'return false;', 'class' => 'form-horizontal')) !!}
-			<div class="row">
-				<div class="col-md-4">
-					<div class="form-group">
-						<!-- {!! Form::label('module-app-name-filter', Lang::get('module::app.name'), array('class' => 'col-sm-2 control-label')) !!} -->
-						<label for="exampleInputName2"  class="col-sm-2 control-label">Fecha y hora de solicitud:</label>
-						<div class="col-sm-10 mg-hm">
-							<input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="form-group">
-						<!-- {!! Form::label('module-app-name-filter', Lang::get('module::app.name'), array('class' => 'col-sm-2 control-label')) !!} -->
-						<label for="exampleInputEmail2" class="col-sm-2 control-label">Nombre</label>
-						<div class="col-sm-10 mg-hm">
-							{!! Form::text('module-app-name', null , array('id' => 'module-app-name', 'class' => 'form-control', 'data-mg-required' => '')) !!}
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="form-group">
-						<!-- {!! Form::label('module-app-name-filter', Lang::get('module::app.model'), array('class' => 'col-sm-2 control-label')) !!} -->
-						<label for="exampleInputEmail2" class="col-sm-2 control-label">Cliente</label>
-						<div class="col-sm-10 mg-hm">
-							{!! Form::autocomplete('module-app-name-filter', array(), array('class' => 'form-control'), 'module-app-name-filter', 'module-app-name-id-filter', null, '', '', 20) !!}
-							{!! Form::hidden('module-app-name-id-filter', null, array('id' => 'module-app-name-id-filter')) !!}
-						</div>
-					</div>
-				</div>
-			</div>
-			{!! Form::close() !!}
-			<!-- {!! Form::open(array('id' => 'module-app-form', 'url' => URL::to('module/category/app'), 'role' => 'form', 'onsubmit' => 'return false;')) !!}
+			{!! Form::open(array('id' => 'module-app-form', 'url' => URL::to('module/category/app'), 'role' => 'form', 'onsubmit' => 'return false;')) !!}
 				<legend id="module-app-form-new-title" class="hidden">{{ Lang::get('module::app.formNewTitle') }}</legend>
 				<legend id="module-app-form-edit-title" class="hidden">{{ Lang::get('module::app.formEditTitle') }}<label class="pull-right module-app-number"></label></legend>
 				<div class="row">
-					<div class="col-md-6 form-division-line">
+					<!-- <div class="col-md-6 form-division-line"> -->
+					<div class="col-md-3">
 						<div class="form-group mg-hm">
 							{!! Form::label('module-app-name', Lang::get('form.name'), array('class' => 'control-label')) !!}
 					    {!! Form::text('module-app-name', null , array('id' => 'module-app-name', 'class' => 'form-control', 'data-mg-required' => '')) !!}
 					    {!! Form::hidden('module-app-id', null, array('id' => 'module-app-id')) !!}
 			  		</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-3">
+						<div class="form-group mg-hm">
+							{!! Form::label('module-app-document-type-label', Lang::get('decima-accounting::journal-management.documentTypeId'), array('class' => 'control-label')) !!}
+							{!! Form::autocomplete('module-app-document-type-label', array(), array('class' => 'form-control'), 'module-app-document-type-label', 'module-app-document-type-id', null, '', '', 10, null, null, false, null, false, false, 'organizationDocumentTypes', 'default') !!}
+							{!! Form::hidden('module-app-document-type-id', null, array('id'  =>  'module-app-document-type-id')) !!}
+			  		</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
 						<div class="form-group mg-hm">
 							{!! Form::label('module-app-phone-number', Lang::get('module::app.phoneNumber'), array('class' => 'control-label')) !!}
 							<div class="input-group">
 								<span class="input-group-addon">
 									<i class="fa fa-phone"></i>
 								</span>
-					    	{!! Form::text('module-app-phone-number', null , array('id' => 'module-app-phone-number', 'class' => 'form-control')) !!}
-					    </div>
-			  		</div>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group mg-hm" style="margin-bottom: 0 !important;">
-									{!! Form::label('module-app-manual-reference', Lang::get('decima-inventory::movement-management.manualReference'), array('class' => 'control-label')) !!}
-									{!! Form::text('module-app-manual-reference', null , array('id' => 'module-app-manual-reference', 'class' => 'form-control')) !!}
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group mg-hm" style="margin-bottom: 0 !important;">
-									{!! Form::label('module-app-status-label', Lang::get('form.status'), array('class' => 'control-label')) !!}
-									<div class="input-group">
-										<span class="input-group-addon"><i class="fa fa-exclamation-triangle"></i></span>
-										{!! Form::text('module-app-status-label', Lang::get('form.P') , array('id' => 'module-app-status-label', 'class' => 'form-control', 'disabled' => '', 'data-label-U' => Lang::get('form.U'), 'data-label-A' => Lang::get('form.A'), 'data-label-P' => Lang::get('form.P'), 'data-default-value' => Lang::get('form.P'))) !!}
-									</div>
-									{!! Form::hidden('module-app-status', 'P', array('id' => 'module-app-status', 'data-default-value' => 'P')) !!}
-					  		</div>
-							</div>
-							<div class="col-md-12">
-								<p class="help-block">{{ Lang::get('decima-inventory::movement-management.statusHelperText') }}</p>
+								{!! Form::text('module-app-phone-number', null , array('id' => 'module-app-phone-number', 'class' => 'form-control')) !!}
 							</div>
 						</div>
 					</div>
+					<div class="col-md-3">
+						<div class="form-group mg-hm" style="margin-bottom: 0 !important;">
+							{!! Form::label('module-app-manual-reference', Lang::get('decima-inventory::movement-management.manualReference'), array('class' => 'control-label')) !!}
+							{!! Form::text('module-app-manual-reference', null , array('id' => 'module-app-manual-reference', 'class' => 'form-control')) !!}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group mg-hm" style="margin-bottom: 0 !important;">
+							{!! Form::label('module-app-status-label', Lang::get('form.status'), array('class' => 'control-label')) !!}
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-exclamation-triangle"></i></span>
+								{!! Form::text('module-app-status-label', Lang::get('form.P') , array('id' => 'module-app-status-label', 'class' => 'form-control', 'disabled' => '', 'data-label-U' => Lang::get('form.U'), 'data-label-A' => Lang::get('form.A'), 'data-label-P' => Lang::get('form.P'), 'data-default-value' => Lang::get('form.P'))) !!}
+							</div>
+							{!! Form::hidden('module-app-status', 'P', array('id' => 'module-app-status', 'data-default-value' => 'P')) !!}
+						</div>
+					</div>
 				</div>
-			{!! Form::close() !!} -->
+			{!! Form::close() !!}
 			{!! Form::open(array('id' => 'module-app-detail-form', 'url' => URL::to('module/category/app'), 'role' => 'form', 'onsubmit' => 'return false;')) !!}
 			<fieldset id="module-app-detail-form-fieldset" disabled="disabled">
 				<legend id="module-app-detail-model-form-new-title" class="">{{ Lang::get('module::app.formDetailTitle') }}</legend>

@@ -35,6 +35,7 @@
 <script src="{{ URL::asset('assets/jsignature-v2.1.2/jSignature.min.js') }}"></script>
 <script src="{{ URL::asset('assets/fullcalendar-v3.9.0/fullcalendar.js') }}"></script>
 <script src="{{ URL::asset('assets/fullcalendar-scheduler-v1.9.4/scheduler.js') }}"></script>
+<script src="{{ URL::asset('assets/sweetalert2-v9.10.0/sweetalert2.all.min.js') }}"></script>
 
 @if (!empty(Config::get('system-security.additional_js')))
 	@foreach (Config::get('system-security.additional_js') as $index => $js)

@@ -7,7 +7,7 @@
 	{
 		$('#email').focus();
 
-		$('#password').onEnter( function()
+		$('#password').onEnter(function()
 		{
 			$('#btn-login').click();
 		});

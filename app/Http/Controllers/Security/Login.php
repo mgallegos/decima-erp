@@ -103,7 +103,8 @@ class Login extends Controller {
 			Cas::authenticate();
 		}
 
-		return $this->View->make('security.login')
+		return $this->View->make('security.login.login')
+		// return $this->View->make('security.login')
 			->with('lastLoggedUserEmail', $this->Auth->getLastLoggedUserEmail());
 	}
 

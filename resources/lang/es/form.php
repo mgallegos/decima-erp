@@ -193,6 +193,8 @@ return array(
 
 	'enterComment' => 'Escriba su comentario',
 
+	'access' => 'Acceder',
+
 	'generate' => 'Generar',
 
 	'generatePdf' => 'Generar PDF',
@@ -248,6 +250,8 @@ return array(
 	'file' => 'Archivo',
 
 	'searchModalTitle' => 'Seleccione el registro que desea editar',
+
+	'tryAgain' => 'Volver a intentar',
 
   'A' => 'Anulado',
 

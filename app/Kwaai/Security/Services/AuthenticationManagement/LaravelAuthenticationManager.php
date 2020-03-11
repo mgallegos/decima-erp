@@ -269,7 +269,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		$this->rules = array(
 			'kwaai_name' => 'honeypot',
-			'kwaai_time' => 'required|honeytime:2'
+			'kwaai_time' => 'required|honeytime:1'
 		);
 	}
 
@@ -346,7 +346,13 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		{
 			// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] System Failed Login Attempt', 'context' => array('email' => $email)), $this));
 
-			return json_encode(array('message' => $this->Lang->get('security/login.failAuthAttempt')));
+			return json_encode(
+				array(
+					'message' => 'failedAttempt',
+					'messageTitle' => $this->Lang->get('security/login.failAuthAttempt'),
+					'messageText' => $this->Lang->get('security/login.tryAgain')
+				)
+			);
 		}
 	}
 
@@ -458,17 +464,31 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			case PasswordBroker::INVALID_USER:
 				// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] User failed to request a password reminder email', 'context' => array('email' => $credentials['email'])), $this));
 
+				$message = 'error';
+
 				$this->Log->warning('[SECURITY EVENT] User failed to request a password reminder email', array('email' => $credentials['email']));
 
-				return $this->Redirector->back()->with('error', $this->Lang->get('security/' . $response));
+				break;
+
+				// return $this->Redirector->back()->with('error', $this->Lang->get('security/' . $response));
 
 			case PasswordBroker::RESET_LINK_SENT:
 				// $this->Event->fire(new OnNewInfoMessage(array('message' => '[SECURITY EVENT] User requested a password reminder email', 'context' => array('email' => $credentials['email'])), $this));
 
+				$message = 'status';
+
 				$this->Log->info('[SECURITY EVENT] User requested a password reminder email', array('email' => $credentials['email']));
 
-				return $this->Redirector->back()->with('status', $this->Lang->get('security/' . $response));
+				break;
+
+				// return $this->Redirector->back()->with('status', $this->Lang->get('security/' . $response));
 		}
+
+		return json_encode( 
+			array(
+				$message => $this->Lang->get('security/' . $response)
+			)
+		);
 	}
 
 	/**

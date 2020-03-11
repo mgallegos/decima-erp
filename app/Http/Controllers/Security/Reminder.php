@@ -75,9 +75,10 @@ class Reminder extends Controller {
 	 */
 	public function getRemind()
 	{
-		return $this->View->make('security/password-remind')
-						->withStatus($this->Session->get('status', false))
-						->withError($this->Session->get('error', false));
+		return $this->View->make('security/login/password-remind')
+			->with('lastLoggedUserEmail', $this->AuthenticationManager->getLastLoggedUserEmail())
+			->withStatus($this->Session->get('status', false))
+			->withError($this->Session->get('error', false));
 	}
 
 	/**
@@ -92,8 +93,8 @@ class Reminder extends Controller {
 		if (is_null($token)) $this->App->abort(404);
 
 		return $this->View->make('security/password-reset')
-						->with('token', $token)
-						->withError($this->Session->get('error', false));
+			->with('token', $token)
+			->withError($this->Session->get('error', false));
 	}
 
 	/**
@@ -106,8 +107,8 @@ class Reminder extends Controller {
 		if (is_null($token)) $this->App->abort(404);
 
 		return $this->View->make('security/user-activation')
-						->with('token', $token)
-						->withError($this->Session->get('error', false));
+			->with('token', $token)
+			->withError($this->Session->get('error', false));
 	}
 
 	/**
@@ -117,7 +118,7 @@ class Reminder extends Controller {
 	 */
 	public function postRemind()
 	{
-		return $this->AuthenticationManager->remindUserPassword($this->Input->all());
+		return $this->AuthenticationManager->remindUserPassword($this->Input->json()->all());
 	}
 
 	/**

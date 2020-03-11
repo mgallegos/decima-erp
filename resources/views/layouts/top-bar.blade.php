@@ -1,10 +1,20 @@
 <nav id="page-navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container-fluid">
  		<div class="navbar-header core-navbar-header">
-			 <!-- <a id="core-mobile-top-bar-link" href="#core-menu" class="core-small-devices-menu"><i class="fa fa-bars fa-2x core-menu-top-bar-link-color"></i></a> -->
-       <a class="navbar-brand" href="{{ AppManager::getBrandUrl() }}" target="_blank">
-         <img src="{{URL::asset('assets/kwaai/images/logo.png')}}">
-       </a>
+			@if(Config::get('system-security.system_logo_topbar_is_visible') === true)
+			<a class="navbar-brand" href="{{ empty(AppManager::getBrandUrl())?URL::to('/'):AppManager::getBrandUrl() }}" target="_blank">
+				@if (!empty(Config::get('system-security.system_logo_public_path')))
+				<img src="{{URL::asset(Config::get('system-security.system_logo_public_path'))}}" style="max-width: 100%;height:19px;">
+				@else
+				<img src="{{URL::asset('assets/kwaai/images/decimaerp.png')}}" style="max-width: 100%;height:19px;">
+				@endif
+			</a>
+			@endif
+			@if(!empty(Config::get('system-security.system_title')) && Config::get('system-security.system_title_topbar_is_visible') === true)
+			<a class="navbar-brand" href="{{ AppManager::getBrandUrl() }}" target="_blank" style="font-size: 22px;">
+				{{ Config::get('system-security.system_title') }}
+			</a>
+			@endif
 		</div>
 		<div class="core-small-devices-menu">
 			<ul class="nav navbar-right">

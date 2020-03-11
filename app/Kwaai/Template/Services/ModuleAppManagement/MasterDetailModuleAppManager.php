@@ -10,31 +10,18 @@
 namespace Vendor\DecimaModule\Module\Services\ModuleAppManagement;
 
 use App\Kwaai\System\Services\Validation\AbstractLaravelValidator;
-
 use App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface;
-
 use App\Kwaai\Security\Services\JournalManagement\JournalManagementInterface;
-
 use App\Kwaai\Security\Repositories\Journal\JournalInterface;
-
 use Mgallegos\LaravelJqgrid\Encoders\RequestedDataInterface;
-
 use Vendor\DecimaModule\Module\Repositories\ModuleApp\EloquentModuleAppGridRepository;
-
 use Vendor\DecimaModule\Module\Repositories\ModuleAppDetail\EloquentModuleAppDetailGridRepository;
-
 use Vendor\DecimaModule\Module\Repositories\ModuleApp\ModuleAppInterface;
-
 use Vendor\DecimaModule\Module\Repositories\ModuleAppDetail\ModuleAppDetailInterface;
-
 use Carbon\Carbon;
-
 use Illuminate\Database\DatabaseManager;
-
 use Illuminate\Translation\Translator;
-
 use Illuminate\Config\Repository;
-
 use Illuminate\Cache\CacheManager;
 
 class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppManagementInterface {
