@@ -308,16 +308,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			die('kwaai_time validation failed!');
 		}
 
-		if($rememberMe == '0')
-		{
-			$rememberMe = false;
-		}
-		else
-		{
-			$rememberMe = true;
-		}
-
-		if ($this->Auth->attempt(array('email' => $email, 'password' => $password, 'is_active' => true), $rememberMe))
+		if ($this->Auth->attempt(array('email' => $email, 'password' => $password, 'is_active' => true), false))
 		{
 			if(strpos($intendedUrl, "logout") !== false)
 			{
@@ -484,7 +475,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 				// return $this->Redirector->back()->with('status', $this->Lang->get('security/' . $response));
 		}
 
-		return json_encode( 
+		return json_encode(
 			array(
 				$message => $this->Lang->get('security/' . $response)
 			)
