@@ -832,9 +832,6 @@ function bindModalMenuEvent(selector, timeout)
   {
     $(selector).find('.modal').each(function(index, element)
     {
-			console.log('API');
-			console.log(API);
-
 			if (empty(API))
 			{
 				return;

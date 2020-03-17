@@ -50,7 +50,7 @@
 <script src="{{ URL::asset('assets/kwaai/js/helpers-v1.1.1.js') }}"></script>
 <script src="{{ URL::asset('assets/kwaai/js/apps-engine-v1.0.3.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery-mg-validation-v0.5/jquery.jqMgVal.src.js') }}"></script>
-<script src="{{ URL::asset('assets/kwaai/js/base-v1.4.3.js') }}"></script>
+<script src="{{ URL::asset('assets/kwaai/js/base-v1.4.4.js') }}"></script>
 
 <script type='text/javascript'>
   $.fn.jqMgVal.defaults.successIconClass = 'fa fa-check-circle';
