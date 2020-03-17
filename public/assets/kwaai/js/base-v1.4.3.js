@@ -826,7 +826,12 @@ function resizeApplicationGrids(timeout, gridClass)
 function bindModalMenuEvent(selector, timeout)
 {
   selector = selector || '.tab-pane.fade.active.in';
-  timeout = timeout || 500;
+	timeout = timeout || 500;
+	
+	if (empty(API))
+	{
+		return;
+	}
 
   setTimeout(function ()
   {
