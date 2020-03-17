@@ -827,16 +827,19 @@ function bindModalMenuEvent(selector, timeout)
 {
   selector = selector || '.tab-pane.fade.active.in';
 	timeout = timeout || 500;
-	
-	if (empty(API))
-	{
-		return;
-	}
 
   setTimeout(function ()
   {
     $(selector).find('.modal').each(function(index, element)
     {
+			console.log('API');
+			console.log(API);
+
+			if (empty(API))
+			{
+				return;
+			}
+
       if(windowWidth >= minWidthExpandedMenu)
       {
         $(element).on('show.bs.modal', function (e)
