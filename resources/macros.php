@@ -651,7 +651,7 @@ Form::macro('journals', function($appPrefix, $appId, $twoColumns = true, $userId
 			";
 });
 
-Form::macro('imageuploader', function($name, $options = array(), $appPrefix, $folder, $minWidth = '""', $sameWidthAsHeight = '""', $sizes = '[]', $isPublic = true, $flag = null, $value = null, $prefixIcon = 'fa-link', $inputGroupSizeClass = '')
+Form::macro('imageuploader', function($name, $options = array(), $appPrefix, $folder, $minWidth = '""', $sameWidthAsHeight = '""', $sizes = '\'\'', $isPublic = true, $flag = null, $value = null, $prefixIcon = 'fa-link', $inputGroupSizeClass = '')
 {
 	$prefix = '';
 

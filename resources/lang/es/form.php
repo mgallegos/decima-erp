@@ -46,12 +46,16 @@ return array(
 	'invaliddateToHelpMessage' => 'La fecha final es inválida.',
 
 	'month' => 'Mes',
+	
+	'months' => 'Meses',
 
 	'of' => 'de',
 
 	'monthOf' => 'Mes de :month',
 
 	'year' => 'Año',
+	
+	'years' => 'Años',
 
 	'gridFooterPageNumber' => ':page de :totalPages',
 
