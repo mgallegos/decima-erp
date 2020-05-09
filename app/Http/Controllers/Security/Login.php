@@ -112,9 +112,19 @@ class Login extends Controller {
 	{
 		return $this->Auth->casLoginAttempt();
 	}
-
+	
 	public function postAuthenticationAttempt()
 	{
 		return $this->Auth->loginAttempt($this->Input->json()->get('email'), $this->Input->json()->get('password'), $this->Input->json()->get('rememberMe'), $this->Session->get('url.intended', $this->Url->to('/dashboard')), $this->Input->json()->all());
+	}
+
+	public function signIn()
+	{	
+		return $this->Auth->apiSignIn($this->Input->all());
+	}
+
+	public function signUp()
+	{
+		return $this->Auth->apiSignUp($this->Input->all());
 	}
 }
