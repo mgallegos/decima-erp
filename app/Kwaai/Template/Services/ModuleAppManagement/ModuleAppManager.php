@@ -157,24 +157,49 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    *
    * @return array
    */
-  public function getSearchModalTableRows($id = null, $organizationId = null, $databaseConnectionName = null, $returnJson = true)
+  public function getSearchModalTableRows($id = null, $input, $pager = false, $organizationId = null, $databaseConnectionName = null, $returnJson = true)
   {
     $rows = array();
+    $limit = $offset = 0;
+    $filter = '';
 
     if(empty($organizationId))
     {
       $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
     }
 
-    $this->ModuleTableName->searchModalTableRows($id, $organizationId, $databaseConnectionName)->each(function($ModuleTableName) use (&$rows)
+    if(!empty($input['filter']))
+    {
+      $filter = $input['filter'];
+    }
+
+    if($pager)
+    {
+      $count = $this->ModuleTableName->searchModalTableRows($id, $organizationId, false, $limit, $offset, $filter, $databaseConnectionName);
+
+      encode_requested_data(
+        $input,
+        $count,
+        $limit,
+        $offset
+      );
+    }
+
+    $this->ModuleTableName->searchModalTableRows($id, $organizationId, false, $limit, $offset, $filter, $databaseConnectionName)->each(function($ModuleTableName) use (&$rows)
     {
       $rows['key' . $ModuleTableName->id] = (array)$ModuleTableName;
-
-      // $rows['key' . $ModuleTableName->id] = array(
-      //   'label' => $ModuleTableName->code . ' - ' . $ModuleTableName->name,
-      //   'value' => $ModuleTableName->id,
-      // );
     });
+
+    if($pager)
+    {
+      $rows = array(
+        'from' => $offset,
+        'to' => $limit,
+        'page' => $input['page'],
+        'records' => $count,
+        'rows' => $rows
+      );
+    }
 
     if($returnJson)
     {
@@ -310,7 +335,14 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     return json_encode(
       array(
         'success' => $this->Lang->get('form.defaultSuccessSaveMessage'),
-        'smtRow' => $this->getSearchModalTableRows($ModuleTableName->id, $organizationId, $databaseConnectionName, false)
+        'smtRow' => $this->getSearchModalTableRows(
+          $ModuleTableName->id,
+          array(),
+          false,
+          $organizationId, 
+          $databaseConnectionName, 
+          false
+        )
       )
     );
   }
@@ -465,7 +497,14 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     return json_encode(
       array(
         'success' => $this->Lang->get('form.defaultSuccessUpdateMessage'),
-        'smtRow' => $this->getSearchModalTableRows($ModuleTableName->id, $organizationId, $databaseConnectionName, false)
+        'smtRow' => $this->getSearchModalTableRows(
+          $ModuleTableName->id, 
+          array(),
+          false,
+          $organizationId, 
+          $databaseConnectionName, 
+          false
+        )
       )
     );
   }

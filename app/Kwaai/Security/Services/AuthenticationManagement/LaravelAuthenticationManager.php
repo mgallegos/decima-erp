@@ -10,49 +10,27 @@
 namespace App\Kwaai\Security\Services\AuthenticationManagement;
 
 use Carbon\Carbon;
-
 use Illuminate\Validation\Factory;
-
 use Illuminate\Contracts\Hashing\Hasher;
-
 use Illuminate\Auth\Passwords\PasswordBroker;
-
 use Illuminate\Auth\Passwords\PasswordBrokerManager;
-
 use Illuminate\Config\Repository;
-
 use Illuminate\Http\Request;
-
 use Illuminate\Cookie\CookieJar;
-
 use Illuminate\Session\SessionManager;
-
 use Illuminate\Routing\Redirector;
-
 use Illuminate\Log\Writer;
-
 use Illuminate\Routing\UrlGenerator;
-
 use Illuminate\Auth\AuthManager;
-
 use Illuminate\Translation\Translator;
-
 use Illuminate\Cache\CacheManager;
-
 use App\Kwaai\Organization\Organization;
-
 use App\Kwaai\Security\Repositories\User\UserInterface;
-
 use App\Kwaai\System\Repositories\Currency\CurrencyInterface;
-
 use App\Kwaai\System\Repositories\Country\CountryInterface;
-
 use App\Kwaai\System\Services\Validation\AbstractLaravelValidator;
-
 use App\Kwaai\Organization\Repositories\Organization\OrganizationInterface;
-
 use App\Kwaai\Security\Services\Authentication\AuthenticationInterface;
-
 use Xavrsl\Cas\CasManager;
 
 class LaravelAuthenticationManager extends AbstractLaravelValidator implements AuthenticationManagementInterface {
@@ -230,46 +208,129 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	)
 	{
 		$this->Organization = $Organization;
-
 		$this->User = $User;
-
 		$this->Currency = $Currency;
-
 		$this->Country = $Country;
-
 		$this->Auth = $Auth;
-
 		$this->Lang = $Lang;
-
 		$this->Cache = $Cache;
-
 		$this->Url = $Url;
-
 		$this->Log = $Log;
-
 		$this->Redirector = $Redirector;
-
 		$this->Cookie = $Cookie;
-
 		$this->Input = $Input;
-
 		$this->Config = $Config;
-
 		$this->Password = $Password;
-
 		$this->Hash = $Hash;
-
 		$this->Session = $Session;
-
 		$this->Validator = $Validator;
-
 		$this->Cas = $Cas;
-
 		$this->defaultDatabaseConnectionName = 'default';
-
 		$this->rules = array(
 			'kwaai_name' => 'honeypot',
 			'kwaai_time' => 'required|honeytime:1'
+		);
+	}
+
+	/**
+	 * Api sign up with email and password
+	 *
+	 * @param string $email
+	 * 	User email
+	 * @param string $password
+	 * 	User password
+	 * @param  string $rememberMe
+	 * 	"1" if the user wants to be "remember" by the application, null otherwise.
+	 * @param  string $intendedUrl
+	 * 	URL to redirect the user after login.
+	 * @param array $input
+	 *
+	 * @return JSON encoded string
+	 *  A string as follows:
+	 *  In case of success: {"message":"success","url":"$url"}
+	 *  In case of failure: {"message":"$failAuthAttemptMessage"}
+	 */
+	public function apiSignUp(array $input)
+	{
+		// Sign up with email / password
+		// You can create a new email and password user by issuing an HTTP POST request to the Auth signupNewUser endpoint.
+		
+		// https://firebase.google.com/docs/reference/rest/auth#section-create-email-password
+
+		// example returned data
+
+		// data:
+		// 	kind: "identitytoolkit#SignupNewUserResponse"
+		// 	idToken: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgzYTczOGUyMWI5MWNlMjRmNDM0ODBmZTZmZWU0MjU4Yzg0ZGI0YzUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vdmlydHVhbC1jYWlybi0yNjUxMDIiLCJhdWQiOiJ2aXJ0dWFsLWNhaXJuLTI2NTEwMiIsImF1dGhfdGltZSI6MTU4NTkzNjQ0MywidXNlcl9pZCI6IlRlNE1aV2hwY2dUT2tJNnVta1FUa0liYkttdjIiLCJzdWIiOiJUZTRNWldocGNnVE9rSTZ1bWtRVGtJYmJLbXYyIiwiaWF0IjoxNTg1OTM2NDQzLCJleHAiOjE1ODU5NDAwNDMsImVtYWlsIjoidGVzdEBoZWxsby5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsidGVzdEBoZWxsby5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.Dwrs6BwiHDsBROSh3oMZvmlioKCk6DAbO5_eVe3t3NX4Jqpt3nJMwP7AVjDfer2ITjtFCK6hcSqlOpJx688mWEYnQjH188WD_8ljnWKBMFymWOkvzfIDSlo046R_NQpx7SJiRDqm8op6xsNCL9x5hrXw467lgNQOuEuyQfGpXzM_OmMBfskTJZdmbzhK8D_CyMzYsrH4Gw37663oDQGRHCttOQq83H8No1vyokGP26y1sEXcMFou95xs_6UWmjEZXm6sNODqS2KX1mjEbwmb3S9xYaB36msPF3pb74_lso1yWmWhS-9Pln6YVAE1RXfIEcbtKjW5o5u8L95p7J9SCA"
+		// 	email: "test@hello.com"
+		// 	refreshToken: "AE0u-Nf-hPw1ApBlTwxkWsHnCwLs9RFxBc1S02mhnSV0wXA1fj3LHrfZoaJTOrseddPN9Ga9jLAkcazWIev8A3onivp8qreTwib6IP9Rk7ssN2JwXWBc7eUOECXso_6cbCpLTG2RHqM66Pkvm-vAz6ZCPfdhCBSW89UQm5f-VXwcgzXRa06rMUm5rGjNOhWwi4QfErJf3XhaRJofyGDBlbd_OEz2z3Mn9A"
+		// 	expiresIn: "3600"
+		// 	localId: "Te4MZWhpcgTOkI6umkQTkIbbKmv2"
+	}
+
+	/**
+	 * Api sign in with email and password
+	 *
+	 * @param string $email
+	 * 	User email
+	 * @param string $password
+	 * 	User password
+	 * @param  string $rememberMe
+	 * 	"1" if the user wants to be "remember" by the application, null otherwise.
+	 * @param  string $intendedUrl
+	 * 	URL to redirect the user after login.
+	 * @param array $input
+	 *
+	 * @return JSON encoded string
+	 *  A string as follows:
+	 *  In case of success: {"message":"success","url":"$url"}
+	 *  In case of failure: {"message":"$failAuthAttemptMessage"}
+	 */
+	public function apiSignIn(array $input)
+	{
+		// Sign in with email / password
+		// https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password
+
+		if($input['key'] != $this->Config->get('system-security.api_key'))
+		{
+			throw new \Exception("Invalid key", 1);
+		}
+
+		if($this->Auth->attempt(array('email' => $input['email'], 'password' => $input['password'], 'is_active' => true), false))
+		{
+			$token = str_random(20);
+			$authUser = $this->Auth->user()->toArray();
+			$authUser['organization_id'] = $authUser['default_organization'];
+			$organization = $this->getOrganization($authUser['default_organization']);
+			$authUser['organization_name'] = $organization['name'];
+			$authUser['database_connection_name'] = $organization['database_connection_name'];
+			$authUser['article_images_folder_id'] = $organization['article_images_folder_id'];
+			$authUser['default_category_id'] = $organization['default_category_id'];
+			$authUser['default_article_type_id'] = $organization['default_article_type_id'];
+
+			$this->Cache->put($token, json_encode($authUser), $this->Config->get('session.lifetime'));
+
+			return response()->json(
+				array(
+					'message' => '',
+					'idToken' => $token, 
+					// 'localId' => $authUser['id'], 
+					'expiresIn' => $this->Config->get('session.lifetime') * 60, 
+					'organizationId' => $authUser['default_organization'], 
+					'costPricePrecision' => $organization['cost_price_precision'], 
+					'currencySymbol' => $this->getOrganizationCurrencySymbol($authUser['default_organization']), 
+					'name' => $authUser['firstname'],
+					'input' => $authUser
+				)
+			);
+		}
+
+		return response()->json(
+			array(
+				'message' => 'failedAttempt',
+				'messageTitle' => $this->Lang->get('security/login.failAuthAttempt'),
+				'messageText' => $this->Lang->get('security/login.tryAgain')
+			)
 		);
 	}
 
@@ -596,18 +657,13 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function isUserGuest()
 	{
-		// return $this->Auth->guest();
-
 		if($this->Session->has('loggedUser'))
 		{
 			return false;
 		}
 
 		return true;
-		// // var_dump('isUserGuest');
-		// return $this->Auth->guest();
 	}
-
 
 	/**
 	 * Find out if an user is root
@@ -620,7 +676,6 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 */
 	public function isUserRoot($id = null)
 	{
-		// var_dump('isUserRoot');
 		if(empty($id))
 		{
 			$id = $this->getLoggedUserId();
@@ -920,6 +975,31 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 *
 	 * @return int
 	 */
+	public function getApiLoggedUser($token)
+	{
+		if(empty($token))
+		{
+			throw new \Exception("Empty token", 1);
+		}
+
+		if($token == $this->Config->get('system-security.demo_api_token'))
+		{
+			return $this->Config->get('system-security.demo_api_user');
+		}
+
+		if($this->Cache->has($token))
+		{
+			return  json_decode($this->Cache->get($token), true);
+		}
+		
+		throw new \Exception("Invalid token", 1);
+	}
+
+	/**
+	 * Get logged user ID
+	 *
+	 * @return int
+	 */
 	public function getSessionLoggedUser()
 	{
 		if($this->Session->has('loggedUser'))
@@ -1022,6 +1102,28 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*
 	* @return string
 	*/
+	public function getOrganization($organizationId)
+	{
+		if($this->Cache->has('organization' . $organizationId))
+		{
+			$organization = json_decode($this->Cache->get('organization' . $organizationId), true);
+		}
+		else
+		{
+			$organization = $this->Organization->byId($organizationId)->toArray();
+			$this->Cache->put('organization' . $organizationId, json_encode($organization), 360);
+		}
+
+		return $organization;
+	}
+
+	/**
+	* Get organization connection
+	*
+	* @param  int $value organization id
+	*
+	* @return string
+	*/
 	public function getOrganizationConnection($organizationId)
 	{
 		if($this->Cache->has('organization' . $organizationId))
@@ -1035,6 +1137,39 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		}
 
 		return $organization['database_connection_name'];
+	}
+
+
+	/**
+	* Get organization connection
+	*
+	* @param  int $value organization id
+	*
+	* @return string
+	*/
+	public function getOrganizationCurrencySymbol($organizationId)
+	{
+		if($this->Cache->has('organization' . $organizationId))
+		{
+			$organization = json_decode($this->Cache->get('organization' . $organizationId), true);
+		}
+		else
+		{
+			$organization = $this->Organization->byId($organizationId)->toArray();
+			$this->Cache->put('organization' . $organizationId, json_encode($organization), 360);
+		}
+
+		if($this->Cache->has('currency' . $organization['currency_id']))
+		{
+			$currency = json_decode($this->Cache->get('currency' . $organization['currency_id']), true);
+		}
+		else
+		{
+			$currency = $this->Currency->byId($organization['currency_id'])->toArray();
+			$this->Cache->put('currency' . $organization['currency_id'], json_encode($currency), 360);
+		}
+
+		return $currency['symbol'];
 	}
 
 	/**

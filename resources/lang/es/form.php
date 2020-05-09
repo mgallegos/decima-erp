@@ -85,6 +85,10 @@ return array(
 
 	'defaultVoidMessage' => 'El registro se anuló exitosamente.',
 
+	'defaultAlreadyAuthorizeMessage' => 'El registro ya se encuentra autorizado.',
+
+	'defaultAlreadyVoidMessage' => 'El registro ya se encuentra anulado.',
+
 	'defaultErrorMessage' => 'Su petición no ha podido ser procesada, por favor intente de nuevo más tarde.',
 
 	'tokenMismatchException' => 'El token de seguridad de su sesión ha expirado, por seguridad se procederá a refrescar la ventana de su navegador.',

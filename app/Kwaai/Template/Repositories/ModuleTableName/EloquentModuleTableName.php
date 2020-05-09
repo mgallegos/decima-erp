@@ -10,11 +10,8 @@
 namespace Vendor\DecimaModule\Module\Repositories\ModuleTableName;
 
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Database\DatabaseManager;
-
 use Illuminate\Database\Eloquent\Collection;
-
 use Vendor\DecimaModule\Module\ModuleTableName;
 
 class EloquentModuleTableName implements ModuleTableNameInterface {
@@ -46,11 +43,8 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
   public function __construct(Model $ModuleTableName, DatabaseManager $DB, $databaseConnectionName)
   {
     $this->ModuleTableName = $ModuleTableName;
-
     $this->DB = $DB;
-
     $this->databaseConnectionName = $databaseConnectionName;
-
     $this->ModuleTableName->setConnection($databaseConnectionName);
   }
 
@@ -71,7 +65,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    *
    * @return Collection
    */
-  public function searchModalTableRows($id = null, $organizationId, $databaseConnectionName = null)
+  public function searchModalTableRows($id = null, $organizationId, $count = false, $limit = null, $offset = null, $filter = null, $databaseConnectionName = null)
   {
     if(empty($databaseConnectionName))
     {
@@ -89,6 +83,32 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
     if(!empty($id))
     {
       $query->where('t0.id', '=', $id);
+    }
+
+    if(!empty($filter))
+    {
+      $query->where(function($dbQuery) use ($filter)
+      {
+        foreach (array('column1', 'column2') as $key => $value)
+        {
+          $dbQuery->orWhere($value, 'like', '%' . str_replace(' ', '%', $filter) . '%');
+        }
+      });
+    }
+
+    if($count)
+    {
+      return $query->count();
+    }
+
+    if(!empty($limit))
+    {
+      $query->take($limit);
+    }
+
+    if(!empty($offset) && $offset != 0)
+    {
+      $query->skip($offset);
     }
 
     return new Collection(
@@ -323,6 +343,29 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
     $this->DB->connection($databaseConnectionName)
       ->table($this->getTable())
       ->where('column_name', '=', $id)
+      ->delete();
+
+    return true;
+  }
+
+  /**
+   * Mass detele by column
+   *
+   * @param integer $fileId
+   *
+   *
+   * @return boolean
+   */
+  public function massDeleteByColumn($column, $value, $databaseConnectionName = null)
+  {
+    if(empty($databaseConnectionName))
+    {
+      $databaseConnectionName = $this->databaseConnectionName;
+    }
+
+    $this->DB->connection($databaseConnectionName)
+      ->table($this->getTable())
+      ->where($column, '=', $value)
       ->delete();
 
     return true;
