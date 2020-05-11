@@ -15,9 +15,15 @@
 </style>
 <script type="text/javascript">
 
+	function moduleAppEnableDetailForm()
+	{
+		$('#module-app-detail-form-fieldset').removeAttr('disabled');
+	}
+
 	function moduleAppDisabledDetailForm()
 	{
 		$('#module-app-detail-form-fieldset').attr('disabled', 'disabled');
+		$('#module-app-detail-btn-toolbar').disabledButtonGroup();
 	}
 
 	function moduleAppOnSelectRowEvent()
@@ -37,11 +43,11 @@
 			// cleanFiles('module-app-');
 		}
 
-		$('#module-app-btn-group-2').enableButtonGroup();
+		$('#module-app-btn-group-2, #module-app-btn-group-4').enableButtonGroup();
 
 		// if(rowData.module_app_status != 'P')
 		// {
-		// 	$('#module-app-btn-authorize, #module-app-btn-edit').attr('disabled', 'disabled');
+		// 	$('#module-app-btn-authorize').attr('disabled', 'disabled');
 		// }
 		//
 		// if(rowData.module_app_status == 'A')
@@ -69,6 +75,16 @@
 		}
 	}
 
+	function moduleAppEnableSelectedField()
+	{
+		//enable selected fields that could be disabled after authorize or void when form is visible	
+	}
+	
+	function moduleAppDisableSelectedField()
+	{
+		//disable selected fields after authorize or void when form is visible	
+	}
+
 	function moduleAppOnLoadCompleteEvent()
 	{
 		// $('#module-app-front-detail-grid').jqGrid('clearGridData');
@@ -90,6 +106,61 @@
 		// $('#module-app-detail-').val($.fmatter.NumberFormat(amount, $.fn.jqMgVal.defaults.validators.money.formatter));
 	}
 
+	function moduleAppInitForm(data)
+	{
+		data = data || {};
+
+		$('#module-app-form, #module-app-detail-form').jqMgVal('clearForm');
+
+		$('#module-app-btn-toolbar, #module-app-detail-btn-toolbar').disabledButtonGroup();
+
+		// $('#module-app-status-label').val($('#module-app-status-label').attr('data-default-value'));
+		// $('#module-app-status').val($('#module-app-status').attr('data-default-value'));
+
+		$('#module-app-btn-new, #module-app-btn-edit').removeAttr('disabled');
+
+		$('#module-app-btn-group-3').enableButtonGroup();
+
+		$('#module-app-form-new-title').removeClass('hidden');
+
+		$('#module-app-form-edit-title').addClass('hidden');
+
+		moduleAppEnableSelectedField();
+		moduleAppDisabledDetailForm();
+
+		if(!empty(data))
+		{
+			$('#module-app-btn-group-2, #module-app-btn-group-3, #module-app-btn-group-4').enableButtonGroup();
+			$('#module-app-detail-btn-group-1, #module-app-detail-btn-group-3').enableButtonGroup();
+
+			$('#module-app-form-edit-title').removeClass('hidden');
+
+			$('#module-app-form-new-title').addClass('hidden');
+
+			$('#module-app-id, #module-app-detail-master-id').val(data.module_app_id);
+
+			// $('#module-app-label').setAutocompleteLabel(data.module_app_id);
+
+			// $('#module-app-number').attr('data-number', data.module_app_number);
+			$('#module-app-btn-view').attr('disabled', 'disabled');
+
+			// $('#module-app-number').html($('#module-app-number').attr('data-default-label').replace(':number', data.module_app_number));
+			// $('#module-app-number').html(rowData.module_app_number);
+
+			// $('#module-app-status-label').val($('#module-app-status-label').attr('data-label-' + data.module_app_status));
+
+			$('#module-app-detail-btn-refresh').click();
+
+			moduleAppEnableDetailForm();
+
+			if(data.module_app_status == 'U' || data.module_app_status == 'A')
+			{
+				moduleAppDisableSelectedField();
+				moduleAppDisabledDetailForm();
+			}
+		}
+	}
+
 	$(document).ready(function()
 	{
 		loadSmtRows('moduleAppSmtRows', $('#module-app-form').attr('action') + '/smt-rows');
@@ -100,6 +171,11 @@
 
 		$('#module-app-form, #module-app-detail-form').jqMgVal('addFormFieldsValidations');
 
+		$('#module-app-grid-section').on('hide.bs.collapse', function ()
+		{
+			$('#module-app-filters').hide();
+		});
+		
 		$('#module-app-grid-section').on('hidden.bs.collapse', function ()
 		{
 			$($('#module-app-journals-section').attr('data-target-id')).collapse('show');
@@ -131,18 +207,19 @@
 
 			$('.decima-erp-tooltip').tooltip('hide');
 
-      $('#module-app-form, #module-app-detail-form').jqMgVal('clearForm');
+      // $('#module-app-form, #module-app-detail-form').jqMgVal('clearForm');
 
-			$('#module-app-detail-btn-toolbar, #module-app-ot-btn-toolbar, #module-app-btn-toolbar').disabledButtonGroup();
+			// $('#module-app-detail-btn-toolbar, #module-app-ot-btn-toolbar, #module-app-btn-toolbar').disabledButtonGroup();
 
-			// $('#module-app-status-label').val($('#module-app-status-label').attr('data-default-value'));
-			// $('#module-app-status').val($('#module-app-status').attr('data-default-value'));
+			// // $('#module-app-status-label').val($('#module-app-status-label').attr('data-default-value'));
+			// // $('#module-app-status').val($('#module-app-status').attr('data-default-value'));
 
-			$('#module-app-btn-new, #module-app-btn-edit').removeAttr('disabled');
+			// $('#module-app-btn-new, #module-app-btn-edit').removeAttr('disabled');
 
-			$('#module-app-btn-group-3').enableButtonGroup();
+			// $('#module-app-btn-group-3').enableButtonGroup();
 
-			moduleAppDisabledDetailForm();
+			// moduleAppEnableSelectedField();
+			// moduleAppDisabledDetailForm();
 
 			if(!$('#module-app-form-section').is(":visible"))
 			{
@@ -157,13 +234,11 @@
 				$('#module-app-back-detail-grid').jqGrid('clearGridData');
 			}
 
-			$('#module-app-filters').hide();
+			// $(this).removeAttr('disabled');
 
-			$(this).removeAttr('disabled');
+			// $('#module-app-form-new-title').removeClass('hidden');
 
-			$('#module-app-form-new-title').removeClass('hidden');
-
-			$('#module-app-form-edit-title').addClass('hidden');
+			// $('#module-app-form-edit-title').addClass('hidden');
 		});
 
 		$('#module-app-btn-refresh').click(function()
@@ -237,37 +312,24 @@
 					return;
 				}
 
-				$('#module-app-btn-toolbar').disabledButtonGroup();
+				// $('#module-app-btn-toolbar').disabledButtonGroup();
+				// $('#module-app-detail-btn-toolbar').disabledButtonGroup();
 
-				$('#module-app-btn-group-3').enableButtonGroup();
+				// $('#module-app-btn-group-2, #module-app-btn-group-3').enableButtonGroup();
+				// $('#module-app-detail-btn-group-1, #module-app-detail-btn-group-3').enableButtonGroup();
 
-				$('#module-app-btn-new, #module-app-btn-edit, #module-app-btn-upload, #module-app-btn-show-files, #module-app-btn-show-history').removeAttr('disabled');
+				// $('#module-app-btn-new, #module-app-btn-edit, #module-app-btn-upload, #module-app-btn-show-files, #module-app-btn-show-history').removeAttr('disabled');
 
-				$('#module-app-form-edit-title').removeClass('hidden');
+				// $('#module-app-form-edit-title').removeClass('hidden');
 
 				rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
 
 				populateFormFields(rowData);
-
-				$('#module-app-filters').hide();
+				moduleAppInitForm(rowData);
 
 				$('#module-app-journals-section').attr('data-target-id', '#module-app-form-section');
 
 				$('#module-app-grid-section').collapse('hide');
-
-				$('#module-app-detail-form-fieldset').removeAttr('disabled');
-
-				$('#module-app-id').val(rowData.module_app_id);
-				$('#module-app-detail-master-id').val(rowData.module_app_id);
-
-				// $('.module-app-number').html(rowData.module_app_number);
-
-				$('#module-app-detail-btn-refresh').click();
-
-				$('#module-app-detail-btn-toolbar').disabledButtonGroup();
-
-				$('#module-app-detail-btn-group-1').enableButtonGroup();
-				$('#module-app-detail-btn-group-3').enableButtonGroup();
 			}
 			else if($('#module-app-journals-section').attr('data-target-id') == '#module-app-form-section')
 			{
@@ -279,7 +341,6 @@
 
 			}
 		});
-
 
 		$('#module-app-detail-btn-edit').click(function()
 		{
@@ -371,10 +432,7 @@
 				id = $('#module-app-id').val();
 			}
 
-			if($('#module-app-btn-file-modal-delete').attr('data-system-reference-id') != id)
-			{
-				getElementFiles('module-app-', id);
-			}
+			getElementFiles('module-app-', id);
 
 			$.scrollTo({top: $('#module-app-file-viewer').offset().top - 100, left:0});
 		});
@@ -488,39 +546,66 @@
 
 			$('.decima-erp-tooltip').tooltip('hide');
 
-			if($('#module-app-journals-section').attr('data-target-id') == '')
+			// if($('#module-app-journals-section').attr('data-target-id') == '')
+			// {
+
+			// }
+			// else
+			// {
+
+			// }
+
+			if($('#module-app-grid').is(":visible"))
 			{
 				if(!$('#module-app-grid').isRowSelected())
 				{
-					$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
-
+					$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 20000);
 					return;
 				}
 
 				rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
-
-				$('#module-app-ma-authorize-message').html($('#module-app-ma-authorize-message').attr('data-default-label').replace(':name', rowData.name));
+				name = rowData.module_app_name;
+				// number = rowData.module_app_number;;
 			}
 			else
 			{
-
+				name = $('#module-app-name').val();
+				// number = $('#module-app-number').attr('data-number');
 			}
+
+			$('#module-app-ma-authorize-message').html($('#module-app-ma-authorize-message').attr('data-default-label').replace(':name', name));
+			// $('#module-app-ma-authorize-message').html($('#module-app-ma-authorize-message').attr('data-default-label').replace(':number', number));
 
 			$('#module-app-ma').modal('show');
 		});
 
 		$('#module-app-ma-btn-authorize').click(function()
 		{
-			var id, url;
+			var id, url = $('#module-app-form').attr('action') + '/authorize-master';
 
-			if($('#module-app-journals-section').attr('data-target-id') == '')
+			// if($('#module-app-journals-section').attr('data-target-id') == '')
+			// {
+
+			// }
+			// else
+			// {
+
+			// }
+
+			if($('#module-app-grid').is(":visible"))
 			{
-			  url = $('#module-app-form').attr('action') + '/authorize-master';
-			  id = $('#module-app-grid').getSelectedRowId('module_app_id');
+				if(!$('#module-app-grid').isRowSelected())
+				{
+					$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 20000);
+					return;
+				}
+
+				rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
+				id = rowData.module_app_id;
 			}
 			else
 			{
-
+				id = $('#module-app-id').val();
 			}
 
 			$.ajax(
@@ -548,16 +633,27 @@
 				{
 					if(json.success)
 					{
-						$('#module-app-btn-refresh').click();
-						$("#module-app-btn-group-2").disabledButtonGroup();
+						if($('#module-app-form-section').is(":visible"))
+						{
+							moduleAppDisableSelectedField();
+							moduleAppDisabledDetailForm();
+						}
+						else
+						{
+							$('#module-app-btn-refresh').click();
+						}
+						
 						$('#module-app-btn-toolbar').showAlertAfterElement('alert-success alert-custom',json.success, 5000);
 					}
 
 					if(json.info)
 					{
-						$('#module-app-btn-refresh').click();
-						$("#module-app-btn-group-2").disabledButtonGroup();
-						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 5000);
+						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 20000);
+					}
+
+					if($('#module-app-form-section').is(":visible") && !empty(json.newStatus))
+					{
+						$('#module-app-status-label').val($('#module-app-status-label').attr('data-label-' + json.newStatus));
 					}
 
 					if(!empty(json.smtRow))
@@ -586,38 +682,66 @@
 
 			$('.decima-erp-tooltip').tooltip('hide');
 
-			if($('#module-app-journals-section').attr('data-target-id') == '')
+			// if($('#module-app-journals-section').attr('data-target-id') == '')
+			// {
+
+			// }
+			// else
+			// {
+
+			// }
+
+			if($('#module-app-grid').is(":visible"))
 			{
 				if(!$('#module-app-grid').isRowSelected())
 				{
-					$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 5000);
+					$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 20000);
 					return;
 				}
 
 				rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
-
-				$('#module-app-mv-void-message').html($('#module-app-mv-void-message').attr('data-default-label').replace(':name', rowData.name));
+				name = rowData.module_app_name;
+				// number = rowData.module_app_number;;
 			}
 			else
 			{
-
+				name = $('#module-app-name').val();
+				// number = $('#module-app-number').attr('data-number');
 			}
+
+			$('#module-app-mv-void-message').html($('#module-app-mv-void-message').attr('data-default-label').replace(':name', name));
+			// $('#module-app-mv-void-message').html($('#module-app-mv-void-message').attr('data-default-label').replace(':number', number));
 
 			$('#module-app-mv').modal('show');
 		});
 
 		$('#module-app-mv-btn-void').click(function()
 		{
-			var id, url;
+			var id, url = $('#module-app-form').attr('action') + '/void-master';;
 
-			if($('#module-app-journals-section').attr('data-target-id') == '')
+			// if($('#module-app-journals-section').attr('data-target-id') == '')
+			// {
+
+			// }
+			// else
+			// {
+
+			// }
+
+			if($('#module-app-grid').is(":visible"))
 			{
-			  url = $('#module-app-form').attr('action') + '/void-master';
-			  id = $('#module-app-grid').getSelectedRowId('module_app_id');
+				if(!$('#module-app-grid').isRowSelected())
+				{
+					$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom', lang.invalidSelection, 20000);
+					return;
+				}
+
+				rowData = $('#module-app-grid').getRowData($('#module-app-grid').jqGrid('getGridParam', 'selrow'));
+				id = rowData.module_app_id;
 			}
 			else
 			{
-
+				id = $('#module-app-id').val();
 			}
 
 			$.ajax(
@@ -645,16 +769,27 @@
 				{
 					if(json.success)
 					{
-						$('#module-app-btn-refresh').click();
-						$("#module-app-btn-group-2").disabledButtonGroup();
+						if($('#module-app-form-section').is(":visible"))
+						{
+							moduleAppDisableSelectedField();
+							moduleAppDisabledDetailForm();
+						}
+						else
+						{
+							$('#module-app-btn-refresh').click();
+						}
+
 						$('#module-app-btn-toolbar').showAlertAfterElement('alert-success alert-custom',json.success, 5000);
 					}
 
 					if(json.info)
 					{
-						$('#module-app-btn-refresh').click();
-						$("#module-app-btn-group-2").disabledButtonGroup();
-						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 5000);
+						$('#module-app-btn-toolbar').showAlertAfterElement('alert-info alert-custom',json.info, 20000);
+					}
+
+					if($('#module-app-form-section').is(":visible") && !empty(json.newStatus))
+					{
+						$('#module-app-status-label').val($('#module-app-status-label').attr('data-label-' + json.newStatus));
 					}
 
 					if(!empty(json.smtRow))
@@ -770,7 +905,8 @@
 							{
 								$('#module-app-id').val(json.id);
 								$('#module-app-detail-master-id').val(json.id);
-								// $('.module-app-number').html('#' + json.number);
+								// $('#module-app-number').html($('#module-app-number').attr('data-default-label').replace(':number', json.number));
+								// $('#module-app-number').html(json.number);
 							}
 
 							if(action == 'edit')
@@ -925,6 +1061,7 @@
 			$('#module-app-journals-section').attr('data-target-id', '');
 
 			moduleAppDisabledDetailForm();
+			moduleAppEnableSelectedField();
 		});
 
 		$('#module-app-btn-clear-filter').click(function()
@@ -986,8 +1123,8 @@
 
 			$('#module-app-id').val(rowData.module_app_id);
 			$('#module-app-detail-master-id').val(rowData.module_app_id);
-
-			// $('.module-app-number').html(rowData.module_app_number);
+			// $('#module-app-number').html($('#module-app-number').attr('data-default-label').replace(':number', rowData.module_app_number));
+			// $('#module-app-number').html(rowData.module_app_number);
 
 			$('#module-app-detail-btn-refresh').click();
 
@@ -1068,7 +1205,7 @@
 		<div class="form-container form-container-followed-by-grid-section">
 			{!! Form::open(array('id' => 'module-app-form', 'url' => URL::to('module/category/app'), 'role' => 'form', 'onsubmit' => 'return false;')) !!}
 				<legend id="module-app-form-new-title" class="hidden">{{ Lang::get('module::app.formNewTitle') }}</legend>
-				<legend id="module-app-form-edit-title" class="hidden">{{ Lang::get('module::app.formEditTitle') }}<label class="pull-right module-app-number"></label></legend>
+				<legend id="module-app-form-edit-title" class="hidden">{{ Lang::get('module::app.formEditTitle') }}<label id="module-app-number" class="pull-right" data-default-label="{{ Lang::get('module::app.numberLabel') }}"></label></legend>
 				<div class="row">
 					<!-- <div class="col-md-6 form-division-line"> -->
 					<div class="col-md-3">

@@ -308,6 +308,8 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			$authUser['default_category_id'] = $organization['default_category_id'];
 			$authUser['default_article_type_id'] = $organization['default_article_type_id'];
 			$authUser['default_increase_movement_type_id'] = $organization['default_increase_movement_type_id'];
+			$authUser['default_decrease_movement_type_id'] = $organization['default_decrease_movement_type_id'];
+			$authUser['default_warehouse_id'] = $organization['default_warehouse_id'];
 
 			$this->Cache->put($token, json_encode($authUser), $this->Config->get('session.lifetime'));
 
