@@ -8,24 +8,15 @@
  */
 
 return array(
-
 	'welcome' => 'Le damos la bienvenida',
-
 	'email' => 'Ingrese su correo electrónico',
-
 	'password' => 'Ingrese su contraseña',
-
 	'change' => 'Haga clic aquí para ingresar con un correo electrónico diferente.',
-
 	'forgottenPassword' => '¿Olvidó su contraseña?',
-
 	'failAuthAttempt' => 'Su correo electrónico y/o contraseña es incorrecto.',
-
+	'usernameFailAuthAttempt' => 'Su usuario y/o contraseña es incorrecto.',
 	'tryAgain' => 'Vuelva a intentarlo o haga clic en "¿Olvidó su contraseña?" para restablecerla.',
-
 	'notExistingUser' => 'No existe un usuario con sus credenciales en el sistema.',
-
-	'notActiveUser' => 'Su usuario se encuentra inactivo en el sistema.',
-
+	'notActiveUser' => 'Su cuenta se encuentra inactiva.',
 	'poweredBy' => 'Desarrollado bajo la plaforma <a href="https://www.decimaerp.com" target="_blank">DecimaERP</a>',
 );

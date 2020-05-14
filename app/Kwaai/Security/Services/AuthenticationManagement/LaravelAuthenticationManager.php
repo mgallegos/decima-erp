@@ -322,8 +322,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 					'organizationId' => $authUser['default_organization'], 
 					'costPricePrecision' => $organization['cost_price_precision'], 
 					'currencySymbol' => $this->getOrganizationCurrencySymbol($authUser['default_organization']), 
-					'name' => $authUser['firstname'],
-					'input' => $authUser
+					'name' => $authUser['firstname']
 				)
 			);
 		}
