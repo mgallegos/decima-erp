@@ -9,17 +9,11 @@
 namespace Vendor\DecimaModule\Module\Controllers;
 
 use Illuminate\Session\SessionManager;
-
 use Illuminate\Http\Request;
-
 use Vendor\DecimaModule\Module\Services\ModuleAppManagement\ModuleAppManagementInterface;
-
 use App\Kwaai\Security\Services\UserManagement\UserManagementInterface;
-
 use App\Kwaai\Security\Services\AppManagement\AppManagementInterface;
-
 use Illuminate\View\Factory;
-
 use App\Http\Controllers\Controller;
 
 class ModuleAppManager extends Controller {
@@ -82,15 +76,10 @@ class ModuleAppManager extends Controller {
 	)
 	{
 		$this->ModuleAppManagerService = $ModuleAppManagerService;
-
 		$this->UserManagerService = $UserManagerService;
-
 		$this->AppManagerService = $AppManagerService;
-
 		$this->View = $View;
-
 		$this->Input = $Input;
-
 		$this->Session = $Session;
 	}
 

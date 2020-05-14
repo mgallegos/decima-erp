@@ -14,9 +14,15 @@ return [
 	*/
 
 	'password' => 'Las contraseñas deben contener al menos 6 caracteres y coincidir.',
-	'user'     => 'No se ha encontrado a un usuario con ese correo electrónico.',
 	'token'    => 'Este token de recuperación de contraseña es inválido.',
+	'user'     => 'No se ha encontrado a un usuario con ese correo electrónico.',
 	'sent'     => '¡Código de verificación enviado!<br>En breve recibirá un correo de electrónico (revise la bandeja de correo no deseado en caso no le aparezca en su bandeja de entrada), siga las instrucciones para completar el restablecimiento de su contraseña.',
-	"reset" => "Your password has been reset!",
-
+	'activationSent'     => '¡Código de activación enviado!<br>En breve recibirá un correo de electrónico (revise la bandeja de correo no deseado en caso no le aparezca en su bandeja de entrada), siga las instrucciones para completar el restablecimiento de su contraseña.',
+	'rememberTokenValid'    => '¡Código de verificación validado!',
+	'rememberTokenInvalid'    => 'El código de verificación es inválido.',
+	'activationTokenValid'    => '¡Código de activación validado!',
+	'activationTokenInvalid'    => 'El código de activación es inválido.',
+	'passwordsDoNotMatch' => 'Las contraseñas no coinciden.',
+	'passwordMinimumCharacters' => 'Las contraseña debe contener al menos 6 caracteres',
+	"reset" => "¡Su contraseña ha sido restablecida!",
 ];

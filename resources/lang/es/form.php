@@ -44,6 +44,8 @@ return array(
 	'invalidDateFromHelpMessage' => 'La fecha inicial es inválida.',
 
 	'invaliddateToHelpMessage' => 'La fecha final es inválida.',
+	
+	'invalidParameters' => 'Parámetros inválidos.',
 
 	'month' => 'Mes',
 	
