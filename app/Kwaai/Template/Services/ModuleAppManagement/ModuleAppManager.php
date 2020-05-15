@@ -175,7 +175,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
 
     if($pager)
     {
-      $count = $this->ModuleTableName->searchModalTableRows($id, $organizationId, false, $limit, $offset, $filter, $databaseConnectionName);
+      $count = $this->ModuleTableName->searchModalTableRows($id, $organizationId, true, $limit, $offset, $filter, $databaseConnectionName);
 
       encode_requested_data(
         $input,
