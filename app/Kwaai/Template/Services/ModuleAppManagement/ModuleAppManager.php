@@ -195,7 +195,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $rows = array(
         'from' => $offset,
         'to' => $limit,
-        'page' => $input['page'],
+        'page' => !empty($input['page'])?$input['page']:1,
         'records' => $count,
         'rows' => $rows
       );
