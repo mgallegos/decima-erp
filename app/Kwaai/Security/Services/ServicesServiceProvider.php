@@ -96,7 +96,8 @@ class ServicesServiceProvider extends ServiceProvider {
 					$app->make('App\Kwaai\Security\Repositories\Journal\JournalInterface'),
 					$app->make('App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface'),
 					$app->make('AppJournalConfigurations'),
-					new Gravatar(),
+					$app->make('gravatar'),
+					// new Gravatar(),
 					new Carbon(),
 					$app['translator'],
 					$app['config']

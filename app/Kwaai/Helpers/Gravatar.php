@@ -21,6 +21,8 @@
 
 namespace App\Kwaai\Helpers;
 use \InvalidArgumentException;
+use Illuminate\Cache\CacheManager;
+use Illuminate\Config\Repository;
 
 /**
  * GravatarLib - A lightweight library for working with gravatars en masse,
@@ -67,6 +69,31 @@ class Gravatar
 	const HTTP_URL = 'http://www.gravatar.com/avatar/';
 	const HTTPS_URL = 'https://secure.gravatar.com/avatar/';
 	/**#@-*/
+	
+	/**
+	 * Laravel Cache instance
+	 *
+	 * @var \Illuminate\Cache\CacheManager
+	 *
+	 */
+	protected $Cache;
+
+	/**
+	 * Laravel Repository instance
+	 *
+	 * @var Illuminate\Config\Repository
+	 *
+	 */
+	protected $Config;
+
+  public function __construct(
+		CacheManager $Cache, 
+		Repository $Config
+	)
+  {
+		$this->Cache = $Cache;
+		$this->Config = $Config;
+  }
 
 	/**
 	 * Get the currently set avatar size.
@@ -228,6 +255,11 @@ class Gravatar
 	 */
 	public function buildGravatarURL($email, $custom_size = null,$hash_email = true)
 	{
+		if($this->Cache->has('gravatar' . $email . $custom_size))
+		{
+			return $this->Cache->get('gravatar' . $email . $custom_size);
+		}
+		
 		// Start building the URL, and deciding if we're doing this via HTTPS or HTTP.
 		if($this->usingSecureImages())
 		{
@@ -246,7 +278,6 @@ class Gravatar
 		{
 			$size = $this->getAvatarSize();
 		}
-
 
 		// Tack the email hash onto the end.
 		if($hash_email == true && !empty($email))
@@ -284,6 +315,8 @@ class Gravatar
 		{
 			$tail = !empty($this->params_cache) ? '&amp;f=y' : '?f=y';
 		}
+
+		$this->Cache->put('gravatar' . $email . $custom_size, $url . $this->params_cache . $tail, $this->Config->get('session.lifetime'));
 
 		// And we're done.
 		return $url . $this->params_cache . $tail;

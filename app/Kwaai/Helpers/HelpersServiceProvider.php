@@ -40,9 +40,12 @@ class HelpersServiceProvider extends ServiceProvider {
 	 */
 	protected function registerGravatar()
 	{
-		$this->app->bind('gravatar', function()
+		$this->app->bind('gravatar', function($app)
 		{
-			return new \App\Kwaai\Helpers\Gravatar;
+			return new \App\Kwaai\Helpers\Gravatar(
+				$app['cache'],
+				$app['config']
+			);
 		});
 	}
 

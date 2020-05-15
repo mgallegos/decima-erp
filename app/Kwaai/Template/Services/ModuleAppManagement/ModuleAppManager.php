@@ -200,6 +200,12 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
         'rows' => $rows
       );
     }
+    else
+    {
+      $rows = array(
+        'rows' => $rows
+      );
+    }
 
     if($returnJson)
     {
