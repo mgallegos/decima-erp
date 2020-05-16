@@ -45,6 +45,10 @@
 		fieldDivContainer: 'form-group',
 		scrollToFirstFieldWithError: true,
 		validators:{
+			phoneNumber:{
+				validationRegex: '^([1-9]{1}[0-9]{0,2}(\\,[0-9]{3})*|[1-9]{1}[0-9]{0,}|0)$',
+				allowedCharactersRegex: '^(\\d)$'
+			},
 			positiveInteger:{
 				formatter: {
 						thousandsSeparator: ',',
