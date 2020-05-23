@@ -305,6 +305,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			$authUser['organization_name'] = $organization['name'];
 			$authUser['database_connection_name'] = $organization['database_connection_name'];
 			$authUser['article_images_folder_id'] = $organization['article_images_folder_id'];
+			$authUser['main_gallery_images_folder_id'] = $organization['main_gallery_images_folder_id'];
 			$authUser['default_category_id'] = $organization['default_category_id'];
 			$authUser['default_article_type_id'] = $organization['default_article_type_id'];
 			$authUser['default_increase_movement_type_id'] = $organization['default_increase_movement_type_id'];
