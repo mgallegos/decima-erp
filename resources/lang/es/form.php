@@ -273,7 +273,7 @@ return array(
 
 	'E' => 'Publicado',
 
-	'F' => 'Femenino',
+	'F' => 'Mujer',
 
 	'G' => 'Entregada',
 
@@ -287,7 +287,7 @@ return array(
 
 	'L' => 'Con licencia',
 
-	'M' => 'Masculino',
+	'M' => 'Hombre',
 
 	'N' => 'Enviada',
 
