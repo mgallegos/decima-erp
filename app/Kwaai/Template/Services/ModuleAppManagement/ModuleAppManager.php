@@ -160,7 +160,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
   public function getSearchModalTableRows($id = null, $input, $pager = false, $organizationId = null, $databaseConnectionName = null, $returnJson = true)
   {
     $rows = array();
-    $limit = $offset = 0;
+    $limit = $offset = $count = 0;
     $filter = '';
 
     if(empty($organizationId))
@@ -190,23 +190,13 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $rows['key' . $ModuleTableName->id] = (array)$ModuleTableName;
     });
 
-    if($pager)
-    {
-      $rows = array(
-        'from' => $offset,
-        'to' => $limit,
-        'page' => !empty($input['page'])?$input['page']:1,
-        'records' => $count,
-        'rows' => $rows
-      );
-    }
-    else
-    {
-      $rows = array(
-        'rows' => $rows
-      );
-    }
-
+    $rows = array(
+      'from' => $offset,
+      'to' => $limit,
+      'page' => !empty($input['page'])?$input['page']:1,
+      'records' => $count,
+      'rows' => $rows
+    );
     if($returnJson)
     {
       return json_encode($rows);

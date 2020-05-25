@@ -1176,7 +1176,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	}
 
 	/**
-	* Get organization connection
+	* Get organization by api token
 	*
 	* @param  int $value organization id
 	*
@@ -1184,6 +1184,11 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	*/
 	public function getOrganizationByApiToken($token)
 	{
+		if($this->Cache->has($token))
+		{
+			return json_decode($this->Cache->get($token), true);
+		}
+
 		$Organizations = $this->Organization->byApiToken($token);
 
 		if($Organizations->isEmpty())
@@ -1191,7 +1196,11 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			return '';
 		}
 
-		return $Organizations->first();
+		$organization = $Organizations->first()->toArray();
+
+		$this->Cache->put($token, json_encode($organization), $this->Config->get('session.lifetime'));
+
+		return $organization;
 	}
 
 	/**
