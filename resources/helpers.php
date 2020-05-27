@@ -705,6 +705,21 @@ if ( ! function_exists('eloquent_array_filter'))
     }
   }
 
+  if ( ! function_exists('boolean_value'))
+  {
+    /**
+     * Return boolean representation of a string, integer or even a boolean
+     *
+     * @param mixed $value
+     *
+     * @return array
+     */
+    function boolean_value($value)
+    {
+      return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
+  }
+
   if ( ! function_exists('checkbox_journal_value'))
   {
     /**
