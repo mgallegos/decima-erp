@@ -653,7 +653,7 @@ if ( ! function_exists('eloquent_array_filter'))
     {
       if(!empty($input['page']))
       {
-        $page = $input['page'];
+        $page = (int)$input['page'];
       }
       else
       {
@@ -662,7 +662,7 @@ if ( ! function_exists('eloquent_array_filter'))
 
       if(!empty($input['rows']))
       {
-        $limit = $input['rows'];
+        $limit = (int)$input['rows'];
       }
       else
       {
