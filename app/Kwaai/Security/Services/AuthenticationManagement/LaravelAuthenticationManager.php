@@ -1113,7 +1113,15 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		}
 		else
 		{
-			$organization = $this->Organization->byId($organizationId)->toArray();
+			$Organization = $this->Organization->byId($organizationId);
+
+			if(empty($Organization))
+			{
+				return '';
+			}
+
+			$organization = $Organization->toArray();
+
 			$this->Cache->put('organization' . $organizationId, json_encode($organization), 360);
 		}
 
@@ -1193,12 +1201,37 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 
 		if($Organizations->isEmpty())
 		{
-			return '';
+			throw new \Exception("Invalid key", 1);
+			// return '';
 		}
 
 		$organization = $Organizations->first()->toArray();
 
 		$this->Cache->put($token, json_encode($organization), $this->Config->get('session.lifetime'));
+
+		return $organization;
+	}
+
+	/**
+	* Get organization by id with api key validation
+	*
+	* @param  int $value organization id
+	*
+	* @return string
+	*/
+	public function getOrganizationByIdWithApiKeyValidation($id, $key)
+	{
+		if($key != $this->Config->get('system-security.api_key'))
+		{
+			throw new \Exception("Invalid key", 1);
+		}
+
+		$organization = $this->getOrganization($id);
+
+		if(empty($organization))
+		{
+			throw new \Exception("Invalid id", 1);
+		}
 
 		return $organization;
 	}
