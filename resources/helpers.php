@@ -666,7 +666,8 @@ if ( ! function_exists('eloquent_array_filter'))
       }
       else
       {
-        $limit = 10;
+        // $limit = 10;
+        $limit = $count;
       }
 
       if($page == 0)
@@ -700,7 +701,7 @@ if ( ! function_exists('eloquent_array_filter'))
   			$offset = 0;
   		}
 
-  		$limit = $limit * $page;
+  		// $limit = $limit * $page;
     }
   }
 
