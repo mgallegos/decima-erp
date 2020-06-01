@@ -25,4 +25,5 @@ return [
 	'passwordsDoNotMatch' => 'Las contraseñas no coinciden.',
 	'passwordMinimumCharacters' => 'Las contraseña debe contener al menos 6 caracteres',
 	"reset" => "¡Su contraseña ha sido restablecida!",
+	"account" => "¡Su cuenta ha sido creada!",
 ];
