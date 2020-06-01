@@ -18,5 +18,6 @@ return array(
 	'tryAgain' => 'Vuelva a intentarlo o haga clic en "¿Olvidó su contraseña?" para restablecerla.',
 	'notExistingUser' => 'No existe un usuario con sus credenciales en el sistema.',
 	'notActiveUser' => 'Su cuenta se encuentra inactiva.',
+	"success" => "¡Se inició sesión exitosamente!",
 	'poweredBy' => 'Desarrollado bajo la plaforma <a href="https://www.decimaerp.com" target="_blank">DecimaERP</a>',
 );
