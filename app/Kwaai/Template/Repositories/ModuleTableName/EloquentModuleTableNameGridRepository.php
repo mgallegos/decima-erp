@@ -10,11 +10,8 @@
 namespace Vendor\DecimaModule\Module\Repositories\ModuleTableName;
 
 use App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface;
-
 use Illuminate\Database\DatabaseManager;
-
 use Mgallegos\LaravelJqgrid\Repositories\EloquentRepositoryAbstract;
-
 use Illuminate\Translation\Translator;
 
 class EloquentModuleTableNameGridRepository extends EloquentRepositoryAbstract {

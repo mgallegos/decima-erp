@@ -10,11 +10,8 @@
 namespace Vendor\DecimaModule\Module\Repositories\ModuleTableName;
 
 use Illuminate\Database\Eloquent\Model;
-
 use Illuminate\Database\DatabaseManager;
-
 use Illuminate\Database\Eloquent\Collection;
-
 use Vendor\DecimaModule\Module\ModuleTableName;
 
 class EloquentModuleTableName implements ModuleTableNameInterface {
@@ -46,7 +43,6 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
   public function __construct(Model $ModuleTableName, DatabaseManager $DB)
   {
     $this->ModuleTableName = $ModuleTableName;
-
     $this->DB = $DB;
   }
 

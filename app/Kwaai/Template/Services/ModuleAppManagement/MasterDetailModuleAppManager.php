@@ -147,29 +147,17 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
   )
 	{
     $this->AuthenticationManager = $AuthenticationManager;
-
     $this->JournalManager = $JournalManager;
-
     $this->Journal = $Journal;
-
     $this->GridEncoder = $GridEncoder;
-
     $this->EloquentModuleAppGridRepository = $EloquentModuleAppGridRepository;
-
     $this->EloquentModuleAppDetailGridRepository = $EloquentModuleAppDetailGridRepository;
-
     $this->ModuleApp = $ModuleApp;
-
     $this->ModuleAppDetail = $ModuleAppDetail;
-
     $this->Carbon = $Carbon;
-
     $this->DB = $DB;
-
 		$this->Lang = $Lang;
-
 		$this->Config = $Config;
-
     $this->Cache = $Cache;
 	}
 

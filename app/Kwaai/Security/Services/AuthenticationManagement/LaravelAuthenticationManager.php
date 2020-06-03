@@ -974,7 +974,7 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	}
 
 	/**
-	 * Get logged user ID
+	 * Get logged user
 	 *
 	 * @return int
 	 */
