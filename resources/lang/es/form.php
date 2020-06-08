@@ -132,6 +132,8 @@ return array(
 	'phpDateFormat' => 'd/m/Y h:i:s A',
 
 	'phpDateTimeFormat' => 'd/m/Y h:i a',
+	
+	'phpDateTime24hourFormat' => 'd/m/Y H:i',
 
 	'jsDateFormat' => 'DD/MM/YYYY',
 
