@@ -10,55 +10,30 @@
 namespace App\Kwaai\Security\Services\UserManagement;
 
 use Illuminate\Validation\Factory;
-
 use Illuminate\Mail\Mailer;
-
 use Illuminate\Routing\UrlGenerator;
-
 use Illuminate\Log\Writer;
-
 use Illuminate\Config\Repository;
-
 use Illuminate\Database\DatabaseManager;
-
 use Illuminate\Contracts\Hashing\Hasher;
-
 use Illuminate\Translation\Translator;
-
 use Illuminate\Cache\CacheManager;
-
 use Illuminate\Session\SessionManager;
-
 use DateTimeZone;
-
 use Exception;
-
 use App\Kwaai\Security\Services\JournalManagement\JournalManagementInterface;
-
 use App\Kwaai\System\Services\Validation\AbstractLaravelValidator;
-
 use App\Kwaai\Security\Repositories\User\EloquentAdminUserGridRepository;
-
 use App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface;
-
 use App\Kwaai\Security\Repositories\Journal\JournalInterface;
-
 use App\Kwaai\Security\Repositories\Permission\PermissionInterface;
-
 use App\Kwaai\Security\Repositories\Role\RoleInterface;
-
 use App\Kwaai\Security\Repositories\Menu\MenuInterface;
-
 use App\Kwaai\Security\Repositories\Module\ModuleInterface;
-
 use App\Kwaai\Organization\Repositories\Organization\OrganizationInterface;
-
 use App\Kwaai\Security\Repositories\User\UserInterface;
-
 use App\Kwaai\Security\Repositories\User\EloquentUserGridRepository;
-
 use App\Kwaai\Security\Services\UserManagement\UserManagementInterface;
-
 use Mgallegos\LaravelJqgrid\Encoders\RequestedDataInterface;
 
 class UserManager extends AbstractLaravelValidator implements UserManagementInterface{
@@ -360,13 +335,23 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 *  In case of an existing user: {"info":security/user-management.UserExistsException}
 	 *  In form does not pass validation: {"validationFailed":true, "fieldValidationMessages":{$field0:$message0, $field1:$message1,…}}
 	 */
-	public function save(array $input)
+	public function save(array $input, $openTransaction = true, $createdBy = null, $defaultOrganization = null, $attachOrganization = true)
 	{
 		$data = array(
 			'email' => $input['email'],
 			'password' => $input['password'],
 			'confirm_password' => $input['confirm_password']
 		);
+
+		if(empty($createdBy))
+		{
+			$createdBy = $this->AuthenticationManager->getLoggedUserId();
+		}
+
+		if(empty($defaultOrganization) && $attachOrganization)
+		{
+			$defaultOrganization = $this->AuthenticationManager->getCurrentUserOrganization('id');
+		}
 
 		if( $this->with( $data )->fails() )
 		{
@@ -375,13 +360,11 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 		if(!$this->User->byEmail($input['email'])->isEmpty())
 		{
-			return json_encode(array('validationFailed' => true , 'fieldValidationMessages' => array('email' => $this->Lang->get('security/user-management.UserExistsException'))));
+			return json_encode(array('validationFailed' => true, 'info2' => $this->Lang->get('security/user-management.UserExistsException'), 'fieldValidationMessages' => array('email' => $this->Lang->get('security/user-management.UserExistsException'))));
 		}
 
-		if(!$this->AuthenticationManager->isUserAdmin() && $input['is_admin'] == '1')
+		if($input['is_admin'] == '1' && !$this->AuthenticationManager->isUserAdmin())
 		{
-			// $this->Event->fire(new OnNewWarningMessage(array('message' => '[SECURITY EVENT] A non-admin user tried to add an admin user', 'context' => $input), $this->AuthenticationManager));
-
 			$this->Log->warning('[SECURITY EVENT] A non-admin user tried to add an admin user', $input);
 
 			return json_encode(array('info' => $this->Lang->get('security/user-management.nonAdminException')));
@@ -396,6 +379,8 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			$input['password'] = bcrypt($input['password']);
 		}
 
+		unset($input['confirm_password']);
+
 		if($input['send_email'] == '1')
 		{
 			$input['is_active'] = 0;
@@ -408,13 +393,21 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 		else
 		{
 			$input['activation_code'] = null;
-			$input['is_active'] = 1;
+
+			if(!isset($input['is_active']))
+			{
+				$input['is_active'] = 1;
+			} 
+			
 		}
 
-		$input = array_add($input, 'created_by', $this->AuthenticationManager->getLoggedUserId());
-		$input = array_add($input, 'default_organization', $this->AuthenticationManager->getCurrentUserOrganization('id'));
+		$input = array_add($input, 'created_by', $createdBy);
+		$input = array_add($input, 'default_organization', $defaultOrganization);
 
-		$this->DB->transaction(function() use ($input)
+		$this->beginTransaction($openTransaction);
+
+		// $this->DB->transaction(function() use (&$User, $input, $attachOrganization)
+		try
 		{
 			if($input['is_admin'] == '1')
 			{
@@ -434,9 +427,14 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			{
 				$input['is_admin'] = '0';
         $User = $this->User->create($input);
-        $this->User->attachOrganizations($User->id, array($input['default_organization']), $input['created_by'], $User);
         $Journal = $this->Journal->create(array('journalized_id' => $User->id, 'journalized_type' => $this->User->getTable(), 'user_id' => $input['created_by'], 'organization_id' => $input['default_organization']));
-        $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('security/user-management.userAddedJournal', array('email' => $input['email'], 'organization' => $this->AuthenticationManager->getCurrentUserOrganization('name')))), $Journal);
+				
+				if($attachOrganization)
+				{
+					$this->User->attachOrganizations($User->id, array($input['default_organization']), $input['created_by'], $User);
+					$this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('security/user-management.userAddedJournal', array('email' => $input['email'], 'organization' => $this->AuthenticationManager->getCurrentUserOrganization('name')))), $Journal);
+				}
+				
         $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('security/user-management.userAddedSystemJournal', array('email' => $input['email'], 'organization' => $this->AuthenticationManager->getCurrentUserOrganization('name')))), $Journal);
 				$data = $input;
 
@@ -447,7 +445,20 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 				$this->Log->info('[SECURITY EVENT] A new user has been added to the organization', $data);
 			}
 
-		});
+			$this->commit($openTransaction);
+    }
+    catch (\Exception $e)
+    {
+      $this->rollBack($openTransaction);
+
+      throw $e;
+    }
+    catch (\Throwable $e)
+    {
+      $this->rollBack($openTransaction);
+
+      throw $e;
+    }
 
 		if($input['send_email'] == '1')
 		{
@@ -462,11 +473,21 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 		if($input['is_admin'] == '1')
 		{
-			return json_encode(array('success' => $this->Lang->get('form.defaultSuccessSaveMessage')));
+			return json_encode(
+				array(
+					'success' => $this->Lang->get('form.defaultSuccessSaveMessage'),
+					'id' => $User->id
+				)
+			);
 		}
 		else
 		{
-			return json_encode(array('success' => $this->Lang->get('security/user-management.successSaveMessage')));
+			return json_encode(
+				array(
+					'success' => $this->Lang->get('security/user-management.successSaveMessage'),
+					'id' => $User->id
+				)
+			);
 		}
 	}
 
