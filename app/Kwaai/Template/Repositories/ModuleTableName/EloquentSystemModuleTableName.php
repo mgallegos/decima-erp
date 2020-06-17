@@ -7,7 +7,7 @@
  * See COPYRIGHT and LICENSE.
  */
 
-namespace Vendor\DecimaModule\Module\Repositories\ModuleTableName;
+namespace Vendor\DecimaModule\System\Repositories\ModuleTableName;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\DatabaseManager;

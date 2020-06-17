@@ -197,6 +197,7 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       'records' => $count,
       'rows' => $rows
     );
+    
     if($returnJson)
     {
       return json_encode($rows);
