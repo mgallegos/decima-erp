@@ -2035,13 +2035,13 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 			{
 				$userPermissionsId = $this->getUserPermissionsShorcutsIdByMenuAndByOrganization($userId, $menu->id, $organizationId);
 
-				$this->Menu->permissionsByMenu($menu->id)->each(function($permission) use (&$userMenus, $menu, $userPermissionsId)
-				{
-					if($permission->is_only_shortcut || in_array($permission->id, $userPermissionsId))
-					{
-						$userMenus = array_add($userMenus, 1000 + $permission->id, array('id' => $permission->id, 'parentId' => $menu->parent_id, 'hidden' => $permission->hidden, 'childsMenus' => array(), 'icon' => $permission->icon, 'url' => $permission->url, 'aliasUrl' => $permission->alias_url, 'actionButtonId' => $permission->action_button_id, 'name' => ($this->Lang->has($permission->lang_key) ? $this->Lang->get($permission->lang_key) : $permission->name)));
-					}
-				});
+				// $this->Menu->permissionsByMenu($menu->id)->each(function($permission) use (&$userMenus, $menu, $userPermissionsId)
+				// {
+				// 	if($permission->is_only_shortcut || in_array($permission->id, $userPermissionsId))
+				// 	{
+				// 		$userMenus = array_add($userMenus, 1000 + $permission->id, array('id' => $permission->id, 'parentId' => $menu->parent_id, 'hidden' => $permission->hidden, 'childsMenus' => array(), 'icon' => $permission->icon, 'url' => $permission->url, 'aliasUrl' => $permission->alias_url, 'actionButtonId' => $permission->action_button_id, 'name' => ($this->Lang->has($permission->lang_key) ? $this->Lang->get($permission->lang_key) : $permission->name)));
+				// 	}
+				// });
 
 				$userMenus = array_add($userMenus, $menu->id, array('id'=>$menu->id, 'parentId' => $menu->parent_id, 'hidden' => false, 'childsMenus' => array(), 'icon' => $menu->icon, 'url' => $menu->url, 'aliasUrl' => '', 'actionButtonId' => $menu->action_button_id, 'name'=>($this->Lang->has($menu->lang_key) ? $this->Lang->get($menu->lang_key) : $menu->name)));
 			});
@@ -2055,15 +2055,15 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 				if($menu->pivot->is_assigned)
 				{
-					$userPermissionsId = $this->getUserPermissionsShorcutsIdByMenuAndByOrganization($userId, $menu->id, $organizationId);
+					// $userPermissionsId = $this->getUserPermissionsShorcutsIdByMenuAndByOrganization($userId, $menu->id, $organizationId);
 
-					$this->Menu->permissionsByMenu($menu->id)->each(function($permission) use (&$userMenus, $menu, $userPermissionsId)
-					{
-						if($permission->is_only_shortcut || in_array($permission->id, $userPermissionsId))
-						{
-							$userMenus = array_add($userMenus, 1000 + $permission->id, array('id'=>$permission->id, 'parentId' => $menu->parent_id, 'hidden' => $permission->hidden, 'childsMenus' => array(), 'icon' => $permission->icon, 'url' => $permission->url, 'aliasUrl' => $permission->alias_url, 'actionButtonId' => $permission->action_button_id, 'name'=>($this->Lang->has($permission->lang_key) ? $this->Lang->get($permission->lang_key) : $permission->name)));
-						}
-					});
+					// $this->Menu->permissionsByMenu($menu->id)->each(function($permission) use (&$userMenus, $menu, $userPermissionsId)
+					// {
+					// 	if($permission->is_only_shortcut || in_array($permission->id, $userPermissionsId))
+					// 	{
+					// 		$userMenus = array_add($userMenus, 1000 + $permission->id, array('id'=>$permission->id, 'parentId' => $menu->parent_id, 'hidden' => $permission->hidden, 'childsMenus' => array(), 'icon' => $permission->icon, 'url' => $permission->url, 'aliasUrl' => $permission->alias_url, 'actionButtonId' => $permission->action_button_id, 'name'=>($this->Lang->has($permission->lang_key) ? $this->Lang->get($permission->lang_key) : $permission->name)));
+					// 	}
+					// });
 
 					$userMenus = array_add($userMenus, $menu->id, array('id'=>$menu->id, 'parentId' => $menu->parent_id, 'hidden' => false, 'childsMenus' => array(), 'icon' => $menu->icon, 'url' => $menu->url, 'aliasUrl' => '', 'actionButtonId' => $menu->action_button_id, 'name'=>($this->Lang->has($menu->lang_key) ? $this->Lang->get($menu->lang_key) : $menu->name)));
 				}

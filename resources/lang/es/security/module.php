@@ -9,8 +9,9 @@
 
 return array(
 
-	'generalSetup' => 'Configuración General',
-
-	'accounting' => 'Contabilidad',
-
+	'generalSetup' => 'Configuraciones',
+	'accounting' => 'Contabilidad',//verificar uso
+	'financialStatements' => 'Estados financieros',//verificar uso
+	'catalogues' => 'Catálogos',
+	'reports' => 'Reportes',
 );

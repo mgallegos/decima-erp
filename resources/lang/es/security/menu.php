@@ -10,14 +10,9 @@
 return array(
 
  	'organization' => 'Organización',
-
-	'organizationManagment' => 'Gestión de Organizaciones',
-
+	'organizationManagment' => 'Organizaciones',
 	'organizationManagmentAction' => 'Gestionar organizaciones',
-
 	'security' => 'Seguridad',
-
-	'userManagment' => 'Gestión de usuarios',
-
+	'userManagment' => 'Usuarios',
 	'userManagmentAction' => 'Gestionar Usuarios',
 );
