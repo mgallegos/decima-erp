@@ -511,6 +511,96 @@ Form::macro('daterange', function($nameFrom, $nameTo, $options = array(), $value
 			</div>';
 });
 
+Form::macro('datetimerange', function($nameFrom, $nameTo, $options = array(), $valueFrom = null, $valueTo = null)
+{
+  $options['type'] = 'text';
+  //$options['regex'] = Regex::getDate();
+  $options['data-mg-validator'] = 'datetime';
+  // $options['data-mg-datetimerange'] = 'from';
+	$options['maxlength'] = 10;
+	
+  if (!isset($options['nameFrom']))
+  {
+    $options['name'] = $nameFrom;
+	}
+	
+	$options['id'] = $nameFrom;
+	
+  if (isset($options['placeholderfrom']))
+  {
+    $options['placeholder'] = $options['placeholderfrom'];
+  }
+  else
+  {
+    $options['placeholder'] = Lang::get('form.dateTimePlaceHolder');
+	}
+	
+	FormJavascript::setCode("$('#".$options['id']."').datetimepicker({timeFormat: $.timepicker._defaults.timeFormat, changeMonth: true, changeYear: true, onClose: function(selectedDate) { $( '#".$options['id']."' ).focusout(); $( '#".$options['id']."-calendar-button' ).focus(); }});  $('#".$options['id']."').unbind('focus'); $('#".$options['id']."').unbind('keypress');  $('#".$options['id']."').mask('99/99/9999 99:99 **');$('#".$options['id']."').unbind('blur');$('#".$options['id']."-calendar-button').click(function(){ $('#".$options['id']."').datetimepicker('show');});");
+	
+  if(!empty($valueFrom))
+  {
+    $options['value'] = $valueFrom;
+	}
+	
+  $inputFrom = Html::attributes($options);
+	// $options['data-mg-datetimerange'] = "to";
+	
+  if (isset($options['placeholderfrom']))
+  {
+    unset($options['placeholder']);
+	}
+	
+  if (isset($options['value']))
+  {
+    unset($options['value']);
+	}
+	
+  if (isset($options['placeholderto']))
+  {
+    $options['placeholder'] = $options['placeholderto'];
+  }
+  else
+  {
+    $options['placeholder'] = Lang::get('form.dateTimePlaceHolder');
+	}
+	
+  if (! isset($options['nameTo'])) {
+    $options['name'] = $nameTo;
+	}
+	
+	$options['id'] = $nameTo;
+	
+	FormJavascript::setCode("$('#".$options['id']."').datetimepicker({timeFormat: $.timepicker._defaults.timeFormat, changeMonth: true, changeYear: true, onClose: function(selectedDate) { $( '#".$options['id']."' ).focusout(); $( '#".$options['id']."-calendar-button' ).focus(); }});  $('#".$options['id']."').unbind('focus'); $('#".$options['id']."').unbind('keypress');  $('#".$options['id']."').mask('99/99/9999 99:99 **');$('#".$options['id']."').unbind('blur');$('#".$options['id']."-calendar-button').click(function(){ $('#".$options['id']."').datetimepicker('show');});");
+	
+  if(!empty($valueTo))
+  {
+    $options['value'] = $valueTo;
+	}
+	
+	$inputTo = Html::attributes($options);
+	
+  return '<div class="input-group">
+        <span class="input-group-addon">
+          ' . Lang::get('form.dateRangeFrom') . '
+        </span>
+        <input' . $inputFrom . '>
+        <span class="input-group-btn">
+          <button id="' . $nameFrom . '-calendar-button" class="btn btn-default" type="button">
+            <i class="fa fa-calendar-o"></i>
+          </button>
+        </span>
+        <span class="input-group-addon">
+          ' . Lang::get('form.dateRangeTo') . '
+        </span>
+        <input' . $inputTo . '>
+        <span class="input-group-btn">
+          <button id="' . $nameTo . '-calendar-button" class="btn btn-default" type="button">
+            <i class="fa fa-calendar-o"></i>
+          </button>
+        </span>
+      </div>';
+});
+
 Form::macro('journals', function($appPrefix, $appId, $twoColumns = true, $userId = '', $journalizedId = '', $onlyActions = '', $journalLengend = null, $journals = null, $organizationNotNull = true)
 {
 	$journalsHtml = '';
