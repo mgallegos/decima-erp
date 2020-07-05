@@ -978,11 +978,16 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	 *
 	 * @return int
 	 */
-	public function getApiLoggedUser($token)
+	public function getApiLoggedUser($token, $throwExceptionIfInvalid = true)
 	{
 		if(empty($token))
 		{
-			throw new \Exception("Empty token", 1);
+			if($throwExceptionIfInvalid)
+			{
+				throw new \Exception("Empty token", 1);
+			}
+
+			return '';
 		}
 
 		if($token == $this->Config->get('system-security.demo_api_token'))
@@ -995,7 +1000,12 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			return  json_decode($this->Cache->get($token), true);
 		}
 		
-		throw new \Exception("Invalid token", 1);
+		if($throwExceptionIfInvalid)
+		{
+			throw new \Exception("Invalid token", 1);
+		}
+
+		return '';
 	}
 
 	/**
