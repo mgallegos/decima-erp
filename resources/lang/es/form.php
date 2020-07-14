@@ -131,6 +131,8 @@ return array(
 	'greeting' => 'Un saludo',
 	'gender' => 'Género',
 	'code' => 'Código',
+	'order' => 'Orden',
+	'position' => 'Posición',
 	'userCustomFormat' => 'Formato de usuario',
 	'devCustomFormat' => 'Formato personalizado',
 	'file' => 'Archivo',
