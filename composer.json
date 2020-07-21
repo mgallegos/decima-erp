@@ -25,7 +25,9 @@
         "lesichkovm/laravel-advanced-route": "dev-master",
         "fzaninotto/faker": "^1.8",
         "phpoffice/phpspreadsheet": "^1.8",
-        "tecnickcom/tcpdf": "^6.3"
+        "tecnickcom/tcpdf": "^6.3",
+        "strikewood/omnipay-first-atlantic-commerce": "dev-master",
+        "mervick/aes-everywhere": "^1.1"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
