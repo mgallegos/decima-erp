@@ -45,7 +45,7 @@ return array(
 
 	'currencyHelperText' => 'Moneda en que se realizan las transacciones de la organización.',
 
-	'phoneNumber' => 'Número de teléfono fijo',
+	'phoneNumber' => 'Número de teléfono',
 
 	'fax' => 'Fax',
 
