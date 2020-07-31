@@ -1,4 +1,4 @@
-<nav id="page-navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav id="page-navbar" class="navbar {{ (strpos(URL::to('/'), 'http://localhost') == 0 || strpos(AuthManager::getCurrentUserOrganizationName(), 'Dev') === 0) ? 'navbar-inverse' : 'navbar-default'  }} navbar-fixed-top" role="navigation">
 	<div class="container-fluid">
  		<div class="navbar-header core-navbar-header">
 			@if(Config::get('system-security.system_logo_topbar_is_visible') === true)
