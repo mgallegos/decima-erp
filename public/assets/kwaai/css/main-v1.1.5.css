@@ -64,11 +64,16 @@
 
 /* Generals */
 
+/* label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* display: inline-block; */
+} */
+
 .no-margin-bottom {
   margin-bottom: 0px !important;
 }
-
-/* Menus */
 
 #core-mobile-top-bar-link {
   position: relative;
@@ -824,7 +829,6 @@
 }
 
 /* mmenu */
-
 .mm-navbars_top {
   margin-top: 55px;
 }
@@ -833,8 +837,27 @@
   padding: 2px !important;
 }
 
-.mm-slideout {
-  z-index: auto;
+/* Menus */
+body.modal-open .mm-slideout{
+  z-index: 1043 !important;
+}
+
+body.modal-open .modal-backdrop{
+  display: none;
+}
+
+.modal-dialog {
+  margin: 65px !important;
+} 
+
+.navbar-fixed-top {
+  z-index: 1043 !important;
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+    margin: 65px auto !important;
+  }
 }
 
 .core-menu-top-bar-link-color {
@@ -1107,7 +1130,8 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
   }
 
   .search-modal {
-    width:1138px !important;
+    /* width:1138px !important; */
+    width:1050px !important;
   }
 }
 

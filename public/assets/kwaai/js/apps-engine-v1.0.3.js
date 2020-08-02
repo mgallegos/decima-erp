@@ -347,10 +347,10 @@ function loadPage(url, aliasUrl, actionButtonId)
 			enableAll();
       resizeApplicationGrids();
 
-			if(!duplicate)
-			{
-				bindModalMenuEvent();
-			}
+			// if(!duplicate)
+			// {
+			// 	bindModalMenuEvent();
+			// }
 
 			$('.decima-erp-tooltip').tooltip('hide');
 		}

@@ -390,7 +390,7 @@ function openUploader(prefix, systemReferenceId, parentFolder, allowedFileTypes,
 	parentFolder = parentFolder || '';
 	minWidth = minWidth || '';
 	sameWidthAsHeight = sameWidthAsHeight || '';
-	sizes = sizes || [];
+	sizes = sizes || '';
 	maxFileCount = maxFileCount || 0;
 	isPublic = isPublic || '';
 	allowedFileTypes = allowedFileTypes || [];
@@ -825,6 +825,7 @@ function resizeApplicationGrids(timeout, gridClass)
  */
 function bindModalMenuEvent(selector, timeout)
 {
+	return;
   selector = selector || '.tab-pane.fade.active.in';
 	timeout = timeout || 500;
 
@@ -1581,7 +1582,7 @@ $(document).ready(function()
 {
   centerAppLoader();
   resizeApplicationGrids();
-  bindModalMenuEvent('body');
+  // bindModalMenuEvent('body');
 
   if(windowWidth >= minWidthExpandedMenu)
   {
