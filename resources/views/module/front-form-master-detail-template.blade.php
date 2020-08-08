@@ -1101,6 +1101,7 @@
 			  $('#module-app-btn-filter').removeClass('btn-warning').addClass('btn-default');
 			}
 
+			// $('#module-app-grid').jqGrid('setGridParam', {'sortname':''}).trigger('reloadGrid'); //restablecer orden
 			$('#module-app-grid').jqGrid('setGridParam', {'postData':{'datatype':'json', "filters":"{'groupOp':'AND','rules':" + JSON.stringify(filters) + "}"}}).trigger('reloadGrid');
 		});
 
