@@ -735,18 +735,25 @@ if ( ! function_exists('eloquent_array_filter'))
       
       if(isset($settings[$key]))
       {
-        app()->forgetInstance('swift.transport');
-        app()->forgetInstance('swift.mailer');
-        app()->forgetInstance('mailer');
+        // Config::set('mail.driver', $settings[$key]['driver']);
+        // Config::set('mail.host', $settings[$key]['host']);
+        // Config::set('mail.port', $settings[$key]['port']);
+        // Config::set('mail.from', $settings[$key]['from']);
+        // Config::set('mail.encryption', $settings[$key]['encryption']);
+        // Config::set('mail.username', $settings[$key]['username']);
+        // Config::set('mail.password', $settings[$key]['password']);
+
+        $transport = (new \Swift_SmtpTransport(
+          $settings[$key]['host'], 
+          $settings[$key]['port'], 
+          $settings[$key]['encryption']))
+        ->setUsername($settings[$key]['username'])
+        ->setPassword($settings[$key]['password']);
         
-        Config::set('mail.driver', $settings[$key]['driver']);
-        Config::set('mail.host', $settings[$key]['host']);
-        Config::set('mail.port', $settings[$key]['port']);
-        Config::set('mail.from', $settings[$key]['from']);
-        Config::set('mail.encryption', $settings[$key]['encryption']);
-        Config::set('mail.username', $settings[$key]['username']);
-        Config::set('mail.password', $settings[$key]['password']);
+        return new \Swift_Mailer($transport);
       }
+
+      return '';
     }
   }
   
