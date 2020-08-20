@@ -729,9 +729,10 @@ if ( ! function_exists('eloquent_array_filter'))
      *
      * @return array
      */
-    function set_custom_mail_settings($key)
+    function set_custom_mail_settings($key, &$from)
     {
       $settings = Config::get('system-security.custom_mail');
+      $from = Config::get('mail.from');
       
       if(isset($settings[$key]))
       {
@@ -742,14 +743,15 @@ if ( ! function_exists('eloquent_array_filter'))
         // Config::set('mail.encryption', $settings[$key]['encryption']);
         // Config::set('mail.username', $settings[$key]['username']);
         // Config::set('mail.password', $settings[$key]['password']);
-
+        
+        $from = $settings[$key]['from'];
         $transport = (new \Swift_SmtpTransport(
           $settings[$key]['host'], 
           $settings[$key]['port'], 
           $settings[$key]['encryption']))
         ->setUsername($settings[$key]['username'])
         ->setPassword($settings[$key]['password']);
-        
+
         return new \Swift_Mailer($transport);
       }
 
