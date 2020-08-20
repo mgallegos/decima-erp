@@ -735,6 +735,10 @@ if ( ! function_exists('eloquent_array_filter'))
       
       if(isset($settings[$key]))
       {
+        app()->forgetInstance('swift.transport');
+        app()->forgetInstance('swift.mailer');
+        app()->forgetInstance('mailer');
+        
         Config::set('mail.driver', $settings[$key]['driver']);
         Config::set('mail.host', $settings[$key]['host']);
         Config::set('mail.port', $settings[$key]['port']);
