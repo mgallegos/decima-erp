@@ -27,21 +27,21 @@
    function eloquent_array_filter_for_insert($array)
    {
      return array_filter($array, function($a)
-            {
-                if(is_null($a))
-                {
-                  return false;
-                }
-                elseif (is_string($a) && trim($a) === "")
-                // elseif (is_string($a) && (trim($a) === '' || trim($a) == ''  || trim($a) == ' ' || trim($a) == ' '))
-                {
-                  return false;
-                }
-                else
-                {
-                  return true;
-                }
-            });
+      {
+          if(is_null($a))
+          {
+            return false;
+          }
+          elseif (is_string($a) && trim($a) === "")
+          // elseif (is_string($a) && (trim($a) === '' || trim($a) == ''  || trim($a) == ' ' || trim($a) == ' '))
+          {
+            return false;
+          }
+          else
+          {
+            return true;
+          }
+      });
    }
 }
 
@@ -720,6 +720,32 @@ if ( ! function_exists('eloquent_array_filter'))
     }
   }
 
+  if ( ! function_exists('set_custom_mail_settings'))
+  {
+    /**
+     * R....
+     *
+     * @param  string  $value
+     *
+     * @return array
+     */
+    function set_custom_mail_settings($key)
+    {
+      $settings = Config::get('system-security.custom_mail');
+      
+      if(isset($settings[$key]))
+      {
+        Config::set('mail.driver', $settings[$key]['driver']);
+        Config::set('mail.host', $settings[$key]['host']);
+        Config::set('mail.port', $settings[$key]['port']);
+        Config::set('mail.from', $settings[$key]['from']);
+        Config::set('mail.encryption', $settings[$key]['encryption']);
+        Config::set('mail.username', $settings[$key]['username']);
+        Config::set('mail.password', $settings[$key]['password']);
+      }
+    }
+  }
+  
   if ( ! function_exists('checkbox_journal_value'))
   {
     /**
