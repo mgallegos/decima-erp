@@ -8,24 +8,14 @@
  */
 
 return array(
-
   'gridTitle' => 'Ejemplo: Tipos de artículos',
-
   'new' => 'Nuevo ...',
-
   'edit' => 'Editar ...',
-
   'delete' => 'Eliminar ...',
-
   'save' => 'Guardar ...',
-
   'formNewTitle' => 'Creación de ...',
-
   'formEditTitle' => 'Edición de ... Existente',
-
   'deleteMessageConfirmation' => '¿Está seguro que desea eliminar el ... ":name"?',
-
   'addedJournal' => 'Se agregó el ... ":name"',
-
   'deletedJournal' => 'Se eliminó el ... ":name"'
 );

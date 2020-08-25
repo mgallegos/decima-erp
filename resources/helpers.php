@@ -758,6 +758,42 @@ if ( ! function_exists('eloquent_array_filter'))
       return '';
     }
   }
+
+  if ( ! function_exists('timezone_offset'))
+  {
+    /**
+     * R....
+     *
+     * @param  string  $value
+     *
+     * @return array
+     */
+    function timezone_offset($timezone)
+    {
+      $offset = (int)\Carbon\Carbon::now(empty($timezone) ? 'UTC' : $timezone)->offsetHours;
+  
+      if($offset < 0)
+      {
+        $sign = '-';
+        $offset = $offset * -1;
+      }
+      else
+      {
+        $sign = '+';
+      }
+
+      if($offset < 9)
+      {
+        $offset = $sign . '0' . $offset . ':00';
+      }
+      else
+      {
+        $offset = $sign . $offset . ':00';
+      }
+
+      return $offset;
+    }
+  }
   
   if ( ! function_exists('checkbox_journal_value'))
   {

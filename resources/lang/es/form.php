@@ -15,6 +15,7 @@ return array(
 	'radioRequired' => 'Debe seleccionar una opción.',
 	'checkboxRequired' => 'Debe elegir al menos una de las opciones.',
 	'passwordRequired' => 'Si el usuario no será activado por correo electrónico, es necesario que defina una contraseña.',
+	'createdAt' => 'Creado el',
 	'dateRangeFrom' => 'Desde:',
 	'dateRangeTo' => 'Hasta:',
 	'from' => 'Del',
