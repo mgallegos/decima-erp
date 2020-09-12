@@ -136,7 +136,7 @@ return array(
 	'image' => 'Imagen',
 	'order' => 'Orden',
 	'position' => 'Posición',
-	'alert' => 'Alerta',
+	'alerts' => 'Alerta',
 	'userCustomFormat' => 'Formato de usuario',
 	'devCustomFormat' => 'Formato personalizado',
 	'file' => 'Archivo',
