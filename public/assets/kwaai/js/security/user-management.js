@@ -1173,14 +1173,17 @@ $(document).ready(function()
 			return;
 		}
 
-		if($('#um-grid-users-mode').parent().hasClass('active'))
-		{
-			url += '/delete-user';
-		}
-		else
-		{
-			url += '/set-non-admin-user';
-		}
+		//Revisar!!
+		// if($('#um-grid-users-mode').parent().hasClass('active'))
+		// {
+		// 	url += '/delete-user';
+		// }
+		// else
+		// {
+		// 	url += '/set-non-admin-user';
+		// }
+
+		url += '/delete-user';
 
 		var idArray = $('#users-grid').getSelectedRowsIdCell();
 
