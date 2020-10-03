@@ -143,6 +143,7 @@ return array(
 	'file' => 'Archivo',
 	'searchModalTitle' => 'Seleccione el registro que desea editar',
 	'tryAgain' => 'Volver a intentar',
+	'groupBy' => 'Agrupar por',
   'A' => 'Anulado',
 	'B' => 'Abierta',
 	'C' => 'Casado',
