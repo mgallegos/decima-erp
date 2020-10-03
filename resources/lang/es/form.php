@@ -76,6 +76,7 @@ return array(
 	'jsDateFormat' => 'DD/MM/YYYY',
 	'jsDateTimeFormat' => 'DD/MM/YYYY hh:mm a',
 	'mysqlDateFormat' => '%d/%m/%Y',
+	'mysqlDateDefaultFormat' => '%Y-%m-%d',
 	'defaultNumericValue' => '0.00',
 	'invalidSelection' => 'Debe seleccionar un registro antes de realizar esta operación.',
 	'uploadImage' => 'Clic aquí para cambiar la imagen',
