@@ -98,6 +98,7 @@ return array(
 	'dates' => 'Fechas',
 	'dateTime' => 'Fecha y hora',
 	'token' => 'Token',
+	'cvv' => 'CVV',
 	'expiryMonth' => 'Mes de expiración',
 	'expiryYear' => 'Año de expiración',
 	'number' => 'Número',
