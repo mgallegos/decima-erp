@@ -28,7 +28,8 @@
         "tecnickcom/tcpdf": "^6.3",
         "mervick/aes-everywhere": "^1.1",
         "league/iso3166": "~1.0.1",
-        "league/omnipay": "^3"
+        "league/omnipay": "^3",
+        "algolia/algoliasearch-client-php": "^2.7"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
