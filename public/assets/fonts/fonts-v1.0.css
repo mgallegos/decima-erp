@@ -1,0 +1,24 @@
+@font-face {
+  font-family: AvenirLTStdBook;
+  src: url('./AvenirLTStdBook.otf') format('opentype')
+}
+@font-face {
+  font-family: AvenirLTStdLight;
+  src: url('./AvenirLTStdLight.otf') format('opentype')
+}
+@font-face {
+  font-family: ProximaNovaBlack;
+  src: url('./ProximaNovaBlack.otf') format('opentype')
+}
+@font-face {
+  font-family: ProximaNovaExtrabold;
+  src: url('./ProximaNovaExtrabold.otf') format('opentype')
+}
+@font-face {
+  font-family: ProximaNovaBold;
+  src: url('./ProximaNovaExtrabold.otf') format('opentype')
+}
+@font-face {
+  font-family: ProximaNovaRegular;
+  src: url('./ProximaNovaRegular.otf') format('opentype')
+}
