@@ -198,6 +198,11 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     $limit = $offset = $count = 0;
     $filter = '';
 
+    if(!empty($organizationId) && empty($databaseConnectionName))
+    {
+      $databaseConnectionName = $this->AuthenticationManager->getCurrentUserOrganizationConnection((int)$organizationId);
+    }
+
     if(empty($organizationId))
     {
       $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
@@ -264,11 +269,11 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    * @return array
    *  An array of arrays as follows: array( array('label'=>$name0, 'value'=>$id0), array('label'=>$name1, 'value'=>$id1),…)
    */
-  public function getModuleApps()
+  public function getModuleApps($databaseConnectionName = null)
   {
     $ModuleApps = array();
 
-    $this->ModuleApp->byOrganization($this->AuthenticationManager->getCurrentUserOrganizationId())->each(function($ModuleApp) use (&$ModuleApps)
+    $this->ModuleApp->byOrganization($this->AuthenticationManager->getCurrentUserOrganizationId(), $databaseConnectionName)->each(function($ModuleApp) use (&$ModuleApps)
     {
       array_push($ModuleApps, array('label'=> $ModuleApp->name , 'value'=>$ModuleApp->id));
     });
@@ -292,6 +297,28 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     unset(
       $input['_token']
     );
+
+    if(!empty($input['token']))
+    {
+      $token = !empty($input['token']) ? $input['token'] : '';
+      $loggedUser = $this->AuthenticationManager->getApiLoggedUser($token, false);
+
+      if(empty($loggedUser))
+      {
+        $this->Log->warning('[SECURITY EVENT] Action - Invalid token', array(
+          'error' => 'Invalid token', 
+          'errorCode' => '001',
+        ));
+
+        return response()->json(['error' => 'Invalid token', 'errorCode' => '001']);
+      }
+
+      unset( $input['token'] );
+
+      $databaseConnectionName = $loggedUser['database_connection_name'];
+      $organizationId = $loggedUser['organization_id'];
+      $loggedUserId = $loggedUser['id'];
+    }
 
     $input = eloquent_array_filter_for_insert($input);
 
@@ -371,6 +398,28 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $input['_token']
     );
 
+    if(!empty($input['token']))
+    {
+      $token = !empty($input['token']) ? $input['token'] : '';
+      $loggedUser = $this->AuthenticationManager->getApiLoggedUser($token, false);
+
+      if(empty($loggedUser))
+      {
+        $this->Log->warning('[SECURITY EVENT] Action - Invalid token', array(
+          'error' => 'Invalid token', 
+          'errorCode' => '001',
+        ));
+
+        return response()->json(['error' => 'Invalid token', 'errorCode' => '001']);
+      }
+
+      unset( $input['token'] );
+
+      $databaseConnectionName = $loggedUser['database_connection_name'];
+      $organizationId = $loggedUser['organization_id'];
+      $loggedUserId = $loggedUser['id'];
+    }
+
     $input = eloquent_array_filter_for_insert($input);
 
     if(empty($organizationId))
@@ -448,6 +497,28 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
     unset(
       $input['_token']
     );
+
+    if(!empty($input['token']))
+    {
+      $token = !empty($input['token']) ? $input['token'] : '';
+      $loggedUser = $this->AuthenticationManager->getApiLoggedUser($token, false);
+
+      if(empty($loggedUser))
+      {
+        $this->Log->warning('[SECURITY EVENT] Action - Invalid token', array(
+          'error' => 'Invalid token', 
+          'errorCode' => '001',
+        ));
+
+        return response()->json(['error' => 'Invalid token', 'errorCode' => '001']);
+      }
+
+      unset( $input['token'] );
+
+      $databaseConnectionName = $loggedUser['database_connection_name'];
+      $organizationId = $loggedUser['organization_id'];
+      $loggedUserId = $loggedUser['id'];
+    }
 
     $input = eloquent_array_filter_for_update($input);
 
@@ -605,6 +676,28 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
       $input['_token']
     );
 
+    if(!empty($input['token']))
+    {
+      $token = !empty($input['token']) ? $input['token'] : '';
+      $loggedUser = $this->AuthenticationManager->getApiLoggedUser($token, false);
+
+      if(empty($loggedUser))
+      {
+        $this->Log->warning('[SECURITY EVENT] Action - Invalid token', array(
+          'error' => 'Invalid token', 
+          'errorCode' => '001',
+        ));
+
+        return response()->json(['error' => 'Invalid token', 'errorCode' => '001']);
+      }
+
+      unset( $input['token'] );
+
+      $databaseConnectionName = $loggedUser['database_connection_name'];
+      $organizationId = $loggedUser['organization_id'];
+      $loggedUserId = $loggedUser['id'];
+    }
+
     $input = eloquent_array_filter_for_update($input);
 
     // if(!empty($input['date']))
@@ -745,6 +838,28 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    */
   public function authorizeMaster(array $input, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
   {
+    if(!empty($input['token']))
+    {
+      $token = !empty($input['token']) ? $input['token'] : '';
+      $loggedUser = $this->AuthenticationManager->getApiLoggedUser($token, false);
+
+      if(empty($loggedUser))
+      {
+        $this->Log->warning('[SECURITY EVENT] Action - Invalid token', array(
+          'error' => 'Invalid token', 
+          'errorCode' => '001',
+        ));
+
+        return response()->json(['error' => 'Invalid token', 'errorCode' => '001']);
+      }
+
+      unset( $input['token'] );
+
+      $databaseConnectionName = $loggedUser['database_connection_name'];
+      $organizationId = $loggedUser['organization_id'];
+      $loggedUserId = $loggedUser['id'];
+    }
+
     if(empty($organizationId))
     {
       $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
@@ -823,6 +938,28 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    */
   public function voidMaster(array $input, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
   {
+    if(!empty($input['token']))
+    {
+      $token = !empty($input['token']) ? $input['token'] : '';
+      $loggedUser = $this->AuthenticationManager->getApiLoggedUser($token, false);
+
+      if(empty($loggedUser))
+      {
+        $this->Log->warning('[SECURITY EVENT] Action - Invalid token', array(
+          'error' => 'Invalid token', 
+          'errorCode' => '001',
+        ));
+
+        return response()->json(['error' => 'Invalid token', 'errorCode' => '001']);
+      }
+
+      unset( $input['token'] );
+
+      $databaseConnectionName = $loggedUser['database_connection_name'];
+      $organizationId = $loggedUser['organization_id'];
+      $loggedUserId = $loggedUser['id'];
+    }
+
     if(empty($organizationId))
     {
       $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
@@ -901,6 +1038,28 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    */
   public function deleteMaster(array $input, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
   {
+    if(!empty($input['token']))
+    {
+      $token = !empty($input['token']) ? $input['token'] : '';
+      $loggedUser = $this->AuthenticationManager->getApiLoggedUser($token, false);
+
+      if(empty($loggedUser))
+      {
+        $this->Log->warning('[SECURITY EVENT] Action - Invalid token', array(
+          'error' => 'Invalid token', 
+          'errorCode' => '001',
+        ));
+
+        return response()->json(['error' => 'Invalid token', 'errorCode' => '001']);
+      }
+
+      unset( $input['token'] );
+
+      $databaseConnectionName = $loggedUser['database_connection_name'];
+      $organizationId = $loggedUser['organization_id'];
+      $loggedUserId = $loggedUser['id'];
+    }
+
     if(empty($organizationId))
     {
       $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
@@ -951,69 +1110,91 @@ class ModuleAppManager extends AbstractLaravelValidator implements ModuleAppMana
    * Delete existing ... (soft delete)
    *
    * @param array $input
-	 * 	An array as follows: array($id0, $id1,…);
+   * 	An array as follows: array($id0, $id1,…);
    *
    * @return JSON encoded string
    *  A string as follows:
    *	In case of success: {"success" : form.defaultSuccessDeleteMessage}
-   */
-   public function deleteDetails(array $input, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
-   {
-     $count = 0;
+  */
+  public function deleteDetails(array $input, $openTransaction = true, $databaseConnectionName = null, $organizationId = null, $loggedUserId = null)
+  {
+    $count = 0;
 
-     if(empty($organizationId))
-     {
-       $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
-     }
+    if(!empty($input['token']))
+    {
+      $token = !empty($input['token']) ? $input['token'] : '';
+      $loggedUser = $this->AuthenticationManager->getApiLoggedUser($token, false);
 
-     if(empty($loggedUserId))
-     {
-       $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
-     }
+      if(empty($loggedUser))
+      {
+        $this->Log->warning('[SECURITY EVENT] Action - Invalid token', array(
+          'error' => 'Invalid token', 
+          'errorCode' => '001',
+        ));
 
-     $this->beginTransaction($openTransaction, $databaseConnectionName);
+        return response()->json(['error' => 'Invalid token', 'errorCode' => '001']);
+      }
 
-     try
-     {
-       foreach ($input['id'] as $key => $id)
-       {
-         $count++;
+      unset( $input['token'] );
 
-         $ModuleAppDetail = $this->ModuleAppDetail->byId($id, $databaseConnectionName);
+      $databaseConnectionName = $loggedUser['database_connection_name'];
+      $organizationId = $loggedUser['organization_id'];
+      $loggedUserId = $loggedUser['id'];
+    }
 
-         if(empty($ModuleApp))
-         {
-           $ModuleApp = $this->ModuleApp->byId($ModuleAppDetail->master_id, $databaseConnectionName);
-         }
+    if(empty($organizationId))
+    {
+      $organizationId = $this->AuthenticationManager->getCurrentUserOrganizationId();
+    }
 
-         $Journal = $this->Journal->create(array('journalized_id' => $ModuleAppDetail->master_id, 'journalized_type' => $this->ModuleApp->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
-         $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.deletedDetailJournal', array('detailName' => $ModuleAppDetail->name, 'masterName' => $ModuleApp->name))), $Journal);
+    if(empty($loggedUserId))
+    {
+      $loggedUserId = $this->AuthenticationManager->getLoggedUserId();
+    }
 
-         $this->ModuleAppDetail->delete(array($id), $databaseConnectionName);
-       }
+    $this->beginTransaction($openTransaction, $databaseConnectionName);
 
-       $this->commit($openTransaction);
-     }
-     catch (\Exception $e)
-     {
-       $this->rollBack($openTransaction);
+    try
+    {
+      foreach ($input['id'] as $key => $id)
+      {
+        $count++;
 
-       throw $e;
-     }
-     catch (\Throwable $e)
-     {
-       $this->rollBack($openTransaction);
+        $ModuleAppDetail = $this->ModuleAppDetail->byId($id, $databaseConnectionName);
 
-       throw $e;
-     }
+        if(empty($ModuleApp))
+        {
+          $ModuleApp = $this->ModuleApp->byId($ModuleAppDetail->master_id, $databaseConnectionName);
+        }
 
-     if($count == 1)
-     {
-       return json_encode(array('success' => $this->Lang->get('form.defaultSuccessDeleteMessage')));
-     }
-     else
-     {
-       return json_encode(array('success' => $this->Lang->get('form.defaultSuccessDeleteMessage1')));
-     }
-   }
+        $Journal = $this->Journal->create(array('journalized_id' => $ModuleAppDetail->master_id, 'journalized_type' => $this->ModuleApp->getTable(), 'user_id' => $loggedUserId, 'organization_id' => $organizationId));
+        $this->Journal->attachDetail($Journal->id, array('note' => $this->Lang->get('module::app.deletedDetailJournal', array('detailName' => $ModuleAppDetail->name, 'masterName' => $ModuleApp->name))), $Journal);
+
+        $this->ModuleAppDetail->delete(array($id), $databaseConnectionName);
+      }
+
+      $this->commit($openTransaction);
+    }
+    catch (\Exception $e)
+    {
+      $this->rollBack($openTransaction);
+
+      throw $e;
+    }
+    catch (\Throwable $e)
+    {
+      $this->rollBack($openTransaction);
+
+      throw $e;
+    }
+
+    if($count == 1)
+    {
+      return json_encode(array('success' => $this->Lang->get('form.defaultSuccessDeleteMessage')));
+    }
+    else
+    {
+      return json_encode(array('success' => $this->Lang->get('form.defaultSuccessDeleteMessage1')));
+    }
+  }
 }

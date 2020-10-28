@@ -333,7 +333,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
    *
    * @return boolean
    */
-  public function massDelete($id, $databaseConnectionName = null)
+  public function massDelete($ids, $databaseConnectionName = null)
   {
     if(empty($databaseConnectionName))
     {
@@ -342,7 +342,7 @@ class EloquentModuleTableName implements ModuleTableNameInterface {
 
     $this->DB->connection($databaseConnectionName)
       ->table($this->getTable())
-      ->where('column_name', '=', $id)
+      ->whereIn('id', '=', $ids)
       ->delete();
 
     return true;
