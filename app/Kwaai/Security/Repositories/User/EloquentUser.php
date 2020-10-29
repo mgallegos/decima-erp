@@ -158,7 +158,7 @@ class EloquentUser implements UserInterface {
           $query->select('ur.role_id')
             ->from('SEC_User_Role AS ur')
             //->join('SEC_Role AS r', 'r.id', '=', 'ur.role_id')
-            //->where('ur.user_id', '=', $userId)
+            ->where('ur.user_id', '=', $userId)
             ->where('ur.organization_id', '=', $organizationId);
   			})
   			->distinct()
