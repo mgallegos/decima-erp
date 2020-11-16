@@ -12,11 +12,12 @@ table {
   table-layout: fixed;
 }
 
+/*
+
 table td, table th {
   padding: 0 !important;
 }
 
-/*
 table td {
   overflow: hidden;
   white-space: nowrap;
