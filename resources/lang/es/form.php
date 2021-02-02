@@ -76,6 +76,7 @@ return array(
 	'phpShortDateFormat' => 'd/m/Y',
 	'phpDateFormat' => 'd/m/Y h:i:s A',
 	'phpDateTimeFormat' => 'd/m/Y h:i a',
+	'phpTimeFormat' => 'h:i a',
 	'phpDateTime24hourFormat' => 'd/m/Y H:i',
 	'jsDateFormat' => 'DD/MM/YYYY',
 	'jsDateTimeFormat' => 'DD/MM/YYYY hh:mm a',
