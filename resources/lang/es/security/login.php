@@ -19,5 +19,5 @@ return array(
 	'notExistingUser' => 'No existe un usuario con sus credenciales en el sistema.',
 	'notActiveUser' => 'Su cuenta se encuentra inactiva.',
 	"success" => "¡Se inició sesión exitosamente!",
-	'poweredBy' => 'Desarrollado bajo la plaforma <a href="https://www.decimaerp.com" target="_blank">DecimaERP</a>',
+	'poweredBy' => 'Desarrollado bajo la plaforma <a href="https://www.decima.la" target="_blank">DecimaERP</a>',
 );

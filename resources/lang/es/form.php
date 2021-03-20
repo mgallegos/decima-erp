@@ -129,6 +129,7 @@ return array(
 	'access' => 'Acceder',
 	'generate' => 'Generar',
 	'generatePdf' => 'Generar PDF',
+	'reconcile' => 'Conciliar',
 	'generic' => 'Genérico',
 	'custom' => 'Personalizado',
 	'correlativeShort' => 'Correlat.',
