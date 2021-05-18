@@ -810,6 +810,24 @@ if ( ! function_exists('eloquent_array_filter'))
     }
   }
 
+  if ( ! function_exists('replace_special_characters'))
+  {
+    /**
+     * Replace accents
+     *
+     * @param  string  $value
+     *
+     * @return array
+     */
+    function replace_special_characters($string)
+    {
+      $notAllowed = array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹");
+      $allowed = array ("a","e","i","o","u","A","E","I","O","U","n","N","ñ","Ñ","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E");
+
+      return str_replace($notAllowed, $allowed, $string);
+    }
+  }
+
   if ( ! function_exists('ab'))
   {
     /**
