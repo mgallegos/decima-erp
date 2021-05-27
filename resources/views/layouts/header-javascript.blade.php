@@ -22,6 +22,10 @@
 {!! Html::script('assets/bootstrap-fileinput-v4.3.5/js/fileinput.min.js') !!}
 {!! Html::script('assets/bootstrap-fileinput-v4.3.5/themes/fa/theme.js') !!}
 {!! Html::script('assets/bootstrap-fileinput-v4.3.5/js/locales/es.js') !!}
+
+{{-- Falta incluir local --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
+
 {!! Html::script('assets/quill-v1.3.0/js/quill.min.js') !!}
 {!! Html::script('assets/keymaster-v1.6.1/keymaster.min.js') !!}
 <script src="{{ URL::asset('assets/jquery-slidereveal-v1.1.2/jquery.slidereveal.min.js') }}"></script>

@@ -6,8 +6,11 @@
 @else
   {!! Html::style('assets/bootstrap-v3.3.6/css/' . $theme . '.min.css') !!}
 @endif
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"> -->
-<!-- {!! Html::style('assets/font-awesome-v5.0.13/css/fontawesome-all.min.css') !!} -->
+
+{{-- Falta incluir local --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css"/>
+{{-- Falta incluir local --}}
+
 {!! Html::style('assets/font-awesome-v4.7.0/css/font-awesome.min.css') !!}
 {!! Html::style('assets/jquery-ui-v1.12.1/jquery-ui.min.css') !!}
 {!! Html::style('assets/jquery-free-jqGrid-v4.13.5/css/ui.jqgrid.css') !!}
