@@ -1582,6 +1582,7 @@ $(document).ready(function()
 {
   centerAppLoader();
   resizeApplicationGrids();
+	resizeApplicationGrids(500, 'app-grid-50');
   // bindModalMenuEvent('body');
 
   if(windowWidth >= minWidthExpandedMenu)
