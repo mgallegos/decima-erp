@@ -792,18 +792,18 @@ function resizeApplicationGrids(timeout, gridClass)
 {
   timeout = timeout || 500;
   gridClass = gridClass || 'app-grid';
-  width = $('.core-app-container-width:visible').width();
-
-  // if(width == 1108)
-  // {
-  //   return;
-  // }
+  currentWidth = $('.core-app-container-width:visible').width();
 
   setTimeout(function ()
   {
+		if(gridClass == 'app-grid-50')
+		{
+			currentWidth = (currentWidth / 2) - 15;
+		}
+
     $.each($('.' + gridClass), function( index, element )
     {
-      $('#' + $(element).attr('data-app-grid-id')).setGridWidth(width);
+      $('#' + $(element).attr('data-app-grid-id')).setGridWidth(currentWidth);
     });
 
     // $('.tab-pane.fade.active.in').find('.' + gridClass).each(function(index, element)
@@ -1679,6 +1679,7 @@ $(document).ready(function()
         $("input[placeholder='Search']").focus();
 
         resizeApplicationGrids(1);
+				resizeApplicationGrids(1, 'app-grid-50');
       });
 
       API.bind('close:finish', function()
@@ -1688,6 +1689,7 @@ $(document).ready(function()
         $('.core-top-bar-open-menu').show();
 
         resizeApplicationGrids(1);
+				resizeApplicationGrids(1, 'app-grid-50');
       });
 
       if ($.isFunction(key))
@@ -1765,12 +1767,12 @@ $(document).ready(function()
 
     if($('#page-container').width() <= 940)
     {
-      width = 908;
+      // width = 908;
       $('#up-c-journals,#up-a-journals').attr('data-two-columns', true);
     }
     else
     {
-      width = 1106;
+      // width = 1106;
       $('#up-c-journals,#up-a-journals').attr('data-two-columns', '');
     }
 
@@ -1779,10 +1781,11 @@ $(document).ready(function()
     getAppJournals('up-c-','firstPage');
     getAppJournals('up-a-','firstPage');
 
-    width = $('.core-app-container-width:visible').width();
+    // width = $('.core-app-container-width:visible').width();
 
     resizeApplicationGrids(1, 'app-grid');
     resizeApplicationGrids(1, 'custom-app-grid');
+    resizeApplicationGrids(1, 'app-grid-50');
 
     // $.each($('.app-grid'), function( index, element )
     // {

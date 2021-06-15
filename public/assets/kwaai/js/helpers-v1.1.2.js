@@ -1284,21 +1284,56 @@ function getDecimaDataSource(name, type, filterName, filterValue, filterOperator
             flag = true;
           }
 
-          break;
+					break;
+				case '!=':
+					if(element[filterName] != filterValue)
+					{
+						flag = true;
+					}
+
+					break;
         case '<':
           if(element[filterName] < filterValue)
           {
             flag = true;
           }
 
-          break;
+					break;
+				case '<=':
+					if(element[filterName] <= filterValue)
+					{
+						flag = true;
+					}
+
+					break;
         case '>':
           if(element[filterName] > filterValue)
           {
             flag = true;
           }
 
-          break;
+					break;
+				case '>=':
+					if(element[filterName] >= filterValue)
+					{
+						flag = true;
+					}
+
+					break;
+				case 'empty':
+					if(empty(element[filterName]))
+					{
+						flag = true;
+					}
+
+					break;
+				case '!empty':
+					if(!empty(element[filterName]))
+					{
+						flag = true;
+					}
+
+					break;
         case 'in':
           if($.inArray(element[filterName], filterValue) != -1)
           {
@@ -1733,7 +1768,7 @@ function empty(mixed_var)
   //   returns 5: false
 
   var undef, key, i, len;
-  var emptyValues = [undef, null, false, 0, '', '0'];
+  var emptyValues = [undef, null, false, 0, '', '0', '0.0', '0.00', '0.000', '0.0000', '0.00000', '0.000000'];
 
   for (i = 0, len = emptyValues.length; i < len; i++)
 	{
@@ -1855,3 +1890,126 @@ function customRound (value, decimals)
 {
   return Number(Math.round(parseFloat(value) + 'e' + decimals) + 'e-' + decimals);
 }
+
+function decNumberToText(c, upperCase = true, currencyName = '')
+{
+	let cents = amount = 0;
+
+	cents = Math.round((c - Math.floor(c)) * 100)
+	amount = Math.floor(c)
+
+	amount = parseInt(amount)
+	cents += ''
+
+	while (cents.length < 2) 
+	{
+		cents = '0' + cents
+	}
+
+	if (!upperCase) 
+	{
+		return decNumberToTextAux(amount, 0) + cents + '/100 ' + currencyName
+	} 
+	else 
+	{
+		return (decNumberToTextAux(amount, 0) + cents + '/100 ' + currencyName).toUpperCase()
+	}
+}
+
+// function decNumberToTextAux(number, thousand)
+// {
+// 	let exactNumbers = {
+// 		0: '{{Lang::get('numbers.0')}}',
+// 		1: '{{Lang::get('numbers.1')}}',
+// 		2: '{{Lang::get('numbers.2')}}',
+// 		3: '{{Lang::get('numbers.3')}}',
+// 		4: '{{Lang::get('numbers.4')}}',
+// 		5: '{{Lang::get('numbers.5')}}',
+// 		6: '{{Lang::get('numbers.6')}}',
+// 		7: '{{Lang::get('numbers.7')}}',
+// 		8: '{{Lang::get('numbers.8')}}',
+// 		9: '{{Lang::get('numbers.9')}}',
+// 		10: '{{Lang::get('numbers.10')}}',
+// 		11: '{{Lang::get('numbers.11')}}',
+// 		12: '{{Lang::get('numbers.12')}}',
+// 		13: '{{Lang::get('numbers.13')}}',
+// 		14: '{{Lang::get('numbers.14')}}',
+// 		15: '{{Lang::get('numbers.15')}}',
+// 		16: '{{Lang::get('numbers.16')}}',
+// 		17: '{{Lang::get('numbers.17')}}',
+// 		18: '{{Lang::get('numbers.18')}}',
+// 		19: '{{Lang::get('numbers.19')}}',
+// 		20: '{{Lang::get('numbers.20')}}',
+// 		30: '{{Lang::get('numbers.30')}}',
+// 		40: '{{Lang::get('numbers.40')}}',
+// 		50: '{{Lang::get('numbers.50')}}',
+// 		60: '{{Lang::get('numbers.60')}}',
+// 		70: '{{Lang::get('numbers.70')}}',
+// 		80: '{{Lang::get('numbers.80')}}',
+// 		90: '{{Lang::get('numbers.90')}}',
+// 		100: '{{Lang::get('numbers.100')}}',
+// 		200: '{{Lang::get('numbers.200')}}',
+// 		300: '{{Lang::get('numbers.300')}}',
+// 		400: '{{Lang::get('numbers.400')}}',
+// 		500: '{{Lang::get('numbers.500')}}',
+// 		600: '{{Lang::get('numbers.600')}}',
+// 		700: '{{Lang::get('numbers.700')}}',
+// 		800: '{{Lang::get('numbers.800')}}',
+// 		900: '{{Lang::get('numbers.900')}}'
+// 	}
+
+// 	if (number in exactNumbers && number != 100)
+// 	{
+// 		return exactNumbers[number]
+// 	}
+
+// 	let dozensHundreds = {
+// 		20: '{{Lang::get('numbers.dh20')}}',
+// 		30: '{{Lang::get('numbers.dh30')}}',
+// 		40: '{{Lang::get('numbers.dh40')}}',
+// 		50: '{{Lang::get('numbers.dh50')}}',
+// 		60: '{{Lang::get('numbers.dh60')}}',
+// 		70: '{{Lang::get('numbers.dh70')}}',
+// 		80: '{{Lang::get('numbers.dh80')}}',
+// 		90: '{{Lang::get('numbers.dh90')}}',
+// 	}
+
+// 	if (number < 100) 
+// 	{
+// 		return dozensHundreds[number - (number % 10)] + exactNumbers[number % 10]
+// 	} 
+// 	else if (number == 100) 
+// 	{
+// 		return '{{Lang::get('numbers.cien')}}'
+// 	} 
+// 	else if (number < 1000) 
+// 	{
+// 		return exactNumbers[number - (number % 100)] + decNumberToTextAux((number % 100), 0)
+// 	}
+
+// 	let threeFigures = [
+// 		'', 
+// 		'{{Lang::get('numbers.mil')}}', 
+// 		'{{Lang::get('numbers.millones')}}', 
+// 		'{{Lang::get('numbers.mil')}}', 
+// 		'{{Lang::get('numbers.billones')}}', 
+// 		'{{Lang::get('numbers.mil')}}', 
+// 		'{{Lang::get('numbers.trillones')}}'
+// 	]
+
+// 	if (((number - (number % 1000)) / 1000) == 1) 
+// 	{
+// 		return '{{Lang::get('numbers.un')}}' + threeFigures[thousand + 1].replace('{{Lang::get('numbers.es')}}', "") + (number%1000 != 0? decNumberToTextAux((number % 1000), 0) : '');
+// 	} 
+// 	else 
+// 	{
+// 		if ((((number  - (number %1000)) / 1000) % 1000) != 0 || thousand % 2 != 0) 
+// 		{
+// 			return decNumberToTextAux((number - (number % 1000)) / 1000, thousand + 1) + threeFigures[thousand + 1] + (number%1000 != 0? decNumberToTextAux((number % 1000), 0) : ''); 
+// 		}
+// 		else 
+// 		{
+// 			return decNumberToTextAux((number - (number % 1000)) / 1000, thousand + 1) + (number%1000 != 0? decNumberToTextAux((number % 1000), 0) : '');
+// 		}
+// 	}
+// }

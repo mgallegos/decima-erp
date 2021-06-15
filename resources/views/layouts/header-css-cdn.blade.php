@@ -25,8 +25,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar-scheduler/1.9.4/scheduler.css"/>
 
-<link rel="stylesheet" href="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/css/main-v1.1.5.css"/>
-{{-- {!! Html::style('assets/kwaai/css/main-v1.1.5.css') !!}  --}}
+<link rel="stylesheet" href="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/css/main-v1.1.6.css"/>
+{{-- {!! Html::style('assets/kwaai/css/main-v1.1.6.css') !!}  --}}
 <link rel="stylesheet" href="https://storage.googleapis.com/decimaerp-cdn-bucket/kwaai/css/button-custom-classes.css"/>
 
 @if (!empty(Config::get('system-security.additional_cdn_css')))

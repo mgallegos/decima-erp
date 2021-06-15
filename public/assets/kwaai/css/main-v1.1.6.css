@@ -330,11 +330,22 @@
   display: none;
 }
 
+.app-grid-50 .ui-jqgrid-titlebar-close {
+  display: none;
+}
+
 .app-grid-without-toolbar .ui-jqgrid-titlebar {
   border-top: 1px solid #cccccc !important;
 }
 
 .app-grid .ui-jqdialog.ui-jqgrid-bootstrap .ui-jqdialog-titlebar, .app-grid .ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-caption {
+  background-color: #f5f5f5;
+  background-image: -webkit-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+  background-image: linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%);
+  background-repeat: repeat-x;
+}
+
+.app-grid-50 .ui-jqdialog.ui-jqgrid-bootstrap .ui-jqdialog-titlebar, .app-grid-50 .ui-jqgrid.ui-jqgrid-bootstrap .ui-jqgrid-caption {
   background-color: #f5f5f5;
   background-image: -webkit-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
   background-image: linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%);
@@ -354,7 +365,26 @@
   padding-bottom: 3px
 }
 
+.app-grid-50 th.ui-th-column div, .sale-som-od-grid-section th.ui-th-column div{
+  word-wrap: break-word; /* IE 5.5+ and CSS3 */
+  white-space: pre-wrap; /* CSS3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  overflow: hidden;
+  height: auto;
+  vertical-align: middle;
+  padding-top: 3px;
+  padding-bottom: 3px
+}
+
 .app-responsive-grid > .ui-jqgrid, .app-grid > .ui-jqgrid {
+  border: 1px solid #cccccc !important;
+  border-radius: 0 !important;
+  border-top: 0 !important;
+}
+
+.app-responsive-grid > .ui-jqgrid, .app-grid-50 > .ui-jqgrid {
   border: 1px solid #cccccc !important;
   border-radius: 0 !important;
   border-top: 0 !important;
@@ -365,6 +395,11 @@
 }
 
 .app-responsive-grid > .ui-jqgrid > .ui-jqgrid-view > .ui-jqgrid-titlebar, .app-grid > .ui-jqgrid > .ui-jqgrid-view > .ui-jqgrid-titlebar {
+  border-top-right-radius: 0px !important;
+  border-top-left-radius: 0px !important;
+}
+
+.app-responsive-grid > .ui-jqgrid > .ui-jqgrid-view > .ui-jqgrid-titlebar, .app-grid-50 > .ui-jqgrid > .ui-jqgrid-view > .ui-jqgrid-titlebar {
   border-top-right-radius: 0px !important;
   border-top-left-radius: 0px !important;
 }
@@ -870,6 +905,9 @@ body.modal-open .modal-backdrop{
   .app-grid > .ui-jqgrid {
 		width: 290px !important;
 	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 145px !important;
+	}
 }
 
 /*
@@ -884,12 +922,18 @@ Samsung Galaxy S7 Edge	1440 x 2560	360 x 640
   .app-grid > .ui-jqgrid {
 		width: 330px !important;
 	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 165px !important;
+	}
 }
 
 /*Iphone 6/7/8*/
 @media (min-width: 375px) {
   .app-grid > .ui-jqgrid {
 		width: 345px !important;
+	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 172px !important;
 	}
 }
 
@@ -905,11 +949,17 @@ Google Pixel 2 XL
   .app-grid > .ui-jqgrid {
 		width: 381px !important;
 	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 190px !important;
+	}
 }
 
 /*Iphone 6/7/8 Plus*/
 @media (min-width: 414px) {
   .app-grid > .ui-jqgrid {
+		width: 384px !important;
+	}
+  .app-grid-50 > .ui-jqgrid {
 		width: 384px !important;
 	}
 }
@@ -923,6 +973,9 @@ One Plus 3	1080 x 1920	480 x 853
   .app-grid > .ui-jqgrid {
 		width: 450px !important;
 	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 225px !important;
+	}
 }
 
 /*
@@ -931,6 +984,9 @@ Nexus 7 (2013)	1200 x 1920	600 x 960
 @media (min-width: 538px) {
   .app-grid > .ui-jqgrid {
 		width: 508px !important;
+	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 254px !important;
 	}
 }
 
@@ -942,12 +998,18 @@ Samsung Galaxy S7 Edge	1440 x 2560	360 x 640
   .app-grid > .ui-jqgrid {
 		width: 610px !important;
 	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 305px !important;
+	}
 }
 
 /*Iphone 6/7/8 landscape*/
 @media (min-width: 667px) {
   .app-grid > .ui-jqgrid {
 		width: 637px !important;
+	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 318px !important;
 	}
 }
 
@@ -963,12 +1025,18 @@ Google Pixel 2 XL
   .app-grid > .ui-jqgrid {
 		width: 701px !important;
 	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 350px !important;
+	}
 }
 
 /*Iphone 6/7/8 Plus lanscape*/
 @media (min-width: 736px) {
   .app-grid > .ui-jqgrid {
 		width: 706px !important;
+	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 353px !important;
 	}
 }
 
@@ -981,6 +1049,9 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
 @media (min-width: 740px) {
   .app-grid > .ui-jqgrid {
 		width: 710px !important;
+	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 355px !important;
 	}
 }
 
@@ -1014,6 +1085,9 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
   .app-grid > .ui-jqgrid {
 		width: 738px !important;
 	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 369px !important;
+	}
 }
 
 
@@ -1021,6 +1095,9 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
 @media (min-width: 834px) and (max-width: 991px) {
   .app-grid > .ui-jqgrid {
 		width: 804px !important;
+	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 402px !important;
 	}
 }
 
@@ -1070,6 +1147,9 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
   .app-grid > .ui-jqgrid {
 		width: 962px !important;
 	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 481px !important;
+	}
 }
 
 /*Large devices (desktops, 992px and up)*/
@@ -1104,12 +1184,18 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
   .app-grid > .ui-jqgrid {
 		width: 994px !important;
 	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 497px !important;
+	}
 }
 
 /*Large devices (desktops, 992px and up)*/
 @media (min-width: 1194px) and (max-width: 1199px) {
   .app-grid > .ui-jqgrid {
 		width: 1164px !important;
+	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 582px !important;
 	}
 }
 
@@ -1139,11 +1225,18 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
   .app-grid > .ui-jqgrid {
     width: 1170px !important;
   }
+
+  .app-grid-50 > .ui-jqgrid {
+    width: 585px !important;
+  }
 }
 
 @media (min-width: 1280px) and (max-width: 1365px) {
   .app-grid > .ui-jqgrid {
     width: 1250px !important;
+  }
+  .app-grid-50 > .ui-jqgrid {
+    width: 625px !important;
   }
 }
 
@@ -1160,6 +1253,10 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
 
   .app-grid > .ui-jqgrid {
     width: 1111px !important;
+  }
+
+  .app-grid-50 > .ui-jqgrid {
+    width: 555px !important;
   }
 }
 
@@ -1179,10 +1276,16 @@ Samsung Galaxy S8+	1440 x 2960	360 x 740
   .app-grid > .ui-jqgrid {
     width: 1110px !important;
   }
+  .app-grid-50 > .ui-jqgrid {
+    width: 555px !important;
+  }
 }
 
 @media (min-width: 1920px) {
   .app-grid > .ui-jqgrid {
 		width: 1590px !important;
+	}
+  .app-grid-50 > .ui-jqgrid {
+		width: 795px !important;
 	}
 }
