@@ -792,17 +792,18 @@ function resizeApplicationGrids(timeout, gridClass)
 {
   timeout = timeout || 500;
   gridClass = gridClass || 'app-grid';
-  currentWidth = $('.core-app-container-width:visible').width();
 
   setTimeout(function ()
   {
-		if(gridClass == 'app-grid-50')
-		{
-			currentWidth = (currentWidth / 2) - 15;
-		}
-
     $.each($('.' + gridClass), function( index, element )
     {
+			currentWidth = $('.core-app-container-width:visible').width();
+
+			if(gridClass == 'app-grid-50')
+			{
+				currentWidth = (currentWidth / 2) - 15;
+			}
+
       $('#' + $(element).attr('data-app-grid-id')).setGridWidth(currentWidth);
     });
 
@@ -1581,8 +1582,8 @@ $.fn.closeDropdownMenuPopover = function()
 $(document).ready(function()
 {
   centerAppLoader();
-  resizeApplicationGrids();
-	resizeApplicationGrids(500, 'app-grid-50');
+  resizeApplicationGrids(500, 'app-grid');
+	resizeApplicationGrids(600, 'app-grid-50');
   // bindModalMenuEvent('body');
 
   if(windowWidth >= minWidthExpandedMenu)
