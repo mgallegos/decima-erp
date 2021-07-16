@@ -241,7 +241,7 @@ abstract class AbstractLaravelValidator implements ValidableInterface {
 			'WSREP detected deadlock/conflict and aborted the transaction. Try restarting the transaction',
 		]);
 
-		if ($causedByDeadlock($e) && $this->currentAttempt > 1)
+		if ($causedByDeadlock && $this->currentAttempt > 1)
 		{
 			$this->currentAttempt--;
 			return true;
