@@ -291,6 +291,8 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		// Sign in with email / password
 		// https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password
 
+		$this->Log->info('[SECURITY EVENT] User Test', array('input' => $input));
+
 		if($input['key'] != $this->Config->get('system-security.api_key'))
 		{
 			throw new \Exception("Invalid key", 1);
