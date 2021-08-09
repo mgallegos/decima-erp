@@ -318,7 +318,8 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 				array(
 					'message' => '',
 					'idToken' => $token, 
-					// 'localId' => $authUser['id'], 
+					'refreshToken' => '', 
+					'userId' => $authUser['id'], 
 					'expiresIn' => $this->Config->get('session.lifetime') * 60, 
 					'organizationId' => $authUser['default_organization'], 
 					'costPricePrecision' => $organization['cost_price_precision'], 
