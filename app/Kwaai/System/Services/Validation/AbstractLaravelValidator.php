@@ -153,7 +153,7 @@ abstract class AbstractLaravelValidator implements ValidableInterface {
 	  // $this->commit($openTransaction);
 	  // $this->rollBack($openTransaction);
 
-		$this->currentAttempt = 3;
+		$this->currentAttempt = 1;
 
 		if(empty($databaseConnectionName))
     {
