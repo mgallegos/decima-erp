@@ -29,7 +29,9 @@
         "mervick/aes-everywhere": "^1.1",
         "league/iso3166": "~1.0.1",
         "league/omnipay": "^3",
-        "algolia/algoliasearch-client-php": "^2.7"
+        "algolia/algoliasearch-client-php": "^2.7",
+        "mailchimp/marketing": "^3.0",
+        "league/flysystem-aws-s3-v3": "^1.0"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
@@ -46,9 +48,9 @@
         "psr-4": {
             "App\\": "app/"
         },
-    		"files": [
-    			"resources/helpers.php"
-    		]
+        "files": [
+            "resources/helpers.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [
