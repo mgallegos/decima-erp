@@ -996,6 +996,16 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 			return $this->Config->get('system-security.demo_api_user');
 		}
 
+		if( !empty( $this->Config->get('system-security.api_preset_tokens') ) && is_array( $this->Config->get('system-security.api_preset_tokens') ) )
+		{
+			$apiPresetTokens = $this->Config->get('system-security.api_preset_tokens');
+
+			if( isset( $apiPresetTokens['$token'] ) )
+			{
+				return $apiPresetTokens['$token'];
+			}
+		}
+
 		if($this->Cache->has($token))
 		{
 			return  json_decode($this->Cache->get($token), true);
