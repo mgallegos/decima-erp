@@ -1000,9 +1000,9 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 		{
 			$apiPresetTokens = $this->Config->get('system-security.api_preset_tokens');
 
-			if( isset( $apiPresetTokens['$token'] ) )
+			if( isset( $apiPresetTokens[$token] ) )
 			{
-				return $apiPresetTokens['$token'];
+				return $apiPresetTokens[$token];
 			}
 		}
 
