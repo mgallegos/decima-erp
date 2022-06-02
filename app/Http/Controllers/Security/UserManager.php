@@ -16,7 +16,7 @@ use App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagemen
 use App\Kwaai\Organization\Services\OrganizationManagement\OrganizationManagementInterface;
 
 use App\Kwaai\Security\Services\AppManagement\AppManagementInterface;
-
+use Mgallegos\DecimaInventory\Inventory\Services\WarehouseManagement\WarehouseManagementInterface;
 use Illuminate\Session\SessionManager;
 
 use Illuminate\Http\Request;
@@ -52,6 +52,14 @@ class UserManager extends Controller {
 	protected $OrganizationManagerService;
 
 	/**
+	 * Warehouse Manager Service
+	 *
+	 * @var Mgallegos\DecimaInventory\Inventory\Services\WarehouseManagement\WarehouseManagementInterface
+	 *
+	 */
+	protected $WarehouseManagerService;
+
+	/**
 	 * View
 	 *
 	 * @var Illuminate\View\Factory
@@ -80,6 +88,7 @@ class UserManager extends Controller {
 		AuthenticationManagementInterface $AuthenticationManagerService,
 		OrganizationManagementInterface $OrganizationManagerService,
 		AppManagementInterface $AppManagerService,
+		WarehouseManagementInterface $WarehouseManagerService,
 		Factory $View,
 		Request $Input,
 		SessionManager $Session
@@ -93,6 +102,8 @@ class UserManager extends Controller {
 
 		$this->AppManagerService = $AppManagerService;
 
+		$this->WarehouseManagerService = $WarehouseManagerService;
+
 		$this->View = $View;
 
 		$this->Input = $Input;
@@ -103,27 +114,28 @@ class UserManager extends Controller {
 	public function getIndex()
 	{
 		return $this->View->make('security.user-management')
-          	->with('newAdminUserAction', $this->Session->get('newAdminUserAction', false))
-          	->with('newUserAction', $this->Session->get('newUserAction', false))
-            ->with('removeUserAction', $this->Session->get('removeUserAction', false))
-            ->with('assignRoleAction', $this->Session->get('assignRoleAction', false))
-            ->with('unassignRoleAction', $this->Session->get('unassignRoleAction', false))
-						->with('appInfo', $this->AppManagerService->getAppInfo())
-						->with('userOrganizations', $this->UserManagerService->getUserOrganizations())
-						->with('userActions', $this->UserManagerService->getUserActions())
-          	->withModules($this->UserManagerService->getSystemModules())
-          	->withTimezones($this->UserManagerService->getTimezones());
+			->with('newAdminUserAction', $this->Session->get('newAdminUserAction', false))
+			->with('newUserAction', $this->Session->get('newUserAction', false))
+			->with('removeUserAction', $this->Session->get('removeUserAction', false))
+			->with('assignRoleAction', $this->Session->get('assignRoleAction', false))
+			->with('unassignRoleAction', $this->Session->get('unassignRoleAction', false))
+			->with('appInfo', $this->AppManagerService->getAppInfo())
+			->with('userOrganizations', $this->UserManagerService->getUserOrganizations())
+			->with('userActions', $this->UserManagerService->getUserActions())
+			->with('warehouses', $this->WarehouseManagerService->getWarehouses())
+			->withModules($this->UserManagerService->getSystemModules())
+			->withTimezones($this->UserManagerService->getTimezones());
 	}
 
 	public function getUserPreferencesIndex()
 	{
 		return $this->View->make('security.user-preferences')
-						->with('changesJournal', $this->UserManagerService->getUserChangesJournals())
-            ->with('actionsJournal', $this->UserManagerService->getUserActionsJournals())
-						->with('userDefaultOrganizationName', $this->OrganizationManagerService->getOrganizationColumnById($this->AuthenticationManagerService->getLoggedUserDefaultOrganization()))
-						->with('appInfo', $this->AppManagerService->getAppInfo())
-						->with('userOrganizations', $this->UserManagerService->getUserOrganizations())
-						->with('userActions', $this->UserManagerService->getUserActions());
+			->with('changesJournal', $this->UserManagerService->getUserChangesJournals())
+			->with('actionsJournal', $this->UserManagerService->getUserActionsJournals())
+			->with('userDefaultOrganizationName', $this->OrganizationManagerService->getOrganizationColumnById($this->AuthenticationManagerService->getLoggedUserDefaultOrganization()))
+			->with('appInfo', $this->AppManagerService->getAppInfo())
+			->with('userOrganizations', $this->UserManagerService->getUserOrganizations())
+			->with('userActions', $this->UserManagerService->getUserActions());
 	}
 
 	public function postStoreUser()

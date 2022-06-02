@@ -63,6 +63,8 @@ return array(
 
 	'timezone' => 'Zona horaria',
 
+	'warehouse' => 'Bodega por defecto',
+
 	'email' => 'Correo electrónico',
 
 	'password' => 'Contraseña',

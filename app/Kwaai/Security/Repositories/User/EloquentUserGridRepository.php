@@ -25,7 +25,7 @@ class EloquentUserGridRepository extends EloquentRepositoryAbstract {
 								->where('uo.organization_id', '=', $AuthenticationManager->getCurrentUserOrganization('id'))
 								->whereNull('u.deleted_at');
 
-		$this->visibleColumns = array('u.id', 'u.firstname', 'u.lastname', 'u.email', 'u.timezone', 'u.is_active', 'uc.email AS created_by');
+		$this->visibleColumns = array('u.id', 'u.firstname', 'u.default_warehouse_id','u.lastname', 'u.email', 'u.timezone', 'u.is_active', 'uc.email AS created_by');
 
 		$this->orderBy = array(array('u.id', 'asc'));
 	}

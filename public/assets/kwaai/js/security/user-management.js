@@ -1008,11 +1008,15 @@ $(document).ready(function()
 
 		selectedRowData = $('#users-grid').getRowData($('#users-grid').jqGrid('getGridParam', 'selrow'));
 
+		if (!empty(selectedRowData.default_warehouse_id)) {
+			$('#um-default-warehouse-label').setAutocompleteLabel(selectedRowData.default_warehouse_id);
+		}		
+
 		if($('#um-logged-user-email').val() != selectedRowData.created_by && $('#um-user-root').isEmpty())
 		{
 			$('#um-user-created-by-info-message').removeClass('hidden');
 			return;
-		}
+		}		
 
 		$('#um-btn-toolbar').disabledButtonGroup();
 		$('#um-btn-group-3').enableButtonGroup();
@@ -1021,7 +1025,7 @@ $(document).ready(function()
 		$('#um-form-edit-password-help-block').removeClass('hidden');
 		populateFormFields(selectedRowData, 'um-');
 		$('#um-grid-section').collapse('hide');
-    $('#um-journal-section').collapse('hide');
+    $('#um-journal-section').collapse('hide');		
 
 		if(!$('#um-user-root').isEmpty())
 		{
@@ -1032,7 +1036,7 @@ $(document).ready(function()
 		if($('#um-grid-users-mode').parent().hasClass('active') || $('#um-new-admin-user-action').isEmpty())
 		{
 			$('#um-admin-section').collapse('hide');
-		}
+		}		
 
 		$('#um-email').focus();
 	});

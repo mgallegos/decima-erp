@@ -71,6 +71,7 @@
 	    	->setGridOption('postData', array('_token' => Session::token()))
 	    	->setGridEvent('onSelectRow', 'umOnSelectRowEvent')
 	    	->addColumn(array('index' => 'u.id', 'name' => 'id', 'hidden' => true))
+				->addColumn(array('index' => 'u.default_warehouse_id', 'name' => 'default_warehouse_id', 'hidden' => true))
 	    	->addColumn(array('label' => Lang::get('security/user-management.firstname'), 'index' => 'u.firstname', 'name' => 'firstname'))
 	    	->addColumn(array('label' => Lang::get('security/user-management.lastname'), 'index' => 'u.lastname', 'name' => 'lastname'))
 	    	->addColumn(array('label' => Lang::get('security/user-management.email'), 'index' => 'u.email', 'name' => 'email'))
@@ -209,38 +210,43 @@
 								{!! Form::label('um-timezone', Lang::get('security/user-management.timezone'), array('class' => 'control-label')) !!}
 								{!! Form::autocomplete('um-timezone', $timezones, array('class' => 'form-control', 'data-mg-required' => ''), null, null, null, 'fa fa-clock-o') !!}
 						  	</div>
-						</div>
-						<div class="col-lg-6 col-md-6">
-							<div class="form-group">
-							  	<div class="form-checkbox-inline">
-								    <label id='um-is-active-label' class="control-label checkbox-inline hidden">
-								      {!! Form::checkbox('um-is-active', 'S', true, array('id' => 'um-is-active')) !!} {{ Lang::get('security/user-management.isActive') }}
-										</label>
-										<label id='um-send-email-label' class="control-label checkbox-inline hidden">
-									  	{!! Form::checkbox('um-send-email', 'S', true, array('id' => 'um-send-email')) !!} {{ Lang::get('security/user-management.sendEmail') }}
-										</label>
-								</div>
 							</div>
-						  	<div class="form-group mg-hm">
-								{!! Form::label('um-password', Lang::get('security/user-management.password'), array('class' => 'control-label')) !!}
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="fa fa-key"></i>
-									</span>
-						    		{!! Form::password('um-password', array('id' => 'um-password', 'class' => 'form-control', 'disabled' => '')) !!}
-						    	</div>
-							    <p id="um-form-edit-password-help-block" class="help-block hidden">{{ Lang::get('security/user-management.formEditpasswordHelperText') }}</p>
-						  	</div>
-						  	<div class="form-group">
-								{!! Form::label('um-confirm-password', Lang::get('security/user-management.confirmPassword'), array('class' => 'control-label')) !!}
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="fa fa-key"></i>
-									</span>
-						    		{!! Form::password('um-confirm-password', array('id' => 'um-confirm-password', 'class' => 'form-control', 'disabled' => '')) !!}
-						    	</div>
-						  	</div>
-						</div>
+							<div class="col-lg-6 col-md-6">							
+									<div class="form-group mg-hm">
+										{!! Form::label('um-warehouse', Lang::get('security/user-management.warehouse'), array('class' => 'control-label')) !!}
+										{!! Form::autocomplete('um-default-warehouse-label', $warehouses, array('class' => 'form-control'), 'um-default-warehouse-label', 'um-default-warehouse-id', null,'fa fa-home') !!}
+										{!! Form::hidden('um-default-warehouse-id', null, array('id'  =>  'um-default-warehouse-id')) !!}
+									</div>
+									<div class="form-group mg-hm">
+										{!! Form::label('um-password', Lang::get('security/user-management.password'), array('class' => 'control-label')) !!}
+										<div class="input-group">
+											<span class="input-group-addon">
+												<i class="fa fa-key"></i>
+											</span>
+											{!! Form::password('um-password', array('id' => 'um-password', 'class' => 'form-control', 'disabled' => '')) !!}
+										</div>
+										<p id="um-form-edit-password-help-block" class="help-block hidden">{{ Lang::get('security/user-management.formEditpasswordHelperText') }}</p>
+									</div>
+									<div class="form-group">
+										{!! Form::label('um-confirm-password', Lang::get('security/user-management.confirmPassword'), array('class' => 'control-label')) !!}
+										<div class="input-group">
+											<span class="input-group-addon">
+												<i class="fa fa-key"></i>
+											</span>
+											{!! Form::password('um-confirm-password', array('id' => 'um-confirm-password', 'class' => 'form-control', 'disabled' => '')) !!}
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="form-checkbox-inline">
+											<label id='um-is-active-label' class="control-label checkbox-inline hidden">
+												{!! Form::checkbox('um-is-active', 'S', true, array('id' => 'um-is-active')) !!} {{ Lang::get('security/user-management.isActive') }}
+											</label>
+											<label id='um-send-email-label' class="control-label checkbox-inline hidden">
+												{!! Form::checkbox('um-send-email', 'S', true, array('id' => 'um-send-email')) !!} {{ Lang::get('security/user-management.sendEmail') }}
+											</label>
+										</div>
+									</div>
+							</div>
 					</div>
 				</fieldset>
 			{!! Form::close() !!}

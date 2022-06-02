@@ -337,6 +337,9 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 */
 	public function save(array $input, $openTransaction = true, $createdBy = null, $defaultOrganization = null, $attachOrganization = true)
 	{
+		if (isset($input['default_warehouse_label'])) {
+			unset($input['default_warehouse_label']);
+		}
 		$data = array(
 			'email' => $input['email'],
 			'password' => $input['password'],
@@ -506,6 +509,9 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 */
 	public function update(array $input)
 	{
+		if (isset($input['default_warehouse_label'])) {
+			unset($input['default_warehouse_label']);
+		}		
 		$data = array(
 			'email' => $input['email'],
 			'password' => $input['password'],
