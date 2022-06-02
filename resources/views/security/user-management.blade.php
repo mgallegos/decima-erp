@@ -213,7 +213,7 @@
 							</div>
 							<div class="col-lg-6 col-md-6">							
 									<div class="form-group mg-hm">
-										{!! Form::label('um-warehouse', Lang::get('security/user-management.warehouse'), array('class' => 'control-label')) !!}
+										{!! Form::label('um-warehouse', Lang::get('decima-inventory::warehouse-management.defaultDistributionCenter'), array('class' => 'control-label')) !!}
 										{!! Form::autocomplete('um-default-warehouse-label', $warehouses, array('class' => 'form-control'), 'um-default-warehouse-label', 'um-default-warehouse-id', null,'fa fa-home') !!}
 										{!! Form::hidden('um-default-warehouse-id', null, array('id'  =>  'um-default-warehouse-id')) !!}
 									</div>
