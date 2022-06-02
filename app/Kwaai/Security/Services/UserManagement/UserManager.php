@@ -34,6 +34,7 @@ use App\Kwaai\Organization\Repositories\Organization\OrganizationInterface;
 use App\Kwaai\Security\Repositories\User\UserInterface;
 use App\Kwaai\Security\Repositories\User\EloquentUserGridRepository;
 use App\Kwaai\Security\Services\UserManagement\UserManagementInterface;
+use Mgallegos\DecimaInventory\Inventory\Repositories\Warehouse\WarehouseInterface;
 use Mgallegos\LaravelJqgrid\Encoders\RequestedDataInterface;
 
 class UserManager extends AbstractLaravelValidator implements UserManagementInterface{
@@ -109,6 +110,14 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 *
 	 */
 	protected $EloquentUserGridRepository;
+
+	/**
+   *  Warehouse Interface
+   *
+   * @var Mgallegos\DecimaInventory\Inventory\Repositories\Warehouse\WarehouseInterface
+   *
+   */
+  protected $Warehouse;
 
 	/**
 	 * Eloquent Admin User Repository
@@ -247,6 +256,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 		RequestedDataInterface $GridEncoder,
 		EloquentUserGridRepository $EloquentUserGridRepository,
 		EloquentAdminUserGridRepository $EloquentAdminUserGridRepository,
+		WarehouseInterface $Warehouse,
 		DateTimeZone $DateTimeZone,
 		DatabaseManager $DB,
 		Translator $Lang,
@@ -280,6 +290,8 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 		$this->EloquentUserGridRepository = $EloquentUserGridRepository;
 
 		$this->EloquentAdminUserGridRepository = $EloquentAdminUserGridRepository;
+
+		$this->Warehouse = $Warehouse;
 
 		$this->DateTimeZone = $DateTimeZone;
 
@@ -509,9 +521,15 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 	 */
 	public function update(array $input)
 	{
-		if (isset($input['default_warehouse_label'])) {
+		if(isset($input['default_warehouse_label']))
+    {
+			$defaultWarehouseLabel = $input['default_warehouse_label'];
 			unset($input['default_warehouse_label']);
-		}		
+    }
+    else
+    {
+      $defaultWarehouseLabel = '';
+    }	
 		$data = array(
 			'email' => $input['email'],
 			'password' => $input['password'],
@@ -576,7 +594,7 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 
 		$this->Session->forget('loggedUser');
 
-    $this->DB->transaction(function() use ($User, $input, $loggedUserId)
+    $this->DB->transaction(function() use ($User, $input, $loggedUserId, $defaultWarehouseLabel)
     {
         $unchangedUserValues = $User->toArray();
         $unchangedUserValues['password'] = '';
@@ -619,6 +637,10 @@ class UserManager extends AbstractLaravelValidator implements UserManagementInte
 						else if($key == 'is_active')
 						{
 								$this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('security/user-management.' . camel_case($key)), 'field_lang_key' => 'security/user-management.' . camel_case($key), 'old_value' => $this->Lang->get('journal.' . $unchangedUserValues[$key]), 'new_value' => $this->Lang->get('journal.' . $value)), $Journal);
+						}
+						else if($key == 'default_warehouse_id')
+						{
+							$this->Journal->attachDetail($Journal->id, array('field' => $this->Lang->get('decima-inventory::warehouse-management.defaultDistributionCenter'), 'field_lang_key' => 'decima-inventory::warehouse-management.defaultDistributionCenter', 'old_value' => $this->Warehouse->byId($unchangedUserValues[$key], null)->name, 'new_value' => $defaultWarehouseLabel, $Journal));
 						}
           	else if($key != 'password')
             {

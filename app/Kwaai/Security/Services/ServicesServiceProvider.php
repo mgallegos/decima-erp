@@ -125,9 +125,10 @@ class ServicesServiceProvider extends ServiceProvider {
 					$app->make('App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface')
 				),
 				new \App\Kwaai\Security\Repositories\User\EloquentAdminUserGridRepository(
-						$app['db'],
-						$app->make('App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface')
+					$app['db'],
+					$app->make('App\Kwaai\Security\Services\AuthenticationManagement\AuthenticationManagementInterface')
 				),
+				$app->make('Mgallegos\DecimaInventory\Inventory\Repositories\Warehouse\WarehouseInterface'),
 				new \DateTimeZone($app['config']['app.timezone']),
 				$app['db'],
 				$app['translator'],
