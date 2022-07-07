@@ -1873,4 +1873,35 @@ class LaravelAuthenticationManager extends AbstractLaravelValidator implements A
 	{
 		return $this->Config->get('system-security.root_users_id');
 	}
+
+	/**
+	* Get logged user default warehouse
+	*
+	* @return array
+	*/
+	public function getLoggedUserDefaultWarehouse()
+	{
+		if ($this->isUserGuest())
+		{
+			return '';
+		}
+
+		$user = $this->getSessionLoggedUser();
+
+		return array(
+			'warehouse_id' => $user['default_warehouse_id'],
+			'warehouse_name' => $user['default_warehouse_name']
+		);
+	}
+
+	/**
+	 * Get token data
+	 * Compatibilidad con Decima v2.0
+	 *
+	 * @return array
+	 */
+	public function getTokenData()
+	{
+		return false;
+	}
 }
