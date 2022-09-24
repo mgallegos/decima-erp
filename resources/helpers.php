@@ -15,6 +15,8 @@
  * See COPYRIGHT and LICENSE.
  */
 
+use PhpOffice\PhpSpreadsheet\Chart\Title;
+
  if ( ! function_exists('eloquent_array_filter'))
  {
    /**
@@ -828,7 +830,7 @@ if ( ! function_exists('eloquent_array_filter'))
     }
   }
 
-  if ( ! function_exists('ab'))
+  if ( ! function_exists('format_error'))
   {
     /**
      * R....
@@ -837,8 +839,50 @@ if ( ! function_exists('eloquent_array_filter'))
      *
      * @return array
      */
-    function ab($a, $b)
+    function format_error($input)
     {
-      return $a + $b;
+      return [
+        'status' => !empty( $input['status'] ) ? $input['status'] : '422',
+        'source' => [
+          'pointer' => !empty( $input['name'] ) ? $input['name'] : '',
+          'value' => !empty( $input['value'] ) ? $input['value'] : '',
+          'errorCode' => $input['code'],
+          'attributes' => !empty( $input['attributes'] ) ? $input['attributes'] : '',
+        ],
+        'title' => $input['title'],
+        'detail' => !empty( $input['detail'] ) ? $input['detail'] : '',
+      ];
+    }
+  }
+
+  if ( ! function_exists('increase_resources'))
+  {
+    /**
+     * Increase memory and execution time
+     *
+     * @param array $input
+     *
+     * @return array
+     */
+    function increase_resources($input = array())
+    {
+      ini_set('memory_limit', !empty( $input['memory_limit'] ) ? $input['memory_limit'] : '2048' . 'M');
+      ini_set('max_execution_time', !empty( $input['max_execution_time'] ) ? $input['max_execution_time'] : 300);
+    }
+  }
+
+
+  if ( ! function_exists('sendNotificationToAdmin'))
+  {
+    /**
+     * Send Notification to Admin
+     *
+     * @param array $response          
+     *
+     * @return void
+     */
+    function sendNotificationToAdmin(string $message)
+    {
+
     }
   }
