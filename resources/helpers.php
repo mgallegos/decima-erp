@@ -881,7 +881,7 @@ if ( ! function_exists('eloquent_array_filter'))
      *
      * @return void
      */
-    function sendNotificationToAdmin(string $message)
+    function sendNotificationToAdmin($message)
     {
 
     }
