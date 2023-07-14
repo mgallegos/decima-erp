@@ -231,4 +231,6 @@ return array(
 	'Y' => 'Generada',
 	'Z' => 'Procesada',
 	'statusGridText' => ':;P:Pendiente;U:Autorizado;A:Anulado;M:Hombre;F:Mujer;S:Soltero;C:Casado;V:Viudo;O:Aprobada;R:Rechazada;B:Abierta;T:Activo;I:Inactivo;L:Con licencia;D:Borrador;E:Publicado;H:Oculto;N:Enviada;J:Valor Fijo;K:Porcentaje;X:Pagado;Y:Generada;Z:Procesada',
+
+	'rating' => 'Clasificación',
 );
